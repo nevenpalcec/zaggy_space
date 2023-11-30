@@ -1,0 +1,648 @@
+﻿@page "/rents/list"
+
+@code {
+
+    System.Data.DataTable rents, payments, messages;
+    System.Data.DataRow rent;
+
+    // string Reservation_del;
+    int offset = 1;
+    int list_count = 0;
+
+    bool is_loading = true;
+
+    string search;
+    string b2b_id = "";
+    string countries = "-1";
+    string sort_by = "rents.created desc";
+    string filter_date = "rents.created";
+    string sort_order = "";
+    string date_from = System.DateTime.Now.AddDays(-60).ToString("yyyy-MM-dd");
+    string date_until = System.DateTime.Now.AddDays(60).ToString("yyyy-MM-dd");
+    string active = "";
+    string no_show = "";
+    string reseller_id = "";
+    string modal_rent_id = "";
+    string modal_rent_active = "";
+    string resellers_overbooking_id = "";
+    string tooltip = "objects name, contact name, contact email, contact tel., rent id hash, users name ";
+
+    string b2b = bl.B2B.zaggy.shared.b2b_id; // always Njusškalo here
+
+    string UserAgent;
+    string IPAddress;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await Perm.reseller_worker_perm();
+        if (Perm.rents_list == false) { NavManager.NavigateTo("403", true); }
+
+        UserAgent = httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
+        IPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
+        countries = Perm.countries;
+
+        await on_load();
+
+        await js.InvokeVoidAsync("addTooltips");
+
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        js.InvokeVoidAsync("ui.flatpicker", "#rents_date_from");
+        js.InvokeVoidAsync("ui.flatpicker", "#rents_date_until");
+    }
+
+    async Task on_load()
+    {
+        is_loading = true;
+        await Task.Delay(1);
+
+        rents_list();
+
+        var u = (await storage.GetAsync<string>("users")).Value;
+
+        is_loading = false;
+        await Task.Delay(1);
+    }
+
+    void fill_list()
+    {
+        offset = 1;
+        rents_list();
+    }
+
+    async void rents_list()
+    {
+        is_loading = true;
+        await Task.Delay(1);
+        StateHasChanged();
+
+        var f = new
+        {
+            offset = 50 * (offset - 1),
+            search = search,
+            date_from = date_from,
+            date_until = date_until,
+            active = active,
+            sort_by = sort_by,
+            filter_date = filter_date,
+            resellers_overbooking_id = resellers_overbooking_id,
+            rents_soruce_ids = bl.B2B.zaggy.shared.b2b_id,
+            no_show,
+            countries,
+            reseller_id,
+            b2b_id
+        };
+
+        var json = bl.sys.json.to_string(f);
+
+        rents = bl.B2B.Zagreb.rents.list(json);
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+
+    }
+
+    async void sort_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        await Task.Delay(1);
+        StateHasChanged();
+
+        sort_by = e.Value.ToString();
+        rents_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async Task filter_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        await Task.Delay(10);
+        StateHasChanged();
+
+        filter_date = e.Value.ToString();
+
+        // <option value="rents.created"> @lng.l.Created2 </option>
+        // <option value="rents.from_date"> @lng.l.Arrival </option>
+        // <option value="rents.until_date"> @lng.l.Until </option>
+
+        if (e.Value.ToString() == "rents.created")
+        {
+            sort_by = "rents.created desc ";
+        }
+        else if (e.Value.ToString() == "rents.from_date")
+        {
+            sort_by = "rents.from_date asc ";
+        }
+        else if (e.Value.ToString() == "rents.until_date")
+        {
+            sort_by = "rents.until_date asc ";
+        }
+
+        rents_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async Task b2b_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        await Task.Delay(10);
+        StateHasChanged();
+
+        b2b_id = e.Value.ToString();
+
+        rents_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    void payment_get(string rent_id)
+    {
+        payments = bl.B2B.zaggy.Invoces.get(rent_id);
+    }
+
+    void rent_get(System.Data.DataRow row)
+    {
+        rent = row;
+        payment_get(row["id"].ToString());
+        messages_get(row["id"].ToString());
+    }
+
+    void messages_get(string rent_id)
+    {
+        messages = bl.messages.msg(rent_id, true);
+    }
+
+    void search_keypress(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            fill_list();
+            //rents_list();
+        }
+    }
+
+    void set_rent_id_modal(string rent_id, string active)
+    {
+        modal_rent_active = active;
+        modal_rent_id = rent_id;
+    }
+
+    void set_active(string rent_id)
+    {
+        bl.B2B.zaggy.rents.set_active(rent_id, "N");
+        rents_list();
+    }
+
+    void set_deactive(string rent_id)
+    {
+        bl.B2B.zaggy.rents.set_active(rent_id, "Y");
+        rents_list();
+    }
+
+    void order_by(string col)
+    {
+        sort_order = (sort_order == "" ? " desc" : "");
+        sort_by = col + sort_order;
+        rents_list();
+    }
+
+    async void active_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        await Task.Delay(1);
+
+        if (e.Value.ToString() == "O")
+        {
+            active = "";
+            resellers_overbooking_id = "true";
+            no_show = "";
+            rents_list();
+            is_loading = false;
+        }
+        else if (e.Value.ToString() == "S")
+        {
+            active = "";
+            resellers_overbooking_id = "";
+            no_show = "Y";
+            rents_list();
+            is_loading = false;
+        }
+        else
+        {
+            resellers_overbooking_id = "";
+            no_show = "";
+            active = e.Value.ToString();
+            rents_list();
+            is_loading = false;
+        }
+
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    string r_active(string a)
+    {
+        return (a == "Y" ? "Active" : "Disabled");
+    }
+
+    string char_check(string a)
+    {
+        return (a == "" ? " - - - " : a);
+    }
+
+    /// <summary>
+    /// Export to excel
+    /// </summary>
+    /// <returns></returns>
+    async Task on_load_exl()
+    {
+
+        var wb = new ClosedXML.Excel.XLWorkbook();
+        wb.Properties.Author = " zaggy";
+        wb.Properties.Title = " Title";
+        wb.Properties.Subject = " Subject";
+
+        var ws = wb.Worksheets.Add("rents");
+
+        ws.Cell(1, 1).Value = lng.l.Reservation;
+
+        ws.Row(1).Style.Font.Bold = true;
+        /*********************************/
+        ws.Cell(1, 1).Value = lng.l.Reservation;
+        ws.Cell(1, 2).Value = lng.l.Contact;
+        ws.Cell(1, 3).Value = lng.l.User;
+
+        ws.Cell(1, 4).Value = lng.l.Property;
+        ws.Cell(1, 5).Value = lng.l.Status;
+
+        ws.Cell(1, 6).Value = lng.l.Date;
+        ws.Cell(1, 7).Value = @lng.l.Commission;
+        ws.Cell(1, 8).Value = @lng.l.Price;
+
+        var rowx = 2;
+
+        foreach (System.Data.DataRow r in rents.Rows)
+        {
+
+            ws.Cell(rowx, 1).Value = "Rent ID: " + r["id_hash"].ToString();
+            ws.Cell(rowx, 2).Value = r["contact_name"].ToString();
+
+            ws.Cell(rowx, 3).Value = "User ID: " + r["user_id_hash"].ToString();
+            ws.Cell(rowx, 4).Value = r["object_name"].ToString();
+
+            ws.Cell(rowx, 5).Value = r["active"].ToString();
+            ws.Cell(rowx, 6).Value = System.DateTime.Parse(r["from_date"].ToString() ?? "").ToString("dd.MM.yy");
+
+            ws.Cell(rowx, 7).Value = r["rent_source_provision"].ToString() + " " + r["currency_label"].ToString();
+            ws.Cell(rowx, 8).Value = r["price"].ToString() + " " + r["currency_label"].ToString();
+
+
+            rowx++;
+        }
+
+        MemoryStream XLSStream = new();
+        wb.SaveAs(XLSStream);
+
+        await js.InvokeVoidAsync("BlazorDownloadFile", "rents.xlsx", XLSStream.ToArray());
+    }
+
+    async void select_reseller_onchange(ChangeEventArgs e)
+    {
+        is_loading = true;
+        await Task.Delay(1);
+        reseller_id = e.Value.ToString();
+
+        rents_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void rents_export()
+    {
+        var dt = bl.B2B.zaggy.reports.rents(date_from, date_until);
+        var s = bl.sys.excell.generate.from_datatable(dt, "rents");
+        await js.InvokeVoidAsync("BlazorDownloadFile", "rents.xlsx", s.ToArray());
+    }
+
+}
+
+<!-- title -->
+<PageTitle> @lng.l.Reservations </PageTitle>
+
+<!-- header -->
+<div class="row mb-3">
+
+    <div class="col-12">
+        <div class="card shadow-none border" style="background-color: #163d73;">
+            <div class="row gx-0 flex-between-center">
+
+                <div class="col-sm-auto d-flex align-items-center ms-2">
+                    <img class="p-2" src="@Settings.img_avatar_small" alt="" style="height: 60px;"/>
+                    <div>
+                        <h6 class="fs--1 mb-0" style="color: #fff;"> @lng.l.Reservation @bl.lng.l.List <span style="color: #fff;">  </span>  </h6>
+                        <h4 class="fw-black mb-0" style="color: #fff;"> <span class="fw-medium" style="color: #fff;"> Zahtjevi za prostorom </span></h4>
+                    </div>
+                </div>
+
+                <div class="col-md-auto p-3">
+
+                    <div class="d-flex">
+
+                        <span class="me-2 align-self-center" style="color: #fff;">@lng.l.Page</span>
+                        <input class="form-control me-2" placeholder="page" type="number" @bind="offset" @bind:event="oninput" style="width: 100px;" @onchange="on_load" min="1" />
+
+                       @*  <select class="form-select form-select-sm me-2" type="text" @onchange="select_reseller_onchange">
+                            <option value="" selected>@lng.l.All</option>
+                            <option value="@bl.B2B.zaggy.shared.reseller_id"> zaggy </option>
+                            <option value="@bl.B2B.zaggy.shared.reseller_id"> zaggy </option>
+                        </select>
+                         *@
+                        <input class="form-control me-2" data-toggle="tooltip" data-html="true" data-placement="top" title="@tooltip" placeholder="@lng.l.Search..." type="search" @bind="search" @bind:event="oninput" @onkeyup="search_keypress" />
+                        <button type="button" class="btn btn-dark ms-1" @onclick="fill_list"> @lng.l.Search </button>
+
+                        @* <a type="button" class="btn btn-dark ms-1" @onclick="on_load_exl">
+                            <i class="far fa-file-excel fs--0"></i>
+                        </a> *@
+
+                        <a type="button" class="btn btn-dark ms-1" @onclick="rents_export">
+                            <i class="fas fa-file-download fs--0"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-12">
+        <div class="row gx-0 flex-between-center">
+
+            <div class="col-md-auto p-2" style="margin-left: -15px;">
+                <div class="d-flex">
+
+                    <!-- status of rent -->
+                    <select class="form-select form-select-sm m-2 w-50" @onchange="active_by_on_change">
+                        <option value=""> @lng.l.All </option>
+                        <option value="Y"> @lng.l.Active </option>
+                        <option value="N"> @lng.l.Cancelled </option>
+                        <option value="S"> @lng.l.No_show </option>
+                        <option value="O"> Overbooking </option>
+                    </select>
+
+                    <!-- by creation -->
+                    <select class="form-select form-select-sm m-2 w-50" @onchange="filter_on_change">
+                        <option value="rents.created"> @lng.l.Created2 </option>
+                        <option value="rents.from_date"> @lng.l.Arrival </option>
+                        <option value="rents.until_date"> @lng.l.Until </option>
+                    </select>
+
+                    <!-- -->
+                    @* <select class="form-select form-select-sm m-2 w-50" @onchange="b2b_on_change">
+                        <option value=""> All </option>
+                        <option value="384"> zaggy </option>
+                        <option value="385"> zaggy </option>
+                    </select> *@
+
+                </div>
+            </div>
+
+            <div class="col-md-auto p-2" style="margin-right: -15px;">
+                <div class="d-flex">
+                    <input class="form-control form-control-sm w-50 m-2" type="text" @bind="date_from" placeholder="Check-in" @bind:event="oninput" id="rents_date_from" @onchange="on_load" />
+                    <input class="form-control form-control-sm w-50 m-2" type="text" @bind="date_until" placeholder="Check-out" @bind:event="oninput" id="rents_date_until" @onchange="on_load" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@if (is_loading == true)
+{
+    <LoadingLoader></LoadingLoader>
+}
+
+@if (rents != null)
+{
+    <!-- list of rents -->
+    <admin.Pages.Rents.Shared.Table rents="@rents"></admin.Pages.Rents.Shared.Table>
+}
+
+<!-- Modals error -->
+<div>
+
+    @if (rent != null)
+    {
+        <div class="modal fade" id="error-modal" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document">
+                <div class="modal-content position-relative">
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="@lng.l.Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pb-1 pe-2 bg-light">
+                            <h4 class="mb-1" id="modalTitle"> @rent["contact_name"] ( @rent["id"]) </h4>
+
+                        </div>
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                            <h5 class="" id="adress"> @rent["contact_adress"] @rent["contact_city_zip"] @rent["contact_city"]</h5>
+                        </div>
+
+                        <div class="p-4 pb-0">
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#tab-home" role="tab" aria-controls="tab-home" aria-selected="true">General</a></li>
+                                <li class="nav-item"><a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#tab-Payment" role="tab" aria-controls="tab-Payment" aria-selected="false">Payment</a></li>
+                                <li class="nav-item"><a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#tab-Notes" role="tab" aria-controls="tab-Notes" aria-selected="false">Notes</a></li>
+                                <li class="nav-item"><a class="nav-link" id="messages-tab" data-bs-toggle="tab" href="#tab-Messages" role="tab" aria-controls="tab-Messages" aria-selected="false">Messages</a></li>
+                            </ul>
+                            <div class="tab-content border-x border-bottom p-3" id="myTabContent">
+                                <div class="tab-pane fade show active" id="tab-home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div>
+                                        @if (string.IsNullOrWhiteSpace(rent["country_code"].ToString()) == false)
+                                        {
+                                            <img src="/assets/images/icons/flags/@(rent["country_code"]).svg" style="height: 15px; margin-right: 10px;" loading="lazy" />
+                                        }
+                                        <strong> @rent["contact_name"] </strong>
+                                        <div class="mb-1">tel.: @rent["contact_tel"] <br /> mail: @rent["contact_email"]</div>
+                                    </div>
+
+                                    <div class="mb-1 mt-3">Created:</div>
+                                    <div>
+                                        @System.DateTime.Parse(rent["created"].ToString() ?? "").ToString("dd.MM.yyyy")
+                                    </div>
+                                    <div class="notification-time mb-0">
+                                        @System.DateTime.Parse(rent["created"].ToString() ?? "").ToString("HH:mm") h
+                                    </div>
+
+                                    <div class="mb-1 mt-3">From - To:</div>
+                                    <div>
+                                        @System.DateTime.Parse(rent["from_date"].ToString() ?? "").ToString("dd.MM.yy") -  @System.DateTime.Parse(rent["until_date"].ToString() ?? "").ToString("dd.MM.yy")
+                                    </div>
+                                    <div class="notification-time mb-0"> @rent["days"] nights</div>
+
+                                    <div class="notification-time mb-0"> @rent["rent_adults"] guest </div>
+
+                                    <div class="mb-1 mt-3">Object:</div>
+
+                                    <div class="mb-0"> @rent["object_name"]</div>
+
+                                    <div class="notification-time mb-0">
+                                        @rent["user_name"] (@rent["user_id"])
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane fade" id="tab-Payment" role="tabpanel" aria-labelledby="profile-tab">
+
+                                    <div class="table-responsive scrollbar">
+                                        <table class="table table-hover  overflow-hidden">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Pay</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Subject</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col">Price(local)</th>
+                                                    <th scope="col">Rent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (payments != null)
+                                                {
+                                                    foreach (System.Data.DataRow r in payments.Rows)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @r["payment_type"]
+                                                            </td>
+                                                            <td>
+                                                                Pay
+                                                            </td>
+                                                            <td>
+                                                                @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yyyy")
+                                                            </td>
+                                                            <td>
+                                                                @r["subject"]
+                                                            </td>
+                                                            <td>
+                                                                Type
+                                                            </td>
+                                                            <td>
+                                                                @string.Format("{0:#.00}", Convert.ToDecimal(r["price"].ToString()) ) @r["currency_label"]
+
+                                                            </td>
+                                                            <td>
+                                                                @string.Format("{0:#.00}", Convert.ToDecimal(r["price_total"].ToString()) ) @r["code2"]
+                                                            </td>
+                                                            <td>
+                                                                @r["rent_id"]
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane fade" id="tab-Notes" role="tabpanel" aria-labelledby="contact-tab">
+                                    @rent["note"]
+                                </div>
+
+                                <div class="tab-pane fade" id="tab-Messages" role="tabpanel" aria-labelledby="messages-tab">
+
+                                    <div class="tab-content card-chat-content bg-100">
+                                        <div class="tab-pane card-chat-pane active" id="chat-0" role="tabpanel" aria-labelledby="chat-link-0">
+                                            <div class="chat-content-body" style="display: inherit;">
+                                                <div class=" scrollbar">
+
+                                                    @if (messages != null)
+                                                    {
+                                                        foreach (System.Data.DataRow r in messages.Rows)
+                                                        {
+                                                            if (r["creator"].ToString() == "user")
+                                                            {
+                                                                <div class="d-flex p-3">
+                                                                    <div class="avatar avatar-l me-2">
+                                                                        <img class="rounded-circle" src="https://api.zaggy.net/workers/picture/ @r["worker_id"]" alt="" />
+                                                                    </div>
+                                                                    <div class="flex-1">
+                                                                        <div class="w-xxl-75">
+                                                                            <div class="hover-actions-trigger d-flex align-items-center">
+                                                                                <div class="chat-message bg-200 text-1000 p-2 rounded-2">@r["message"] </div>
+                                                                            </div>
+                                                                            <div class="text-400 fs--2">
+                                                                                <span>@r["created"]</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="d-flex p-3">
+                                                                    <div class="flex-1 d-flex justify-content-end">
+
+                                                                        <div class="w-100 w-xxl-75">
+                                                                            <div class="hover-actions-trigger d-flex flex-end-center">
+
+                                                                                <div class="bg-primary text-white p-2 rounded-2 chat-message light">
+                                                                                    <p class="mb-0">@r["message"] </p>
+                                                                                </div>
+                                                                                <div class="avatar avatar-l m-3 me-2">
+                                                                                    <img class="rounded-circle" src="/assets/img/no_user.jpg" alt="" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="text-400 fs--2 text-end">
+                                                                                @r["created"]
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

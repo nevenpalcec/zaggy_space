@@ -1,0 +1,185 @@
+﻿@page "/"
+@namespace admin.Pages
+@using Microsoft.AspNetCore.Localization
+@using System.Globalization
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+
+    this.HttpContext.Response.Cookies.Append(
+    CookieRequestCultureProvider.DefaultCookieName,
+    CookieRequestCultureProvider.MakeCookieValue(
+        new RequestCulture(
+            CultureInfo.CurrentCulture,
+            CultureInfo.CurrentUICulture)));
+
+    bl.sys.ip.ip_remote = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+    bl.sys.ip.ip_local = Request.HttpContext.Connection.LocalIpAddress.ToString();
+
+}
+
+<ErrorBoundary>
+    <ChildContent>
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
+    </ChildContent>
+    <ErrorContent>
+       @* <p class="errorUI">Nothing to see here right now. Sorry!</p>*@
+    </ErrorContent>
+</ErrorBoundary>
+
+<script>
+
+    let theEditor;
+    function ClassicEditorCreate(html, id, h) {
+
+        CKEDITOR.replace(id);
+        CKEDITOR.config.allowedContent = true;
+        CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+        CKEDITOR.config.height = h;
+        CKEDITOR.config.FillEmptyBlocks = false;
+        CKEDITOR.instances[id].setData(html);
+    }
+
+    function ClassicEditorReadOnly(html, id, h) {
+
+        CKEDITOR.replace(id, { toolbar: [], readOnly: true });
+        CKEDITOR.config.allowedContent = true;
+        CKEDITOR.config.height = h;
+        CKEDITOR.instances[id].setData(html);
+    }
+
+    function ClassicEditorGet(id) {
+        var html = CKEDITOR.instances[id].getData();
+        //alert(html);
+
+        return html
+    }
+
+</script>
+
+<script>
+
+    async function downloadFileFromStream(fileName, contentStreamReference) {
+        const arrayBuffer = await contentStreamReference.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+        const url = URL.createObjectURL(blob);
+
+        triggerFileDownload(fileName, url);
+        URL.revokeObjectURL(url);
+    }
+
+    function BlazorDownloadFile(filename, content) {
+        // thanks to Geral Barre : https://www.meziantou.net/generating-and-downloading-a-file-in-a-blazor-webassembly-application.htm
+
+        // Create the URL
+        const file = new File([content], filename, { type: "application/octet-stream" });
+        const exportUrl = URL.createObjectURL(file);
+
+        // Create the <a> element and click on it
+        const a = document.createElement("a");
+        document.body.appendChild(a);
+        a.href = exportUrl;
+        a.download = filename;
+        a.target = "_self";
+        a.click();
+
+        // We don't need to keep the object url, let's release the memory
+        // On Safari it seems you need to comment this line... (please let me know if you know why)
+        URL.revokeObjectURL(exportUrl);
+    }
+
+    function triggerFileDownload(fileName, url) {
+        const anchorElement = document.createElement('a');
+        anchorElement.href = url;
+        anchorElement.download = fileName ?? '';
+        anchorElement.click();
+        anchorElement.remove();
+    }
+
+    function jschoice(el) {
+
+        const element = document.getElementById(el)
+        const choices = new Choices(element);
+    }
+
+    function OnScrollEvent() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // flatpicker ućitava js
+    var ui = {};
+    ui.test = '3242342424';
+
+    ui.flatpicker = function (id) {
+        flatpickr(id);
+    }
+
+    ui.flatpicker_range = function (id) {
+        flatpickr(id, {
+            mode: "range"
+        });
+    }
+
+    // citanje cookie-a
+    window.blazorExtensions = {
+
+        WriteCookie: function (name, value, days) {
+
+            var expires;
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toGMTString();
+            }
+            else {
+                expires = "";
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+    }
+
+    function ReadCookie(name) {
+        return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+    }
+
+    function copyClipboard(eID) {
+
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", eID);
+        /* Get the text field */
+        //var copyText = document.getElementById(eID).innerHTML;
+        /* Select the text field */
+        //copyText.select();
+        /* Copy the text inside the text field */
+        //document.execCommand("copy");
+    }
+
+    function addTooltips() {
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'hover',
+            html: true
+        });
+        $('[data-toggle="tooltip"]').on('mouseleave', function () {
+            $(this).tooltip('hide');
+        });
+        $('[data-toggle="tooltip"]').on('click', function () {
+            $(this).tooltip('dispose');
+        });
+    }
+
+    let clicked = true;
+
+    function map_full_click() {
+        let media_card = document.getElementById("map_wrapper");
+        if (clicked) {
+            media_card.classList.add("map_full_screen");
+        } else {
+            media_card.classList.remove("map_full_screen");
+        }
+        clicked = !clicked;
+    }
+    
+</script>
+

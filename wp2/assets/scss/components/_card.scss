@@ -1,0 +1,357 @@
+.card {
+    z-index: 0 !important;
+    border-radius: 0 !important;
+
+    a {
+        position: relative;
+
+        .card-img {
+            position: relative;
+            height: 12rem;
+            width: 100%;
+            .img-fluid {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: flex;
+                margin: auto;
+            }
+        }
+
+        .card-stars {
+            position: absolute;
+            top: .2rem;
+            left: .5rem;
+            font-size: .7rem;
+            color: $color-star;
+
+            i {
+                text-shadow: 0 1px 3px rgba($bg-secondary, .5);
+            }
+        }
+
+        .card-notice {
+            top: .2rem;
+            background-color: $bg-tertiary;
+            color: $text-secondary;
+        }
+
+        .card-discount {
+            position: absolute;
+            top: 1.4rem;
+            background-color: $bg-primary;
+            color: $text-primary;
+        }
+
+        .card-notice, .card-discount {
+            position: absolute;
+            right: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 0 .3rem;
+            font-size: .7rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-rating {
+            position: absolute;
+            bottom: .2rem;
+            right: .2rem;
+            font-size: .9rem;
+            padding: 0 .3rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: $bg-tertiary;
+            color: $text-secondary;
+            font-weight: bold;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .card-body {
+        padding-top: .5rem;
+
+        .card-body-title {
+            @include underline;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-body-info {
+            padding: 1rem 0;
+
+            .card-body-info-item {
+                font-size: 1rem;
+
+                strong {
+                    font-weight: normal;
+                    padding-right: .5rem;
+                }
+
+                i, strong {
+                    opacity: .6;
+                }
+
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+.card.rent-details {
+    color: $text-secondary;
+    position: sticky;
+    top: 20px;
+    border: unset !important;
+
+    .wrapper {
+        background-color: $bg-secondary;
+
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: .3rem;
+            background-color: $bg-tertiary;
+        }
+    }
+
+    .card-main {
+        padding: 1.15rem;
+        padding-bottom: .5rem;
+        position: relative;
+
+        .card-main-stars {
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            font-size: .7rem;
+            transform: translate(-50%,0);
+            margin: 0 auto -12px auto;
+            display: table;
+            background-color: $bg-secondary;
+            padding: .2rem .5rem;
+            z-index: 1;
+            color: rgba(255,255,255,.5);
+
+            i {
+                color: $color-star;
+                padding: .1rem;
+            }
+        }
+
+        .card-main-value {
+            font-size: 1.6rem;
+            font-weight: 500;
+            text-align: center;
+            padding: .3rem 0;
+        }
+
+        .card-main-wrapper {
+            hr {
+                margin: .8rem 0;
+            }
+        }
+
+        .card-main-p {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            font-size: .8rem;
+            transform: translate(-50%,0);
+            margin: 0 auto -12px auto;
+            display: table;
+            background-color: $bg-secondary;
+            padding: .2rem .5rem;
+            z-index: 1;
+            color: rgba(255,255,255,.5);
+        }
+    }
+
+    hr {
+        border-top: 1px solid rgba(255,255,255, .2);
+        margin: 0;
+    }
+
+    .card-body {
+        .card-body-item {
+            padding: .3rem 0;
+        }
+
+        .card-body-item-label {
+            padding-right: .4rem;
+        }
+
+        .card-body-item-value {
+            align-self: center;
+        }
+
+        .card-body-item.calendar {
+            position: relative;
+
+            i {
+                position: absolute;
+                top: 1rem;
+                right: .7rem;
+                color: $text-primary;
+            }
+        }
+
+        .card-body-item-label {
+            font-size: 1rem;
+        }
+
+        .total {
+            .card-body-item-label, .card-body-item-value {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.blog-details-cards, .blog-lists-cards {
+    a {
+        display: block;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .card {
+        .card-img {
+            img {
+                width: 100%;
+                object-fit: cover;
+                height: 13rem;
+            }
+        }
+
+        .card-body {
+            color: $text-primary;
+            font-weight: 500;
+        }
+    }
+}
+
+.blog-lists-cards.main {
+    .card-img, .card-content {
+        flex: 0 0 50%;
+
+        @media screen and (max-width: 991px) {
+            flex: 0 0 100%;
+        }
+    }
+
+    .card-img {
+        img {
+            min-height: 18rem;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .card-content {
+        padding: 1rem;
+        color: $text-primary;
+
+        .card-content-post {
+            font-size: .8rem;
+        }
+
+        .card-content-label {
+            font-size: 1.2rem;
+            padding: .5rem 0;
+            font-weight: 500;
+        }
+
+        .card-content-text {
+            line-height: normal;
+            font-size: .9rem;
+            padding-bottom: 1.5rem;
+        }
+    }
+}
+
+.card_loading {
+    cursor: wait;
+    backdrop-filter: blur(2px);
+
+    &:before {
+        content: "";
+        background-color: $bg_secondary;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        opacity: .5;
+    }
+}
+
+.card_secondary_underline {
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 0.3rem;
+        background-color: #20baba;
+    }
+}
+
+.card_testimonial {
+    .card_testimonial_comment {
+        background-color: rgba(255,255,255,.1);
+    }
+}
+
+.card_excursion {
+    &:hover {
+        border: 1px solid rgb(32, 186, 186) !important;
+        background: rgba(32, 186, 186, .05);
+    }
+
+    .card_excursion_img {
+        height: 14rem;
+        width: 16rem;
+
+        @media screen and (max-width: 767px) {
+            width: 100%;
+        }
+    }
+}
+
+.hotel_object_card {
+    .hotel_object_card_img {
+        height: 7.75rem;
+        width: 12rem;
+
+        @media screen and (max-width: 767px) {
+            width: 100%;
+            height: 12rem;
+        }
+    }
+
+    .hotel_object_card_wrapper_persons {
+        width: 4rem;
+        min-width: 4rem;
+    }
+
+    .hotel_object_card_features {
+        .border {
+            width: 7rem;
+        }
+    }
+}

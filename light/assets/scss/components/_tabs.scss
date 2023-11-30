@@ -1,0 +1,191 @@
+.view_modal {
+    .modal_header {
+        .nav-tabs {
+            border-bottom: unset;
+        }
+        li {
+            position: relative;
+            a {
+                padding: .7rem 1.5rem;
+                font-weight: 500;
+                font-size: 1.3rem;
+                color: $color-white;
+                opacity: .5;
+                @include hover;
+                display: block;
+                &:hover {
+                    opacity: 1;
+                }
+            }
+            .active {
+                opacity: 1;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 1;
+                    border-left: .6rem solid transparent;
+                    border-right: .6rem solid transparent;
+                    border-bottom: 0.6rem solid $color-white;
+                }
+            }
+        }
+    }
+    .modal_tabs {
+        .nav-tabs {
+            li {
+                a {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+                    justify-content: center;
+                    padding: .5rem 0;
+                    text-decoration: none;
+                    @include hover;
+                    color: $color-black;
+                    @media screen and (max-width: 767px) {
+                        flex-direction: column;
+                        i {
+                            font-size: 1.2rem;
+                            padding: 0 0 .3rem !important;
+                        }
+                        span {
+                            padding-top: .4rem;
+                            text-transform: uppercase;
+                            font-size: .8rem;
+                        }
+                    }
+                    &:hover {
+                        background-color: rgba($color-silver02, .5);
+                    }
+                }
+            }
+            .active {
+                background-color: rgba($color-silver02, .5);
+                border-radius: .45rem .45rem 0 0;
+                position: relative;
+                &:before {
+                    content: "";
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    height: 2px;
+                    background-color: $color-secondary;
+                }
+            }
+        }
+    }
+}
+
+.tab_pills {
+    margin-bottom: 1rem;
+
+    .active {
+        background-color: rgba(206, 212, 218, 0.5);
+        border-radius: .45rem .45rem 0 0;
+        position: relative;
+
+        &:before {
+            content: "";
+            width: 100%;
+            position: absolute;
+            top: 100% !important;
+            left: 0 !important;
+            bottom: 0 !important;
+            height: 2px !important;
+            background-color: #1d3557 !important;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        padding: .3rem 0;
+        color: $color-black;
+        @include hover;
+        position: relative;
+
+        &:hover {
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 1px solid $color-secondary;
+                border-radius: 0.45rem 0.45rem 0 0;
+            }
+        }
+    }
+}
+.tab_pills_02 {
+    li {
+        flex: 0 0 50%;
+    }
+}
+.tab_pills_03 {
+    li {
+        flex: 0 0 33.3333%;
+    }
+}
+.tab_pills_04 {
+    li {
+        flex: 0 0 25%;
+    }
+}
+.tab_pills_05 {
+    li {
+        flex: 0 0 20%;
+    }
+}
+.tab_pills_06 {
+    flex-wrap: wrap;
+    li {
+        flex: 0 0 16.666%;
+        a {
+            padding-left: .5rem !important;
+            padding-right: .5rem !important;
+            white-space: nowrap;
+        }
+    }
+}
+
+.modal_tabs_option {
+    .modal_datepicker_option {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 2;
+        @include drop_shadow_md;
+    }
+    .modal_input_close {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: .6rem;
+        cursor: pointer;
+    }
+}
+#modal_add_new_reservation {
+    .modal_tabs {
+        li {
+            a {
+                font-size: .9rem;
+            }
+        }
+    }
+}
+.tab-content {
+    .add_payment {
+        .type {
+            background-color: $color-primary;
+            color: $color-white;
+            border-radius: .25rem;
+        }
+    }
+}

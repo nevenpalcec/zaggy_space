@@ -1,0 +1,46 @@
+﻿@code {
+    [Parameter] public System.Data.DataTable rents { get; set; }
+}
+
+<div class="card mb-3">
+    <div class="card-header bg-light">
+        <h5 class="mb-0 text-uppercase" id="account"> <i class="fab fa-connectdevelop"></i> &nbsp; @lng.l.Recent_Reservations </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive scrollbar">
+                    <table class="table table-hover pt-3">
+
+                        <thead style="border-bottom-width: 2px">
+                            <tr>
+
+                                <th scope="col">@lng.l.Reservation</th>
+                                <th scope="col">@lng.l.Guest</th>
+                                <th class="text-end" scope="col">@lng.l.Dates</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (System.Data.DataRow r in rents.Rows)
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="text-decoration-none link-dark" href="/reservations/@r["id_hash"]">@r["id"]</a>
+                                    </td>
+                                    <td>
+                                        <a class="text-decoration-none link-dark" href="/reservations/@r["id_hash"]">@r["contact_name"]</a>
+                                    </td>
+                                    <td class="text-end">
+                                        @System.DateTime.Parse(r["from_date"].ToString() ?? "").ToString("dd.MM.yy") -  @System.DateTime.Parse(r["until_date"].ToString() ?? "").ToString("dd.MM.yy")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

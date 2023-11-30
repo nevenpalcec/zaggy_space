@@ -1,0 +1,406 @@
+﻿@using System.Data;
+@using System.ComponentModel.DataAnnotations
+
+@code {
+
+    //System.Data.DataTable region_desc;
+
+
+    [Parameter]
+    public string region_id { get; set; }
+
+    [Parameter]
+    public System.Data.DataRow objItem { get; set; }
+
+    [Parameter]
+    public EventCallback<string> onSave { get; set; }
+
+    private Items ItemsModel = new Items();
+    bool save_success_item = false;
+
+    public class Items
+    {
+
+        public string code { get; set; }
+
+        [Required]
+        public string name { get; set; }
+
+        [Required]
+        public string slug { get; set; }
+
+        public string moto { get; set; }
+
+        [Required]
+        public string short_des { get; set; }
+
+        [Required]
+        public string long_des { get; set; }
+
+        [Required]
+        public int language_id { get; set; }
+
+        [Required]
+        public DateTime created { get; set; }
+
+
+        public string id { get; set; }
+        public string note { get; set; }
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        await Task.Run(async () =>
+       {
+
+           await Task.Delay(1);
+
+           objItem["id"] = ItemsModel.id;
+           objItem["language_id"] = ItemsModel.language_id;
+           objItem["code"] = ItemsModel.code;
+           objItem["name"] = ItemsModel.name;
+           objItem["slug"] = ItemsModel.slug;
+           objItem["moto"] = ItemsModel.moto;
+
+           objItem["short"] = ItemsModel.short_des;
+           objItem["long"] = ItemsModel.long_des;
+
+           objItem["created"] = ItemsModel.created;
+
+           //Console.WriteLine(obj["title"]);
+
+           bl.b2b_regions.b2b_regions_descriptions_put(ItemsModel.id, ItemsModel.language_id.ToString(), ItemsModel.name, ItemsModel.slug, ItemsModel.moto, ItemsModel.short_des, ItemsModel.long_des);
+
+           save_success_item = true;
+
+       });
+
+        await onSave.InvokeAsync("Hello from ChildComponent");
+    }
+
+
+    public async Task HandleInvalidSubmit()
+    {
+        await Task.Run(() =>
+        {
+            save_success_item = false;
+        });
+    }
+
+    void get_description(System.Data.DataRow row)
+    {
+        //objItem = row;
+
+        //ItemsModel.id = objItem["id"].ToString();
+        //ItemsModel.name = objItem["name"].ToString();
+        //ItemsModel.language_id = (int)objItem["language_id"];
+        //ItemsModel.short_des = objItem["short"].ToString();
+        //ItemsModel.long_des = objItem["long"].ToString();
+        //ItemsModel.created = DateTime.Parse(objItem["created"].ToString());
+        //ItemsModel.note = objItem["note"].ToString();
+
+        save_success_item = false;
+    }
+    protected override void OnParametersSet()
+    {
+        @if (objItem != null)
+        {
+            save_success_item = false;
+            ItemsModel.id = objItem["id"].ToString();
+            ItemsModel.name = objItem["name"].ToString();
+            ItemsModel.slug = objItem["slug"].ToString();
+            ItemsModel.moto = objItem["moto"].ToString();
+
+            ItemsModel.language_id = (int)objItem["language_id"];
+            ItemsModel.short_des = objItem["short"].ToString();
+            ItemsModel.long_des = objItem["long"].ToString();
+            ItemsModel.created = DateTime.Parse(objItem["created"].ToString());
+        }
+    }
+}
+
+
+@*edit items modal*@
+<div class="modal fade" id="edit-modal" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-2" role="dialog" aria-hidden="true">
+    <div class="modal-dialog mt-6" role="document">
+        <div class="modal-content position-relative">
+            <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" @onmouseup="@(() => onSave.InvokeAsync("Hello from ChildComponent"))" aria-label="@lng.l.Close"></button>
+            </div>
+
+            @if (objItem != null)
+            {
+                <EditForm id="_form" Model="ItemsModel" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                    <DataAnnotationsValidator />
+
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                            <h4 class="mb-1">@lng.l.Meta_data</h4>
+                        </div>
+                        <div class="p-4 pb-0">
+                            <form>
+                                <InputText @bind-Value="ItemsModel.id" hidden="true" disabled="true" />
+
+                                @*Title*@
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="item-title">
+                                        <span>@lng.l.Title</span><span class="fs--2 "><ValidationMessage For="@(() => ItemsModel.name)" /></span>
+                                    </label>
+                                    <InputText class="form-control" id="item-title" @bind-Value="@ItemsModel.name" placeholder="@lng.l.Title" />
+                                </div>
+
+                                @*Motto*@
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="meta-motto">
+                                        <span>Motto</span><span class="fs--2 "><ValidationMessage For="@(() => ItemsModel.moto)" /></span>
+                                    </label>
+                                    <InputText class="form-control" id="item-moto" @bind-Value="@ItemsModel.moto" placeholder="Motto" />
+                                </div>
+
+                                @*URL*@
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="meta-url">
+                                       
+                                        <span>URL</span><span class="fs--2 "><ValidationMessage For="@(() => ItemsModel.slug)" /></span>
+                                    </label>
+                                    <InputText class="form-control" id="item-Url" @bind-Value="@ItemsModel.slug" placeholder="URL slug" />
+                                </div>
+
+                                @*Language*@
+                                <div class="mb-3">
+                                    <label class="col-form-label" for="meta-language">@lng.l.Language</label>
+                                    <InputSelect @bind-Value="ItemsModel.language_id" class="form-select">
+                                        @foreach (System.Data.DataRow r in bl.languages.list().Rows)
+                                        {
+                                            if ((int)r["id"] == ItemsModel.language_id)
+                                            {
+                                            <option selected value="@r["id"]">@r["language"]</option>
+                                            }
+                                            else
+                                            {
+                                            <option value="@r["id"]">@r["language"]</option>
+                                            }
+                                        }
+                                </InputSelect>
+                            </div>
+
+                            @*Date*@
+                            <div class="mb-3">
+                                <label class="col-form-label" for="meta-language">
+                                    <span>@lng.l.Date</span><span class="fs--2 "><ValidationMessage For="@(() => ItemsModel.created)" /></span>
+                                </label>
+                                <InputDate class="form-control" id="item-date" @bind-Value="@ItemsModel.created" placeholder="@lng.l.Date" />
+                            </div>
+
+                            @*Short description*@
+                            <div class="mb-3">
+                                <label class="col-form-label" for="meta-language">
+                                    
+                                    <span>@lng.l.Short_description</span><span class="fs--2 "><ValidationMessage For="@(() => ItemsModel.short_des)" /></span>
+                                </label>
+
+                                <InputTextArea class="form-control" rows="4" id="item-price" @bind-Value="@ItemsModel.short_des" placeholder="@lng.l.Description" />
+                            </div>
+
+                            @*Main description*@
+                            <div class="mb-3">
+                                <label class="col-form-label" for="meta-language">
+                                    <span>@lng.l.Main_description</span><span class="fs--2 "><ValidationMessage For="@(() => ItemsModel.long_des)" /></span>
+                                </label>
+                                <InputTextArea class="form-control " rows="6" id="item-price" @bind-Value="@ItemsModel.long_des" placeholder="@lng.l.Description" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+               @* <div class="modal-body p-4">
+                    <div class=" row">
+                        @if (save_success_item)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    Successfully updated!
+                                </div>
+                            }
+
+                            <InputText @bind-Value="ItemsModel.id" hidden="true" disabled="true" />
+
+                            <table class="table m-0 p-2">
+                                <tr>
+                                    <td class="p-0 ">
+                                        <div class="m-0 p-0">
+
+                                            <label class="form-label" for="item-title">Title</label>
+                                            <InputText class="form-control" id="item-title" @bind-Value="@ItemsModel.name" placeholder="Name" />
+                                            <ValidationMessage For="@(() => ItemsModel.name)" />
+                                            <ValidationMessage For="@(() => ItemsModel.short_des)" />
+                                            <ValidationMessage For="@(() => ItemsModel.long_des)" />
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                            <ul class="nav nav-tabs pt-2" id="myTab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#tab-home" role="tab" aria-controls="tab-home" aria-selected="true">General</a></li>
+                                <li class="nav-item"><a class="nav-link" id="long-tab" data-bs-toggle="tab" href="#tab-long" role="tab" aria-controls="tab-long" aria-selected="false">Long</a></li>
+                                <li class="nav-item"><a class="nav-link" id="short-tab" data-bs-toggle="tab" href="#tab-short" role="tab" aria-controls="tab-short" aria-selected="false">Short</a></li>
+
+                            </ul>
+
+                            <div class="tab-content border-x border-bottom p-3" id="myTabContent">
+                                <div class="tab-pane fade show active" id="tab-home" role="tabpanel" aria-labelledby="home-tab">
+
+
+                                    <table class="table ">
+                                        <tr>
+                                            <td>
+                                                <div class="mb-0 ">
+                                                    <label class="form-label" for="item-quantity">Language</label><br>
+                                                    <InputSelect @bind-Value="ItemsModel.language_id">
+                                                        @foreach (System.Data.DataRow r in bl.languages.list().Rows)
+                                                        {
+                                                            if ((int)r["id"] == ItemsModel.language_id)
+                                                            {
+                                                            <option selected value="@r["id"]">@r["language"]</option>
+                                                            }
+                                                            else
+                                                            {
+                                                            <option value="@r["id"]">@r["language"]</option>
+                                                            }
+                                                        }
+                                                </InputSelect>
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            <div class="mb-0 col-6">
+
+                                                <label class="form-label" for="item-date">Date</label>
+                                                <div class="input-group">
+                                                    <InputDate class="form-control" id="item-date" @bind-Value="@ItemsModel.created" placeholder="Date" />
+                                                    <ValidationMessage For="@(() => ItemsModel.created)" />
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=2>
+                                            <div class="mb-0 col-12">
+
+                                                <label class="form-label" for="item-moto">Moto</label>
+                                                <div class="input-group">
+                                                    <InputText class="form-control" id="item-moto" @bind-Value="@ItemsModel.moto" placeholder="Moto" />
+                                                    <ValidationMessage For="@(() => ItemsModel.moto)" />
+
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan=2>
+                                            <div class="mb-0 col-12">
+
+                                                <label class="form-label" for="item-Url">Url</label>
+                                                <div class="input-group">
+                                                    <InputText class="form-control" id="item-Url" @bind-Value="@ItemsModel.slug" placeholder="Url" />
+                                                    <ValidationMessage For="@(() => ItemsModel.slug)" />
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                    </tr>
+
+                                </table>
+
+
+                            </div>
+
+                            <div class="tab-pane fade show " id="tab-long" role="tabpanel" aria-labelledby="long-tab">
+                                <table class="table ">
+
+                                    <tr>
+                                        <td colspan=3>
+                                            <div class="mb-0">
+                                                <label class="form-label" for="item-price">Description long</label>
+                                                <div class="input-group">
+                                                    <InputTextArea class="form-control w-25" rows="6" id="item-price" @bind-Value="@ItemsModel.long_des" placeholder="Description" />
+
+
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                            <div class="tab-pane fade show " id="tab-short" role="tabpanel" aria-labelledby="short-tab">
+                                <table class="table ">
+
+                                    <tr>
+                                        <td colspan=3>
+                                            <div class="mb-0">
+                                                <label class="form-label" for="item-price">Description short</label>
+                                                <div class="input-group">
+                                                    <InputTextArea class="form-control w-25" rows="4" id="item-price" @bind-Value="@ItemsModel.short_des" placeholder="Description" />
+
+
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>*@
+
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="text-start">
+                            <button class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                    @onmouseup="@(() => onSave.InvokeAsync("Hello from ChildComponent"))">
+                                @lng.l.Close
+                            </button>
+                        </div>
+
+                        <div>
+                            @if (save_success_item)
+                                {
+                                    <div class="alert alert-success" role="alert">
+                                        @lng.l.Successfully !
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="text-end me-1">
+                                <button class="btn btn-dark" form="_form" type="submit">@lng.l.Save</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </EditForm>
+
+            }
+        </div>
+    </div>
+</div>

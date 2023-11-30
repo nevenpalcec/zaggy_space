@@ -1,0 +1,150 @@
+﻿<!-- Modal add new room -->
+<div id="modal_add_amenities" class="view_modal hidden visuallyhidden ">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold" id="modal_add_beds_title"><i class="fas fa-plus pr-2"></i>Add new amenities</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Select amenities</label>
+                            <div id="modal_add_amenities_select_amenities" class="select">
+                                <button class="custom-select focus" id="modal_add_amenities_type_btn"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden" id="modal_add_amenities_list_type">
+                                    <li class="select_li" data-id="1">Example 01</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn_silver" data-dismiss="modal">Cancel</button>
+                <div>
+                    <button class="btn btn_primary" id="modal_add_amenities_add_btn" onclick="modal_add_amenities.bl.add_amenities();"><i class="fas fa-plus pr-2"></i>Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <template id="template_amenities">
+        <li class="select_li" data-id="${id}">${name}</li>
+    </template>
+</section>
+<script>
+
+    var modal_add_amenities = {};
+
+    modal_add_amenities.object_id = '';
+
+    // Load function
+    modal_add_amenities.load = () => {
+
+        // Global components
+
+        // BL components
+        modal_add_amenities.bl.close_modal("modal_add_amenities");
+        modal_add_amenities.bl.load_amenities();
+
+    };
+
+    // UI logic
+    modal_add_amenities.ui = new function () {
+
+    };
+
+    // BL logic
+    modal_add_amenities.bl = new function () {
+
+        // CLose modal
+        this.close_modal = function (id) {
+            
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        // save changes
+        this.add_amenities = async () => {
+            var id = modal_add_amenities_type_btn.dataset.id;
+            var url = `/api/objects_amenites/add/${modal_add_amenities.object_id}?amenity_id=${id}`;
+            
+            await ajax.get(url);
+            modal_add_amenities.bl.close_modal('modal_add_amenities');
+        }
+
+
+        this.load_amenities = async () => {
+
+            modal_add_amenities.object_id = page.get_id();
+
+            var url = '/api/objects_amenites/list_available/' + modal_add_amenities.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            modal_add_amenities_list_type.innerHTML = '';
+
+            for (var b of json_response) {
+                t = template_amenities.innerHTML;
+
+                t = t.replace('${name}', b['name']);
+                t = t.replace('${id}', b['id']);
+
+                js.html.insertAdjacentHTML('modal_add_amenities_list_type', t)
+            }
+
+            ui.custom_select("modal_add_amenities_select_amenities");
+        }
+
+    };
+
+    // On load
+    modal_add_amenities.load();
+
+</script>

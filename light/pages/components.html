@@ -1,0 +1,2341 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase"><i class="fas fa-tools pr-2"></i>Components</div>
+        </div>
+        <div class="align-self-center ml-auto">
+            <div class="view_sidebar d-flex text-dark font_6">
+                <div class="view_sidebar_item align-self-center position-relative">
+                    <i class="far fa-bell"></i>
+                    <span class="notice text-white">10</span>
+                </div>
+                <div class="view_sidebar_line_y sidebar_silver"></div>
+                <div class="view_user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Content -->
+        <div class="content components pt-3">
+
+            <!-- Pop up  -->
+            <div class="font_8 font_medium border-bottom my-4">Success pop up</div>
+            <div class="flex-wrap d-flex">
+                <button onclick="components.bl.pop_up_open('pop_up_need_help');" class="mr-3 pop_up_top_btn success btn btn_primary">Need help</button>
+                <button onclick="components.bl.pop_up_open('pop_up_success');" class="mr-3 pop_up_top_btn btn btn_primary">Success!</button>
+                <button onclick="components.bl.pop_up_open('pop_up_warning');" class="mr-3 pop_up_top_btn btn btn_secondary">Warning!</button>
+                <button onclick="components.bl.pop_up_open('pop_up_remove');" class="mr-3 pop_up_top_btn btn btn_secondary">Remove</button>
+                <button onclick="components.bl.pop_up_open('pop_up_offer');" class="mr-3 pop_up_top_btn btn btn_secondary">Send</button>
+                <button onclick="components.bl.pop_up_open('pop_up_noshow');" class="mr-3 pop_up_top_btn btn btn_secondary">No show</button>
+                <button onclick="components.bl.pop_up_open('pop_up_confirm');" class="mr-3 pop_up_top_btn btn btn_secondary">Confirm</button>
+                <button onclick="components.bl.pop_up_open('pop_up_deactivate');" class="mr-3 pop_up_top_btn btn btn_secondary">Deactivate</button>
+                <button onclick="components.bl.pop_up_open('pop_up_invoice');" class="mr-3 pop_up_top_btn btn btn_secondary">Invoice</button>
+                <button onclick="components.bl.pop_up_open('pop_up_request');" class="mr-3 pop_up_top_btn btn btn_secondary">Request</button>
+                <button onclick="components.bl.pop_up_open('pop_up_saved');" class="mr-3 pop_up_top_btn btn btn_secondary">Saved</button>
+            </div>
+
+            <!-- Filter dropdown -->
+            <div class="font_8 font_medium border-bottom my-4">Filter dropdown</div>
+            <!--<div class="view_filter bg-white p-2 d-flex flex-wrap">-->
+            <!-- Icon, Name & Checkbox -->
+            <!--<div id="filter_dropdown_example" class="view_dropdown filter_tip d-lg-block d-none">
+        <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+            <div class="d-flex align-items-center">
+                <span class="mr-3 font_7"><i class="far fa-object-ungroup"></i></span>
+                <div class="dropdown_label mr-1">
+                    <div class="font_1 text-uppercase font_bold">Example</div>
+                    <div class="font_3 text-left">-</div>
+                </div>
+                <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </button>
+        <div class="dropdown_menu filter_min_width hidden">
+            <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                <div class="font_bold">Exaemple</div>
+                <div class="dropdown_close"><i class="fas fa-times"></i></div>
+            </div>
+            <hr class="m-0">
+            <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                <li class="dropdown_li" data-id="1">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon"><i class="far fa-thumbs-up"></i></div>
+                            <div class="align-self-center">Example01</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-id="2">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon"><i class="far fa-file-archive"></i></div>
+                            <div class="align-self-center">Example02</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-id="3">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon"><i class="far fa-trash-alt"></i></div>
+                            <div class="align-self-center">Example03</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+            </ul>
+            <hr class="m-0">
+            <div class="dropdown_footer d-flex">
+                <div class="dropdown_btn all w-100 text-center font_3">All</div>
+                <div class="dropdown_btn remove w-100 text-red text-center font_3">Remove</div>
+            </div>
+        </div>
+    </div>
+    <div class="filter_line_y"></div>-->
+            <!-- Name -->
+            <!--<div id="filter_dropdown_example02" class="view_dropdown dropdown d-md-block d-none">
+        <button class="btn btn_hover px-2 py-1 d-md-block d-none">
+            <div class="d-flex align-items-center">
+                <span class="mr-3 font_7"><i class="fas fa-cube"></i></span>
+                <div class="dropdown_label mr-1">
+                    <div class="font_1 text-uppercase font_bold">Example02</div>
+                    <div class="dropdown_name font_3 text-left">-</div>
+                </div>
+                <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </button>
+        <div class="dropdown_menu filter_min_width hidden">
+            <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                <div class="font_bold">Example02</div>
+                <div class="dropdown_close"><i class="fas fa-times"></i></div>
+            </div>
+            <hr class="m-0">
+            <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                <li class="dropdown_li" data-id="1">Example02</li>
+                <li class="dropdown_li" data-id="2">Example02</li>
+            </ul>
+        </div>
+    </div>
+    <div class="filter_line_y"></div>-->
+            <!-- Circle color, name & checkbox -->
+            <!--<div id="filter_status_example03" class="view_dropdown filter_status d-lg-block d-none">
+        <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+            <div class="d-flex align-items-center">
+                <span class="mr-3 font_7"><i class="fas fa-layer-group"></i></span>
+                <div class="dropdown_label mr-1">
+                    <div class="font_1 text-uppercase font_bold">Status</div>
+                    <div class="font_3 text-left">-</div>
+                </div>
+                <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </button>
+        <div class="dropdown_menu filter_min_width hidden">
+            <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                <div class="font_bold">Status</div>
+                <div class="dropdown_close"><i class="fas fa-times"></i></div>
+            </div>
+            <hr class="m-0">
+            <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                <li class="dropdown_li" data-status="1">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #DDDDDD;"></div>
+                            <div class="align-self-center">Owner</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="2">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #414f6e;"></div>
+                            <div class="align-self-center">Paid</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="3">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #e2a74d;"></div>
+                            <div class="align-self-center">OW pending</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="4">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #df6969;"></div>
+                            <div class="align-self-center">Deleted</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="5">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #389b7a;"></div>
+                            <div class="align-self-center">Check OUT</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="6">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #337e61;"></div>
+                            <div class="align-self-center">ADV Paid</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="7">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #287533;"></div>
+                            <div class="align-self-center">Guest confirmed</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="8">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #942121;"></div>
+                            <div class="align-self-center">Blocked</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="9">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #6ae488;"></div>
+                            <div class="align-self-center">Confirm</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="10">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #c255b3;"></div>
+                            <div class="align-self-center">ORVAS VHC</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="11">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #c27e3f;"></div>
+                            <div class="align-self-center">Waiting</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="12">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #4dc4e2;"></div>
+                            <div class="align-self-center">Check IN</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+                <li class="dropdown_li" data-status="13">
+                    <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-item-center">
+                            <div class="icon" style="background-color: #f0ee94;"></div>
+                            <div class="align-self-center">Offer</div>
+                        </div>
+                        <input type="checkbox">
+                        <span class="check check_md"></span>
+                    </label>
+                </li>
+            </ul>
+            <hr class="m-0">
+            <div class="dropdown_footer d-flex">
+                <div class="dropdown_btn all w-100 text-center font_3">All</div>
+                <div class="dropdown_btn remove w-100 text-red text-center font_3">Remove</div>
+            </div>
+        </div>
+    </div>
+    <div class="filter_line_y"></div>-->
+            <!-- Links -->
+            <!--<a href="#" class="filter_link active"><i class="far fa-file-alt pr-lg-2"></i><span class="d-none d-lg-flex">Example</span></a>
+    <div class="filter_line_y"></div>
+    <a href="#" class="filter_link"><i class="far fa-images pr-lg-2"></i><span class="d-none d-lg-flex">Example</span></a>
+    <div class="filter_line_y"></div>
+    <a href="#" class="filter_link"><i class="fas fa-coins pr-lg-2"></i><span class="d-none d-lg-flex">Example</span></a>-->
+            <!-- Dropdown -->
+            <!--<div id="example_filter_dropdown" class="view_dropdown toggle ml-auto" style="height: unset;">
+            <button class="btn btn_hover">
+                <div class="d-flex align-items-center">
+                    <span class="font_6"><i class="fas fa-cog"></i></span>
+                    <span class="font_1 ml-2"><i class="fas fa-chevron-down"></i></span>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Reports</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fab fa-connectdevelop"></i></div>
+                                <div class="align-self-center">Rent list</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-user"></i></div>
+                                <div class="align-self-center">Owner</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Housekeeping</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Hotel housekeeping</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-csv"></i></div>
+                                <div class="align-self-center">Export CSV/XLS</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-word"></i></div>
+                                <div class="align-self-center">Word</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                                <div class="align-self-center">Payment</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-users"></i></div>
+                                <div class="align-self-center">Payment</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+            <!-- Modals -->
+            <div class="font_8 font_medium border-bottom my-4">Modals</div>
+
+            <!-- Modal price & per night -->
+            <div class="font_8 font_medium border-bottom my-4">Modals</div>
+            <div class="">
+                <div style="height: 7rem;">
+                    <!-- Modal price per Night -->
+                    <div class="modal_price_perNight">
+                        <div class="d-flex">
+                            <div class="mr-3">
+                                <label class="mb-1 font_3">Price</label>
+                                <div class="input-group">
+                                    <input 
+                                           class="form-control pr-5 focus font_7" style="max-width: 10rem;">
+                                    <div class="position-relative">
+                                        <span class="value">EUR</span>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <label class="input-group-text cursor_point"><i class="fas fa-check"></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="mb-1 font_3">min stay</label>
+                                <div class="input-group input_remove_number_arrow">
+                                    <input type="number" class="form-control pr-4 focus font_7" style="max-width: 7rem;">
+                                    <div class="position-relative">
+                                        <span class="night"><i class="fas fa-moon"></i></span>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <label class="input-group-text cursor_point"><i class="fas fa-check"></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="btn btn_secondary" onclick="components.ui.modal_open('modal_default')">Open Modal default pop up</button>
+                <!-- Modal default -->
+                <div id="modal_default" class="modal_pop_up visuallyhidden hidden">
+                    <div class="modal_wrapper position-relative">
+                        <div class="modal_header border-bottom p-2 d-flex justify-content-between">
+                            <div><i class="fas fa-tags pr-2"></i>Title</div>
+                            <div class="modal_close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="font_6 font_bold text-uppercase pb-2 border-bottom">Apartment 01</div>
+                            <div class="d-flex justify-content-between pt-2">
+
+                                <!-- Calendar from -->
+                                <div class="form-group pr-2 w-100">
+                                    <label class="mb-1">From</label>
+                                    <input id="components_input_calendar_from" type="text"
+                                           class="calendar_label input_calendar_from form-control focus" readonly />
+                                    <div class="position-relative">
+                                        <div id="components_inside_default_calendar_from"
+                                             class="inside_calendar inside_calendar_from hidden" style="left: 0;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Calendar until -->
+                                <div class="form-group pl-2 w-100">
+                                    <label class="mb-1">Until</label>
+                                    <input id="components_input_calendar_until" type="text"
+                                           class="calendar_label input_calendar_until form-control focus w-100" readonly />
+                                    <div class="position-relative">
+                                        <div id="components_inside_default_calendar_until"
+                                             class="inside_calendar inside_calendar_until hidden" style="right: 0;"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="modal_default_counter_price form-group mr-2">
+                                    <label class="mb-1">Price: EUR</label>
+                                    <input class="form-control focus font_7" value="20" />
+                                    <span class="modal_arrow up"><i class="fas fa-angle-up"></i></span>
+                                    <span class="modal_arrow down"><i class="fas fa-angle-down"></i></span>
+                                </div>
+                                <div class="modal_default_counter_min_stay form-group ml-2">
+                                    <label class="mb-1">Min stay</label>
+                                    <input class="form-control focus font_7" value="4" />
+                                    <span class="modal_arrow up"><i class="fas fa-angle-up"></i></span>
+                                    <span class="modal_arrow down"><i class="fas fa-angle-down"></i></span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="pr-2 w-100">
+                                    <button class="btn btn_silver w-100" data-dismiss='modal'>Back</button>
+                                </div>
+                                <div class="pl-2 w-100">
+                                    <button class="btn btn_secondary w-100" data-dismiss='modal'>
+                                        <i class="fas fa-save pr-2"></i>Save
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="modal-footer justify-content-start">
+                            <div class="m-0">Možete koristiti + ili %</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn_secondary" onclick="components.ui.modal_open('modal_price')">Open Modal price pop up</button>
+                <!-- Modal price -->
+                <div id="modal_price" class="modal_pop_up visuallyhidden hidden">
+                    <div class="modal_wrapper position-relative">
+                        <div class="modal_header border-bottom p-2 d-flex justify-content-between">
+                            <div><i class="fas fa-tags pr-2"></i>Title</div>
+                            <div class="modal_close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="font_6 font_bold text-uppercase pb-2 border-bottom">Apartment 01</div>
+                            <div class="d-flex justify-content-between pt-2">
+
+                                <!-- Calendar from -->
+                                <div class="form-group pr-2 w-100">
+                                    <label class="mb-1">From</label>
+                                    <input id="components_input_calendar_from" type="text"
+                                           class="calendar_label input_calendar_from form-control focus" readonly />
+                                    <div class="position-relative">
+                                        <div id="components_inside_price_calendar_from"
+                                             class="inside_calendar inside_calendar_from hidden" style="left: 0;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Calendar until -->
+                                <div class="form-group pl-2 w-100">
+                                    <label class="mb-1">Until</label>
+                                    <input id="components_input_calendar_until" type="text"
+                                           class="calendar_label input_calendar_until form-control focus w-100" readonly />
+                                    <div class="position-relative">
+                                        <div id="components_inside_price_calendar_until"
+                                             class="inside_calendar inside_calendar_until hidden" style="right: 0;"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal_price_counter_price form-group">
+                                <label class="mb-1">Price: EUR</label>
+                                <input class="form-control focus font_7" value="20" />
+                                <span class="modal_arrow up"><i class="fas fa-angle-up"></i></span>
+                                <span class="modal_arrow down"><i class="fas fa-angle-down"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="pr-2 w-100">
+                                    <button class="btn btn_silver w-100" data-dismiss='modal'>Back</button>
+                                </div>
+                                <div class="pl-2 w-100">
+                                    <button class="btn btn_secondary w-100" data-dismiss='modal'>
+                                        <i class="fas fa-save pr-2"></i>Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal  -->
+            <div class="font_8 font_medium border-bottom my-4">Modal put rent </div>
+
+            <div>
+                <!-- Modal -->
+                <div class="position-relative w-100" style="height: 22rem;">
+
+
+
+                    <div class="modal_put_rent">
+                        <div class="modal_put_rent_header position-relative">
+                            <div class="text-center font_6 mb-3 px-4">Name of apartment sooo loong nameeeee</div>
+                            <span class="modal_put_rent_close" data-dismiss='modal'><i class="fas fa-times"></i></span>
+                        </div>
+                        <div class="modal_put_rent_body">
+
+                            <!-- Date -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="modal_put_rent_date_from" class="form-group">
+                                        <label class="mb-1 font_3">Date from:</label>
+                                        <input type="text" id="modal_put_rent_date_from_input"
+                                               class="form-control focus">
+                                        <div id="modal_put_rent_date_from_calendar" class="modal_pop_up hidden"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="modal_put_rent_date_until" class="form-group">
+                                        <label class="mb-1 font_3">Date until:</label>
+                                        <input type="text" id="modal_put_rent_date_until" class="form-control focus">
+                                        <div id="modal_put_rent_date_until_calendar" class="modal_pop_up hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="border-top py-2"></div>
+
+                            <!-- Price -->
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="text-uppercase font_medium mr-auto">Price</div>
+                                <div id="" class="input-group input_remove_number_arrow" style="width: 130px;">
+                                    <div class="input-group-prepend cursor_point">
+                                        <span class="input-group-text"><i class="fas fa-euro-sign"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control focus text-center" value="1">
+                                </div>
+                                <button class="btn btn_secondary ml-2"><i class="fas fa-check"></i></button>
+                            </div>
+
+                            <!-- Nights -->
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="text-uppercase font_medium mr-auto">Nights</div>
+                                <div id="" class="input-group input_remove_number_arrow" style="width: 130px;">
+                                    <div class="input-group-prepend cursor_point">
+                                        <span class="input-group-text"><i class="fas fa-moon"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control focus text-center" value="1">
+                                </div>
+                                <button class="btn btn_secondary ml-2"><i class="fas fa-check"></i></button>
+                            </div>
+
+                            <!-- Enable/Disable -->
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="text-uppercase font_medium flex-grow-1">Enable / Disable</div>
+                                <div style="width: 130px;">
+                                    <div class="yes_or_no font_5">
+                                        <span onclick="components.ui.yes_or_no(this)" class="yes py-1 px-2">Yes</span>
+                                        <span onclick="components.ui.yes_or_no(this)" class="no py-1 px-2">No</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn_secondary ml-2"><i class="fas fa-check"></i></button>
+                            </div>
+
+                            <!-- Check in -->
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="text-uppercase font_medium flex-grow-1">Check in</div>
+                                <div style="width: 130px;">
+                                    <div class="yes_or_no font_5">
+                                        <span onclick="components.ui.yes_or_no(this)" class="yes py-1 px-2">Yes</span>
+                                        <span onclick="components.ui.yes_or_no(this)" class="no py-1 px-2">No</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn_secondary ml-2"><i class="fas fa-check"></i></button>
+                            </div>
+
+                            <!-- Check out -->
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="text-uppercase font_medium flex-grow-1">Check out</div>
+                                <div style="width: 130px;">
+                                    <div class="yes_or_no font_5">
+                                        <span onclick="components.ui.yes_or_no(this)" class="yes py-1 px-2">Yes</span>
+                                        <span onclick="components.ui.yes_or_no(this)" class="no py-1 px-2">No</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn_secondary ml-2"><i class="fas fa-check"></i></button>
+                            </div>
+                        </div>
+                        <div class="border-top py-2"></div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn_secondary" data-dismiss='modal'>Close</button>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <!-- Select -->
+            <div class="font_8 font_medium border-bottom my-4">Select</div>
+            <!--<div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="mb-1">Example</label>
+                <div id="example_select" class="select">
+                    <button class="custom-select focus"></button>
+                    <i class="fas fa-angle-down"></i>
+                    <ul class="select_ul hidden">
+                        <li class="select_li" data-id="1">Example 01</li>
+                        <li class="select_li" data-id="2">Example 02</li>
+                        <li class="select_li" data-id="3">Example 03</li>
+                        <li class="select_li" data-id="4">Example 04</li>
+                        <li class="select_li" data-id="5">Example 05</li>
+                        <li class="select_li" data-id="6">Example 06</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="mb-1">Example with countries</label>
+                <div id="example_select_countries" class="select">
+                    <button class="custom-select focus"></button>
+                    <i class="fas fa-angle-down"></i>
+                    <ul class="select_ul hidden">
+                        <li class="select_li" data-id="1"><span><img src="./assets/images/icons/flags/ad.svg" alt=""></span>Example</li>
+                        <li class="select_li" data-id="2"><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</li>
+                        <li class="select_li" data-id="3"><span><img src="./assets/images/icons/flags/es.svg" alt=""></span>Spain</li>
+                        <li class="select_li" data-id="4"><span><img src="./assets/images/icons/flags/fi.svg" alt=""></span>Finska</li>
+                        <li class="select_li" data-id="5"><span><img src="./assets/images/icons/flags/fr.svg" alt=""></span>France</li>
+                        <li class="select_li" data-id="6"><span><img src="./assets/images/icons/flags/hr.svg" alt=""></span>Croatia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="mb-1">Example - search</label>
+                <div id="example_select_search" class="select">
+                    <input type="text" class="form-control focus">
+                    <span class="select_label"></span>
+                    <i class="fas fa-angle-down"></i>
+                    <div class="clean hidden"><i class="fas fa-times"></i></div>
+                    <ul class="select_ul hidden">
+                        <li class="select_li" data-id="1">Example</li>
+                        <li class="select_li" data-id="2">Axample 02</li>
+                        <li class="select_li" data-id="3">Cxample 03</li>
+                        <li class="select_li" data-id="4">Dxample 04</li>
+                        <li class="select_li" data-id="5">Fxample 05</li>
+                        <li class="select_li" data-id="6">Oxample 06</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="mb-1">Example with countries - search</label>
+                <div id="example_select_search_icon" class="select">
+                    <input type="text" class="form-control focus">
+                    <span class="select_label"></span>
+                    <i class="fas fa-angle-down"></i>
+                    <div class="clean hidden"><i class="fas fa-times"></i></div>
+                    <ul class="select_ul hidden">
+                        <li class="select_li" data-id="1"><span><img src="./assets/images/icons/flags/ad.svg" alt=""></span>Example</li>
+                        <li class="select_li" data-id="2"><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</li>
+                        <li class="select_li" data-id="3"><span><img src="./assets/images/icons/flags/es.svg" alt=""></span>Spain</li>
+                        <li class="select_li" data-id="4"><span><img src="./assets/images/icons/flags/fi.svg" alt=""></span>Finska</li>
+                        <li class="select_li" data-id="5"><span><img src="./assets/images/icons/flags/fr.svg" alt=""></span>France</li>
+                        <li class="select_li" data-id="6"><span><img src="./assets/images/icons/flags/hr.svg" alt=""></span>Croatia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>-->
+            <!-- Fonts -->
+            <!--<div class="font_8 font_medium border-bottom mb-4">Fonts</div>
+    <div class="font_1">Font 01</div>
+    <div class="font_2">Font 02</div>
+    <div class="font_3">Font 03</div>
+    <div class="font_4">Font 04 - normal size</div>
+    <div class="font_5">Font 05</div>
+    <div class="font_6">Font 06</div>
+    <div class="font_7">Font 07</div>
+    <div class="font_8">Font 08</div>
+    <div class="font_9">Font 09</div>
+    <div class="font_10">Font 10</div>
+    <div class="font_11">Font 11</div>
+    <div class="font_12">Font 12</div>
+    <div class="font_13">Font 13</div>-->
+            <!-- Font weight -->
+            <!--<div class="font_8 font_medium border-bottom my-4">Font weight</div>
+    <div class="font_extraLight">Font weight</div>
+    <div class="font_light">Font weight</div>
+    <div class="font_medium">Font weight</div>
+    <div class="font_bold">Font weight</div>-->
+            <!-- Color font -->
+            <div class="font_8 font_medium border-bottom my-4">Color font</div>
+            <!--<div class="yellow">Yellow</div>
+    <div class="red">Red</div>
+    <div class="green">Green</div>-->
+            <!-- Remark -->
+            <div class="font_8 font_medium border-bottom my-4">Remark</div>
+            <!--<div class="card_remark mb-2">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex in voluptatem, eius libero velit culpa delectus provident fugiat quaerat? Itaque!
+    </div>
+    <div class="card_remark remark_info mb-2">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex in voluptatem, eius libero velit culpa delectus provident fugiat quaerat? Itaque!
+    </div>
+    <div class="card_remark remark_red mb-2">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex in voluptatem, eius libero velit culpa delectus provident fugiat quaerat? Itaque!
+    </div>
+    <div class="card_remark remark_yellow">
+        Lorem i-->
+            psum dolor sit amet, consectetur adipisicing elit. Ex in voluptatem, eius libero velit culpa delectus provident fugiat quaerat? Itaque!
+        </div>
+
+        <!-- Toggle switch -->
+        <div class="font_8 font_medium border-bottom my-4">Toggle switch</div>
+        <div class="d-flex flex-wrap">
+            <div class="mr-4">
+
+                <!-- Switch md -->
+                <label class="switch switch_md">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+
+            </div>
+            <div class="mr-4">
+
+                <!-- Switch lg -->
+                <label class="switch switch_lg">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+
+            </div>
+            <div>
+
+                <!-- Switch xl -->
+                <label class="switch switch_xl">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+
+            </div>
+        </div>
+
+        <!-- Checkbox label -->
+        <div class="font_8 font_medium border-bottom my-4">Checkbox label</div>
+        <div class="d-flex flex-wrap">
+            <div class="mr-4">
+
+                <!-- Checkbox label md -->
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" checked>
+                        <div class="check check_md"></div>
+                        <div class="pl-2">Checkbox label</div>
+                    </div>
+                </label>
+
+            </div>
+            <div class="mr-4">
+
+                <!-- Checkbox label lg -->
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" checked>
+                        <div class="check check_lg"></div>
+                        <div class="pl-2">Checkbox label02</div>
+                    </div>
+                </label>
+
+            </div>
+            <div class="mr-4">
+
+                <!-- Checkbox label xl -->
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" checked>
+                        <div class="check check_xl"></div>
+                        <div class="pl-2">Checkbox label03</div>
+                    </div>
+                </label>
+
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="font_8 font_medium border-bottom my-4">Button</div>
+        <div class="d-flex flex-wrap">
+            <div class="mr-4">
+
+                <button class="btn btn_secondary">Primary</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_secondary">Secondary</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_red">Red</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_silver">Silver</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_hover">Hover</button>
+
+            </div>
+        </div>
+        <!-- Buttons with icon -->
+        <div class="font_8 font_medium border-bottom my-4">Button with icon</div>
+        <div class="d-flex flex-wrap">
+            <div class="mr-4">
+
+                <button class="btn btn_secondary"><i class="fas fa-save pr-2"></i>Save</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_green"><i class="far fa-check-circle pr-2"></i>Active</button>
+
+            </div>
+            <div class="mr-4">
+
+                <button class="btn btn_red"><i class="far fa-trash-alt pr-2"></i>Remove</button>
+
+            </div>
+            <div class="mr-4">
+
+                <a class="btn btn_silver"><i class="fas fa-edit pr-2"></i>Edit</a>
+
+            </div>
+        </div>
+
+        <!-- Buttons size -->
+        <div class="font_8 font_medium border-bottom my-4">Buttons size</div>
+        <div class="d-flex flex-wrap">
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary">Example</button>
+
+            </div>
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary font_3">Example</button>
+
+            </div>
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary font_2">Example</button>
+
+            </div>
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary font_1">Example</button>
+
+            </div>
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary font_1 text-uppercase">Example</button>
+
+            </div>
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary font_1 text-uppercase py-1 px-2">Example</button>
+
+            </div>
+
+            <div class="mr-3">
+
+                <button class="btn btn_secondary font_1 text-uppercase py-0 px-1">Example</button>
+
+            </div>
+
+        </div>
+
+        <!-- Input Size -->
+        <div class="font_8 font_medium border-bottom my-4">Input size</div>
+        <div class="d-flex flex-wrap">
+            <div class="mr-4">
+
+                <div class="input-group input_remove_number_arrow" style="width: 150px;">
+                    <div class="input-group-prepend cursor_point">
+                        <span class="input-group-text"><i class="fas fa-angle-left"></i></span>
+                    </div>
+                    <input type="number" class="form-control focus text-center" value="2020">
+                    <div class="input-group-append cursor_point">
+                        <span class="input-group-text"><i class="fas fa-angle-right"></i></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="mr-4">
+
+                <div class="input-group input_group_md input_remove_number_arrow" style="width: 150px;">
+                    <div class="input-group-prepend cursor_point">
+                        <span class="input-group-text"><i class="fas fa-angle-left"></i></span>
+                    </div>
+                    <input type="number" class="form-control focus text-center" value="2020">
+                    <div class="input-group-append cursor_point">
+                        <span class="input-group-text"><i class="fas fa-angle-right"></i></span>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+
+                <div class="input-group input_group_sm input_remove_number_arrow" style="width: 120px;">
+                    <div class="input-group-prepend cursor_point">
+                        <span class="input-group-text px-2"><i class="fas fa-angle-left"></i></span>
+                    </div>
+                    <input type="number" class="form-control focus text-center px-2" value="2020">
+                    <div class="input-group-append cursor_point">
+                        <span class="input-group-text px-2"><i class="fas fa-angle-right"></i></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Card -->
+        <div class="font_8 font_medium border-bottom my-4">Card</div>
+        <div class="row">
+            <!-- Normal -->
+            <div class="col-md-4">
+                <div>Test, click button Save and it will open loading and one second will close.</div>
+                <div id="card_example" class="card">
+                    <div class="card_loading visuallyhidden hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Example -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Textarea -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Textarea</label>
+                                    <textarea name="" id="" cols="30" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                            <!-- Checkbox -->
+                            <div class="col-md-12">
+                                <div class="d-flex flex-wrap">
+                                    <label class="checkbox mr-4">
+                                        <div class="d-flex align-items-center user_select_none">
+                                            <input type="checkbox">
+                                            <div class="check check_lg"></div>
+                                            <div class="pl-2">Checkbox</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>
+                            <button id="btn_secondary" class="btn btn_secondary"><i class="fas fa-save pr-2"></i>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card loading -->
+            <div class="col-md-4">
+                <div id="card_example02" class="card">
+                    <span class="card_loading">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </span>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Example -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Textarea -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Textarea</label>
+                                    <textarea name="" id="" cols="30" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                            <!-- Checkbox -->
+                            <div class="col-md-12">
+                                <div class="d-flex flex-wrap">
+                                    <label class="checkbox mr-4">
+                                        <div class="d-flex align-items-center user_select_none">
+                                            <input type="checkbox">
+                                            <div class="check check_lg"></div>
+                                            <div class="pl-2">Checkbox</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>
+                            <button class="btn btn_secondary">
+
+                                <i class="fas fa-save pr-2"></i>Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Click button save and it will show loading inside button -->
+            <div class="col-md-4">
+                <div>Test, click button Save and it will open loading under button and one second will close.</div>
+                <div id="card_example03" class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Example -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Textarea -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Textarea</label>
+                                    <textarea name="" id="" cols="30" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                            <!-- Checkbox -->
+                            <div class="col-md-12">
+                                <div class="d-flex flex-wrap">
+                                    <label class="checkbox mr-4">
+                                        <div class="d-flex align-items-center user_select_none">
+                                            <input type="checkbox">
+                                            <div class="check check_lg"></div>
+                                            <div class="pl-2">Checkbox</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>
+                            <button id="btn_save" class="btn btn_secondary">
+                                <span class="btn_loading hidden">
+                                    <img src="./assets/images/icons/loading-white.svg" alt="loading">
+                                </span>
+                                <i class="fas fa-save pr-2"></i>Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Deactivated -->
+            <div class="col-md-4">
+                <div class="card deactivated">
+                    <div class="card_loading hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Example -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Textarea -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Textarea</label>
+                                    <textarea name="" id="" cols="30" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                            <!-- Checkbox -->
+                            <div class="col-md-12">
+                                <div class="d-flex flex-wrap">
+                                    <label class="checkbox mr-4">
+                                        <div class="d-flex align-items-center user_select_none">
+                                            <input type="checkbox">
+                                            <div class="check check_lg"></div>
+                                            <div class="pl-2">Checkbox</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button class="btn btn_green"><i class="far fa-check-circle pr-2"></i>Active</button>
+                            <button class="btn btn_secondary"><i class="fas fa-save pr-2"></i>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Underline deactivated -->
+            <div class="col-md-4">
+                <div class="card underline_deactivated">
+                    <div class="card_loading hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Example -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Example -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Example</label>
+                                    <input type="text" class="form-control focus">
+                                </div>
+                            </div>
+                            <!-- Textarea -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Textarea</label>
+                                    <textarea name="" id="" cols="30" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                            <!-- Checkbox -->
+                            <div class="col-md-12">
+                                <div class="d-flex flex-wrap">
+                                    <label class="checkbox mr-4">
+                                        <div class="d-flex align-items-center user_select_none">
+                                            <input type="checkbox">
+                                            <div class="check check_lg"></div>
+                                            <div class="pl-2">Checkbox</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button class="btn btn_green"><i class="far fa-check-circle pr-2"></i>Active</button>
+                            <button class="btn btn_secondary"><i class="fas fa-save pr-2"></i>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card_loading hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Tabs 01 -->
+                        <ul class="tab_pills nav nav-pills nav-tabs pt-2">
+                            <li><a data-toggle="pill" href="#tab_example01" class="active px-3"><i class="fas fa-cube pr-2"></i>Example01</a></li>
+                            <li><a data-toggle="pill" href="#tab_example02" class="px-3"><i class="fas fa-cube pr-2"></i>Example02</a></li>
+                            <li><a data-toggle="pill" href="#tab_example03" class="px-3"><i class="fas fa-cube pr-2"></i>Example03</a></li>
+                            <li><a data-toggle="pill" href="#tab_example04" class="px-3"><i class="fas fa-cube pr-2"></i>Example04</a></li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab_example01" class="tab-pane active show">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3"
+                                          placeholder="Example 01"></textarea>
+                            </div>
+                            <div id="tab_example02" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3"
+                                          placeholder="Example 02"></textarea>
+                            </div>
+                            <div id="tab_example03" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3"
+                                          placeholder="Example 01"></textarea>
+                            </div>
+                            <div id="tab_example04" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3"
+                                          placeholder="Example 02"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Tabs 01 -->
+                        <ul class="tab_pills tab_pills_02 nav nav-pills nav-tabs pt-2">
+                            <li><a data-toggle="pill" href="#tab_example01" class="active"><i class="fas fa-cube pr-2"></i>Example01</a></li>
+                            <li><a data-toggle="pill" href="#tab_example02"><i class="fas fa-cube pr-2"></i>Example02</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab_example01" class="tab-pane active show">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 01"></textarea>
+                            </div>
+                            <div id="tab_example02" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 02"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Tabs 02 -->
+                        <ul class="tab_pills tab_pills_03 nav nav-pills nav-tabs pt-2">
+                            <li><a data-toggle="pill" href="#tab_example01" class="active"><i class="fas fa-cube pr-2"></i>Example01</a></li>
+                            <li><a data-toggle="pill" href="#tab_example02"><i class="fas fa-cube pr-2"></i>Example02</a></li>
+                            <li><a data-toggle="pill" href="#tab_example03"><i class="fas fa-cube pr-2"></i>Example03</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab_example01" class="tab-pane active show">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 01"></textarea>
+                            </div>
+                            <div id="tab_example02" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 02"></textarea>
+                            </div>
+                            <div id="tab_example03" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 03"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Tabs 03 -->
+                        <ul class="tab_pills tab_pills_04 nav nav-pills nav-tabs pt-2">
+                            <li><a data-toggle="pill" href="#tab_example01" class="active"><i class="fas fa-cube pr-2"></i>Example01</a></li>
+                            <li><a data-toggle="pill" href="#tab_example02"><i class="fas fa-cube pr-2"></i>Example02</a></li>
+                            <li><a data-toggle="pill" href="#tab_example03"><i class="fas fa-cube pr-2"></i>Example03</a></li>
+                            <li>
+                                <a data-toggle="pill" href="#tab_example04"><i class="fas fa-cube pr-2"></i>Example04</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab_example01" class="tab-pane active show">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 01"></textarea>
+                            </div>
+                            <div id="tab_example02" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 02"></textarea>
+                            </div>
+                            <div id="tab_example03" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 03"></textarea>
+                            </div>
+                            <div id="tab_example04" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3" placeholder="Example 04"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card_loading hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-clipboard pr-2"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 font_3">
+                            <div class="font-weight-bold text-uppercase border-bottom mb-2"><i class="far fa-clipboard pr-2"></i>Example</div>
+                            <div>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas asperiores
+                                dolor deserunt, nesciunt sapiente magnam assumenda earum voluptates
+                                cupiditate molestiae?
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="mb-1">Example</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control focus">
+                                <div class="input-group-append" data-toggle="tooltip" data-placement="top" data-original-title="Copy">
+                                    <label class="input-group-text cursor_point"><i class="far fa-copy"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend cursor_point" data-toggle="tooltip" data-placement="top" data-original-title="View Data">
+                                <span class="input-group-text"><i class="far fa-eye"></i></span>
+                            </div>
+                            <input type="text" class="form-control focus" value="https://api.zaggy.net/icals/blank/ff314628-ada9-11e7-80c6-0050563c3009">
+                            <div class="input-group-append cursor_point" data-toggle="tooltip" data-placement="top" data-original-title="Copied!">
+                                <span class="input-group-text"><i class="far fa-copy"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Textarea language switcher -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="hidden card_loading">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="pr-2 far fa-clipboard"></i>Card
+                        </div>
+                        <div class="d-flex">
+                            <div class="card-header_arrow"><i class="fas fa-angle-down"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="position-relative">
+                            <textarea name="" id="" rows="6" class="form-control"></textarea>
+                            <div class="mt-2 mr-2 position-absolute" style="top: 0; right: 0; z-index: 5;">
+                                <div id="language_switcher" class="language_switcher">
+                                    <button class="p-2 btn line_normal" data-id="eng">EN</button>
+                                    <ul class="hidden switcher_dropdown">
+                                        <li class="switcher_dropdown_item" data-id="eng">English</li>
+                                        <li class="switcher_dropdown_item" data-id="de">Deutsch</li>
+                                        <li class="switcher_dropdown_item" data-id="cro">Croatian</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <!--<div class="font_8 font_medium border-bottom my-4">Loading</div>
+        <div class="d-flex align-items-center flex-wrap bg-white">
+            <div class="d-flex flex-wrap align-items-center">
+                <div><img src="./assets/images/icons/loading.svg" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading.svg" style="width: 5rem; height: 5rem;" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading.svg" style="width: 4rem; height: 4rem;" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading.svg" style="width: 3rem; height: 3rem;" alt="loading"></div>
+            </div>
+            <div class="d-flex flex-wrap align-items-center">
+                <div><img src="./assets/images/icons/loading-blue.svg" style="width: 5rem; height: 5rem;" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading-blue.svg" style="width: 4rem; height: 4rem;" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading-blue.svg" style="width: 3rem; height: 3rem;" alt="loading"></div>
+            </div>
+            <div class="d-flex flex-wrap align-items-center" style="background-color: #1d3557;">
+                <div><img src="./assets/images/icons/loading-white.svg" style="width: 5rem; height: 5rem;" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading-white.svg" style="width: 4rem; height: 4rem;" alt="loading"></div>
+                <div><img src="./assets/images/icons/loading-white.svg" style="width: 3rem; height: 3rem;" alt="loading"></div>
+            </div>
+        </div>-->
+        <!-- Tooltip -->
+        <div class="font_8 font_medium border-bottom my-4">Tooltip</div>
+        <div class="d-flex flex-wrap">
+            <button class="btn btn_secondary" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip">Tooltip</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Pop up -->
+<!-- Warning, Oh snap, Saved, Send offer, No show, Confirm?, Deactivate, Send invoice, Send request?, Need help?, Success!,  -->
+<!-- Need help - pop-up -->
+<div id="pop_up_need_help" class="pop_up info position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Need help?</div>
+        <div class="pb-4 line_normal opacity_50">You can find out more about this feature in our <span class="text_decoration_underline">knowledge base</span>.</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">View</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success pop-up -->
+<div id="pop_up_success" class="pop_up success position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/success-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (1).svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Success!</div>
+        <div class="pb-4 line_normal opacity_50">You have added a new $insert-property-here.</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Edit</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Add more</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Warning pop-up -->
+<div id="pop_up_warning" class="pop_up warning position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/warning-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (2).svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Warning!</div>
+        <div class="pb-4 line_normal opacity_50">Overbooking has been detected on reservation ID <span class="text_decoration_underline font_bold">20661106</span>.</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">View</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Disregard</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Remove pop-up -->
+<div id="pop_up_remove" class="pop_up custom_alert position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/remove-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (3).svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Oh snap!</div>
+        <div class="pb-4 line_normal opacity_50">You're about to remove $insert-property-here, please confirm.</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Remove</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Send offer pop-up -->
+<div id="pop_up_offer" class="pop_up info position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Send offer!</div>
+        <div class="pb-4 line_normal opacity_50">You are sending offer to $guest-mail, offer is valid for $valid days.</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- No show pop-up -->
+<div id="pop_up_noshow" class="pop_up custom_alert position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/remove-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (3).svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">No show?</div>
+        <div class="pb-4 line_normal opacity_50">Guests didn't show up? Report this booking as a no show.</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Report</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confrim pop-up -->
+<div id="pop_up_confirm" class="pop_up info position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Confirm?</div>
+        <div class="pb-4 line_normal opacity_50">You are sending a reservation confirmation to $guest-mail</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Deactivate pop-up -->
+<div id="pop_up_deactivate" class="pop_up custom_alert position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/remove-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (3).svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Deactivate?</div>
+        <div class="pb-4 line_normal opacity_50">Your object won't be removed, but it will be blocked for sale</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Deactivate</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Send invoice pop-up -->
+<div id="pop_up_invoice" class="pop_up info position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Send invoice?</div>
+        <div class="pb-4 line_normal opacity_50">You are sending an invoice to $guest-mail</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Send request pop-up -->
+<div id="pop_up_request" class="pop_up info position_center_center" style="display: none;">
+    <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Send request?</div>
+        <div class="pb-4 line_normal opacity_50">You are sending a review request to $guest-mail</div>
+        <div class="m-0 row pop_up_btns">
+            <div class="col-6">
+                <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+            </div>
+            <div class="col-6">
+                <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Saved pop-up -->
+<div id="pop_up_saved" class="pop_up saved pop_up_position_down_right" style="display: none;">
+    <img src="/assets/images/icons/pop-up/save-balloon.svg" class="icon_ballon" alt="icon ballon">
+    <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (4).svg" alt="icon bubbles"></div>
+    <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+        <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+        <div class="pb-1 font_bold font_8">Saved!</div>
+        <div class="line_normal opacity_50">You're changes have been successfully saved.</div>
+    </div>
+</div>
+
+<script>
+
+    var components = {};
+
+    // on load function
+    components.load = function () {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        //components.ui.select_custom("example_select");
+        //components.ui.select_custom("example_select_countries");
+        //components.ui.select_search_custom("example_select_search");
+        //components.ui.select_search_custom("example_select_search_icon");
+        //components.ui.filter_dropdown("filter_dropdown_example");
+        //components.ui.filter_dropdown("filter_dropdown_example02");
+        //components.ui.filter_dropdown("filter_status_example03");
+        //components.ui.filter_dropdown("example_filter_dropdown");
+        //components.ui.card_loading("card_example");
+        components.ui.btn_loading("btn_save");
+
+        components.ui.modal_calendar("modal_put_rent_date_from_calendar", "modal_put_rent_date_from");
+        components.ui.modal_calendar("modal_put_rent_date_until_calendar", "modal_put_rent_date_until");
+
+        components.ui.close_modal_put_rent();
+
+        // Default
+        components.ui.modal_input_counter("modal_default_counter_price", 20);
+        components.ui.modal_input_counter("modal_default_counter_min_stay", 4);
+        components.ui.modal_close("modal_default");
+        components.ui.modal_single_calendar("modal_default", "components_inside_default_calendar_from", "input_calendar_from", "inside_calendar_from");
+        components.ui.modal_single_calendar("modal_default", "components_inside_default_calendar_until", "input_calendar_until", "inside_calendar_until");
+
+        // Price
+        components.ui.modal_input_counter("modal_price_counter_price", 20);
+        components.ui.modal_close("modal_price");
+        components.ui.modal_single_calendar("modal_price", "components_inside_price_calendar_from", "input_calendar_from", "inside_calendar_from");
+        components.ui.modal_single_calendar("modal_price", "components_inside_price_calendar_until", "input_calendar_until", "inside_calendar_until");
+
+        // bl components
+        components.bl.switcher_dropdown("language_switcher");
+
+        // Pop up
+        components.bl.pop_up("pop_up_need_help");
+        components.bl.pop_up("pop_up_success");
+        //components.bl.pop_up("pop_up_warning");
+        components.bl.pop_up("pop_up_remove");
+        components.bl.pop_up("pop_up_offer");
+        components.bl.pop_up("pop_up_noshow");
+        components.bl.pop_up("pop_up_confirm");
+        components.bl.pop_up("pop_up_deactivate");
+        components.bl.pop_up("pop_up_invoice");
+        components.bl.pop_up("pop_up_request");
+        components.bl.pop_up("pop_up_saved");
+
+    }
+
+    // ui
+    components.ui = new function () {
+
+        // Pop up top
+        this.pop_up_top = function (id, btn) {
+            let pop_up_show = document.querySelector("." + id);
+            let pop_up_btn = document.querySelector("." + btn);
+            pop_up_btn.addEventListener("click", function () {
+                $(pop_up_show).fadeIn(300);
+                setTimeout(function () {
+                    $(pop_up_show).fadeOut(400);
+                }, 3000)
+            });
+        }
+
+        // Custom select
+        this.select_custom = function (id) {
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul = select_id.getElementsByTagName("ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul.classList.remove("hidden");
+                    let ulOffset = $(ul).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul.classList.add("reverse");
+                    } else {
+                        ul.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(ul).has(e.target).length === 0) {
+                    if (!$(ul).is(e.target) && $(ul).has(e.target).length === 0) {
+                        ul.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+
+        // Custom select search
+        this.select_search_custom = function (id) {
+            var select_id = document.getElementById(id);
+            var input = select_id.getElementsByTagName("input")[0];
+            var ul = select_id.getElementsByTagName("ul")[0];
+            var li = ul.querySelectorAll(".select_li");
+            var span = select_id.getElementsByTagName("span")[0];
+            var clean = select_id.getElementsByClassName("clean")[0];
+
+            input.addEventListener("click", function () {
+                ul.classList.remove("hidden");
+                if (input.value.length <= 0) {
+                    input.style.backgroundColor = "rgba(255,255,255,.5)";
+                }
+            });
+            // menu close by click out botder's menu
+            document.addEventListener("mouseup", function (e) {
+                if (!$(ul).is(e.target) && $(ul).has(e.target).length === 0) {
+                    ul.classList.add("hidden");
+                    if (input.value.length <= 0) {
+                        input.style.backgroundColor = "";
+                    }
+                }
+                if (!$(input).is(e.target) && $(input).has(e.target).length === 0) {
+                    clean.classList.add("hidden");
+                }
+            });
+            // focus on input to show clean when contais is true
+            input.addEventListener("focus", function () {
+                clean.classList.remove("hidden");
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    span.innerHTML = e.currentTarget.innerHTML;
+                    ul.classList.add("hidden");
+                    input.style.backgroundColor = "";
+                    input.value = "";
+                    for (let j = 0; j < ul.children.length; j++) {
+                        const element = ul.children[j];
+                        ul.children[j].style.display = "";
+                    }
+                }
+            }
+            input.onclick = function () {
+                var ulOffset = $(ul).offset();
+                var spaceUp = (ulOffset.top - $(input).height() - $(ul).height()) - $(window).scrollTop();
+                var spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul).height());
+                if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                    ul.classList.add("reverse");
+                } else {
+                    ul.classList.remove("reverse");
+                }
+                clean.classList.remove("hidden");
+            }
+            input.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    var list = li[i];
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+            document.addEventListener("keyup", function () {
+                if (input.value.length > 0) {
+                    input.style.backgroundColor = "white";
+                } else {
+                    input.style.backgroundColor = "rgba(255,255,255,.5)";
+                }
+            })
+            clean.addEventListener("click", function () {
+                span.innerHTML = "";
+            });
+        }
+
+        // Tooltip
+        this.event_tooltip = function (e) {
+            var attr_value = e.attributes[4];
+            attr_value.value = "Copied!";
+        }
+
+        // Filter dropdown
+        this.dropdown = function (id) {
+            var dropdown_id = document.getElementById(id);
+            var dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            var dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            var dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            var button = dropdown_id.getElementsByClassName("btn")[0];
+            var dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            button.addEventListener("click", function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    button.classList.add("open");
+                }
+            })
+            $(document).mouseup(function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    button.classList.remove("open");
+                }
+            });
+            dropdown_close.onclick = function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.add("hidden");
+                    button.classList.remove("open");
+                }
+            }
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+                element.onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    button.classList.remove("open");
+                }
+            }
+        }
+
+        // Filter check all
+        this.filter_check_all = function (id) {
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("all")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = true;
+                }
+            });
+        }
+
+        // Filter uncheck all
+        this.filter_unCheck_all = function (id) {
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("remove")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = false;
+                }
+            });
+        }
+
+        // Filter dropdown
+        this.filter_dropdown = function (id) {
+            var id = document.getElementById(id);
+            var btn = id.getElementsByClassName("btn")[0];
+            var dropdown = id.lastElementChild;
+            var close = id.lastElementChild.children[0].lastElementChild;
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            close.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            $(document).mouseup(function (e) {
+                if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+            if (id.classList.contains("toggle")) {
+                var dropdown_li = id.querySelectorAll(".dropdown_li");
+                for (let i = 0; i < dropdown_li.length; i++) {
+                    dropdown_li[i].addEventListener("click", function () {
+                        dropdown.classList.add("hidden");
+                        btn.classList.remove("open");
+                    })
+                }
+            }
+        }
+
+        // Card - save to get loading
+        this.card_loading = function (id) {
+            var card_id = document.getElementById(id);
+            var btn = card_id.getElementsByClassName("btn_primary")[0];
+            var loading = card_id.getElementsByClassName("card_loading")[0];
+            btn.onclick = function () {
+                if (loading.classList.contains('hidden')) {
+                    loading.classList.remove('hidden');
+                    // Lagano se otvara loading, visuallyhidden ima svog koda "opacity: 0;"
+                    setTimeout(function () {
+                        loading.classList.remove('visuallyhidden');
+                    }, 20);
+                    // Nakon otvaranja i sam se gasi loading
+                    setTimeout(function () {
+                        loading.classList.add('visuallyhidden');
+                        loading.addEventListener('transitionend', function () {
+                            loading.classList.add('hidden');
+                        });
+                    }, 1000);
+                }
+            }
+        }
+
+        // Button - loading
+        this.btn_loading = function (id) {
+            var btn = document.getElementById(id);
+            var loading = btn.getElementsByClassName("btn_loading")[0];
+            btn.onclick = function () {
+                if (loading.classList.contains('hidden')) {
+                    loading.classList.remove('hidden');
+                    setTimeout(function () {
+                        loading.classList.remove('visuallyhidden');
+                    }, 20);
+                    setTimeout(function () {
+                        loading.classList.add('visuallyhidden');
+                        loading.addEventListener('transitionend', function () {
+                            loading.classList.add('hidden');
+                        });
+                    }, 1000);
+                }
+            }
+        }
+
+        // Modal - close
+        this.modal_close = function (id) {
+            let modal_id = document.getElementById(id);
+            var dismiss = modal_id.querySelectorAll("[data-dismiss='modal']");
+
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                }
+            }
+
+            // Event on mouse to close
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_id).is(e.target) && $(modal_id).has(e.target).length === 0) {
+                    if (!modal_id.classList.contains("hidden")) {
+                        hide_modal();
+                    }
+                }
+            });
+            // on keyboard to ESC to close
+            document.onkeydown = function (e) {
+                if (!modal_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+
+            function hide_modal() {
+                modal_id.classList.add('visuallyhidden');
+                modal_id.addEventListener('transitionend', function (e) {
+                    modal_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+
+        }
+
+        // Modal - input counter
+        this.modal_input_counter = function (id, value) {
+            let input_counter_id = document.querySelector("." + id);
+            let counter = value;
+            let input = input_counter_id.getElementsByClassName("form-control")[0];
+            let btn_up = input_counter_id.getElementsByClassName("up")[0];
+            let btn_down = input_counter_id.getElementsByClassName("down")[0];
+
+            btn_up.onclick = function () {
+                counter++;
+                input.value = counter;
+            }
+
+            btn_down.onclick = function () {
+                if (counter > 0) {
+                    counter--;
+                    input.value = counter;
+                }
+            }
+
+        }
+
+        // Modal - calendar
+        this.modal_single_calendar = function (id, calendar, input_calendar, inside_calendar_class) {
+            let modal_id = document.getElementById(id);
+            let input = modal_id.getElementsByClassName(input_calendar)[0];
+            let inside_calendar = modal_id.getElementsByClassName(inside_calendar_class)[0];
+
+            input.onclick = function () {
+                inside_calendar.classList.remove("hidden");
+            }
+
+            $("#" + calendar).datepicker({
+                firstDay: 1,
+                minDate: 0,
+                onSelect: function (dateText, inst) {
+                    inside_calendar.classList.add("hidden");
+                    input.value = dateText;
+                }
+
+            });
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(inside_calendar).is(e.target) && $(inside_calendar).has(e.target).length === 0) {
+                    inside_calendar.classList.add("hidden");
+                }
+            });
+        }
+
+        // Modal - open details
+        this.modal_open = function (id) {
+            var modal_id = document.getElementById(id);
+            if (modal_id.classList.contains('hidden')) {
+                modal_id.classList.remove('hidden');
+                setTimeout(function () {
+                    modal_id.classList.remove('visuallyhidden');
+                }, 20);
+            } else {
+                modal_id.classList.add('visuallyhidden');
+                modal_id.addEventListener('transitionend', function (e) {
+                    modal_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+        }
+
+        // Table - yes or no
+        this.yes_or_no = function (e) {
+            if (e.classList.contains("yes")) {
+                e.classList.add("active");
+                e.parentElement.children[1].classList.remove("active");
+            } else if (e.classList.contains("no")) {
+                e.classList.add("active");
+                e.parentElement.children[0].classList.remove("active");
+            }
+        }
+
+        this.close_modal_put_rent = function () {
+
+            let modal = document.querySelector(".modal_put_rent");
+            let dismiss = modal.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    $(modal).addClass("hidden");
+                }
+            }
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal).is(e.target) && $(modal).has(e.target).length === 0) {
+                    if (!modal.classList.contains("hidden")) {
+                        $(modal).addClass("hidden");
+                    }
+                }
+            });
+
+        }
+
+        // Modal - Calendar
+        this.modal_calendar = function (date_id, modal_calendar_id) {
+
+            let calendar_wrapper = document.getElementById(modal_calendar_id);
+            let calendar_pop_up = calendar_wrapper.getElementsByClassName("modal_pop_up")[0];
+            let calendar_input = calendar_wrapper.getElementsByTagName("input")[0];
+
+            calendar_input.addEventListener("click", function () {
+                if (!calendar_pop_up.classList.contains("open")) {
+                    calendar_pop_up.classList.remove("hidden");
+                    calendar_pop_up.classList.add("open");
+                } else {
+                    calendar_pop_up.classList.add("hidden");
+                    calendar_pop_up.classList.remove("open");
+                }
+            });
+
+            $("#" + date_id).datepicker({
+                firstDay: 1,
+                minDate: 0,
+                numberOfMonths: 1,
+                onSelect: function (dateText, inst) {
+                    calendar_input.value = dateText;
+                    calendar_pop_up.classList.add("hidden");
+                    calendar_pop_up.classList.remove("open");
+                }
+            });
+
+            $(document).mouseup(function (e) {
+                if (!$(calendar_pop_up).is(e.target) && $(calendar_pop_up).has(e.target).length === 0) {
+                    calendar_pop_up.classList.add("hidden");
+                    calendar_pop_up.classList.remove("open");
+                }
+            });
+        }
+
+
+    }
+
+    // bl
+    components.bl = new function () {
+
+        // Switcher dropdown
+        this.switcher_dropdown = function (id) {
+
+            let switcher_id = document.getElementById(id);
+            let switcher_dropdown = switcher_id.getElementsByClassName("switcher_dropdown")[0];
+            let switcher_btn = switcher_id.getElementsByClassName("btn")[0];
+
+            switcher_btn.addEventListener("click", function () {
+                if (!switcher_dropdown.classList.contains("open")) {
+                    switcher_dropdown.classList.remove("hidden");
+                    switcher_btn.classList.add("open");
+                }
+            });
+
+            document.addEventListener('mouseup', function (e) {
+                if (e.target.classList.contains("btn") == false) {
+                    switcher_dropdown.classList.add("hidden");
+                    switcher_btn.classList.remove("open");
+                }
+            });
+
+            for (let i = 0; i < switcher_dropdown.children.length; i++) {
+                const element = switcher_dropdown.children[i];
+                element.onclick = function (e) {
+
+                    switcher_btn.innerHTML = e.currentTarget.innerHTML;
+
+                    let lang_label = switcher_btn.textContent;
+
+                    if (lang_label == "English") {
+                        switcher_btn.innerHTML = "EN";
+                    } else if (lang_label == "Deutsch") {
+                        switcher_btn.innerHTML = "DE";
+                    } else if (lang_label == "Croatian") {
+                        switcher_btn.innerHTML = "CRO";
+                    }
+
+                    switcher_dropdown.classList.add("hidden");
+                    switcher_btn.classList.remove("open");
+                    switcher_btn.setAttribute('data-id', e.currentTarget.dataset.id);
+
+                }
+            }
+        }
+
+        // Pop up
+        this.pop_up = function (id) {
+
+            let pop_up_id = document.getElementById(id);
+            let dismiss = pop_up_id.querySelectorAll("[data-dismiss='pop_up']");
+
+            dismiss.forEach(element => {
+                element.onclick = function () {
+                    console.log("clicked");
+                    $(pop_up_id).fadeOut();
+                }
+            });
+
+            // pop up - save will close after 3s
+            if (pop_up_id.classList.contains("saved")) {
+                setTimeout(() => {
+                    $(pop_up_id).fadeOut();
+                }, 3000);
+            };
+
+            document.addEventListener("mouseup", function (e) {
+                if (pop_up_id.outerHTML.includes(e.target.outerHTML) == false) {
+                    $(pop_up_id).fadeOut();
+                }
+            });
+
+        }
+
+        // Pop up open
+        this.pop_up_open = function (id) {
+
+            console.log("open");
+            let pop_up_id = document.getElementById(id);
+
+            $(pop_up_id).fadeIn();
+        }
+
+    }
+
+    // Load
+    components.load();
+
+</script>

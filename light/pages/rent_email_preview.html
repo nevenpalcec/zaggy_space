@@ -1,0 +1,27 @@
+﻿<div id="preview_div">
+
+</div>
+
+<script>
+    rent_email_preview = {};
+
+    rent_email_preview.bl = new function () {
+
+        this.load_page = async () => {
+            
+            var rent_id = page.get_id();
+
+            var url = '/api/rents/generate_confirmation/' + rent_id;
+            var response = await ajax.get(url);
+            console.log(response);
+            $('#preview_div').html(response);
+
+        }
+    }
+
+    window.addEventListener('load', function () {
+
+        rent_email_preview.bl.load_page();
+    })
+
+</script>

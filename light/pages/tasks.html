@@ -1,0 +1,731 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase"><i class="far fa-clipboard pr-2"></i>Tasks</div>
+        </div>
+        <div class="align-self-center ml-auto">
+            <div class="view_sidebar d-flex text-dark font_6">
+                <div class="view_sidebar_item align-self-center position-relative">
+                    <i class="far fa-bell"></i>
+                    <span class="notice text-white">10</span>
+                </div>
+                <div class="view_sidebar_line_y sidebar_silver"></div>
+                <div class="view_user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control font_3" placeholder="Search task">
+            <span class="search_icon"><i class="fas fa-search"></i></span>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Add Task -->
+        <a onclick="tasks.ui.show_task('view_modal_task_new');" class="filter_link"><i class="far fa-plus-square pr-md-2"></i><span class="d-md-block d-none">Add Task</span></a>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="statistics_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <div class="view_table">
+            <div class="table_wrapper">
+                <table class="table tasks">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Content</th>
+                            <th scope="col"></th>
+                            <th class="text-right" style="min-width: 4rem;"><i class="fas fa-ellipsis-v"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasks_tbody">
+                        <tr>
+                            <th scope="row" class="position-relative text-center">1</th>
+                            <td class="td_item01">
+                                <div>03.07.2020</div>
+                            </td>
+                            <td class="td_item02">
+                                <div class="text-center green">
+                                   <span data-toggle="tooltip" data-placement="top" data-original-title="Normal"><i class="fas fa-circle"></i></span>
+                                </div>
+                            </td>
+                            <td class="td_item03">
+                                <div><strong>Task01</strong></div>
+                            </td>
+                            <td class="td_item04">
+                                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
+                            </td>
+                            <td><span class="check"><i class="fas fa-check"></i></span></td>
+                            <td class="td_item08 icons edit_trash text-right font_5">
+                                <span class="edit" onclick="tasks.ui.show_task('view_modal_task_edit');"><i class="far fa-edit"></i></span>
+                                <span class="trash" onclick="tasks.ui.remove_task(this);"><i class="far fa-trash-alt"></i></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="position-relative text-center">2</th>
+                            <td class="td_item01">
+                                <div>03.07.2020</div>
+                            </td>
+                            <td class="td_item02">
+                                <div class="text-center red">
+                                    <span data-toggle="tooltip" data-placement="top" data-original-title="Urgent"><i class="fas fa-circle"></i></span>
+                                </div>
+                            </td>
+                            <td class="td_item03">
+                                <div><strong>Task02 A long</strong></div>
+                            </td>
+                            <td class="td_item04">
+                                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                            </td>
+                            <td><span class="check"><i class="fas fa-check"></i></span></td>
+                            <td class="td_item08 icons edit_trash text-right font_5">
+                                <span class="edit" onclick="tasks.ui.show_task('view_modal_task_edit');"><i class="far fa-edit"></i></span>
+                                <span class="trash" onclick="tasks.ui.remove_task(this);"><i class="far fa-trash-alt"></i></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modals -->
+<div>
+
+    <!-- Modal new task -->
+    <div id="view_modal_task_new" class="view_modal visuallyhidden new hidden">
+        <div class="modal_backdrop"></div>
+        <div class="modal_dialog modal_lg">
+            <div class="modal_content">
+                <div class="modal_header">
+                    <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                        <i class="far fa-clipboard pr-2"></i>New node details
+                    </div>
+                    <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><i class="far fa-sticky-note pr-2"></i>Subject</label>
+                        <input type="text" class="form-control focus">
+                    </div>
+                    <div class="border-bottom border-top">
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <!-- Calendar -->
+                                <div id="new_tasks_modal_calendar" class="view_dropdown dropdown">
+                                    <button class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="far fa-calendar-alt"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Calendar - day
+                                                </div>
+                                                <div id="calendar_new_task_day" class="font_3 dropdown_name white text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="form_calendar_new_task" class="dropdown_menu calendar hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Calendar - day</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <div id="modal_double_calendar_new" class="pt-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Status -->
+                                <div id="new_tasks_modal_status" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-layer-group"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Status
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Status</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-status="1">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="icon" style="background-color: #38a3a5;"></div>
+                                                    <div class="align-self-center">Normal</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-status="2">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="icon" style="background-color: #e63946;"></div>
+                                                    <div class="align-self-center">Urgent</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Object -->
+                                <div id="new_tasks_modal_object" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-cube"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Object
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Object</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-object="1">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 01</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="2">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment u ljubljani</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="3">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment s balkonom</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="4">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 02</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="5">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 03</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="6">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 04</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="7">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 05</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="8">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 06</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="9">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 07</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="10">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 08</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="11">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 09</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Notes</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Response</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal_check_new" class="modal_check">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center"
+                               style="max-width: 100px;">
+                            <span class="d-flex align-item-center">
+                                Done
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_lg"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn_silver" data-dismiss='modal'>Close</button>
+                    <div>
+                        <button type="button" class="btn btn_primary" data-dismiss='modal'><i class="fas fa-plus pr-2"></i>Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit task -->
+    <div id="view_modal_task_edit" class="view_modal visuallyhidden edit hidden">
+        <div class="modal_backdrop"></div>
+        <div class="modal_dialog modal_lg">
+            <div class="modal_content">
+                <div class="modal_header">
+                    <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="far fa-clipboard pr-2"></i>Edit node details</div>
+                    <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><i class="far fa-sticky-note pr-2"></i>Subject</label>
+                        <input type="text" class="form-control focus">
+                    </div>
+                    <div class="border-bottom border-top">
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <!-- Calendar -->
+                                <div id="edit_tasks_modal_calendar" class="view_dropdown dropdown">
+                                    <button class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="far fa-calendar-alt"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Calendar - day
+                                                </div>
+                                                <div id="calendar_edit_task_day" class="font_3 dropdown_name white text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="form_calendar_edit_task" class="dropdown_menu calendar hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Calendar - day</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <div id="modal_double_calendar_edit" class="pt-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Status -->
+                                <div id="edit_tasks_modal_status" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-layer-group"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Status
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Status</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-status="1">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="icon" style="background-color: #38a3a5;"></div>
+                                                    <div class="align-self-center">Normal</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-status="2">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="icon" style="background-color: #e63946;"></div>
+                                                    <div class="align-self-center">Urgent</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Object -->
+                                <div id="edit_tasks_modal_object" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-cube"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Object
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Object</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-object="1">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 01</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="2">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment u ljubljani</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="3">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment s balkonom</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="4">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 02</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="5">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 03</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="6">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 04</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="7">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 05</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="8">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 06</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="9">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 07</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="10">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 08</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="11">
+                                                <div class="d-flex align-item-center">
+                                                    <div class="align-self-center">Apartment 09</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Notes</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Response</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal_check_edit" class="modal_check">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center" style="max-width: 100px;">
+                            <span class="d-flex align-item-center">
+                                Done
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_lg"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn_silver custome_close" data-dismiss='modal'>Close</button>
+                    <div>
+                        <button type="button" class="btn btn_red" data-dismiss='modal'><i class="far fa-trash-alt pr-2"></i>Remove</button>
+                        <button type="button" class="btn btn_primary" data-dismiss='modal'><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<section>
+    <template id="template_task">
+        <tr>
+            <th scope="row" class="position-relative text-center">${number}</th>
+            <td class="td_item01">
+                <div>${day}</div>
+            </td>
+            <td class="td_item02">
+                <div class="text-center green">
+                    <span data-toggle="tooltip" data-placement="top" data-original-title="Normal"><i class="fas fa-circle"></i></span>
+                </div>
+            </td>
+            <td class="td_item03">
+                <div><strong>${subject}</strong></div>
+            </td>
+            <td class="td_item04">
+                <div>${note}</div>
+            </td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+            <td class="td_item08 icons edit_trash text-right font_5">
+                <span class="edit" onclick="tasks.ui.show_task('view_modal_task_edit');"><i class="far fa-edit"></i></span>
+                <span class="trash" onclick="tasks.ui.remove_task(this);"><i class="far fa-trash-alt"></i></span>
+            </td>
+        </tr>
+    </template>
+</section>
+
+<script>
+
+    var tasks = {};
+
+    // on load function
+    tasks.load = () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        // Global
+        ui.display_title("Tasks");
+        ui.dropdown_list("new_tasks_modal_status");
+        ui.dropdown_list("new_tasks_modal_object");
+        ui.dropdown_date("new_tasks_modal_calendar");
+        ui.dropdown_list("edit_tasks_modal_status");
+        ui.dropdown_list("edit_tasks_modal_object");
+        ui.dropdown_date("edit_tasks_modal_calendar");
+        // Local
+        tasks.ui.modal_check("modal_check_edit");
+        tasks.ui.modal_check("modal_check_new");
+        tasks.ui.modal_close("view_modal_task_edit");
+        tasks.ui.modal_close("view_modal_task_new");
+
+        tasks.ui.task_double_calendar("modal_double_calendar_new", "calendar_new_task_day", "form_calendar_new_task", "new_tasks_modal_calendar");
+        tasks.ui.task_double_calendar("modal_double_calendar_edit", "calendar_edit_task_day", "form_calendar_edit_task", "edit_tasks_modal_calendar");
+
+        tasks.bl.load_tasks();
+
+    }
+
+    // Local Ui
+    tasks.ui = new function () {
+
+        // Check success
+        this.modal_check = function (id) {
+            var check_id = document.getElementById(id);
+            var check_label = check_id.children[0];
+            var checkbox = check_id.children[0].children[1];
+            checkbox.addEventListener("click", function () {
+                if (checkbox.checked == true) {
+                    check_label.classList.add("bg_success_shadow");
+                } else {
+                    check_label.classList.remove("bg_success_shadow");
+                }
+            });
+        }
+
+        // Modal - close details
+        this.modal_close = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                }
+            }
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    }
+                }
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+        }
+
+        // Modal - open task
+        this.show_task = function (id) {
+            var modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20)
+        }
+
+        // Remove task
+        this.remove_task = function (e) {
+            
+            e.parentElement.parentElement.remove();
+        }
+
+        // Task - double calendar
+        this.task_double_calendar = function (cal, calendar_task_day, form_calendar_task, modal_calendar) {
+            $("#" + cal).datepicker({
+                firstDay: 1,
+                minDate: 0,
+                numberOfMonths: 2,
+                onSelect: function (dateText, inst) {
+                    var selectedDate = $.datepicker.parseDate($.datepicker._defaults.dateFormat, dateText);
+                    $("#" + calendar_task_day).val(dateText).text(dateText);
+                    $("#" + form_calendar_task).addClass("hidden");
+                    $("#" + modal_calendar + " > .btn").removeClass("open");
+                    $(this).datepicker();
+                }
+            });
+            var debounce;
+            $(window).resize(function () {
+                clearTimeout(debounce);
+                if ($(window).width() < 670) {
+                    debounce = setTimeout(function () {
+                        debounceDatepicker(1);
+                    }, 200);
+                } else {
+                    debounce = setTimeout(function () {
+                        debounceDatepicker(2)
+                    }, 200);
+                }
+            }).trigger('resize');
+
+            function debounceDatepicker(no) {
+                $(cal).datepicker("option", "numberOfMonths", no);
+            }
+        }
+    }
+
+    tasks.bl = new function () {
+
+        this.load_tasks = async () => {
+
+            var user_id = bl.workers.current_user_id();
+            var date_from = js.date.toIsoFormat(new Date());
+            var date_until = js.date.add_day(date_from, 10);
+
+            var url = `/api/notes/list?id=${user_id}&date_from=${date_from}&date_until=${date_until}`;
+
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            var number = 1;
+            tasks_tbody.innerHTML = '';
+
+            for (var task of json_response) {
+
+                var t = template_task.innerHTML;
+
+                t = t.replace('${day}', task['day'].split('T')[0]);
+                t = t.replace('${subject}', task['subject']);
+                t = t.replace('${note}', task['note']);
+                t = t.replace('${number}', number);
+                t = t.replace('${notes_statuses_color}', task['notes_statuses_color']);
+                
+                number++;
+
+                js.html.insertAdjacentHTML('tasks_tbody', t);
+            }
+
+            //console.log(json_response);
+        }
+    }
+
+    tasks.load();
+
+</script>

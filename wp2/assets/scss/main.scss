@@ -1,0 +1,42 @@
+// Abstracts
+@import "abstracts/variables";
+@import "abstracts/base";
+@import "abstracts/mixins";
+
+// Components
+@import "components/buttons";
+@import "components/calendar";
+@import "components/finder";
+@import "components/inputs";
+@import "components/dropdowns";
+@import "components/carousel";
+@import "components/map";
+@import "components/slick";
+@import "components/card";
+@import "components/tabs";
+@import "components/radio";
+@import "components/checkbox";
+@import "components/select";
+@import "components/heading-title";
+@import "components/pop-up";
+@import "components/lightGallery";
+@import "components/spinner";
+
+// Layouts
+@import "layouts/footer";
+@import "layouts/header";
+@import "layouts/nav";
+@import "layouts/full_width";
+@import "layouts/content";
+
+// Pages
+@import "pages/index";
+@import "pages/gallery";
+@import "pages/accommodation";
+@import "pages/rent-details";
+@import "pages/about-us";
+@import "pages/blog";
+@import "pages/testimonial";
+@import "pages/payment";
+@import "pages/confirm";
+@import "pages/excursion";

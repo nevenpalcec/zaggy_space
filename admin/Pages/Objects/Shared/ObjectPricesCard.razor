@@ -1,0 +1,67 @@
+﻿@code {
+    [Parameter] public System.Data.DataTable prices { get; set; }
+
+        string month = "";
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await js.InvokeVoidAsync("addTooltips");
+        }
+    }
+}
+
+<div id="table_price" style="position: relative; zoom: 1;">
+        <div class="table-responsive" >
+
+            <table class="table table-bordered table-striped fs--1 mb-0" style="border-color: #ccc;" >
+                                    
+                    <thead style="background-color: #f3f3f3">
+                        <tr>                           
+                            @for (int i = 0; i < 32; i++)
+                            {
+                                <th style="text-align:center; width: 50px;min-width: 50px; ">
+                                    @((i == 0) ? "Month" : i)
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+
+                    <tbody class="list">
+                    @foreach (System.Data.DataRow r in prices.Rows)
+                    {
+                         @if (month != r["month"].ToString() && month != "")
+                        {
+                            @:</tr>
+                        }
+
+                        @if (month != r["month"].ToString())
+                        {
+                            month = r["month"].ToString();
+                            string monthName = CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(Int32.Parse(r["month"].ToString()));
+                            @:</tr><tr>
+
+                            <td style="text-align:center;font-weight:900;padding:10px;">
+                                @monthName
+                            </td>
+                        }
+
+                            <td data-toggle="tooltip" style="padding:5px; text-align:center; @((@r["free"].ToString()!="Y") ? "background-color: #CCFFCC;":"")" title="@r["day_string"]">
+                                <div class="text-dark p-0">@r["price"]@r["currency_label"]</div> 
+                                <div class="fs--1 p-0 text-secondary">@r["min_stay"] </div>
+                            </td>
+
+                        @if(true==false)
+                        {
+                           // month = r["month"].ToString();
+                        }
+
+
+                    }
+                
+                </tbody>
+            </table>
+        </div>
+</div>

@@ -1,0 +1,462 @@
+.section-rd {
+    .bg-img {
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.2), 
+            rgba(0, 0, 0, 0.2)
+          ),url("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80");
+        background-position: center;
+        background-size: cover;
+    }
+    .rd-description {
+        .rd-description-short {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 1rem 0;
+            .rd-description-short-label {
+                font-size: 1.1rem;
+            }
+            .rd-description-short-line {
+                border-right: 1px solid $color-black;
+                margin: .2rem .5rem;
+            }
+        }
+    }
+    .rd-description-label, .rd-calendar-label, .rd-amenities-label, .rd-reviews-label {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding-top: 1rem;
+        border-bottom: 1px solid $color-silver;
+        @include underline;
+    }
+    .rd-description-text {
+        font-size: 1rem;
+        line-height: normal;
+        text-align: justify;
+    }
+    .rd-amenities {
+        .rd-amenities-item {
+            flex: 0 0 50%;
+            padding: .2rem 0;
+            @media screen and (max-width: 500px) {
+                flex: 0 0 100%;
+            }
+            .rd-amenities-item-label {
+                font-size: 1.1rem;
+            }
+        }
+    }
+    .rd-calendar {
+        .rd-calendar-info {
+            font-size: 1rem;
+        }
+        .rd-calendar-datepicker {
+            padding-top: 1rem;
+        }
+        .rd-calendar-status {
+            ul {
+                padding-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                list-style-type: none;
+                padding-left: 0;
+                li {
+                    padding: .2rem .4rem;
+                    font-size: .9rem;
+                    span {
+                        width: 1.2rem;
+                        height: 1.2rem;
+                        display: block;
+                        float: left;
+                        margin-right: .5rem;
+                    }
+                    .available {
+                        border: 1px solid $color-silver;
+                    }
+                    .special-offer {
+                        background-color: #f2eb66;
+                    }
+                    .not-available {
+                        background-color: #eb6c6c;
+                    }
+                    .selection {
+                        background-color: $bg-tertiary;
+                    }
+                }
+            }
+        }
+        .rd-calendar-book-now {
+            background-color: $bg-secondary;
+            padding: 1rem;
+            color: $text-secondary;
+            .rd-calendar-book-now-label {
+                font-size: 1.2rem !important;
+                font-weight: 500;
+                border-bottom: 1px solid rgba(255, 255, 255, .2);
+                @include underline;
+                padding-right: 1rem;
+            }
+            .rd-calendar-book-now-date, .rd-calendar-book-now-value {
+                align-self: center;
+                font-size: 1.2rem;
+                font-weight: 500;
+                white-space: nowrap;
+                i {
+                    margin: 0 1rem;
+                }
+            }
+            .rd-calendar-book-now-value {
+                padding: 0 1rem;
+            }
+            .rd-calendar-book-now-stars {
+                color: $color-star;
+                font-size: .7rem;
+            }
+            .rd-calendar-book-now-date, .rd-calendar-book-now-value {
+                label {
+                    display: block;
+                    margin: 0;
+                    font-size: .9rem;
+                }
+                i {
+                    font-size: 1rem;
+                }
+            }
+        }
+        .heading {
+            @media screen and (max-width: 500px) {
+                display: block !important;
+                .rd-calendar-book-now-stars {
+                    padding-top: 1rem;
+                }
+            }
+        }
+        .body {
+            @media screen and (max-width: 450px) {
+                display: block !important;
+                .rd-calendar-book-now-value {
+                    padding: 0;
+                    padding-top: 1rem;
+                }
+            }
+        }
+    }
+    .rd-reviews {
+        .heading {
+            @media screen and (max-width: 450px) {
+                display: block !important;
+                .rd-reviews-wrapper.rating {
+                    padding-bottom: .5rem;
+                }
+            }
+        }
+        .rd-reviews-wrapper.rating {
+            align-self: center;
+           .rd-reviews-value {
+               i {
+                   color: $color-star;
+                   text-shadow: 0 0 1px rgba(0, 0, 0, .1);
+               }
+               span {
+                   font-size: 1.1rem;
+                   font-weight: 500;
+               }
+           }
+           .rd-reviews-p {
+                font-size: 1.1rem;
+                font-weight: 500;
+           }
+        }
+        .rd-reviews-wrapper.search {
+            position: relative;
+            i {
+                position: absolute;
+                top: 11px;
+                right: 10px;
+            }
+        }
+        .rd-reviews-item {
+            flex: 0 0 50%;
+            display: flex;
+            justify-content: space-between;
+            padding: .2rem 1rem;
+            @media screen and (max-width: 991px) {
+                flex: 0 0 100%;
+            }
+            .rd-reviews-item-label {
+                font-size: 1rem;
+            }
+            .rd-reviews-item-value {
+                font-weight: 500;
+                width: 7rem;
+                display: flex;
+                span {
+                    display: block;
+                }
+                .line {
+                    position: relative;
+                    width: 5rem;
+                    margin-right: .5rem;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        transform: translate(0,-50%);
+                        background-color: $color-silver;
+                        height: 4px;
+                        width: 5rem;
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        transform: translate(0,-50%);
+                        background-color: $bg-tertiary;
+                        height: 4px;
+                        width: 5rem;
+                    }
+                }
+                // Very good
+                .very-good {
+                    &:after {
+                        width: 4rem;
+                    }
+                }
+                // Good
+                .good {
+                    &:after {
+                        width: 3rem;
+                    }
+                }
+            }
+        }
+    }
+    .rd-comments {
+        .rd-comments-item {
+            padding: 1rem;
+        }
+        .rd-comments-guest {
+            font-size: 1.1rem;
+            font-weight: 500;
+            span {
+                /*display: block;
+                float: left;
+                padding-right: .5rem;*/
+                img {
+                    width: 1rem;
+                }
+            }
+        }
+        .rd-comments-text {
+            font-size: .9rem;
+            padding: .5rem 0;
+            line-height: normal;
+        }
+        .rd-comments-date {
+            font-size: .9rem;
+            font-weight: 500;
+            text-align: right;
+        }
+        .rd-comments-rating {
+            width: 7rem;
+            display: flex;
+            span {
+                display: block;
+            }
+            .line {
+                position: relative;
+                width: 5rem;
+                margin-right: .5rem;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translate(0,-50%);
+                    background-color: $color-silver;
+                    height: 4px;
+                    width: 5rem;
+                }
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translate(0,-50%);
+                    background-color: $bg-tertiary;
+                    height: 4px;
+                    width: 5rem;
+                }
+            }
+        }
+        .rd-reply {
+            margin-left: 3rem;
+            .rd-reply-label {
+                font-size: .9rem;
+                font-weight: 500;
+                @include underline;
+                border-bottom: 1px solid $color-silver;
+            }
+            .rd-reply-owner {
+                padding-top: .5rem;
+                font-size: 1rem;
+                font-weight: 500;
+            }
+            .rd-reply-text {
+                font-size: .9rem;
+                line-height: normal;
+            }
+        }
+        .rd-pages {
+            padding: 1rem 0;
+            ul {
+                padding: 0;
+                list-style-type: none;
+                display: flex;
+                justify-content: center;       
+                .rd-pages-item {
+                    width: 2rem;
+                    height: 2rem;
+                    background-color: $bg-secondary;
+                    margin: .1rem;
+                    color: $text-secondary;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: 500;
+                    cursor: pointer;
+                    user-select: none;
+                }         
+                .active {
+                    background-color: $bg-tertiary !important;
+                }
+            }
+        }
+    }
+    .rd-map {
+        height: 300px;
+    }
+    .rd-contact {
+        .rd-contact-label {
+            font-size: .9rem;
+            padding: .3rem .5rem;
+            a {
+                color: $text-primary;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+.section-testimonial {
+    .rd-reviews {
+        .heading {
+            @media screen and (max-width: 450px) {
+                display: block !important;
+
+                .rd-reviews-wrapper.rating {
+                    padding-bottom: .5rem;
+                }
+            }
+        }
+
+        .rd-reviews-wrapper.rating {
+            align-self: center;
+
+            .rd-reviews-value {
+                i {
+                    color: $color-star;
+                    text-shadow: 0 0 1px rgba(0, 0, 0, .1);
+                }
+
+                span {
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                }
+            }
+
+            .rd-reviews-p {
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+        }
+
+        .rd-reviews-wrapper.search {
+            position: relative;
+
+            i {
+                position: absolute;
+                top: 11px;
+                right: 10px;
+            }
+        }
+
+        .rd-reviews-item {
+            flex: 0 0 50%;
+            display: flex;
+            justify-content: space-between;
+            padding: .2rem 1rem;
+
+            @media screen and (max-width: 991px) {
+                flex: 0 0 100%;
+            }
+
+            .rd-reviews-item-label {
+                font-size: 1rem;
+            }
+
+            .rd-reviews-item-value {
+                font-weight: 500;
+                width: 7rem;
+                display: flex;
+
+                span {
+                    display: block;
+                }
+
+                .line {
+                    position: relative;
+                    width: 5rem;
+                    margin-right: .5rem;
+
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        transform: translate(0,-50%);
+                        background-color: $color-silver;
+                        height: 4px;
+                        width: 5rem;
+                    }
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        transform: translate(0,-50%);
+                        background-color: $bg-tertiary;
+                        height: 4px;
+                        width: 5rem;
+                    }
+                }
+                // Very good
+                .very-good {
+                    &:after {
+                        width: 4rem;
+                    }
+                }
+                // Good
+                .good {
+                    &:after {
+                        width: 3rem;
+                    }
+                }
+            }
+        }
+    }
+}

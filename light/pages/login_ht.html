@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+</head>
+
+<body>
+
+    <div class="sign_new">
+        <div class="mx-0 row" style="height: 100vh;">
+            <div class="p-0 col-xl-6 col-lg-6 d-none d-lg-block text_white position-relative" style="max-width: 1200px;">
+                <div class="top-0 position-absolute w-100 h-100" style="z-index: -1;">
+                    <img src="/assets/images/pictures/bg_ht_login.png" class="w-100 h-100" style="object-fit: cover;" alt="img">
+                </div>
+                <div class="top-0 position-absolute  w-100 h-100" style="left: 0;"></div>
+                <div class="p-3 m-auto text-white position-relative flex-column align-items-center d-flex justify-content-center h-100" style="max-width: 500px;">
+                    <div class="mb-3 font_8 font_medium"></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="px-5 py-4">
+                    <div class="sign_header d-flex justify-content-between">
+                        <img src="/assets/images/pictures/ht_logo.svg" style="height: 3rem; width: auto;" alt="logo syncbeds">
+                    </div>
+
+                    <form class="position-relative p-1" action="" style="max-width: 50%">
+
+                        <!-- Loading -->
+                        <div id="login_content_loading" class="view_loading" style="display: none;">
+                            <img src="/assets/images/icons/loading.svg" />
+                        </div>
+
+                        <div class="mb-5 font_bold font_8 ">Sign in</div>
+
+                        <!-- Username -->
+                        <div class="mb-4">
+                            <label class="font_medium">Username</label>
+                            <input type="text" class="form-control focus font_6" id="login_username">
+                            <small class="red hidden" id="sign_in_username_message"><i class="pr-2 fas fa-exclamation"></i>Wrong username!</small>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label class="font_medium">Password</label>
+                            <div id="sign_in_passowrd" class="position-relative">
+                                <input type="password" class="form-control focus font_6 " id="login_password">
+                                <span class="px-3 py-2 position-absolute user_select_none toggle_password cursor_point opacity_50" style="transform: translateY(-50%); right: 0; top: 50%;">
+                                    <img src="/assets/images/icons/view.svg" alt="icon">
+                                </span>
+                            </div>
+                            <small class="red hidden" id="sign_in_password_message"><i class="pr-2 fas fa-exclamation"></i>Wrong password!</small>
+                        </div>
+                        <div class="mb-4">Not a member? <a href="#sign_up" class="font_medium color_primary">Sign up</a></div>
+                        <div id="sign_in_btn" class="">
+                            <button type="button" onclick="bl.workers.worker_login()" class="px-4 py-2 btn btn_secondary font_6 position-relative"><span>Sign in</span></button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var sign_in = {};
+
+        sign_in.load = function () {
+
+            // Global components
+            ui.display_title("Sign in");
+
+            $(".main_menu_left").addClass("hidden");
+            $(".bg_screen_img_blur_shadow").addClass("hidden");
+            $(".bg_screen_img_blur").addClass("hidden");
+            $(".bg_sign").addClass("hidden");
+            $(".main_background").addClass("hidden");
+            $(".bg_sign").addClass("hidden");
+
+            sign_in.bl.enter_key_login();
+        }
+
+        sign_in.bl = new function () {
+
+            this.enter_key_login = function () {
+                addEventListener("keyup", function (event) {
+                    if (event.keyCode === 13) {
+                        event.preventDefault();
+                        bl.workers.worker_login();
+                    }
+                });
+            }
+        }
+
+        sign_in.ui = new function () {
+
+            this.add_loading = () => {
+
+                if (!sign_in_btn.classList.contains('loading')) {
+                    sign_in_btn.classList.add('loading');
+                }
+
+            }
+        }
+
+        sign_in.toggle_pass = function (id) {
+            let pass_id = document.getElementById(id);
+            let input = pass_id.firstElementChild;
+            let btn = pass_id.getElementsByClassName("toggle_password")[0];
+            btn.addEventListener("click", function () {
+                if (input.type === "password") {
+                    input.setAttribute("type", "text");
+                    btn.classList.remove("opacity_50");
+                } else {
+                    input.setAttribute("type", "password");
+                    btn.classList.add("opacity_50");
+                }
+            })
+        }
+
+        sign_in.toggle_pass("sign_in_passowrd");
+
+
+        sign_in.load();
+
+    </script>
+
+</body>
+
+</html>

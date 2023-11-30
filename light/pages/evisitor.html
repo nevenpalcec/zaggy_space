@@ -1,0 +1,579 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>User settings
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+        <a href="#settings" class="filter_link"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_status" class="filter_link"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Status</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_sources" class="filter_link"><i class="fas fa-code-branch pr-lg-2"></i><span class="d-none d-lg-flex">Sources</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#payments_methods" class="filter_link hidden"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Payment methods</span></a>
+        <div class="filter_line_y hidden"></div>
+        <a href="#evisitor" class="filter_link active"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">eVisitor</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoice_text" class="filter_link"><i class="fas fa-file-invoice pr-lg-2"></i><span class="d-none d-lg-flex">Invoice text</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#email_templates" class="filter_link"><i class="fas fa-envelope pr-lg-2"></i><span class="d-none d-lg-flex">Email templates</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+
+        <div id="evisitor_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+
+        <div class="row pt-3">
+            <div class="col-lg-5">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="font-weight-bold">List</div>
+                        <button class="btn btn_primary py-1 font_3" onclick="evisitor.bl.add_item();"><i class="fas fa-plus fa-xs pr-1"></i>Add</button>
+                    </div>
+                    <div class="card-body font_3">
+                        <!-- Table -->
+                        <div class="view_table">
+                            <div class="table_wrapper">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            TAN username
+                                        </tr>
+                                        <hr />
+                                    </thead>
+
+                                    <tbody id="evisitor_tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="evisitor_tan_list" class="col-lg-7 hidden">
+
+                <div class="card">
+                    <!--<div class="view_filter d-flex align-items-center">
+                    <div class="btn_hover font-weight-bold ml-2 font_6 filter_link active" id="sync_tab_details_active">eVisitor</div>
+                    <div class="filter_line_y"></div>
+                    <div class="btn_hover font-weight-bold font_6 filter_link hidden" id="sync_tab_settings_active">TAN list</div>
+                </div>-->
+                    <div class="card-body" id="evisitor_tab_details">
+
+                        <!-- Tabs -->
+                        <ul class="tab_pills nav nav-pills nav-tabs pt-2">
+                            <li>
+                                <a data-toggle="pill" href="#evisitor_tab" class="active px-3">eVisitor</a>
+                            </li>
+                            <li>
+                                <a data-toggle="pill" href="#tan_list_tab" class="px-3">TAN list</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tabs content -->
+                        <div class="tab-content font_3">
+                            <div id="evisitor_tab" class="tab-pane active show">
+                                <div class="row">
+
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Username:</label>
+                                            </div>
+                                            <input type="text" class="form-control focus" id="evisitor_username">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Password:</label>
+                                            </div>
+                                            <input type="text" class="form-control focus" id="evisitor_password">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 col-md-4 my-auto">
+                                        <!-- Checkbox label md -->
+                                        <label class="checkbox">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" id="evisitor_enable">
+                                                <div class="check check_md"></div>
+                                                <div class="pl-2">eVisitor enable</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="tan_list_tab" class="tab-pane">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div class="ml-2 mt-2 font_bold font_4">
+                                        Uploaded: <span id="tan_file_uploaded"></span>
+                                    </div>
+                                    <button class="btn btn-danger" onclick="evisitor.bl.delete_tan_file();"><i class="fas fa-trash-alt pr-2"></i>Delete</button>
+                                </div>
+                                <form class="dropzone" id="tan_file_dropzone" style="border: 2px dotted rgba(0,0,0,.3); background-color: #c0c0c00d;"></form>
+
+                                <div id="tan_file_container" class="hidden w-100">
+                                    <object type="application/pdf" id="tan_file_pdf"></object>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--<div class="col-sm-6 col-md-12 d-flex justify-content-end mb-3">
+                        <button class="btn btn_secondary" id="evisitor_save_btn" onclick="evisitor.bl.save_item();"><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>-->
+
+                </div>
+
+            </div>
+
+            <div class="card-body font_3 d-flex hidden" id="sync_tab_settings">
+                <div class="row ml-2">
+
+                    <div class="col-sm-4 col-md-4 my-auto">
+                        <!-- Checkbox label md -->
+                        <label class="checkbox">
+                            <div class="d-flex align-items-center user_select_none">
+                                <input type="checkbox" id="sync_ota_commision">
+                                <div class="check check_md"></div>
+                                <div class="pl-2">Save OTA commision</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-4 col-md-4 my-auto">
+                        <!-- Checkbox label md -->
+                        <label class="checkbox">
+                            <div class="d-flex align-items-center user_select_none">
+                                <input type="checkbox" id="sync_add_items">
+                                <div class="check check_md"></div>
+                                <div class="pl-2">Save items</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-4 col-md-4 my-auto">
+                        <!-- Checkbox label md -->
+                        <label class="checkbox">
+                            <div class="d-flex align-items-center user_select_none">
+                                <input type="checkbox" id="sync_share_content">
+                                <div class="check check_md"></div>
+                                <div class="pl-2">Content</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-4 col-md-4 my-auto">
+                        <!-- Checkbox label md -->
+                        <label class="checkbox">
+                            <div class="d-flex align-items-center user_select_none">
+                                <input type="checkbox" id="sync_active">
+                                <div class="check check_md"></div>
+                                <div class="pl-2">Active</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-4 col-md-4 my-auto">
+                        <!-- Checkbox label md -->
+                        <label class="checkbox">
+                            <div class="d-flex align-items-center user_select_none">
+                                <input type="checkbox" id="sync_save_payout_price">
+                                <div class="check check_md"></div>
+                                <div class="pl-2">Save payout price</div>
+                            </div>
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="row mt-3">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="mb-1">Cancelation policy</label>
+                                    <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                        <i class="fas fa-question fa-xs px-1"></i>
+                                    </div>
+                                </div>
+
+                                <div id="sync_round_price" class="select">
+                                    <button class="custom-select focus open"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="">- - -</li>
+
+                                        <li class="select_li" data-id="up">Up</li>
+
+                                        <li class="select_li" data-id="middle">Middle</li>
+
+                                        <li class="select_li" data-id="down">Down</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="mb-1">Icon</label>
+                                    <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                        <i class="fas fa-question fa-xs px-1"></i>
+                                    </div>
+                                </div>
+
+                                <div id="sync_round_price" class="select">
+                                    <button class="custom-select focus open"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="">- - -</li>
+
+                                        <li class="select_li" data-id="up">Up</li>
+
+                                        <li class="select_li" data-id="middle">Middle</li>
+
+                                        <li class="select_li" data-id="down">Down</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="mb-1">Agency profit</label>
+                                    <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                        <i class="fas fa-question fa-xs px-1"></i>
+                                    </div>
+                                </div>
+
+                                <div id="sync_round_price" class="select">
+                                    <button class="custom-select focus open"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="">- - -</li>
+
+                                        <li class="select_li" data-id="up">Up</li>
+
+                                        <li class="select_li" data-id="middle">Middle</li>
+
+                                        <li class="select_li" data-id="down">Down</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <label class="mb-1">Option3</label>
+                                    <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                        <i class="fas fa-question fa-xs px-1"></i>
+                                    </div>
+                                </div>
+
+                                <div id="sync_round_price" class="select">
+                                    <button class="custom-select focus open"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="">- - -</li>
+
+                                        <li class="select_li" data-id="up">Up</li>
+
+                                        <li class="select_li" data-id="middle">Middle</li>
+
+                                        <li class="select_li" data-id="down">Down</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 col-md-12 d-flex justify-content-end">
+
+                        <button class="btn btn_primary" id="sync_settings_save_btn" onclick="sync.bl.save_b2b()">Save</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<section>
+    <template id="template_list_evisitor">
+
+        <div class="card_portal mb-2" onclick="evisitor.bl.show_item(`${id}`)">
+            <div class="d-flex align-items-center justify-content-between line_normal">
+
+                <div class="d-flex align-items-center">
+                    <img src="./assets/images/icons/portals/${icon}" style="max-width:20px; max-height:20px" alt="">
+                    <div class="font-weight-bold pl-1" style="cursor: pointer;">${username}</div>
+                    <div class="pl-1"></div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="view_dropdown ml-3">
+                        <button onclick="evisitor.bl.delete_item(`${id}`)"
+                                class="btn btn_hover p-0 d-flex">
+                            <span class="portal_dropdown"><i class="fas fa-trash-alt"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </template>
+
+</section>
+
+
+<script>
+
+    $(".filter_general").load("/pages/partals/filter_general.html");
+    $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+    var evisitor = {};
+
+    evisitor.list = '';
+    evisitor.link1 = '';
+    evisitor.link2 = '';
+    evisitor.user_b2b = '';
+    evisitor.user_b2b_id_current = '';
+
+    // Load function
+    evisitor.load = () => {
+
+        // Title
+        document.title = "Evisitor";
+
+        // Global ui
+        ui.custom_select('sync_round_price');
+
+        // UI components
+
+        // BL components
+        evisitor.bl.get_list();
+
+    }
+
+    // UI logic
+    evisitor.ui = new function () {
+
+    }
+
+    // BL logic
+    evisitor.bl = new function () {
+
+        this.get_list = async () => {
+
+            var user_id = bl.workers.current_user_id();
+            var url = `/api/users_b2b/list/` + user_id;
+
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+            evisitor.list = json_response;
+
+            evisitor_tbody.innerHTML = '';
+
+            var t = template_list_evisitor.innerHTML;
+
+            for (var i of json_response) {
+
+                var t = template_list_evisitor.innerHTML;
+
+                t = t.replace('${username}', i['username']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+
+                js.html.insertAdjacentHTML('evisitor_tbody', t);
+            }
+        }
+
+        this.show_item = async (id) => {
+
+            await tan_file_pdf.removeAttribute('data');
+
+            evisitor_tan_list.classList.remove("hidden");
+
+            evisitor.user_b2b_id_current = id;
+
+            var item = await evisitor.list.filter(i => i.id == id)
+
+            // TAB - eVisitor
+            evisitor_username.value = item[0]['username'];
+            evisitor_password.value = item[0]['password'];
+            evisitor_enable.checked = item[0]['enable'] == 'Y' ? true : false;
+
+            evisitor.user_b2b = item[0]['id'];
+            evisitor.link1 = item[0]['link1'];
+            evisitor.link2 = item[0]['link2'];
+
+            // TAB - TAN list
+            if (!item[0]['file']) {
+
+                // Dropzone
+                evisitor.bl.upload_tan_file(evisitor.user_b2b_id_current);
+
+                tan_file_uploaded.innerText = '-';
+
+                tan_file_container.classList.add('hidden');
+                tan_file_dropzone.classList.remove('hidden');
+
+                tan_file_pdf.setAttribute('data', '');
+            }
+            else {
+
+                tan_file_uploaded.innerText = js.date.toIso(item[0]['changed']).split("-").reverse().join(".");
+
+                tan_file_container.classList.remove('hidden');
+                tan_file_dropzone.classList.add('hidden');
+
+                tan_file_pdf.setAttribute('data', item[0]['link3']);
+                tan_file_pdf.style.width = '100%';
+                tan_file_pdf.style.height = '1200px';
+
+            }
+
+        }
+
+        this.save_item = async () => {
+
+            ui.content_loading('evisitor_content_loading');
+            
+            var item = {};
+
+            item.username = evisitor_username.value;
+            item.password = evisitor_password.value;
+            item.link1 = evisitor.link1;
+            item.link2 = evisitor.link2;
+            item.enable = evisitor_enable.checked == true ? 'Y' : 'N';
+            item.user_b2b_id = evisitor.user_b2b;
+
+            var url = '/api/users_b2b/save';
+            await ajax.post_json(url, item);
+
+            evisitor.bl.get_list();
+
+            ui.content_loading_hide('evisitor_content_loading');
+
+        }
+
+        this.delete_item = async (id) => {
+
+            ui.content_loading('evisitor_content_loading');
+
+            var url = '/api/users_b2b/delete/' + id;
+            await ajax.get(url);
+
+            evisitor.bl.get_list();
+
+            ui.content_loading_hide('evisitor_content_loading');
+        }
+
+        this.add_item = async () => {
+
+            ui.content_loading('evisitor_content_loading');
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/users_b2b/add_evisitor/' + user_id;
+            await ajax.get(url);
+
+            evisitor.bl.get_list();
+
+            ui.content_loading_hide('evisitor_content_loading');
+        }
+
+        this.upload_tan_file = async () => {
+
+            //enable file upload
+            if (tan_file_dropzone.innerHTML != '') {
+                var myDropzone_old = Dropzone.forElement("#tan_file_dropzone");
+                if (myDropzone_old) {
+                    myDropzone_old.destroy(); // Detach the Dropzone instance
+                }
+            }
+
+            var myDropzone = new Dropzone("#tan_file_dropzone",
+                {
+                    url: `/api/users_b2b/upload_tan_file/?user_b2b_id=${evisitor.user_b2b_id_current}`,
+                    headers: {
+                        'zaggy_user_key': bl.workers.current_user_guid(),
+                        'zaggy_user_id': bl.workers.current_user_id(),
+                        'zaggy_worker_key': bl.workers.current_worker_guid(),
+                        'X-Custom-Header': 'Header'
+                    },
+
+                    acceptedFiles: ".pdf",
+
+                    init: function () {
+                        this.on("addedfile", async function (file) {
+                            await ui.content_loading("evisitor_content_loading");
+                        });
+                        this.on("thumbnail", function (file, fileurl) { });
+                        this.on("removedfile", function (file) { });
+                        this.on("totaluploadprogress", function (progress) { });
+                        this.on("queuecomplete", async function () {
+                            await evisitor.bl.get_list();
+                            await evisitor.bl.show_item(evisitor.user_b2b_id_current);
+                            await ui.content_loading_hide("evisitor_content_loading");
+                        });
+                        this.on("success", function (file) { myDropzone.removeFile(file); });
+                        this.on("error", async function (file) { });
+                    }
+
+                });
+            
+        }
+
+        this.delete_tan_file = async () => {
+
+            ui.content_loading('evisitor_content_loading');
+
+            var url = `/api/users_b2b/delete_tan_file?id=${evisitor.user_b2b_id_current}`;
+            await ajax.get_json(url);
+
+            await evisitor.bl.get_list();
+            await evisitor.bl.show_item(evisitor.user_b2b_id_current);
+
+            ui.content_loading_hide('evisitor_content_loading');
+
+        }
+    }
+
+    // On load
+    evisitor.load();
+
+</script>

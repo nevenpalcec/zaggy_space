@@ -1,0 +1,129 @@
+﻿@{
+    var page = (string)ViewData["page"];
+    var booking_engine_db = (System.Data.DataRow)Session["booking_engine"];
+    var settings_str = (string) booking_engine_db["settings"];
+    var settings = bl.sys.json.obj(settings_str);
+    var show_blogs = (string) settings["show_blogs"];    
+
+}
+<nav class="navbar navbar-expand-lg navbar-light" style="z-index: 11;" >
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        @*<div style="float: left;">
+            <a href="">
+                <img src="https://api.zaggy.net/users/picture/@bl.settings_current.user_id" style="height: 50px;" />
+            </a>
+        </div>*@
+
+        <ul class="navbar-nav" style="justify-content: @booking_engine_db["wp2_navbar_justify_content"];">
+
+            <li class="nav-item @(page == "home" ? "active" : string.Empty)">
+                <a class="nav-link" href="/home/index"><strong> @bl.lng.l.Home <span> @bl.lng.l.Welcome  </span></strong></a>
+            </li>
+            <li class="nav-item @(page == "gallery" ? "active" : string.Empty)">
+                <a class="nav-link" href="/pictures/gallery">
+                    <strong>
+                        @bl.lng.l.Gallery<span>
+                            @bl.lng.l.experience_us
+                        </span>
+                    </strong>
+                </a>
+            </li>
+
+            @if (booking_engine_db["enable_accommodation"].ToString() == "Y") {
+                <li class="nav-item">
+                    <a class="nav-link @(page == "objects_list" ? "active" : string.Empty)" href="/objects/list">
+                        <strong>
+                            @bl.lng.l.Accommodation
+                            <span>
+                                @bl.lng.l.rates_and_reservation
+                            </span>
+                        </strong>
+                    </a>
+                </li>
+            }
+
+            @*<li class="nav-item">
+                <a class="nav-link" @(page == "map" ? "active" : string.Empty) href="/map/map">
+                    <strong>
+                        Mapa
+                        <span>
+                            istražite
+                        </span>
+                    </strong>
+                </a>
+            </li>*@
+
+            <!-- hide while we develop it -->
+            @if (1 == 2) {
+                <li class="nav-item">
+                    <a class="nav-link @(page == "hotel_details" ? "active" : string.Empty)" href="/objects/hotel">
+                        <strong>
+                            @bl.lng.l.Rooms
+                            <span>
+                                @bl.lng.l.rates_and_reservation
+                            </span>
+                        </strong>
+                    </a>
+                </li>
+            }
+
+            @if (bl.sys.html.is_checked(show_blogs)) {
+                <li class="nav-item @(page == "blog" ? "active" : string.Empty)"> 
+                    <a class="nav-link" href="/blogs/blogs">
+                        <strong>
+                            @bl.lng.l.Blogs
+                            <span>
+                                @bl.lng.l.News
+                            </span>
+                        </strong>
+                    </a>
+                </li>
+            }
+
+            @if (booking_engine_db["enable_excursions"].ToString() == "Y") {
+                <li class="nav-item @(page == "excursion" ? "active" : string.Empty)">
+                    <a class="nav-link" href="/excursions/list">
+                        <strong>
+                            @bl.lng.l.Excurisons
+                            <span>
+                                @bl.lng.l.Find
+                            </span>
+                        </strong>
+                    </a>
+                </li>
+            }
+
+            <li class="nav-item @(page == "review" ? "active" : string.Empty)">
+                <a class="nav-link" href="/reviews/list">
+                    <strong>
+                        @bl.lng.l.Reviews
+                        <span>
+                            @bl.lng.l.Feedback
+                        </span>
+                    </strong>
+                </a>
+            </li>
+
+            <li class="nav-item @(page == "user" ? "active" : string.Empty)">
+                <a class="nav-link" href="/users/about">
+                    <strong>
+                        @bl.lng.l.About_us
+                        <span>
+                            @bl.lng.l.Contact
+                        </span>
+                    </strong>
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>

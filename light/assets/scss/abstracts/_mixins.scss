@@ -1,0 +1,9 @@
+@mixin hover {
+    transition: .125s ease-in-out;
+}
+@mixin drop_shadow_md {
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+}
+@mixin drop_shadow_lg {
+    box-shadow: 0 2px 7px rgba(0,0,0,.3);
+}

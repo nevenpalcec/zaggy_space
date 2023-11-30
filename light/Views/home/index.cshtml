@@ -1,0 +1,209 @@
+﻿@{ 
+    string guid = (ViewData["guid"] ?? "").ToString();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- for FF, Chrome, Opera -->
+    <link rel="icon" type="image/png" href="/assets/images/icons/mark.svg" sizes="16x16">
+
+    <!--load scripts-->
+    @Html.Partial("/Views/scripts.cshtml")
+
+</head>
+
+
+<body>
+
+    
+    <script>
+
+        var tran_js_load = async () => {
+            await tran_js.load();
+        }
+
+        tran_js_load();
+
+    </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript" async>
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/617ad90586aee40a5738d940/1fj3tvfdb';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+    <!-- Background screen -->
+    <section class="main_background"></section>
+
+    <section class="bg_sign hidden"></section>
+
+    <div class="view">
+
+        <!-- Left nav -->
+        <selction class="main_menu_left"></selction>
+
+        <!-- Dashboard -->
+        <section class="main_page w-100">
+
+            <!-- Loading -->
+            <div class="view_loading" style="background: rgba(255, 255, 255, 0.4)">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Mobile navigation -->
+    <section>
+        <div class="nav_mobile"></div>
+    </section>
+
+    <!-- Mobile navigation menu -->
+    <section class="mobile_navigation_menu"></section>
+
+    <!-- modals -->
+    <section>
+
+        <!-- Modal rent details -->
+        @*<div class="modal_rent_details-old view_modal_wrapper visuallyhidden hidden"></div>*@
+        <div class="modal_rent_details view_modal_wrapper visuallyhidden hidden"></div>
+
+        <!-- Modal new rent -->
+        <div id="modal_new_rent" class="modal_new_rent view_modal_wrapper visuallyhidden hidden"></div>
+        <div id="modal_rent_edit_guest_details" class="modal_rent_edit_guest_details view_modal_wrapper visuallyhidden hidden"></div>
+        <div id="modal_rent_add_guest_details" class="modal_rent_add_guest_details view_modal_wrapper visuallyhidden hidden"></div>
+
+        <!-- Notifications -->
+        <div id="notifications"></div>
+
+    </section>
+
+    <!-- templates -->
+    <section>
+
+        <template id="template_div_loading">
+            <div class="loading" style="display: flex;">
+                <img src="./assets/images/icons/loading.svg" alt="">
+            </div>
+        </template>
+
+    </section>
+
+    <section class="modal_search"></section>
+
+    <script async>
+
+        var index = {};
+
+        $(".main_menu_left").load("/pages/partals/main_menu_left.html");
+        $(".main_background").load("/pages/partals/main_background.html");
+        $(".bg_sign").load("/pages/partals/clouds_background.html");
+        $(".mobile_navigation_menu").load("/pages/partals/mobile_navigation_menu.html");
+
+        // Load partials
+        ui.modal_load();
+        ui.notify_load();
+
+        index.init_route = async () => {
+
+            let guid = '@guid';
+
+            // debugger;
+
+            await routing.default(guid);
+
+            @if (ViewData["hash"] != null)
+            {
+                @Html.Raw(" routing.clear_url(); window.location.hash = '#" + ViewData["hash"].ToString() + "'; ");
+            }
+
+            index.setup_background_img();
+        }
+
+        index.setup_background_img = async () => {
+
+            var url = window.location.href
+
+            let img_url = bl.workers.picture_background().replace('-thumb', '');
+
+            //if (url.includes("1klik")) {
+
+            //    img_url = '/assets/images/pictures/1klik_bg.png';
+            //    document.getElementById("main_menu_left_user_picture").src = "/assets/images/pictures/1klik_icon.svg"
+            //}
+            //else if (url.includes("livmark")) {
+            //    img_url = '/assets/images/pictures/bg_livmark.png';
+            //}
+            //else if (url.includes("apartmanija")) {
+            //    img_url = '/assets/images/pictures/bg_apartmanija.jpg';
+            //}
+            //else if (url.includes("totaltv")) {
+            //    img_url = '/assets/images/pictures/bg_totaltv.png';
+            //}
+            //else if (url.includes("a1.zaggys.com")) {
+
+            //    img_url = '/assets/images/pictures/bg_a1.png';
+            //    document.getElementById("main_menu_left_user_picture").src = "/assets/images/pictures/logo_a1.png"
+            //}
+            //else if (url.includes("app.sync-hotel.com")) {
+
+            //    img_url = '/assets/images/pictures/bg_sync_hotel.png';
+            //    document.getElementById("main_menu_left_user_picture").src = "/assets/images/pictures/logo_sync_hotel.svg"
+            //}
+            //else if (url.includes("https://ht.my-")) {
+
+            //    img_url = '/assets/images/pictures/bg_ht.png';
+            //    document.getElementById("main_menu_left_user_picture").src = "/assets/images/pictures/ht_logo.svg"
+            //}
+            //else {
+
+            //    // load from worker
+            //    img = bl.workers.picture_background();
+
+            //}
+
+            img_url = '/assets/images/pictures/bg_zagreb.png';
+
+            document.querySelector(".bg_screen_img > img").src = img_url;
+            document.querySelector(".bg_screen_img_blur > img").src = img_url;
+            localStorage.setItem("bg_img", img_url);
+        }
+
+        index.partals = async () => {
+
+            await $(".main_menu_left").load("/pages/partals/main_menu_left.html");
+            await $(".main_background").load("/pages/partals/main_background.html");
+            await $(".bg_sign").load("/pages/partals/clouds_background.html");
+            await $(".mobile_navigation_menu").load("/pages/partals/mobile_navigation_menu.html");
+
+            // Load partials
+            await ui.modal_load();
+            await ui.notify_load();
+
+        }
+
+        window.addEventListener('load', index.init_route);
+
+
+        // translate page
+        // tran_js.translate_page();
+
+    </script>
+
+
+</body>
+
+</html>

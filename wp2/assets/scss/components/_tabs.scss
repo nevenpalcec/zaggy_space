@@ -1,0 +1,40 @@
+.ui-tabs {
+    margin-top: 1rem;
+    border: none !important;
+    .ui-widget-header {
+        border: none !important;
+        background: none;
+    }
+    a {
+        outline-color: transparent !important;
+    }
+    .ui-state-active {
+        border: none !important;
+        border-top: 4px solid $bg-tertiary !important;
+        border-left: 1px solid $color-silver !important;
+        border-right: 1px solid $color-silver !important;
+        a {
+            color: $text-primary !important;
+        }
+    }
+    li {
+        border-top: 4px solid $color-silver !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: 1px solid $color-silver !important;
+        font-size: .9rem;
+    }
+    .ui-state-focus {
+        outline: none !important;
+        outline-color: none !important;
+    }
+    .tab-text {
+        font-size: .9rem;
+    }
+}
+
+.property_prices_box.active {
+    background: rgba(32, 186, 186, .2);
+}

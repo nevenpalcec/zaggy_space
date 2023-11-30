@@ -1,0 +1,701 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <span class="position-relative">
+                    <i class="fas fa-globe pr-2"></i>
+                    <span class="little_icon">
+                        <i class="fas fa-wrench"></i>
+                    </span>
+                </span>Website test
+            </div>
+        </div>
+        <div class="align-self-center ml-auto">
+            <div class="view_sidebar d-flex text-dark font_6">
+                <div class="view_sidebar_item align-self-center position-relative">
+                    <i class="far fa-bell"></i>
+                    <span class="notice text-white">10</span>
+                </div>
+                <div class="view_sidebar_line_y sidebar_silver"></div>
+                <div class="view_user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+        <a href="#website.html" class="filter_link active"><i class="fas fa-code-branch pr-2"></i><span class="d-none d-lg-flex">Booking engine</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#website_carousel.html" class="filter_link"><i class="fas fa-images pr-2"></i><span class="d-none d-lg-flex">Carousel</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#website_gallery.html" class="filter_link"><i class="far fa-images pr-2"></i><span class="d-none d-lg-flex">Gallery</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="website_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content website pt-3">
+            <div class="row">
+                <div class="col_template">
+                    <div class="card sticky">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold"><i class="far fa-image pr-2"></i>View template</div>
+                            <div></div>
+                        </div>
+                        <div class="card-body">
+                            <div id="web_template" class="web_template component_01">
+                                <div class="top_bar"></div>
+                                <div class="wrapper_navbar">
+                                    <div class="logo">Logo</div>
+                                    <div id="web_template_nav" class="nav left">
+                                        <div class="nav_item active">
+                                            <div class="px-2">
+                                                <div class="heading">Home</div>
+                                                <div class="sub"></div>
+                                            </div>
+                                        </div>
+                                        <div class="line-y"></div>
+                                        <div class="nav_item">
+                                            <div class="px-2">
+                                                <div class="heading">Gallery</div>
+                                                <div class="sub"></div>
+                                            </div>
+                                        </div>
+                                        <div class="line-y"></div>
+                                        <div class="nav_item">
+                                            <div class="px-2">
+                                                <div class="heading">Accommodation</div>
+                                                <div class="sub"></div>
+                                            </div>
+                                        </div>
+                                        <div class="line-y"></div>
+                                        <div class="nav_item">
+                                            <div class="px-2">
+                                                <div class="heading">Blog</div>
+                                                <div class="sub"></div>
+                                            </div>
+                                        </div>
+                                        <div class="line-y"></div>
+                                        <div class="nav_item">
+                                            <div class="px-2">
+                                                <div class="heading">Reviews</div>
+                                                <div class="sub"></div>
+                                            </div>
+                                        </div>
+                                        <div class="line-y"></div>
+                                        <div class="nav_item">
+                                            <div class="px-2">
+                                                <div class="heading">About us</div>
+                                                <div class="sub"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="web_template_header">
+                                    <div id="web_template_carousel" class="carousel slide carousel-fade" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img class="d-block w-100"
+                                                     src="https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                                                     alt="gallery">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100"
+                                                     src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                                                     alt="gallery">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block w-100"
+                                                     src="https://images.unsplash.com/photo-1432889490240-84df33d47091?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80"
+                                                     alt="gallery">
+                                            </div>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#web_template_carousel" role="button" data-slide="prev">
+                                            <span class="carousel-icon"><i class="fas fa-chevron-left"></i></span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#web_template_carousel" role="button" data-slide="next">
+                                            <span class="carousel-icon"><i class="fas fa-chevron-right"></i></span>
+                                        </a>
+                                    </div>
+                                    <div class="custom_container d-flex flex-column">
+                                        <div>
+                                            <div id="web_template_title" class="title">Hotel Name</div>
+                                        </div>
+                                        <div>
+                                            <div id="web_template_sub" class="sub">The Only Heritage Hotel in Hvar</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="web_template_finder">
+                                <div id="web_template_finder_childreen" class="wrapper">
+                                    <div>Check in</div>
+                                    <div>Check out</div>
+                                    <div>Adultts</div>
+                                    <div>Childreen</div>
+                                    <div>Check</div>
+                                </div>
+                                <div id="web_template_finder_pets" class="wrapper hidden">
+                                    <div>Check in</div>
+                                    <div>Check out</div>
+                                    <div>Adultts</div>
+                                    <div>Pets</div>
+                                    <div>Check</div>
+                                </div>
+                                <div id="web_template_finder_only_adults" class="wrapper only_adults hidden">
+                                    <div>Check in</div>
+                                    <div>Check out</div>
+                                    <div>Adultts</div>
+                                    <div>Check</div>
+                                </div>
+                            </div>
+                            <div class="row web_content">
+                                <div class="col-4 px-2">
+                                    <div class="heading"></div>
+                                    <div class="img">
+                                        <img src="./assets/images/icons/web-template/web_img.png" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <img src="./assets/images/icons/web-template/web_text.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-4 px-2">
+                                    <div class="heading"></div>
+                                    <div class="img">
+                                        <img src="./assets/images/icons/web-template/web_img.png" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <img src="./assets/images/icons/web-template/web_text.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-4 px-2">
+                                    <div class="heading"></div>
+                                    <div class="img">
+                                        <img src="./assets/images/icons/web-template/web_img.png" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <img src="./assets/images/icons/web-template/web_text.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_flex_1">
+                    <div class="row">
+                        <div class="col-lg-6 col-xl-12 wt_col-2xl-6">
+                            <div class="card">
+                                <div class="card-body font_3">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input id="input_web_title" type="text" class="form-control focus">
+                                    </div>
+                                    <div class="form-group">
+                                        <div>Description</div>
+                                        <textarea name="" id="textarea_web_sub" cols="30" rows="4"
+                                                  class="form-control focus"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <!-- First page -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">First page</label>
+                                                <div id="website_select_first_page" class="select">
+                                                    <button class="custom-select focus"></button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" data-id="1">Home</li>
+                                                        <li class="select_li" data-id="2">Blogs</li>
+                                                        <li class="select_li" data-id="3">Objects</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Status -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Status</label>
+                                                <div id="select_status" class="select">
+                                                    <input type="text" class="form-control focus">
+                                                    <span class="select_label"></span>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <div class="clean hidden"><i class="fas fa-times"></i></div>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" data-id="1">
+                                                            <span class="icon"
+                                                                  style="background-color: #DDDDDD;"></span>Owner
+                                                        </li>
+                                                        <li class="select_li" data-id="2">
+                                                            <span class="icon"
+                                                                  style="background-color: #414f6e;"></span>Paid
+                                                        </li>
+                                                        <li class="select_li" data-id="3">
+                                                            <span class="icon"
+                                                                  style="background-color: #e2a74d;"></span>Owner pending
+                                                        </li>
+                                                        <li class="select_li" data-id="4">
+                                                            <span class="icon"
+                                                                  style="background-color: #df6969;"></span>Deleted
+                                                        </li>
+                                                        <li class="select_li" data-id="5">
+                                                            <span class="icon"
+                                                                  style="background-color: #389b7a;"></span>Check OUT
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #337e61;"></span>ADV Paid
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #287533;"></span>Guest confirmed
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #942121;"></span>Blocked
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #6ae488;"></span>Confirm
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #c255b3;"></span>ORVAS VHC
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #c27e3f;"></span>Waiting
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #4dc4e2;"></span>Check IN
+                                                        </li>
+                                                        <li class="select_li" data-id="6">
+                                                            <span class="icon"
+                                                                  style="background-color: #f0ee94;"></span>Offer
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Type of web page -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Type of web page</label>
+                                                <div id="website_select_type_of_web_page" class="select">
+                                                    <button class="custom-select focus"></button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" data-id="1">Default</li>
+                                                        <li class="select_li" data-id="2">Nanov</li>
+                                                        <li class="select_li" data-id="3">Wide</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Header type -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Header type</label>
+                                                <div id="website_select_navbar_header" class="select">
+                                                    <button class="custom-select focus">Component 01</button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" value="1">Component 01</li>
+                                                        <li class="select_li" value="2">Component 02</li>
+                                                        <li class="select_li" value="3">Component 03</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Navbar -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Navbar</label>
+                                                <div id="website_select_navbar" class="select">
+                                                    <button class="custom-select focus"></button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" data-id="1">Navbar 1</li>
+                                                        <li class="select_li" data-id="2">Navbar 2</li>
+                                                        <li class="select_li" data-id="3">Navbar 3</li>
+                                                        <li class="select_li" data-id="4">Navbar 4</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Navbar justify -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Navbar justify</label>
+                                                <div id="website_select_navbar_justify" class="select">
+                                                    <button class="custom-select focus">Left</button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" value="1">Left</li>
+                                                        <li class="select_li" value="2">Right</li>
+                                                        <li class="select_li" value="3">Right right</li>
+                                                        <li class="select_li" value="4">Center</li>
+                                                        <li class="select_li" value="5">Center center</li>
+                                                        <li class="select_li" value="6">Center between</li>
+                                                        <li class="select_li" value="7">Center between center</li>
+                                                        <li class="select_li" value="8">Center with space</li>
+                                                        <li class="select_li" value="9">Center with space center</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Finder -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Finder</label>
+                                                <div id="website_select_navbar_finder" class="select">
+                                                    <button class="custom-select focus">With childreen</button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <ul class="select_ul hidden">
+                                                        <li class="select_li" value="1">With childreen</li>
+                                                        <li class="select_li" value="2">With pets</li>
+                                                        <li class="select_li" value="3">Only check in/out and adults</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Color -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Color</label>
+                                                <div class="color position-relative">
+                                                    <input id="webiste_color" type="text" class="form-control focus">
+                                                    <i class="fas fa-angle-down"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="checkbox p-0">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" checked="">
+                                                <div class="check check_lg"></div>
+                                                <div class="pl-2">General terms needs to be accepted (guest portal)</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="checkbox p-0">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" checked="">
+                                                <div class="check check_lg"></div>
+                                                <div class="pl-2">Display header title</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="text-right mt-2">
+                                        <button class="btn btn_primary"><i class="fas fa-save pr-2"></i>Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xl-12 wt_col-2xl-6">
+                            <div class="card">
+                                <div class="card-body font_3">
+                                    <div class="form-group">
+                                        <label>Web domain</label>
+                                        <input type="text" class="form-control focus">
+                                    </div>
+                                    <div class="form-group">
+                                        <div>Moto header</div>
+                                        <textarea name="" id="" cols="30" rows="2" class="form-control focus"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>Moto header small</div>
+                                        <textarea name="" id="" cols="30" rows="4" class="form-control focus"></textarea>
+                                    </div>
+                                    <div class="text-right mt-2">
+                                        <button class="btn btn_primary"><i class="fas fa-save pr-2"></i>Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="font-weight-bold"><i class="fas fa-images pr-2"></i>Carousel</div>
+                                    <div class="d-flex">
+                                        <span onclick="website.info_carousel()" class="icon_carousel_info" data-toggle="tooltip" data-placement="top" data-original-title="open to more info"><i class="fas fa-info"></i></span>
+                                        <label class="custom_file_upload m-0 font_2" for="carousel-file-upload">Add pictures</label>
+                                        <input class="carousel_file" type="file" id="carousel-file-upload">
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex border-bottom pb-3">
+                                        <div class="card_carousel flex-wrap d-flex">
+                                            <div class="card_carousel_item">
+                                                <div class="icons_wrapper">
+                                                    <span class="icon_main" data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture"><i class="far fa-image"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Zoom"><i class="fas fa-search-plus"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="">
+                                            </div>
+                                            <div class="card_carousel_item">
+                                                <div class="icons_wrapper">
+                                                    <span class="icon_main" data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture"><i class="far fa-image"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Zoom"><i class="fas fa-search-plus"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="">
+                                            </div>
+                                            <div class="card_carousel_item">
+                                                <div class="icons_wrapper">
+                                                    <span class="icon_main" data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture"><i class="far fa-image"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Zoom"><i class="fas fa-search-plus"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <img src="https://images.unsplash.com/photo-1432889490240-84df33d47091?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80" alt="">
+                                            </div>
+                                            <div class="card_carousel_item">
+                                                <div class="icons_wrapper">
+                                                    <span class="icon_main" data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture"><i class="far fa-image"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Zoom"><i class="fas fa-search-plus"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <img src="https://images.unsplash.com/photo-1432889490240-84df33d47091?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80" alt="">
+                                            </div>
+                                            <div class="card_carousel_item">
+                                                <div class="icons_wrapper">
+                                                    <span class="icon_main" data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture"><i class="far fa-image"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Zoom"><i class="fas fa-search-plus"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <img src="https://images.unsplash.com/photo-1432889490240-84df33d47091?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80" alt="">
+                                            </div>
+                                            <div class="card_carousel_item">
+                                                <div class="icons_wrapper">
+                                                    <span class="icon_main" data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture"><i class="far fa-image"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Zoom"><i class="fas fa-search-plus"></i></span>
+                                                    <span class="icon_remove" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <img src="https://images.unsplash.com/photo-1432889490240-84df33d47091?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button class="btn btn_red"><i class="far fa-trash-alt pr-2"></i>Remove all</button>
+                                        <button class="btn btn_primary"><i class="fas fa-save pr-2"></i>Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    var website = {};
+
+    // on load function
+    website.load = function () {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        // Global ui
+        ui.content_loading("website_content_loading");
+        ui.display_title("Websiite");
+        ui.custom_select("website_select_first_page");
+        ui.custom_select("website_select_type_of_web_page");
+        ui.custom_select("website_select_navbar_header");
+        ui.custom_select("website_select_navbar");
+        ui.custom_select("website_select_navbar_justify");
+        ui.custom_select("website_select_navbar_finder");
+
+        // Local ui
+        website.ui.input_web_template_title();
+        website.ui.textarea_web_template_sub();
+        website.ui.select_web_template_header("website_select_navbar_header");
+        website.ui.select_web_template_finder("website_select_navbar_finder");
+        website.ui.select_web_template_navbar_justify("website_select_navbar_justify", "web_template_nav");
+        website.ui.carousel_slide();
+        website.ui.spectrum_color();
+
+    }
+
+    website.ui = new function () {
+
+        // Event change value of title on web template
+        this.input_web_template_title = function () {
+            let input_web_title = document.getElementById("input_web_title");
+            input_web_title.addEventListener("keyup", function (e) {
+                let value = input_web_title.value;
+                let title = document.getElementById("web_template_title");
+                title.innerText = value;
+            });
+        }
+
+        // Event change value of textarea on web template
+        this.textarea_web_template_sub = function () {
+            let text_web_sub = document.getElementById("textarea_web_sub");
+            text_web_sub.addEventListener("keyup", function () {
+                let value = text_web_sub.value;
+                let sub = document.getElementById("web_template_sub");
+                sub.innerText = value;
+            });
+        }
+
+        // Select web template header
+        this.select_web_template_header = function (id) {
+            let web_template_select_header = document.getElementById(id);
+            let select_li = web_template_select_header.querySelectorAll(".select_ul");
+            let web_template = document.getElementById("web_template");
+            for (let i = 0; i < select_li.length; i++) {
+                select_li[i].onclick = function (e) {
+                    if (e.target.value == 1) {
+                        web_template.classList.add("component_01");
+                        web_template.classList.remove("component_02");
+                        web_template.classList.remove("component_03");
+                    } else if (e.target.value == 2) {
+                        web_template.classList.add("component_02");
+                        web_template.classList.remove("component_01");
+                        web_template.classList.remove("component_03");
+
+                    } else if (e.target.value == 3) {
+                        web_template.classList.add("component_03");
+                        web_template.classList.remove("component_01");
+                        web_template.classList.remove("component_02");
+
+                    }
+                }
+            }
+        }
+
+        // Select web template finder
+        this.select_web_template_finder = function (id) {
+            let web_template_select_finder = document.getElementById(id);
+            let select_li = web_template_select_finder.querySelectorAll(".select_ul");
+            for (let i = 0; i < select_li.length; i++) {
+                select_li[i].onclick = function (e) {
+                    if (e.target.value == 1) {
+                        document.getElementById("web_template_finder_childreen").classList.remove("hidden");
+                        document.getElementById("web_template_finder_pets").classList.add("hidden");
+                        document.getElementById("web_template_finder_only_adults").classList.add("hidden");
+                    } else if (e.target.value == 2) {
+                        document.getElementById("web_template_finder_childreen").classList.add("hidden");
+                        document.getElementById("web_template_finder_pets").classList.remove("hidden");
+                        document.getElementById("web_template_finder_only_adults").classList.add("hidden");
+                    } else {
+                        document.getElementById("web_template_finder_childreen").classList.add("hidden");
+                        document.getElementById("web_template_finder_pets").classList.add("hidden");
+                        document.getElementById("web_template_finder_only_adults").classList.remove("hidden");
+                    }
+                }
+            }
+        }
+
+        // Select web template navbar justify
+        this.select_web_template_navbar_justify = function (id, nav) {
+            let web_template_select_finder = document.getElementById(id);
+            let select_li = web_template_select_finder.querySelectorAll(".select_ul");
+            let web_template_nav = document.getElementById("web_template_nav");
+            for (let i = 0; i < select_li.length; i++) {
+                select_li[i].onclick = function (e) {
+                    remove_justify();
+                    if (e.target.value == 1) {
+                        web_template_nav.classList.add("left");
+                    } else if (e.target.value == 2) {
+                        web_template_nav.classList.add("right");
+                    } else if (e.target.value == 3) {
+                        web_template_nav.classList.add("right_right");
+                    } else if (e.target.value == 4) {
+                        web_template_nav.classList.add("center");
+                    } else if (e.target.value == 5) {
+                        web_template_nav.classList.add("center_center");
+                    } else if (e.target.value == 6) {
+                        web_template_nav.classList.add("center_between");
+                    } else if (e.target.value == 7) {
+                        web_template_nav.classList.add("center_between_center");
+                    } else if (e.target.value == 8) {
+                        web_template_nav.classList.add("center_with_space");
+                    } else {
+                        web_template_nav.classList.add("center_with_space_center");
+                    }
+                    function remove_justify() {
+                        web_template_nav.classList.remove("left");
+                        web_template_nav.classList.remove("right");
+                        web_template_nav.classList.remove("right_right");
+                        web_template_nav.classList.remove("center");
+                        web_template_nav.classList.remove("center_center");
+                        web_template_nav.classList.remove("center_between");
+                        web_template_nav.classList.remove("center_between_center");
+                        web_template_nav.classList.remove("center_with_space");
+                        web_template_nav.classList.remove("center_with_space_center");
+                    }
+                }
+            }
+        }
+
+        // Carousel
+        this.carousel_slide = function () {
+            $('.carousel').carousel({
+                interval: false
+            });
+        }
+
+        // Spectrum color website
+        this.spectrum_color = function () {
+
+            $("#webiste_color").spectrum({
+                move: function (color) {
+                    color.toHexString();
+                    $(":root").css("--web_primary_color", color.toHexString());
+                },
+                color: "#20baba",
+                showInitial: true,
+                showPalette: true,
+                showSelectionPalette: true,
+                preferredFormat: "hex",
+                showInput: true,
+                showButtons: false,
+                palette: [
+                    ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+                        "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
+                    ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+                        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+                    ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
+                        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)"],
+                    ["rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+                        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)"],
+                    ["rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+                        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)"],
+                    ["rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+                        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)"],
+                    ["rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
+                        "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+                ]
+            });
+
+        }
+
+    }
+
+    // On load
+    website.load();
+
+</script>

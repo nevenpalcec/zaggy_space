@@ -1,0 +1,490 @@
+﻿<!-- Modal channel settings -->
+<div id="channel_settings_modal" class="view_modal hidden visuallyhidden" data-b2b_id="" data-item_id="" data-user_id="">
+    <div class="modal_backdrop"></div>>
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold" id="modal_channel_settings_title"><img src="/assets/images/icons/portals/airbnb.svg" class="pr-3" style="height: 2rem;" /><span>Airbnb</span></div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <ul class="tab_pills nav nav-pills nav-tabs pt-2">
+                    <li>
+                        <a data-toggle="pill" href="#tab_channel_settings_details_a_link" class="active px-3" id="sync_details_a_link">
+                            <i class="fas fa-cube pr-2"></i>Details
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" href="#tab_channel_settings" class="px-3">
+                            <i class="fas fa-cogs pr-2"></i>Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" href="#tab_channel_settings_cancelation" class="px-3 hidden">
+                            <i class="fas fa-ban pr-2"></i>Cancelation
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="pill" href="#tab_channel_settings_payment_terms" class="px-3 hidden">
+                            <i class="fas fa-money-bill-wave pr-2"></i>Payment terms
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab_channel_settings_details_a_link" class="tab-pane active show">
+                        <div class="row font_3">
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <label class="mb-1">Value</label>
+                                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="main external ID">
+                                            <i class="fas fa-question fa-xs px-1"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control focus text-center" id="sync_value">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <label class="mb-1">Percent</label>
+                                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="How much will price increase or decrease with percent">
+                                            <i class="fas fa-question fa-xs px-1"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control focus text-center pr-4" id="sync_percent">
+                                    <span class="position-absolute" style="bottom: .4rem; right: .5rem;">%</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <label class="mb-1">Extra</label>
+                                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="Fix add to a price">
+                                            <i class="fas fa-question fa-xs px-1"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control focus text-center" id="sync_extra">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Token</label>
+                                    <input type="text" class="form-control focus text-center" id="sync_token">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Web</label>
+                                    <input type="text" class="form-control focus" id="sync_web">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <label class="mb-1">Exchange rate</label>
+                                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will multiply price with the exchange rate and send it to your partner">
+                                            <i class="fas fa-question fa-xs px-1"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control focus text-center" id="sync_exchange_rate">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <label class="mb-1">Round price</label>
+                                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                            <i class="fas fa-question fa-xs px-1"></i>
+                                        </div>
+                                    </div>
+
+                                    <div id="sync_round_price" class="select">
+                                        <button class="custom-select focus open dropdown" id="sync_round_price_btn" onclick="modal_channel_settings.ui.toggle_dropdown(this)"></button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden" id="price_round_dropdown" data-id="">
+                                            <li class="select_li" data-id="" onclick="modal_channel_settings.bl.pick_dropdown_option(this)">- - -</li>
+                                              
+                                            <li class="select_li" data-id="up" onclick="modal_channel_settings.bl.pick_dropdown_option(this)">Up</li>
+
+                                            <li class="select_li" data-id="middile" onclick="modal_channel_settings.bl.pick_dropdown_option(this)">Middle</li>
+
+                                            <li class="select_li" data-id="down" onclick="modal_channel_settings.bl.pick_dropdown_option(this)">Down</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label class="mb-1">Price id</label>
+                                    <input type="text" class="form-control focus text-center" id="sync_price_id">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label class="mb-1">Option 1 (num)</label>
+                                    <input type="text" class="form-control focus text-center" id="sync_option_1">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label class="mb-1">Cancellation policy</label>
+                                    <input type="text" class="form-control focus text-center" id="sync_option_2">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group">
+                                    <label class="mb-1">Price type</label>
+                                    <input type="text" class="form-control focus text-center" id="sync_price_type">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-12">
+                                <div class="form-group">
+                                    <label class="mb-1">Name of object in a source</label>
+                                    <input type="text" class="form-control focus" id="sync_name_of_object_in_a_source">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="tab_channel_settings" class="tab-pane">
+                        <div class="row font_3">
+
+                            <div class="col-md-6 col-lg-4">
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" id="sync_ota_commision">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2">Save OTA commision</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4">
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" id="sync_add_items">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2">Save items</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4">
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" id="sync_share_content">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2">Content</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4">
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" id="sync_active">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2">Active</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-md-6 col-lg-4">
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" id="sync_save_payout_price">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2">Save payout price</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="row mt-3">
+
+                            <div class="col-md-6">
+                                <div class="form-group input_remove_number_arrow">
+                                    <label class="mb-1">Agency profit</label>
+                                    <input type="number" min="0" class="form-control focus text-center" id="sync_settings_agency_profit">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Option 3</label>
+                                    <input type="text" class="form-control focus text-center" id="sync_settings_option_3">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="tab_channel_settings_cancelation" class="tab-pane">
+                        <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3 mb-3"
+                                  placeholder="Example 01"></textarea>
+                    </div>
+                    <div id="tab_channel_settings_payment_terms" class="tab-pane">
+                        <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3 mb-3"
+                                  placeholder="Example 02"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn_red" id="sync_delete_btn" onclick="modal_channel_settings.bl.delete();">Delete</button>
+                <button class="btn btn_secondary" id="modal_channel_settings_save_btn" onclick="modal_channel_settings.bl.save_modal();"><i class="fas fa-save pr-2"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    var modal_channel_settings = {};
+    modal_channel_settings.object_b2b_id = '';
+
+    // Load function
+    modal_channel_settings.load = () => {
+
+        // Global components
+
+        // BL components
+        modal_channel_settings.bl.close_modal("channel_settings_modal");
+        //modal_channel_settings.bl.load_b2b();
+
+
+    };
+
+    // UI logic
+    modal_channel_settings.ui = new function () {
+
+        this.hide_modal = () => {
+
+            document.getElementById('channel_settings_modal').classList.add('hidden');
+            
+        }
+
+        this.toggle_dropdown = (el) => {
+
+            let e = el.parentNode.querySelector('ul');
+
+            if (e.classList.contains("hidden")) {
+                e.classList.remove("hidden");
+            } else {
+                e.classList.add("hidden");
+            }
+
+        }
+
+    };
+
+    // BL logic
+    modal_channel_settings.bl = new function () {
+
+        // Close modal
+        this.close_modal = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id, row) {
+
+            //row = row.slice(-1);
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+            modal_channel_settings.bl.load_b2b(row);
+
+        };
+
+        // load all b2b connection for object
+        this.load_b2b = async (row) => {
+
+            modal_channel_settings.object_id = page.get_id();            
+            
+            var url = '/api/objects_b2b/list/' + modal_channel_settings.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            modal_channel_settings.b2b_object = json_response;
+
+            var number = 1;
+            var link = '<img src="/assets/images/icons/portals/';
+
+            let data = json_response[row]
+
+            modal_channel_settings_title.children[0].src = '/assets/images/icons/portals/' + data['b2b_icon'].toLowerCase() + ".svg";
+            modal_channel_settings_title.children[1].innerText = data['company'];
+
+            //Load data into modal form
+            channel_settings_modal.object_b2b_id = data['id'];
+
+            channel_settings_modal.dataset.item_id = data['item_id'];
+            channel_settings_modal.dataset.b2b_id = data['b2b_id'];
+            channel_settings_modal.dataset.user_id = data['user_id'];
+
+            sync_value.value = data['value'];
+            sync_percent.value = data['price_percent'];
+            sync_extra.value = data['price_extra'];
+            sync_token.value = data['tolken'];
+            sync_web.value = data['web'];
+            sync_exchange_rate.value = data['exchange'];
+
+            price_round_dropdown.dataset.id = data['round'];
+            //Set round dropdown
+            if (data['round'] === 'up') {
+                price_round_dropdown.children[0].click();
+                price_round_dropdown.children[1].click();
+            } else if (data['round'] === 'middile') {
+                price_round_dropdown.children[0].click();
+                price_round_dropdown.children[2].click();
+            } else if (data['round'] === 'down') {
+                price_round_dropdown.children[0].click();
+                price_round_dropdown.children[3].click();
+            } else {
+                price_round_dropdown.children[0].click();
+                price_round_dropdown.children[0].click();
+            }
+
+            sync_price_id.value = data['price_id'];
+            sync_price_type.value = data['price_type'];
+            sync_name_of_object_in_a_source.value = data['name'];
+            sync_settings_agency_profit.value = data['commision'];
+
+            sync_option_1.value = data['option1'];
+            sync_option_2.value = data['option2'];
+            sync_settings_option_3.value = data['option3'];
+
+            sync_ota_commision.checked = data['save_commision'] === 'Y' ? true : false;
+            sync_add_items.checked = data['add_items'] === 'Y' ? true : false;
+            sync_share_content.checked = data['share_content'] === 'Y' ? true : false;
+            sync_active.checked = data['active'] === 'Y' ? true : false;
+            sync_save_payout_price.checked = data['save_payout_price'] === 'Y' ? true : false;
+
+        }
+
+        this.save_modal = async () => {
+
+            data = {}
+
+            data['id'] = channel_settings_modal.object_b2b_id;
+
+            data['object_id'] = page.get_id();
+            data['b2b_id'] = channel_settings_modal.dataset.b2b_id;
+            data['item_id'] = channel_settings_modal.dataset.item_id;
+            data['user_id'] = channel_settings_modal.dataset.user_id;
+
+            data['value'] = sync_value.value;
+            data['price_percent'] = sync_percent.value;
+            data['price_extra'] = sync_extra.value;
+            data['price_id'] = sync_price_id.value;
+            data['price_type'] = sync_price_type.value;
+            data['commision'] = sync_settings_agency_profit.value;
+
+            data['tolken'] = sync_token.value;
+            data['web'] = sync_web.value;
+            data['exchange'] = sync_exchange_rate.value;
+            data['round'] = price_round_dropdown.dataset.id;
+
+            data['name'] = sync_name_of_object_in_a_source.value;
+            data['option1'] = sync_option_1.value;
+            data['option2'] = sync_option_2.value;
+            data['option3'] = sync_settings_option_3.value;
+
+            data['save_commision'] = sync_ota_commision.checked ? 'Y' : 'N';
+            data['add_items'] = sync_add_items.checked ? 'Y' : 'N';
+            data['share_content'] = sync_share_content.checked ? 'Y' : 'N';
+            data['active'] = sync_active.checked ? 'Y' : 'N';
+            data['save_payout_price'] = sync_save_payout_price.checked ? 'Y' : 'N';
+
+            modal_channel_settings.ui.hide_modal();
+
+            var url = '/api/objects_b2b/save';
+            await ajax.post_json(url, data);
+            await object_general.bl.load_b2b_connections();
+
+        }
+
+        this.delete = async (objects_b2b) => {
+            
+            channel_settings_modal.object_b2b_id = objects_b2b ?? channel_settings_modal.object_b2b_id
+
+            var url = 'api/objects_b2b/delete/' + channel_settings_modal.object_b2b_id;
+
+            modal_channel_settings.ui.hide_modal();
+
+            await ajax.get(url);
+            object_general.bl.load_b2b_connections();
+
+        }
+
+        this.pick_dropdown_option = (elem) => {
+
+            elem.parentNode.dataset.id = elem.dataset.id;
+
+            modal_channel_settings.ui.toggle_dropdown(elem.parentNode);
+
+            sync_round_price_btn.innerText = elem.innerText;
+
+        }        
+
+    };
+
+    // On load
+    modal_channel_settings.load();
+
+</script>

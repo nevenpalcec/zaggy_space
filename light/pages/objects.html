@@ -1,0 +1,1337 @@
+<div class="view_items d-flex flex-column bg-white">
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+        <!-- left menu -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-home pr-2"></i>Object
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Location list -->
+        <a href="#location_list" class="btn btn_hover px-2 py-1">
+            <div class="d-flex align-items-center">
+                <span class="font_7"><i class="fas fa-map-marker-alt"></i></span>
+            </div>
+        </a>
+
+        <div class="filter_line_y"></div>
+
+        <!-- Tip -->
+        <div id="object_filter_tip" class="view_dropdown filter_tip d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="far fa-object-ungroup"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold">Type</div>
+                        <div class="font_3 text-left">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-tip="1">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon"><i class="fas fa-home"></i></span>
+                                <span class="align-self-center">Apartment</span>
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="2">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon"><i class="fas fa-bed"></i></span>
+                                <span class="align-self-center">Krevet</span>
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                </ul>
+                <hr class="m-0">
+                <div class="dropdown_footer d-flex">
+                    <div class="dropdown_btn all w-100 text-center font_3">All</div>
+                    <div class="dropdown_btn remove w-100 text-red text-center font_3">Remove</div>
+                </div>
+            </div>
+        </div>
+        <a id="object_filter_tip_btn" class="filter_link d-lg-none d-block mobile"><i class="far fa-object-ungroup"></i></a>
+        <!--<div class="filter_line_y"></div>-->
+        <!-- Status -->
+        <div id="object_filter_status" class="view_dropdown filter_status d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-layer-group"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold">Status</div>
+                        <div class="font_3 text-left">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-status="1">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon" style="background-color: #DDDDDD;"></span>
+                                <span class="align-self-center">Active</span>
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="2">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon" style="background-color: #df6969;"></span>
+                                <span class="align-self-center">Deleted</span>
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+
+                </ul>
+                <hr class="m-0">
+                <div class="dropdown_footer d-flex">
+                    <div class="dropdown_btn all w-100 text-center font_3">All</div>
+                    <div class="dropdown_btn remove w-100 text-red text-center font_3">Remove</div>
+                </div>
+            </div>
+        </div>
+        <a id="object_filter_status_btn" class="filter_link d-lg-none d-block mobile"><i class="fas fa-layer-group"></i></a>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Search name -->
+        <div id="filter_search_name" class="filter_search_name">
+            <div class=" position-relative">
+                <input type="text" class="form-control focus font_3" style="min-width: 9rem;" placeholder="Search name" id="objects_input_search_name">
+                <span class="search_icon"><i class="fas fa-search"></i></span>
+            </div>
+        </div>
+
+
+        <!-- Refresh page -->
+        <div class="pl-2 ml-auto">
+            <button class="btn btn_hover" onclick="objects.load();">
+                <i class="fas fa-sync"></i>
+            </button>
+        </div>
+
+
+        <div class="pl-2 hidden">
+            <button class="btn bg_primary text-white space_nowrap" onclick="objects.bl.open_add_object();"><i class="fas fa-plus pr-2"></i>Add object</button>
+            <!-- Old add object modal -->
+            <!--<button class="btn bg_primary text-white space_nowrap" onclick="modal_add_object.bl.show_modal('modal_add_object')"><i class="fas fa-plus pr-2"></i>Add object</button>-->
+        </div>
+    </div>
+
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1" id="div_objects_list" onscroll="js.images.lazy_load();">
+
+
+        <!-- Loading -->
+        <div id="objects_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <div class="view_table object">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th scope="col">Picture</th>
+                        <th class="col">Object</th>
+                        <th class="col rooms">Rooms</th>
+                        <th class="col person">Person</th>
+                        <th class="col beds">Beds</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="objects_tbody"></tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal add object -->
+<section class="modal_add_object"></section>
+
+<!-- templates -->
+<section>
+
+    <template id="objects_template_tr">
+
+        <tr class="${active}" style="cursor: pointer;" onclick="this.querySelector('[href]').click();">
+            <th scope="row">${number}</th>
+            <td class="td_item01 picture">
+                <a href="#object_general?${object_id}"><img src="/assets/images/pictures/no-image.png" data-src="${picture_url_amazon}" alt="" class="lazy"></a>
+            </td>
+            <td class="td_item02 object">
+                <div class="td_object"><strong> ${object_name} </strong></div>
+                <div>
+                    <img src="../assets/images/icons/flags/${country_code}.svg" style="height: 15px;" loading="lazy" /> &nbsp; ${address}
+                </div>
+            </td>
+            <td class="td_item03 rooms space_nowrap">
+                <div>${bedrooms} Bedrooms</div>
+                <div>${bathrooms} Bathroom</div>
+            </td>
+            <td class="td_item04 person space_nowrap">
+                <div>${can_sleep_max} max</div>
+                <div>${can_sleep_optimal} optim</div>
+            </td>
+            <td class="td_item05 beds space_nowrap">
+                <div>${beds} Bed</div>
+                <div>${beds_extra} Extra</div>
+            </td>
+            <td class="td_item06 icons">
+                <span class="d-none d-sm-block">
+                    <div class="d-flex pb-1">
+                        <a href="#object_general?${object_id}" data-toggle="tooltip" data-placement="top"
+                           data-original-title="General"><i class="fas fa-cog"></i></a>
+                        <a href="#object_real_estate?${object_id}" data-toggle="tooltip" data-placement="top"
+                           data-original-title="Real state"><i class="far fa-file-alt"></i></a>
+                    </div>
+                    <div class="d-flex">
+                        <a href="#pictures?${object_id}" data-toggle="tooltip" data-placement="top"
+                           data-original-title="Pictures"><i class="far fa-images"></i></a>
+                        <a href="#object_prices?${object_id}" data-toggle="tooltip" data-placement="top"
+                           data-original-title="Price"><i class="fas fa-coins"></i></a>
+                    </div>
+                </span>
+                <a href="#object_general" class="d-sm-none d-flex mobile">
+                    <i class="fas fa-cog font_7"></i>
+                </a>
+            </td>
+        </tr>
+
+    </template>
+
+</section>
+
+<!-- Step of hosting -->
+<div id="steps_box" class="steps_box position-fixed bg-white hidden" style="top: 0; left: 0; right: 0; bottom: 0; z-index: 999;">
+
+    <!-- Exit -->
+    <div class="position-absolute mt-3 mr-3" style="top: 0; right: 0; z-index: 99999;">
+        <button class="btn btn_hover font_5 rounded-circle d-flex justify-content-center align-items-center" onclick="objects.bl.close_add_object();" style="width: 2.4rem; height: 2.4rem;"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Step 01 -->
+    <div id="objects_step_01" class="">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative p-3">
+                    <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content px-4 py-5 d-flex justify-content-center align-items-center">
+                        <div class="text-center w-100" style="max-width: 500px;">
+                            <div class="font_10 font_bold pb-4" style="line-height: 1.2;">Become a Host in 8 easy steps</div>
+                            <div>Join us. We'll help you every step of the way.</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress"></div>
+                        <div class="p-3 text-right">
+                            <button type="button" onclick="objects.bl.step_by_step('step_02')" class="btn btn_primary">Let's go!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 02 -->
+    <div id="objects_step_02" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">What kind of place will you host?</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content px-4 py-5 d-flex justify-content-center align-items-center overflow-auto">
+                        <div class="text-center w-100">
+                            <label class="step_radio w-100 d-block mb-2 mx-auto cursor_point user_select_none">
+                                <input type="radio" class="d-none" checked="checked" name="radio">
+                                <span class="checkmark d-flex align-items-center justify-content-between p-3 rounded-lg">
+                                    <span class="step_radio_label pl-2 font_bold">Apartment</span>
+                                    <span class="step_radio_img d-block">
+                                        <img src="https://images.unsplash.com/photo-1622866306950-81d17097d458?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100 rounded-lg" style="object-fit: cover;" alt="image">
+                                    </span>
+                                </span>
+                            </label>
+                            <label class="step_radio w-100 d-block mb-2 mx-auto cursor_point user_select_none">
+                                <input type="radio" class="d-none" name="radio">
+                                <span class="checkmark d-flex align-items-center justify-content-between p-3 rounded-lg">
+                                    <span class="step_radio_label pl-2 font_bold">Apartment</span>
+                                    <span class="step_radio_img d-block">
+                                        <img src="https://images.unsplash.com/photo-1622866306950-81d17097d458?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100 rounded-lg" style="object-fit: cover;" alt="image">
+                                    </span>
+                                </span>
+                            </label>
+                            <label class="step_radio w-100 d-block mb-2 mx-auto cursor_point user_select_none">
+                                <input type="radio" class="d-none" name="radio">
+                                <span class="checkmark d-flex align-items-center justify-content-between p-3 rounded-lg">
+                                    <span class="step_radio_label pl-2 font_bold">Apartment</span>
+                                    <span class="step_radio_img d-block">
+                                        <img src="https://images.unsplash.com/photo-1622866306950-81d17097d458?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100 rounded-lg" style="object-fit: cover;" alt="image">
+                                    </span>
+                                </span>
+                            </label>
+                            <label class="step_radio w-100 d-block mb-2 mx-auto cursor_point user_select_none">
+                                <input type="radio" class="d-none" name="radio">
+                                <span class="checkmark d-flex align-items-center justify-content-between p-3 rounded-lg">
+                                    <span class="step_radio_label pl-2 font_bold">Apartment</span>
+                                    <span class="step_radio_img d-block">
+                                        <img src="https://images.unsplash.com/photo-1622866306950-81d17097d458?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100 rounded-lg" style="object-fit: cover;" alt="image">
+                                    </span>
+                                </span>
+                            </label>
+                            <label class="step_radio w-100 d-block mb-2 mx-auto cursor_point user_select_none">
+                                <input type="radio" class="d-none" name="radio">
+                                <span class="checkmark d-flex align-items-center justify-content-between p-3 rounded-lg">
+                                    <span class="step_radio_label pl-2 font_bold">Apartment</span>
+                                    <span class="step_radio_img d-block">
+                                        <img src="https://images.unsplash.com/photo-1622866306950-81d17097d458?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100 rounded-lg" style="object-fit: cover;" alt="image">
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_20"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_01')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_03')" class="btn btn_primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 03 -->
+    <div id="objects_step_03" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">Where's your place located?</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content position-relative overflow-auto">
+
+                        <!-- Step 01 -->
+                        <div class="">
+                            <div class="px-4 h-100 d-flex justify-content-center align-items-center" style="padding-top: 8rem; padding-bottom: 8rem;">
+                                <div class="position-relative w-100" style="z-index: 999; max-width: 500px;">
+                                    <div class="bg-white position-relative w-100 mx-auto p-3 d-flex align-items-center shadow-lg rounded-lg">
+                                        <div class="pr-3 d-flex"><i class="fas fa-map-marker-alt font_6"></i></div>
+                                        <input type="text" class="form-control" placeholder="Enter your address">
+                                    </div>
+                                    <div class="position-absolute p-3 bg-white shadow-lg rounded-lg mt-1" style="left: 0; right: 0;">
+                                        <div class="p-2 btn_hover cursor_point">Address 01</div>
+                                        <div class="p-2 btn_hover cursor_point">Address 02</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 02 -->
+                        <div class="hidden">
+                            <div class="px-4 h-100 d-flex align-items-center" style="padding-top: 8rem; padding-bottom: 8rem;">
+                                <div class="bg-white position-relative w-100 mx-auto p-3 shadow-lg rounded-lg" style="z-index: 999; max-width: 500px;">
+
+                                    <div class="d-flex justify-content-between pb-4">
+                                        <button type="button" class="btn btn_hover d-flex"><i class="fas fa-angle-left"></i></button>
+                                        <div class="font_bold font_5">Confirm your address</div>
+                                        <div class="px-3"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label class="font_3 mb-0">Street</label>
+                                            <input type="text" class="form-control focus" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="font_3 mb-0">City</label>
+                                            <input type="text" class="form-control focus" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="font_3 mb-0">State(Optional)</label>
+                                            <input type="text" class="form-control focus" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="font_3 mb-0">Zip code(Optional)</label>
+                                            <input type="text" class="form-control focus" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="font_3 mb-0">Country / Region</label>
+                                            <div id="step_select_country" class="select">
+                                                <input type="text" class="form-control focus" style="">
+                                                <span class="select_label"><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</span>
+                                                <i class="fas fa-angle-down"></i>
+                                                <div class="clean hidden"><i class="fas fa-times"></i></div>
+                                                <ul class="select_ul hidden">
+                                                    <li class="select_li" data-id="1" style=""><span><img src="./assets/images/icons/flags/ad.svg" alt=""></span>Example</li>
+                                                    <li class="select_li" data-id="2" style=""><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</li>
+                                                    <li class="select_li" data-id="3" style=""><span><img src="./assets/images/icons/flags/es.svg" alt=""></span>Spain</li>
+                                                    <li class="select_li" data-id="4" style=""><span><img src="./assets/images/icons/flags/fi.svg" alt=""></span>Finska</li>
+                                                    <li class="select_li" data-id="5" style=""><span><img src="./assets/images/icons/flags/fr.svg" alt=""></span>France</li>
+                                                    <li class="select_li" data-id="6" style=""><span><img src="./assets/images/icons/flags/hr.svg" alt=""></span>Croatia</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="font_3">We'll only share your address with guests who are booked as outlined in our <a href="#" class="text_decoration_underline color_primary">privacy policy.</a></div>
+
+                                    <div class="pt-3 text-right">
+                                        <button type="button" class="btn btn_primary">Looks good</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 03 -->
+                        <div class="hidden">
+                            <div class="px-4 h-100 d-flex align-items-center" style="padding-top: 8rem; padding-bottom: 8rem;">
+                                <div class="bg-white position-relative w-100 mx-auto p-3 d-flex align-items-center shadow-lg rounded-lg" style="z-index: 999; max-width: 500px;">
+                                    <div class="pr-3 d-flex"><i class="fas fa-map-marker-alt font_6"></i></div>
+                                    <div>Address bla bla soooo looong name......</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="step_03_map" class="position-absolute" style="top: 0; left: 0; right: 0; bottom: 0;"></div>
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_40"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_02')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_04')" class="btn btn_primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 04 -->
+    <div id="objects_step_04" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">
+                            How many guests would you like to welcome?
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content p-4 d-flex justify-content-center align-items-center flex-column position-relative overflow-auto">
+
+                        <div class="d-flex justify-content-between mb-4 w-100" style="max-width: 400px;">
+                            <div class="font_bold font_6">Guests</div>
+                            <div id="step_handle_counter_guests" class="step_handle_counter d-flex justify-content-between">
+                                <button type="button" class="minus btn input-group-text"><i class="fa fa-minus"></i></button>
+                                <input type="text" class="form-control border-0 bg-white text-center" readonly value="4">
+                                <button type="button" class="plus btn input-group-text"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-4 w-100" style="max-width: 400px;">
+                            <div class="font_bold font_6">Beds</div>
+                            <div id="step_handle_counter_beds" class="step_handle_counter d-flex justify-content-between">
+                                <button type="button" class="minus btn input-group-text"><i class="fa fa-minus"></i></button>
+                                <input type="text" class="form-control border-0 bg-white text-center" readonly value="1">
+                                <button type="button" class="plus btn input-group-text"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-4 w-100" style="max-width: 400px;">
+                            <div class="font_bold font_6">Bedrooms</div>
+                            <div id="step_handle_counter_bedrooms" class="step_handle_counter d-flex justify-content-between">
+                                <button type="button" class="minus btn input-group-text"><i class="fa fa-minus"></i></button>
+                                <input type="text" class="form-control border-0 bg-white text-center" readonly value="1">
+                                <button type="button" class="plus btn input-group-text"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-4 w-100" style="max-width: 400px;">
+                            <div class="font_bold font_6">Bathrooms</div>
+                            <div id="step_handle_counter_bathrooms" class="step_handle_counter d-flex justify-content-between">
+                                <button type="button" class="minus btn input-group-text"><i class="fa fa-minus"></i></button>
+                                <input type="text" class="form-control border-0 bg-white text-center" readonly value="1">
+                                <button type="button" class="plus btn input-group-text"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_60"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_03')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_05')" class="btn btn_primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 05 -->
+    <div id="objects_step_05" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">
+                            Let guests know what your place has to offer
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content p-4 d-flex justify-content-center align-items-center flex-column position-relative overflow-auto">
+
+                        <div class="w-100 pt-5" style="max-width: 500px;">
+                            <div class="font_bold font_5 mb-3">Do you have any standout amenities?</div>
+                            <div class="d-grid w-100 mb-4" style="gap: 1rem; grid-template-columns: repeat(3,minmax(0,1fr));">
+
+                                <!-- Pool -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.09 246.3">
+                                                <path d="M59,128.49c0,4.84.07,9.33,0,13.81-.13,6.42-4.24,10.8-10,10.8s-10-4.39-10-10.8c-.05-36.51-.19-73,.07-109.52C39.23,15.14,54.27.52,71.84.07c18.1-.47,33.53,13.09,35.09,30.86.66,7.44-2.9,12.58-9.07,13.11-6,.51-10.06-3.58-10.89-10.94-.87-7.77-7-13.28-14.47-13a13.92,13.92,0,0,0-13.43,14c-.16,9.46,0,18.93,0,28.67h90c0-1.82,0-3.74,0-5.65.3-10.31-.51-20.81,1.21-30.88C153.07,9.66,169.65-1.55,186.5.18S217,16.62,217.06,33.07c0,4.4-1.6,7.8-5.52,9.87-3.58,1.88-7.41,1.81-10.25-.95a14.46,14.46,0,0,1-4.09-7.55c-1.43-9.15-6.83-14.71-14.82-14.34s-13.32,6.67-13.33,16.17q0,51.26,0,102.52c0,1.5.06,3,0,4.5-.37,5.7-4.57,9.81-10,9.81a9.91,9.91,0,0,1-10-9.79c-.19-4.81,0-9.64,0-14.82Zm.24-20.74h89.36V83.36H59.26Z" />
+                                                <path d="M167.77,233.23c-26.49,17.34-52.74,17.52-79.41,0-12.23,9.46-26.55,13.61-42.18,12.8-17-.87-32-6.55-42.79-20.33a15.79,15.79,0,0,1-3-9.53c.12-4.08,3.31-6.83,7.39-7.79s7.84.27,10.14,3.75c9.71,14.62,37.12,18.76,54.5,7.69a36.54,36.54,0,0,0,7.66-7c5.34-6.14,11.7-6.32,17-.21,15.59,18.14,46.49,18.23,61.86.18,5.44-6.39,11.78-6.28,17.2.28,14.43,17.5,46.76,17.52,61.23,0,4.5-5.43,10-6.51,14.78-2.89s5.41,9.85.81,15.41c-14,16.95-32.74,21.94-53.77,20.07A57.61,57.61,0,0,1,167.77,233.23Z" />
+                                                <path d="M167.53,188.05c-23.56,17.9-57,16.95-78.9,0a59.72,59.72,0,0,1-31.27,12.6c-19.69,1.94-37.4-2.44-51.66-17a30.77,30.77,0,0,1-4-5.09C-1.26,173.78-.26,168.37,4,165.17a9.61,9.61,0,0,1,13.49,1.42C30.68,182.36,47.43,184,65.47,178c5.36-1.79,10.3-6,14.39-10.14,5.94-6,11.89-6.47,17.34-.06,15.17,17.84,46.52,17.91,61.56.12,5.47-6.47,11.87-6.49,17.2,0,14.72,17.77,46.75,17.76,61.54,0,4.39-5.27,10.18-6.24,14.83-2.48s5,9.63.71,15.08C242.16,194.21,227.28,200,210.32,201,194.68,201.92,180.3,197.93,167.53,188.05Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Pool</span>
+                                    </span>
+                                </label>
+
+                                <!-- Hot tub -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.76 256.21">
+                                                <path d="M128.35,91.08H244.86c9.8,0,12.21,2.87,10.3,12.49q-14.43,72.26-28.91,144.49c-1.31,6.5-3.34,8.14-9.82,8.14q-88.52,0-177,0c-6,0-8.38-1.77-9.5-7.33Q15,174.92.26,101C-1,94.69,2.37,91.1,9.34,91.09Q68.85,91.06,128.35,91.08ZM61.17,106.37H16.68c2.73,13.54,5.61,26.7,7.92,40,.72,4.11,2.36,4.88,6.16,4.87q77-.18,154-.08c13.33,0,26.66-.13,40,.08,4.05.06,6.16-.57,6.84-5.31,1.41-9.7,3.7-19.28,5.62-28.91.69-3.49,1.38-7,2.1-10.59H195c-.7,7.21-1.37,14.16-2.07,21.12-.61,6-3.87,9.17-8.77,8.66s-7.16-4.38-6.55-10.41c.66-6.39,1.18-12.79,1.77-19.29h-43.6c0,7.35.14,14.35,0,21.33-.15,5.82-4.4,9.47-9.39,8.24-4.38-1.08-6.08-4.33-6.09-8.6,0-7,0-13.9,0-21H76.42c.67,7.35,1.44,14.3,1.9,21.27.3,4.47-2.32,7.85-6.28,8.25-4.2.42-7.1-1.51-8.19-5.65a39,39,0,0,1-.84-5.93C62.38,118.47,61.79,112.51,61.17,106.37ZM166,240.93c.7-7.16,1.38-14.1,2.07-21,.6-6,3.79-9.23,8.67-8.78s7.29,4.33,6.68,10.31c-.66,6.4-1.19,12.82-1.83,19.75,9.87,0,19.17.1,28.46-.14,1,0,2.5-1.82,2.82-3.05,1.19-4.5,2-9.1,2.89-13.68,1.82-9.22,3.6-18.45,5.41-27.74H34.75c2.84,14.31,5.55,28.18,8.42,42,.2,1,1.53,2.45,2.35,2.46,9.62.18,19.24.11,29.08.11-.71-7.71-1.52-14.82-2-22a7.15,7.15,0,0,1,6.64-7.93c4.22-.24,7,1.85,8,6A51,51,0,0,1,88,223.2q.94,8.87,1.85,17.73h30.39c0-7.36-.17-14.49.06-21.6.21-6.61,6.42-10.69,11.21-7.12,2.24,1.67,3.83,5.38,4.08,8.31.6,6.71.19,13.51.19,20.41Zm61.18-74.52H28.76c.67,3.4,1.63,6.46,1.81,9.57.25,4.32,2.17,5.27,6.32,5.26q86.94-.23,173.88-.1c3.5,0,7,.2,10.49-.11,1.26-.11,3.2-1.24,3.49-2.28C225.85,174.79,226.41,170.69,227.22,166.41Z" />
+                                                <path d="M90.83,22.81C90.36,31.2,87.15,38,80.58,43.19c-7.77,6.16-8,11.69-.83,18.55,3.38,3.24,3.89,7.39,1.3,10.71s-7.25,3.78-11.16,1.06C56.34,64.06,55.74,43.74,68.7,32.88c8.69-7.29,9-11.49,1.19-19.49C66.9,10.3,66.56,6.15,69,3A7.37,7.37,0,0,1,79.3,1.41C86.93,6.5,90.45,13.91,90.83,22.81Z" />
+                                                <path d="M195.87,22.56c-.4,8.28-3.43,15-9.73,20.22-8.38,6.9-8.64,11.64-1.1,19.18,3.22,3.21,3.55,7.56.82,10.75s-7.06,3.46-10.82.9c-13.79-9.4-14.32-30-1-40.95,8.34-6.84,8.59-11.55,1.06-19.16-3.12-3.15-3.61-6.69-1.06-10.36,2.42-3.48,6.82-4.17,10.63-1.55C192,6.67,195.43,14,195.87,22.56Z" />
+                                                <path d="M111.86,53.6c0-9,3.33-15.82,9.8-21.07,8.09-6.55,8.4-11.76,1.11-18.83C119.46,10.49,119,6.2,121.56,3c2.75-3.45,7-3.83,11.12-1,13.51,9.31,14.09,29.84,1.16,40.65-8.72,7.28-9,11.41-1.18,19.46,3,3.07,3.32,7.31.86,10.4A7.62,7.62,0,0,1,123.2,74,24.65,24.65,0,0,1,111.86,53.6Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Hot tub</span>
+                                    </span>
+                                </label>
+
+                                <!-- Patio -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.09 256.43">
+                                                <path d="M206.16,196.36H178.29c-10.58,0-12.17-1.58-12.13-12.05,0-.8-.09-1.61-.15-2.68H135.84v59.72c6.88,0,13.66,0,20.45,0,6.21,0,9.75,2.78,9.74,7.52s-3.55,7.49-9.77,7.49q-28.24,0-56.49,0c-6.18,0-9.74-2.82-9.71-7.55s3.56-7.43,9.81-7.46c6.63,0,13.27,0,20.28,0V181.61H90v5.76c0,6-2.71,8.92-8.77,9-10.17.07-20.33,0-31.31,0,.88,2,1.52,3.53,2.27,5,7.14,14.3,14.33,28.56,21.43,42.87C76,249,75.09,253,71.39,255.22c-4.19,2.56-8.57.9-11.3-4.5C53.41,237.5,46.82,224.24,40.19,211c-.74-1.48-1.53-2.94-2.59-5-1,1.8-1.82,3.13-2.52,4.52q-9.51,19-19,37.95c-3.65,7.3-7.3,9.42-12,6.94s-5-6.39-1.32-13.84q9.92-19.87,19.84-39.76c.8-1.6,1.53-3.24,2.58-5.48-5.7,0-10.79,0-15.89,0-6.51-.06-9.27-2.66-9.28-9q-.08-36,0-72c0-6.36,2.83-9.16,9.23-9C32,107,51.35,115.6,67,132a12.61,12.61,0,0,0,10.32,4.39c14.14-.25,28.28-.09,42.77-.09.16-1.6.39-2.87.39-4.13,0-18.83,0-37.66,0-56.5,0-2.46-.05-4.19-3.25-5-10-2.54-19.78-5.73-29.74-8.31a14.39,14.39,0,0,0-8,.17Q50.07,73.13,21.66,60.38c-6.48-2.9-7.9-7.44-3.83-13.14C38.86,17.83,67.5,1.84,103.6.54c19.78-.71,39.77-1,59.41,1,32.23,3.28,57.51,19.64,76.07,46.2,3.57,5.1,2.32,9.71-3.24,12.27C217,68.68,197.74,69.67,178,62.92a18.06,18.06,0,0,0-9.94-.24c-10.58,2.85-21,6.29-32.09,9.69v64h18.34c8.5,0,17-.18,25.5.08a10.29,10.29,0,0,0,8.6-3.72c15.67-16.69,35-25.52,58-26.31,7-.24,9.67,2.5,9.68,9.55q0,35.49,0,71c0,6.75-2.64,9.35-9.35,9.42-4.83.06-9.67.06-14.5.09a10.1,10.1,0,0,0-1.11.22c.75,1.68,1.39,3.27,2.16,4.8,7.14,14.29,14.34,28.55,21.43,42.87,2.71,5.49.59,10.88-4.62,11.84-4.5.83-7.13-1.69-9-5.48q-9.87-19.91-19.87-39.75c-.74-1.47-1.53-2.92-2.65-5.05-1.67,3.26-3.09,6-4.46,8.73-6,11.9-11.9,23.82-17.9,35.7-2.83,5.62-6.82,7.4-11.09,5.1s-5-6.26-2.35-11.63c6.95-14,14-28,20.95-42C204.49,200.2,205.17,198.54,206.16,196.36Zm34.69-74.19c-29.3,1.57-58.36,30.76-58.85,58.88h58.85Zm-166.78,59c-.37-28.33-33.14-60.78-58.63-58.59v58.59ZM162.27,48a18.73,18.73,0,0,0-1-2.11c-7.88-12.42-19.32-20.9-31.61-28.39a4.38,4.38,0,0,0-3.9.53c-8,6.21-16,12.35-23.59,19.05-3.33,2.95-5.58,7.12-8.28,10.68C117.08,59.26,139.56,59.24,162.27,48ZM174.59,151.6H81.51c1.66,4.48,3.06,8.73,4.87,12.78a4.42,4.42,0,0,0,3.43,1.87q38.22.17,76.44,0a4.45,4.45,0,0,0,3.45-1.84C171.52,160.36,172.91,156.11,174.59,151.6ZM221.74,49.45c-18.13-21-40.18-32-67.77-34a19.5,19.5,0,0,0,1.75,2.17C165,25.38,173,34.08,178,45.32a4.92,4.92,0,0,0,2.43,2.22C193.57,53.12,207,53.84,221.74,49.45ZM102.89,15.33c-28,2.27-50,13.19-68,34.05,13,4.24,25.23,3.63,37.41-.21C75.94,48,78.21,46,80.25,42.45,84,36,88.74,30.19,93.42,24.4,95.89,21.35,99.1,18.91,102.89,15.33Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Patio</span>
+                                    </span>
+                                </label>
+
+                                <!-- BBY grill -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.04 256.14">
+                                                <path d="M66.94,164.32C31.29,147.68,13.88,120,13.79,80.8c-2.29-.12-4.56-.15-6.81-.38C2.74,80,.18,77.58,0,73.34s2.28-6.84,6.42-7.62a27.53,27.53,0,0,1,5-.23h173q10.26.09,10.54,7.31c.19,4.94-3.3,7.51-10.51,7.73-1,0-2,.14-3.45.25V95.49c4.26,0,8.86-.06,13.46,0,7.06.12,9.53,2.65,9.56,9.77,0,5.83.08,11.66,0,17.49-.09,5-3.17,8.3-7.44,8.3s-7.37-3.3-7.53-8.26c-.11-3.82,0-7.65,0-12.25-3.52,0-6.79-.18-10,.12a4,4,0,0,0-2.58,2.41c-8.47,23.77-24.41,40.47-47.46,50.53-.27.11-.42.48-.86,1,5.3,14.66,10.58,29.53,16.17,44.27.48,1.25,3,2.08,4.71,2.45,10.79,2.32,18.3,11,18.6,21.82A22.5,22.5,0,0,1,126,245.58c-5.08-8.08-4.86-19,1.77-26,4.3-4.56.94-7.89-.08-11.69s-4.36-2.28-6.75-2.3c-16.17-.11-32.33.05-48.5-.14-3.42-.05-5,1-6.08,4.24C61.8,222.87,56.94,236,52.14,249.1c-2.12,5.82-6,8.2-10.37,6.5s-5.8-5.91-3.68-11.76C47.66,217.42,57.25,191,66.94,164.32ZM29,80.81c-.45,28.78,10.31,51.16,35.11,65s50.1,12.3,73.34-4.28c20.5-14.61,29.07-35.43,28.25-60.7Zm92.27,109.32-7.65-21H81.18c-2.37,6.56-4.88,13.54-7.58,21Zm31.21,43.3a7.59,7.59,0,0,0-7.88-7.27,7.47,7.47,0,0,0,.37,14.91A7.59,7.59,0,0,0,152.5,233.43Z" />
+                                                <path d="M64.63,36c2.43-5.1,4-9.66,6.63-13.5,2.4-3.51,3.25-6.13.27-9.7-3.2-3.84-2.7-8.35.65-11s7.54-2.08,11,1.68A19.94,19.94,0,0,1,84,30.3c-3,3.65-3.77,6.54-.48,10.45A7.19,7.19,0,0,1,82.64,51c-3.25,2.76-7.81,2.74-10.55-1.09C69.11,45.78,67.17,40.88,64.63,36Z" />
+                                                <path d="M130.23,16.73c-2.36,5.2-3.76,9.87-6.4,13.67s-3.54,6.33-.48,10.12,2.33,8.07-.86,10.64-7.32,2.19-10.67-1.27a19.94,19.94,0,0,1-1.14-26.81c3.13-3.8,4-6.79.44-10.84A7.06,7.06,0,0,1,112,2c3.08-2.65,7.6-2.84,10.21.65C125.33,6.85,127.49,11.82,130.23,16.73Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">BBQ grill</span>
+                                    </span>
+                                </label>
+
+                                <!-- Fire pit -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.22 255.9"><path d="M24.22,196.11c-20-9.4-27.71-22.6-22.77-38.75,2.85-9.32,9-15.72,18.08-19.4s17.64-1.68,27.13,1.81c-.38-3-.67-5-.89-7.05-2.18-19.77.44-38.54,11.69-55.49,5.9-8.88,11.87-17.71,17.72-26.62,2.42-3.68,5.42-6.09,10-4.52,4.33,1.5,5.12,5.19,5,9.33-.12,5.56,0,11.13,0,16.69l1.79.16c4.31-10.31,9.33-20.4,12.68-31,2.39-7.59-1.81-14.61-6.06-20.93a57.17,57.17,0,0,0-5.34-6.59C90.69,11,89.15,8,91,4.27S96.07-.09,99.83,0c22.81.58,43.87,17.76,49.22,40.59,1.17,5,1.25,10.23,2,15.33,1.25,8.8,6.28,14.63,15.13,18.78,0-7.11.07-13.34,0-19.57-.06-4.18.91-7.75,5.3-9.13s7.28.91,9.59,4.42c6.05,9.18,12.21,18.28,18.25,27.47,11,16.7,13.38,35.2,11.33,54.6-.22,2.1-.53,4.19-.94,7.29,12.13-4.79,23.4-5.75,33.94,1.86a29,29,0,0,1,11.59,16.95c4.07,16.29-3.92,29.47-23.38,37.41,2.1.84,3.47,1.4,4.85,1.94,15.35,6.1,23,22.16,18,37.46-5.17,15.5-21.11,23.94-37.25,19.14C189.13,246.18,161,237.37,132.82,229a16.84,16.84,0,0,0-9.1-.05c-28.07,8.33-56,17-84.08,25.39-16.69,5-32.48-3-37.84-18.68s2.45-31.56,18.6-37.92C21.46,197.28,22.51,196.82,24.22,196.11ZM181.58,79c-1.23,11.37-4.09,13.35-15.13,11.18a37.87,37.87,0,0,1-20.88-11.9c-7.2-7.76-9.73-17.17-10.18-27.46-.51-11.54-5.93-20.59-14.73-27.77a45.55,45.55,0,0,0-4.46-2.76C122,37,121.11,44.57,114,59.63c-3.51,7.43-5.87,15.46-8.18,23.38-1.9,6.51-4.87,8.94-11.59,7.67-8.28-1.58-14-6.56-17.54-14.12-27.87,30.5-20,84.58,17.49,98.85-5.13-11.29-5.89-22.61,0-33.33,8.74-15.89,18.06-31.46,27.4-47,3.42-5.71,9.94-5.61,13.32.17,9.34,15.94,18.59,31.93,27.49,48.11,4.9,8.93,4.91,18.49,1.45,28.05-.48,1.32-.95,2.65-1.54,4.31C197.68,161.58,207.69,111.67,181.58,79Zm24,124.92c-13.78-4.21-26.93-8.25-40.11-12.23a4.06,4.06,0,0,0-2.41.14c-14.63,5.36-29.88,4.29-45,4.06-27.39-.4-48.53-12.21-63.07-35.6-.82-1.31-2-2.83-3.39-3.29C45.48,154.94,39.3,152.9,33,151.4c-7.27-1.73-14.51,2.73-16.93,9.84-3,8.69,1.69,16.63,11.67,19.68q82,25.13,164,50.18c1.38.43,2.8.74,4.8,1.27C195.05,221.36,197.83,212.13,205.57,204Zm-77.42-90.71c-7.23,12.37-14.11,23.56-20.4,35.08-5.07,9.29-2.49,20.33,5.55,27.05a22.59,22.59,0,0,0,28.58.89c8.34-6.21,11.81-16.72,7.25-25.61C142.78,138.27,135.56,126.34,128.15,113.24Zm56.34,68.5c5.86,1.81,12.19,3.82,18.57,5.68a7.12,7.12,0,0,0,3.85.14c8.13-2.43,16.28-4.78,24.27-7.59a14.4,14.4,0,0,0,9.29-18.05,14.65,14.65,0,0,0-17.91-10.33c-5.95,1.5-11.79,3.48-17.66,5.32a5.08,5.08,0,0,0-2.47,1.49C196.46,166.07,190.57,173.81,184.49,181.74ZM29.88,211a15,15,0,1,0,15.23,14.68A15,15,0,0,0,29.88,211ZM226,240.93a15,15,0,1,0-14.8-15.08A15.07,15.07,0,0,0,226,240.93Zm-123.52-21.4L52,204.07c2.34,4.48,5.3,8.64,6.73,13.28s1.3,9.67,1.91,15Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Fire pit</span>
+                                    </span>
+                                </label>
+
+                                <!-- Pool table -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.05 255.94"><path d="M127.5,255.93q-48.73,0-97.48,0c-18.58,0-30-11.33-30-29.78q0-57.75,0-115.48c0-18.25,11.4-29.74,29.54-29.74q98.48,0,197,0c17.93,0,29.48,11.46,29.5,29.28q0,58.23,0,116.47c0,17.79-11.6,29.23-29.54,29.25Q177,256,127.5,255.93ZM15.32,133.59V203.3c23.74-9.65,47.43,11.79,37.47,37.45H203.61c-4.52-11.78-3.48-22.6,5.48-31.62s19.94-10.19,31.62-5.69V133.32c-12,4.63-22.72,3.33-31.67-5.68s-9.94-19.81-5.44-31.53H52.72C62.69,121.07,39.55,143.4,15.32,133.59ZM27.5,120.9A12.48,12.48,0,1,0,15,108.52,12.59,12.59,0,0,0,27.5,120.9Zm200.93,0A12.47,12.47,0,1,0,216,108.45,12.57,12.57,0,0,0,228.43,120.89ZM15,228.54A12.48,12.48,0,1,0,27.27,216,12.59,12.59,0,0,0,15,228.54Zm226,0a12.48,12.48,0,1,0-12.43,12.4A12.58,12.58,0,0,0,241,228.49Z" /><path d="M131.07,3.14c36,1.18,71.9,2.3,107.85,3.57,8.29.3,14.22,5.25,16.41,13,2,7.08-.38,15-6.65,18.93A22.43,22.43,0,0,1,238,42c-39.11,1.47-78.23,2.66-117.34,3.9-31.63,1-63.25,2.09-94.88,2.92C11.93,49.19.94,39.27.07,26.18A24.26,24.26,0,0,1,24.2,0c14.32.06,28.64.68,43,1.13q32,1,63.91,2.12Zm-.31,15.07v.05q-30.72-1-61.43-2c-14.65-.46-29.3-.87-43.95-1.32-4-.12-7.72,1.25-9,5a14.6,14.6,0,0,0,.29,9.37c1.58,3.91,5.62,4.7,9.73,4.56q31.22-1.05,62.43-2l139.34-4.3a78.39,78.39,0,0,0,9.46-.59c1.17-.17,2.17-1.54,3.24-2.37a21.22,21.22,0,0,0-3.31-2.87c-.78-.44-2-.2-3-.24Z" /><path d="M190.48,183.4c4.63,6.33,6.8,12.91,4.81,20.44A22.38,22.38,0,0,1,154,209.56c-1.15-2-1.7-4-4.95-3.79-9.52.55-16.85-3.56-21.33-12s-3.39-16.38,2-24c.29-.41.5-.87.82-1.42-3.83-5.22-6.18-11-5.3-17.64,1.52-11.52,11-19.67,22.7-19.9,1.77,0,4.33-.89,5.15-2.21,7.76-12.48,21.1-16.39,32.43-9.19s13.54,20.8,5.51,33.2a6.26,6.26,0,0,0-.36.82C197.64,163.11,198.15,173.14,190.48,183.4ZM181,138.65a7.46,7.46,0,1,0-7.94,7.22A7.61,7.61,0,0,0,181,138.65Zm-33.29,22.23a7.47,7.47,0,0,0-.16-14.93,7.47,7.47,0,1,0,.16,14.93Zm33.3,7.48a7.47,7.47,0,1,0-7.67,7.52A7.6,7.6,0,0,0,181,168.36Zm-33.42,22.53a7.47,7.47,0,0,0,.08-14.94,7.47,7.47,0,1,0-.08,14.94ZM181,198.43a7.47,7.47,0,1,0-7.74,7.45A7.62,7.62,0,0,0,181,198.43Z" /><path d="M40,168.48a22.5,22.5,0,1,1,22.69,22.44A22.61,22.61,0,0,1,40,168.48Zm30-.06a7.47,7.47,0,1,0-7.72,7.46A7.61,7.61,0,0,0,70,168.42Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Pool table</span>
+                                    </span>
+                                </label>
+
+                                <!-- Indoor fireplace -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256.22"><path d="M15.32,207.37V48.84c-2.72,0-5.18.15-7.62,0C3.35,48.46.21,46.15.1,41.69,0,35.39-.2,28.94,1,22.79A28.07,28.07,0,0,1,28.37.1q99.48-.19,199,0c15.56,0,27.85,12.66,28.53,28.48.14,3.33,0,6.67,0,10,0,7.64-2.47,10.08-10.17,10.29-1,0-2,.11-3.34.18V206.8c.32.16.59.41.88.43,11.68.68,12.72,1.77,12.72,13.32,0,8.84,0,17.67,0,26.51-.05,6.4-2.75,9.14-9.15,9.14q-118.73,0-237.46,0c-6.61,0-9.26-2.75-9.3-9.53-.06-9.67,0-19.34,0-29,0-7.66,2.53-10.17,10.17-10.28C11.83,207.35,13.45,207.37,15.32,207.37ZM65.65,81.15V206.93H95.53c-9.69-14-11.24-28.16-3.69-42.91,7.7-15,18.82-27.43,30.88-39,3-2.93,6.94-3.2,10-.41,13.61,12.42,26.2,25.77,33.18,43.25,5,12.59,3.74,24.8-3.62,36.29-.55.87-.92,1.85-1.4,2.81h30.53V81.15ZM15.09,240.85H240.6V222.71H15.49a13.94,13.94,0,0,0-.38,2.14C15.08,230,15.09,235.16,15.09,240.85ZM240.37,33.51c1.62-11.4-4.32-18.38-15.45-18.44-6.33,0-12.66,0-19,0q-87.48,0-175,0c-11.35,0-17.78,7.81-15.25,18.44Zm-33.2,47.67V207h19.52V81.18ZM31,81.2V207H49.91V81.2ZM101.5,187.08c7.25-8.87,13.09-16.5,19.47-23.66,4.94-5.54,8.91-5.64,13.9-.18,6.55,7.19,12.48,14.95,19,22.91-.13-19.83-13.81-31.83-25.64-45.56-9.64,10.3-18.81,20.21-24.11,32.84C102.53,177.32,102.46,181.87,101.5,187.08ZM184.58,49.24H157.89V65.48h26.69Zm-127,.07H31V65.58h26.6Zm42.19-.05H73.18V65.64H99.82Zm42.35-.08H115.48V65.53h26.69ZM200,65.56h26.61V49.31H200Zm-71.77,111c-4,5.73-7.3,9.89-10,14.42-2.9,4.95-1.85,10.09,2.08,13.5A11.67,11.67,0,0,0,135,205a10.12,10.12,0,0,0,3-13.31C135.46,186.82,132,182.38,128.21,176.55Z" /><path d="M110.58,107.19a7.29,7.29,0,0,1-7.41-7.21,7.47,7.47,0,0,1,7.38-7.32,7.4,7.4,0,0,1,7.37,7.29A7.2,7.2,0,0,1,110.58,107.19Z" /><path d="M169.8,122.42a7.41,7.41,0,0,1,7.25,7.29,7.33,7.33,0,0,1-7.58,7.41,7.18,7.18,0,0,1-7-7.47A7.36,7.36,0,0,1,169.8,122.42Z" /><path d="M87.12,142.51A7.11,7.11,0,0,1,80,135.13a7.36,7.36,0,0,1,14.72.34A7.26,7.26,0,0,1,87.12,142.51Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Indoor fireplace</span>
+                                    </span>
+                                </label>
+
+                                <!-- Outdoor dining area -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.08 254.51"><path d="M256.07,104.22H241.44V239.7h14.35v14.81H.42V240H14.63V104.39H0V85.5c0-9.33-.15-18.66.14-28a6.27,6.27,0,0,1,3.05-4.61q60.89-26.4,122-52.4a8.47,8.47,0,0,1,6,.08Q192,26.5,252.7,52.74c1.37.6,3.21,2.31,3.23,3.52C256.14,72.05,256.07,87.83,256.07,104.22Zm-44.88,22.91V239.57h14.48V104.45H30.44v135h14.9V127.3H60.4v52.35h45.19v59.86H120.1V164.43H83.32V149.78h89.55V164.5H136.13v75.14h14.63V179.4H196V127.13Zm-1-75.94c-1.76-1-2.4-1.42-3.1-1.72-25.37-10.89-50.73-21.82-76.17-32.53a9.31,9.31,0,0,0-6.5.29C99.6,27.72,74.86,38.4,50.11,49.05c-1.06.45-2,1.13-3.79,2.14ZM15.29,88.78H59.9V67.05H15.29Zm60.21-.07h44.58V67.14H75.5Zm60.43.08h44.6V67h-44.6Zm60.35-21.86V88.71h44.4V66.93ZM89.87,239.66v-14.5H60.66v14.5Zm76.26-.21h29.45V225.2H166.13ZM90,209.46V195.1H60.54v14.36Zm105.58,0V195.08H166.11v14.38Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Outdoor dining area</span>
+                                    </span>
+                                </label>
+
+                                <!-- Exercise equipment -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.31 256.1"><path d="M11.67,212.45c-15.55-19.14-15.55-21.8-.08-42.8-2.08-2.28-4.31-4.5-6.28-6.93-6.78-8.37-7.08-20,.08-28s15-15.59,22.8-23.13c3.55-3.44,7.41-2.94,11.42,1,10.89,10.8,21.7,21.67,32.55,32.5,1,1.06,2.16,2.05,2.79,2.65L148,74.67c-10.62-10.59-21.82-21.76-33-32.94-7.4-7.4-7.39-9.74,0-17.15q8-8,15.91-15.92C142.57-2.89,155-2.88,166.8,8.67c.95.92,1.93,1.82,3.37,3.18C175.9,5.6,182.08.09,191.22.06s15.36,5.51,21.08,11.61c16.45-13.6,27.45-15,37.39-4.86s8.44,21.52-5.2,37.13c6.13,5.62,11.68,11.77,11.71,20.9S250.84,80.26,244.46,86c2.46,2.69,4.69,4.91,6.66,7.34,6.78,8.4,7.08,20-.08,28s-15,15.59-22.8,23.13c-3.55,3.44-7.4,2.94-11.42-1-10.88-10.8-21.7-21.67-32.55-32.5-1.05-1-2.16-2-2.79-2.65l-73,73.06c10.61,10.6,21.8,21.77,33,33,7.39,7.39,7.38,9.76,0,17.17q-7.95,8-15.91,15.91c-11.63,11.56-24.1,11.55-35.86,0-.94-.93-1.91-1.83-3.36-3.2C80.55,250.5,74.37,256,65.23,256s-15.37-5.48-21.08-11.61C27.32,258.13,16.27,259.38,6.44,249-3.16,238.78-1.61,227.62,11.67,212.45ZM223.26,128a4.85,4.85,0,0,0,1-.56q6.39-6.33,12.74-12.68c5.76-5.79,5.78-8.88,0-14.66q-40.4-40.42-80.83-80.84a31.91,31.91,0,0,0-2.55-2.39c-3-2.39-6.43-2.71-9.14-.18-5.66,5.3-10.91,11-16.14,16.39Zm-190.64-.22c-4.43,4.57-8.8,9.13-13.22,13.63-5.67,5.78-5.69,8.83.14,14.67q28.05,28.08,56.13,56.13Q88.56,225.1,101.44,238c3,3.07,6.85,4.63,10.19,1.61,5.85-5.28,11.05-11.29,16.17-16.62ZM234.7,75.23c1.25-1.47,2.66-3.1,4.06-4.74,3.29-3.87,3.47-7.46-.11-11.1q-20.85-21.11-42-41.95c-3.34-3.3-7.1-3.16-10.72-.1-1.78,1.5-3.61,2.93-5.07,4.11Zm-159,159.32L21.92,180.79c-1.28,1.45-2.82,3.18-4.34,4.92-3.1,3.56-3.35,7.37,0,10.72q21,21.28,42.32,42.31c3.15,3.12,6.82,3.08,10.34.25Zm72-116.71-9-9.47-29.88,29.89,9,9.45ZM149.48,97l9.69,9.75L169.58,97l-9.69-10.24ZM96.85,169.71,107,159l-9.73-9.71-10.4,9.85ZM233.77,33.07c3.47-4,9-6.54,6.87-12.58a9.29,9.29,0,0,0-5.93-5.11c-5.63-1.09-8,3.89-11.29,7.21ZM22.61,223.12c-3.31,3.82-8.9,6.32-6.86,12.36a9.32,9.32,0,0,0,5.84,5.22c5.68,1.23,8.09-3.87,11.53-7.21Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Exercise equipment</span>
+                                    </span>
+                                </label>
+
+                            </div>
+                            <div class="font_bold font_5 mb-3">Have any of these safety items?</div>
+                            <div class="d-grid w-100 mb-4" style="gap: 1rem; grid-template-columns: repeat(3,minmax(0,1fr));">
+
+                                <!-- Smoke alarm -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.25 236.78"><path d="M256,0c0,11.11.58,22-.14,32.73-1,15-13.65,26.17-29.19,26.88-11.52.53-11.54.53-15.19,11.49-4.89,14.68-9.85,29.32-14.53,44.06-1.09,3.45-2.71,4.59-6.33,4.58q-62.47-.18-124.95,0c-4,0-5.43-1.51-6.55-5C53.61,97.7,47.75,80.73,42.26,63.63c-1-3.15-2.45-4.15-5.62-4.05A62.29,62.29,0,0,1,24.19,59C11.45,56.79.93,45.31.27,32.35-.27,21.72.16,11.05.16,0Zm-20.3,20.05H20.41C19,35.32,21.1,39.86,37.72,39.75q90.45-.55,180.9,0c16.71.1,18.38-4.57,17.34-18.93A7,7,0,0,0,235.72,20.05ZM194.05,60.11H62.17C66.31,72.6,70.23,84.6,74.32,96.54c.4,1.18,1.76,2.86,2.73,2.9,6.9.25,13.81.13,21.17.13V80h20.06V99.38h19.87V80.06h20.18V99.61c6.94,0,13.43.13,19.9-.12A4.77,4.77,0,0,0,181.71,97C185.91,84.87,189.87,72.72,194.05,60.11Z" /><path d="M70.87,143l14,13.8c-.61.94-1.24,1.9-1.86,2.87-5.55,8.62-5.13,15,1.9,22.52,5.21,5.56,9.5,11.6,11.2,19.13,3.06,13.55-1.86,24.75-10.27,34.83L72,221.6c-.27.46.09-.24.53-.9,6.51-9.82,6-15.83-2-24.49-14.36-15.47-15.13-34.27-2.08-50.63C69.15,144.7,70,143.94,70.87,143Z" /><path d="M135.64,236.78l-14.25-14c1.3-2.23,2.67-4.32,3.78-6.54,3-6,2.3-11.6-1.86-16.78-1.25-1.56-2.64-3-4-4.47-14-15.51-13.44-36.67,1.23-51.51l13.64,14.37c.29-.49-.08.2-.52.85-6.51,9.77-6,15.79,2,24.49,14.48,15.68,15.13,34.58,1.78,51C136.85,234.94,136.33,235.79,135.64,236.78Z" /><path d="M185.42,236.67l-14-14.16c.78-1.22,1.7-2.57,2.53-4,4.55-7.68,4-13.85-1.84-20.58-1.31-1.5-2.74-2.9-4-4.42-15.36-18.09-8.48-39.88,3-50.29l13.48,14c-.39.6-1,1.57-1.66,2.55-5.5,8.58-5,15,2,22.5,5.22,5.57,9.47,11.62,11.15,19.16C199.13,215,194.18,226.16,185.42,236.67Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Smoke alarm</span>
+                                    </span>
+                                </label>
+
+                                <!-- First aid kit -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.1 241.04"><path d="M75.14,45.37c0-6.76-.07-12.75,0-18.74C75.37,11.28,85.84.42,101.19.19q26.75-.39,53.5,0c15.61.21,26.05,11.06,26.23,26.75.07,6,0,11.92,0,18.44,11.64,0,22.76-.08,33.88.05a56,56,0,0,1,11.88,1A37.49,37.49,0,0,1,256,82.88q.21,60.24,0,120.49a37.76,37.76,0,0,1-35.12,37.46c-1,.08-2,.17-3,.17-59.82,0-119.65.11-179.48-.05-17.64,0-31.85-10.76-36.64-27.09A40.75,40.75,0,0,1,.1,202.56q-.18-59.24,0-118.49C.08,62,16.51,45.56,38.57,45.39,50.53,45.3,62.49,45.37,75.14,45.37ZM46.05,60.67v164.9H210V60.67Zm-15.6.87C20.8,65.94,15.8,72.63,15.13,82.29c-.32,4.64-.08,9.32-.08,14q0,52.92,0,105.85c0,10.88,6.23,19.66,15.39,21.86ZM225.6,224.47C235.73,220.4,241,212.66,241,202.1q.08-36.71,0-73.41c0-15.15.1-30.3,0-45.45-.09-10.14-6.63-18.92-15.38-20.85ZM165.91,45.13V40.59c0-5,.17-10-.08-15-.3-6-4.23-10.23-10.13-10.29-18.49-.2-37-.17-55.48,0-5.08.05-9,3.09-9.48,8-.7,7.17-.18,14.46-.18,21.83Z" /><path d="M105.41,120.58c0-7,0-13.25,0-19.56,0-8.14,2.36-10.5,10.29-10.51,8.66,0,17.32-.06,26,0,6.13,0,8.82,2.65,8.94,8.81.14,6.82,0,13.64,0,21.25,6.86,0,13.44,0,20,0,7.63,0,10.11,2.51,10.14,10.23,0,8.49.07,17,0,25.47-.06,6.79-2.66,9.34-9.41,9.39s-13.26,0-20.73,0c0,6.62,0,12.86,0,19.11,0,9-2,11-10.79,11-8.49,0-17,.05-25.48,0-6.21,0-8.82-2.56-8.94-8.77-.14-6.81,0-13.62,0-21.29H85.86c-8.34,0-10.59-2.28-10.61-10.71s-.06-16.65,0-25c.06-6.72,2.75-9.35,9.44-9.4S98,120.58,105.41,120.58Zm29.5,59.9c.27-.54.55-.84.55-1.13q.12-9,.17-18c.06-8.45,2.27-10.7,10.59-10.72h19.57c0-4.6,0-8.41,0-12.21a26.66,26.66,0,0,0-.35-2.85H151.87c-16.24,0-16.24,0-16.24-16V105.75h-15.2c0,7,.07,13.79,0,20.58s-2.66,9.22-9.47,9.26-13.51,0-20.42,0v14.33c.54.29.81.57,1.1.57q9.23.1,18.46.16c8,0,10.3,2.36,10.34,10.47,0,6.42,0,12.85,0,19.36Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">First aid kit</span>
+                                    </span>
+                                </label>
+
+                                <!-- Carbon monoxide alarm -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 255.4 255.02"><path d="M92.32,74.17H67.37V59.39H80.3V14.82H0V0H255.4V14.62H175.2V59h12.93V74H162.79c.66,14.17-2.84,26.21-14.31,34.74A34.58,34.58,0,0,1,125,115.49C105.94,114.33,95.37,101.21,92.32,74.17Zm3.77-59.3V29h63.4V14.87Zm-.16,44h63.61V44.54H95.93Zm51.44,15.81H108.11c-1.3,15.57,6.64,25.84,19.63,25.84S148.69,90.21,147.37,74.67Z" /><path d="M89.38,154.25l13.78,5.88c-3,7.14-5.86,14-9,21.42l-13.83-5.78C83.35,168.59,86.27,161.65,89.38,154.25Z" /><path d="M170,154.28c3,7.19,5.93,14,9,21.35l-13.74,6c-3-7.17-6-14.09-9.1-21.49Z" /><path d="M65.08,133.21l8.86,9.46c-5.22,5.23-10.6,10.6-16,16l-9.24-9.2Z" /><path d="M206.14,150.07l-8.57,8-15.89-15.8,8.84-8.15Z" /><path d="M121.76,187.05V164.46h14.35v22.59Z" /><path d="M136.19,225.11h-14.3V203.85h14.3Z" /><path d="M79.47,216.45l-13.78-5.8,8.36-20,13.83,5.8Z" /><path d="M193.73,210.59l-13.79,5.82c-2.78-6.54-5.49-12.91-8.48-20l13.81-5.86C188.14,197.36,190.83,203.72,193.73,210.59Z" /><path d="M37.12,161.22l9.3,9.37L31.33,184.93l-8.78-9.56Z" /><path d="M219.93,161.45c4.07,4.08,8.88,8.91,14.09,14.12l-10.67,8.73L209.5,170.1Z" /><path d="M10.85,187.18l9.66,9.68-10,9.76L.5,196.33Z" /><path d="M234.7,196.76l10.16-9.92L255,197.16l-10.45,9.68Z" /><path d="M136.23,240.61V255H121.88V240.61Z" /><path d="M136.18,149.84h-14.4V135.5h14.4Z" /><path d="M94.12,123.46l-9.18,9.21-9.52-10.38,9.7-9.87Z" /><path d="M160.9,122.35l9.77-9.46,9.92,9.87-10.51,8.69C167.58,129,164.24,125.65,160.9,122.35Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Carbon monoxide alarm</span>
+                                    </span>
+                                </label>
+
+                                <!-- Fire extinguisher -->
+                                <label class="step_checkbox w-100 d-block m-0 cursor_point user_select_none">
+                                    <input type="checkbox" class="d-none">
+                                    <span class="checkmark d-flex flex-column justify-content-center align-items-center py-4 px-3 rounded-lg text-center">
+                                        <span class="d-block mb-3">
+                                            <svg style="height: 2rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230.43 256"><path d="M43.88,48.8c1.25-3.58,0-5.29-3-7a24.26,24.26,0,0,1-7.54-7c-1.77-2.59-3.56-3.46-6.51-3.34-4.49.19-9,.13-13.49,0-5.47-.12-8.84-3-8.91-7.39s3.33-7.45,8.7-7.59q6.51-.18,13,0c2.55.06,4.13-.47,5.38-3.17C35.53,4.63,42.54-.07,52.1,0S68.36,4.92,72.69,13.42c.7,1.37,2.84,2,4.32,3a.74.74,0,0,0,.49,0c15.56-3.11,27,3.41,36,15.48,1.29,1.72,2.79,3.28,4,4.68,7.75-3.87,9-3.74,14.82,1.61q46.6,42.75,93.18,85.55c6.8,6.25,6.6,9.94-.68,15.69q-21.57,17-43.16,34.07c-6.86,5.41-10.76,4.56-15.06-3.14q-31.07-55.59-62.11-111.19c-3.38-6-3.17-7.66,1.81-13.34-4.43-4.37-8.85-8.85-13.45-13.14a6.17,6.17,0,0,0-3.64-1.16c-2.66-.17-5.35.11-8-.09C76,31,71.58,31.45,68.8,37c-1.14,2.29-4.38,3.44-6.39,5.39-1.26,1.21-2.63,2.9-2.73,4.46-.06.87,2.23,2.41,3.69,2.79C83.88,55,97,67.86,102.43,88.33A53.79,53.79,0,0,1,104,101.67q.17,64.76.05,129.5C104,246.78,94.79,256,79.13,256q-27.51,0-55,0C9.37,255.93,0,246.68,0,232Q0,167.46,0,103C0,75.44,15.08,56.17,41.77,49.44,42.41,49.27,43,49.05,43.88,48.8ZM89.07,99.11c-.4-2.68-.6-4.49-.95-6.27C84.64,75,67.78,62.27,49.42,63.62S15.37,79.9,15.22,97.88c-.38,45-.18,90-.14,135,0,5,2.78,8,7.63,8,19.5.12,39,.09,58.5,0,4.25,0,7.26-2.4,7.58-6.51.47-6.23.12-12.53.12-19.25-8.18,0-15.81,0-23.45,0C57.25,215.13,55,213,55,204.89q0-47.74,0-95.5c0-8,2.35-10.26,10.53-10.27C73.2,99.1,80.83,99.11,89.07,99.11Zm30.38-44L177,158.07,211.19,131,124.34,51.26ZM88.72,199.89V114.55H70.34v85.34ZM52,15a7.64,7.64,0,0,0-7.46,7.72A7.66,7.66,0,0,0,52,29.89,7.47,7.47,0,0,0,52,15Z" /></svg>
+                                        </span>
+                                        <span class="line_normal d-block font_3">Fire extinguisher</span>
+                                    </span>
+                                </label>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_60"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_04')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_06')" class="btn btn_primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 06 -->
+    <div id="objects_step_06" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1601134991665-a020399422e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">
+                            Next, let's add some photos of your place
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content p-4 d-flex justify-content-center align-items-center flex-column position-relative overflow-auto">
+                        <div class="file-upload">
+                            <div class="image-upload-wrap">
+                                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                <div class="drag-text px-3 pt-5">
+                                    <div>
+                                        <svg style="height: 4rem;" fill="#1d3557" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 234.55"><path d="M149.31,0q40.23,0,80.45,0c16.3,0,26.21,9.83,26.22,26q0,59.21,0,118.42c0,16.26-9.84,26.27-26.06,26.29q-80.7.08-161.39.05c-11.38,0-19.29-5.32-24.5-15.07A10.5,10.5,0,0,1,43,151c-.11-42.63-.3-85.27-.13-127.9.06-13.15,10.64-23,24-23C94.35,0,121.83,0,149.31,0ZM240,108.6c0-28.25,0-54.91,0-81.56,0-8.51-2.48-11-11-11q-79.76,0-159.49,0c-8.31,0-10.75,2.39-10.75,10.64q0,50.25,0,100.49c0,1.38.23,2.75.43,5.07C70.58,120.83,81.25,110.11,92,99.42c9.44-9.4,19.89-9.44,29.35,0,3.73,3.7,7.24,7.63,11,11.64,1.64-1.82,2.55-2.76,3.39-3.77,12.06-14.46,24-29,36.18-43.38,8.33-9.87,20.9-9.91,29.44-.28,3.87,4.37,7.62,8.84,11.42,13.27ZM61,153.53c3.72.51,6.41,1.19,9.09,1.19q79.18.09,158.37,0c1.5,0,3.19.34,4.44-.25,2.16-1,4.61-2.2,5.92-4,2.81-3.94,1.38-17-1.78-20.7l-45.2-52.71c-5-5.83-5.2-5.83-10-.1l-40.28,48.36c-5.91,7.1-9.67,7.24-16.33.59-4.95-5-10-9.74-14.77-14.9-2.88-3.13-4.79-2.82-7.64.09C90.21,124,77.41,136.59,64.71,149.31,63.69,150.33,62.79,151.46,61,153.53Z" /><path d="M0,163.59c1.12-4.34,2.9-11.25,4.69-18.16C9.15,128.19,13.55,111,18.15,93.75c.66-2.47,1.7-5.81,3.57-6.75a12.44,12.44,0,0,1,9.08-.65c3.53,1.35,4.43,5.06,3.42,8.93Q29.3,114.1,24.44,133c-2.59,10-5.2,20-7.75,30-1.61,6.32.39,10.06,6.57,11.72q81,21.75,162,43.37c6.54,1.74,10-.49,11.72-7.13s3.24-13.25,5-19.85c1.37-5.17,5.53-7.92,9.91-6.76s6.79,5.46,5.55,10.65c-1.67,7-3.35,13.91-5.19,20.82-3.92,14.69-16.23,21.69-31.15,17.73q-40.26-10.72-80.51-21.52Q59.83,201,19.1,190.08C7.25,186.88,0,177.7,0,163.59Z" /><path d="M74.75,53.52A21.23,21.23,0,1,1,96,74.74,21.23,21.23,0,0,1,74.75,53.52Zm27.1,1.39.16-2.33c-2-1.5-3.93-4.14-5.9-4.14-1.75,0-4.49,2.63-5,4.59-.91,3.21,1.59,5.67,4.76,5.4C97.92,58.25,99.85,56.15,101.85,54.91Z" /></svg>
+                                    </div>
+                                    <h3 class="pt-4 pb-1 color_primary">Drag or select your photos here</h3>
+                                    <div class="color_primary pb-4">Add at least 5 photos</div>
+                                </div>
+                            </div>
+                            <div class="file-upload-content">
+                                <img class="file-upload-image" src="#" alt="your image" />
+                                <div class="image-title-wrap">
+                                    <button type="button" onclick="removeUpload()" class="btn btn_hover remove-image">
+                                        Remove <span class="image-title">Uploaded Image</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_80"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_05')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_07')" class="btn btn_primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 07 -->
+    <div id="objects_step_07" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1518708266825-ad9f4356d8ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">
+                            Let's give your place a name
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content p-4 d-flex justify-content-center align-items-center flex-column position-relative overflow-auto">
+
+                        <div class="w-100 pt-5" style="max-width: 500px;">
+                            <div class="font_bold font_5 mb-3">Create your title</div>
+                            <textarea name="" id="" class="w-100 font_5 form-control focus" rows="4" placeholder="Lovely 1-bedroom rental unit with pool"></textarea>
+                            <div class="pt-2">0/50</div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_80"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_06')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_08')" class="btn btn_primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 08 -->
+    <div id="objects_step_08" class="hidden">
+        <div class="row m-0 h-100">
+            <div class="col-lg-6 p-0 step_bg_shadow position-relative">
+                <div class="position-absolute" style="top: 0; left: 0; bottom: 0; right: 0;">
+                    <img src="https://images.unsplash.com/photo-1518708266825-ad9f4356d8ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                         class="w-100 h-100" style="object-fit: cover;" alt="image">
+                </div>
+                <div class="position-relative h-100 p-3" style="z-index: 9999;">
+                    <div>
+                        <img src="./assets/images/icons/mark.svg" class="w-auto" style="height: 3.5rem;" alt="logo">
+                    </div>
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                        <div class="font_9 font_bold text-white pb-5" style="text-shadow: 0px 2px 5px rgba(0,0,0,.3);">
+                            Now, let's describe your place
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="flex-column">
+                    <div class="step_content p-4 d-flex justify-content-center align-items-center flex-column position-relative overflow-auto">
+
+                        <div class="w-100 pt-5" style="max-width: 500px;">
+                            <div class="font_bold font_5 mb-3">Create your description</div>
+                            <textarea name="" id="" class="w-100 font_5 form-control focus" rows="5"
+                                      placeholder=""></textarea>
+                            <div class="pt-2">0/500</div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="w-100 position-relative step_progress progress_100"></div>
+                        <div class="p-3 d-flex justify-content-between">
+                            <button type="button" onclick="objects.bl.step_by_step('step_07')" class="btn btn_silver">Back</button>
+                            <button type="button" onclick="objects.bl.step_by_step('step_finish')" class="btn btn_primary">Finish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- scripts -->
+<script>
+
+    var objects = {};
+
+    // Onload function
+    objects.load = function () {
+
+        // Load
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $(".modal_add_object").load("/pages/components/modal_add_object.html");
+
+        // Global ui
+        ui.display_title("Objects");
+        ui.filter_mobile_btn("object_filter_tip_btn", "object_filter_tip");
+        ui.filter_mobile_btn("object_filter_status_btn", "object_filter_status");
+
+        // Local ui
+        objects.ui.filter_dropdown("object_filter_tip");
+        objects.ui.filter_dropdown("object_filter_status");
+        objects.ui.filter_check_all("object_filter_tip");
+        objects.ui.filter_unCheck_all("object_filter_tip");
+        objects.ui.filter_check_all("object_filter_status");
+        objects.ui.filter_unCheck_all("object_filter_status");
+        objects.ui.leaflet_map();
+
+        // load objects
+        objects.bl.display_objects('objects_tbody');
+        objects.bl.readURL();
+        objects.bl.removeUpload();
+        objects.bl.counter("step_handle_counter_guests", 1, 10, 1);
+        objects.bl.counter("step_handle_counter_beds", 1, 10, 1);
+        objects.bl.counter("step_handle_counter_bedrooms", 1, 10, 1);
+        objects.bl.counter("step_handle_counter_bathrooms", 1, 10, 1);
+
+    }
+
+    // Object bl
+    objects.bl = new function () {
+
+        this.display_objects = async () => {
+
+            ui.content_loading("objects_content_loading");
+
+            var f_name = objects_input_search_name.value;
+
+            objects_tbody.innerHTML = '';
+
+            var objects = bl.objects.list_get();
+            var number = 1;
+
+            for (var o of objects) {
+
+                var name = o['name'];
+
+                if (!f_name == true || name.toLowerCase().includes(f_name) == true) {
+                    var tr = document.getElementById('objects_template_tr').innerHTML;
+
+                    tr = tr.replace('${object_name}', name);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${object_id}', o['id']);
+                    tr = tr.replace('${picture_url_amazon}', o['picture_url_amazon']);
+                    tr = tr.replace('${active}', o['active'] = 'Y' ? '' : 'deleted_bg');
+                    tr = tr.replace('${address}', o['adress'] + ', ' + o['city_name']);
+                    tr = tr.replace('${country_code}', o['country_code']);
+                    tr = tr.replace('${bathrooms}', !o['bathrooms'] == true ? '-' : o['bathrooms']);
+                    tr = tr.replace('${bedrooms}', !o['bedrooms'] == true ? '-' : o['bedrooms']);
+                    tr = tr.replace('${beds}', !o['beds'] == true ? '-' : o['beds']);
+                    tr = tr.replace('${beds_extra}', !o['beds_extra'] == true ? '-' : o['beds_extra']);
+                    tr = tr.replace('${can_sleep_max}', !o['can_sleep_max'] == true ? '-' : o['can_sleep_max']);
+                    tr = tr.replace('${can_sleep_optimal}', !o['can_sleep_optimal'] == true ? '-' : o['can_sleep_optimal']);
+                    tr = tr.replace('${number}', number);
+
+                    await js.html.insertAdjacentHTML('objects_tbody', tr);
+                    number++;
+                }
+
+            }
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+
+            ui.content_loading_hide("objects_content_loading");
+            js.images.lazy_load();
+
+        }
+
+        // Ready for upload images
+        this.readURL = function (input) {
+
+            if (input && input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.image-upload-wrap').hide();
+
+                    $('.file-upload-image').attr('src', e.target.result);
+                    $('.file-upload-content').show();
+
+                    $('.image-title').html(input.files[0].name);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+
+            } else {
+                objects.bl.removeUpload();
+            }
+        }
+
+        // Remove upload
+        this.removeUpload = function () {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+        }
+        $('.image-upload-wrap').bind('dragover', function () {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
+
+        // Steps
+        this.step_by_step = function (panel) {
+
+            // Reset
+            objects_step_01.classList.add("hidden");
+            objects_step_02.classList.add("hidden");
+            objects_step_03.classList.add("hidden");
+            objects_step_04.classList.add("hidden");
+            objects_step_05.classList.add("hidden");
+            objects_step_06.classList.add("hidden");
+            objects_step_07.classList.add("hidden");
+            objects_step_08.classList.add("hidden");
+
+            if (panel == "step_01") {
+
+                console.log("Step 01");
+
+                objects_step_01.classList.remove("hidden");
+
+            } else if (panel == "step_02") {
+
+                console.log("Step 02");
+
+                objects_step_02.classList.remove("hidden");
+
+            } else if (panel == "step_03") {
+
+                console.log("Step 03");
+
+                objects_step_03.classList.remove("hidden");
+
+            } else if (panel == "step_04") {
+
+                console.log("Step 04");
+
+                objects_step_04.classList.remove("hidden");
+
+            } else if (panel == "step_05") {
+
+                console.log("Step 05");
+
+                objects_step_05.classList.remove("hidden");
+
+            } else if (panel == "step_06") {
+
+                console.log("Step 06");
+
+                objects_step_06.classList.remove("hidden");
+
+            } else if (panel == "step_07") {
+
+                console.log("Step 07");
+
+                objects_step_07.classList.remove("hidden");
+
+            } else if (panel == "step_08") {
+
+                console.log("Step 08");
+
+                objects_step_08.classList.remove("hidden");
+
+            } else if (panel == "step_finish") {
+
+                steps_box.classList.add("hidden");
+
+
+            }
+
+        }
+
+        // btn open add object
+        this.open_add_object = function () {
+
+            steps_box.classList.remove("hidden");
+
+
+        }
+
+        // btn close add object
+        this.close_add_object = function () {
+
+            steps_box.classList.add("hidden");
+
+        }
+
+        // Counter
+        this.counter = function (counter_id, min_value, max_value, current) {
+            let id = document.getElementById(counter_id);
+            let minus = id.children[0];
+            let plus = id.children[2];
+            let count = id.children[1];
+
+            count.value = current;
+            count.setAttribute("value", current);
+
+            if (min_value == 0) {
+
+                let counter = 0;
+
+                minus.addEventListener("click", function () {
+                    if (counter > min_value) {
+                        counter--;
+                        count.value = counter;
+                        count.setAttribute("value", counter);
+                        plus.classList.remove("not_available");
+                        if (counter === 0) {
+                            minus.classList.add("not_available");
+                        };
+                        return;
+                    };
+                });
+
+                plus.addEventListener("click", function () {
+                    if (counter < max_value) {
+                        counter++;
+                        count.value = counter;
+                        count.setAttribute("value", counter);
+                        minus.classList.remove("not_available");
+                        if (counter === max_value) {
+                            plus.classList.add("not_available");
+                        }
+                        return;
+                    };
+                });
+
+            } else {
+
+                let counter = 1;
+
+                minus.addEventListener("click", function () {
+                    if (counter > min_value) {
+                        counter--;
+                        count.value = counter;
+                        count.setAttribute("value", counter);
+                        plus.classList.remove("not_available");
+                        if (counter === 1) {
+                            minus.classList.add("not_available");
+                        };
+                        return;
+                    };
+                });
+                plus.addEventListener("click", function () {
+                    if (counter < max_value) {
+                        counter++;
+                        count.value = counter;
+                        count.setAttribute("value", counter);
+                        minus.classList.remove("not_available");
+                        if (counter === max_value) {
+                            plus.classList.add("not_available");
+                        };
+                        return;
+                    };
+                });
+
+            };
+
+        };
+
+    }
+
+    // ui components
+    objects.ui = new function () {
+
+        // Filter dropdown
+        this.filter_dropdown = function (id) {
+
+            var id = document.getElementById(id);
+            var btn = id.children[0];
+            var dropdown = id.lastElementChild;
+            var close = id.lastElementChild.children[0].lastElementChild;
+
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+
+            close.addEventListener("click", function () {
+                dropdownToggle();
+            });
+
+            $(document).mouseup(function (e) {
+                if (id.outerHTML.includes(e.target.outerHTML) == false) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+
+        }
+
+        // Filter check all
+        this.filter_check_all = function (id) {
+
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("all")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = true;
+                }
+            });
+        }
+
+        // Filter uncheck all
+        this.filter_unCheck_all = function (id) {
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("remove")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = false;
+                }
+            });
+        }
+
+        // Search by client name
+        this.searchOnKeyUp = () => {
+
+            // Declare variables
+            var input, tr, td, a, i, txtValue;
+
+            input = document.getElementById('objects_input_search_name');
+       
+            tr = document.getElementById('objects_tbody');
+            td = document.getElementsByClassName('td_item02');
+
+            let timeout = null;
+
+            //// Loop through all list items, and hide those who don't match the search query
+            //for (i = 0; i < td.length; i++) {
+
+            //    a = td[i].getElementsByClassName('td_object')[0];
+            //    txtValue = a.textContent || a.innerText;
+            //    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            //        td[i].parentElement.style.display = '';
+            //    } else {
+            //        td[i].parentElement.style.display = 'none';
+            //    }
+            //}
+
+            // Listen for keystroke events
+            input.addEventListener('keyup', function (e) {
+                // Clear the timeout if it has already been set.
+                // This will prevent the previous task from executing
+                // if it has been less than <MILLISECONDS>
+                clearTimeout(timeout);
+
+                let filter = input.value.toUpperCase();
+
+                // Make a new timeout set to go off in 1000ms (1 second)
+                timeout = setTimeout(function () {
+                    // Loop through all list items, and hide those who don't match the search query
+                    for (i = 0; i < td.length; i++) {
+
+                        a = td[i].getElementsByClassName('td_object')[0];
+                        txtValue = a.textContent || a.innerText;
+
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            js.images.lazy_load();
+                            td[i].parentElement.style.display = '';
+                        } else {
+                            td[i].parentElement.style.display = 'none';
+                        }
+                    }
+                }, 500);
+            });
+        }
+
+        // Mobile open dropdown by click btn
+        this.filter_mobile_btn = function (id, dropdown_id) {
+            var mobile_btn = document.getElementById(id);
+            var dropdown = document.getElementById(dropdown_id);
+            var dropdown_btn = dropdown.getElementsByTagName("button")[0];
+            var dropdown_menu = dropdown.getElementsByClassName("dropdown_menu")[0];
+            mobile_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown.classList.remove("d-none");
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("d-none");
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+        }
+
+        // Leaflet map
+        this.leaflet_map = function () {
+
+            var map = L.map('step_03_map').setView([51.505, -0.09], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([51.5, -0.09]).addTo(map)
+                .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                .openPopup();
+
+        }
+
+    }
+
+    // On load
+    objects.load();
+    objects.ui.searchOnKeyUp();
+
+
+</script>

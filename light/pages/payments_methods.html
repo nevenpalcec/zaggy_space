@@ -1,0 +1,151 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>User settings
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#settings" class="filter_link"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_status" class="filter_link"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Status</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_sources" class="filter_link"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Sources</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#payments_methods" class="filter_link active"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Payment methods</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#evisitor" class="filter_link"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">eVisitor</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoice_text" class="filter_link"><i class="fas fa-file-invoice pr-lg-2"></i><span class="d-none d-lg-flex">Invoice text</span></a>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3 justify-content-end">
+
+        <button class="btn bg_primary text-white font_medium py-1" onclick="modal_add_payment_methods.bl.show_modal('modal_add_payment_methods')"><i class="fas fa-plus pr-2"></i>Add</button>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <div class="view_table">
+            <div class="table_wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" style="min-width: 15rem;">Name</th>
+                            <th scope="col" style="min-width: 8rem;">Link</th>
+                            <th scope="col" style="min-width: 6rem;">Fis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payments_list_tbody">
+                        
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal add review -->
+<section class="modal_add_payment_methods"></section>
+
+<section>
+    <template id="payments_list">
+        <tr onclick="modal_add_payment_methods.bl.edit_payment(`${payment_id}`);">
+            <th scope="row">${number}</th>
+            <td class="td_item01">${code}</td>
+            <td class="td_item02">${name}</td>
+            <td class="td_item03">${payment_method_fis}</td>
+        </tr>
+    </template>
+</section>
+
+<script>
+
+    $(".modal_add_payment_methods").load("/pages/components/modal_add_payment_methods.html");
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+    var payment_methods = {};
+
+    payment_methods.object_id = '';
+
+
+    // Load function
+    payment_methods.load = () => {
+
+        // Title
+        document.title = "Reviews";
+
+        // UI components
+
+        // BL components
+        payment_methods.bl.load_paymenths();
+
+    }
+
+    // UI logic
+    payment_methods.ui = new function () {
+
+    }
+
+    // BL logic
+    payment_methods.bl = new function () {
+
+        this.load_paymenths = async () => {
+
+            var user_id = bl.workers.current_user_id();
+
+            var url = '/api/payment_methods/list/' + user_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            payments_list_tbody.innerHTML = '';
+            var number = 1;
+
+            for (var r of json_response) {
+
+                var t = payments_list.innerHTML;
+
+                t = t.replace('${payment_id}', r['id']);
+                t = t.replace('${code}', !r['code'] == true ? '-' : r['code']);
+                t = t.replace('${name}', !r['name'] == true ? '-' : r['name']);
+                t = t.replace('${payment_method_fis}', !r['payment_method_fis'] == true ? '-' : r['payment_method_fis']);
+                t = t.replace('${number}', number);
+
+                number++;
+
+                js.html.insertAdjacentHTML('payments_list_tbody', t);
+            }
+
+        }
+
+    }
+
+    // On load
+    payment_methods.load();
+
+</script>

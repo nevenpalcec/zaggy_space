@@ -1,0 +1,299 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-file-signature pr-2"></i>User contract
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#balance" class="filter_link"><i class="fas fa-coins pr-lg-2"></i><span class="d-none d-lg-flex">Balance</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#user_invoices" class="filter_link"><i class="fas fa-file-alt pr-lg-2"></i><span class="d-none d-lg-flex">Invoices</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#user_contract" class="filter_link active"><i class="fas fa-file-signature pr-lg-2"></i><span class="d-none d-lg-flex">User contract</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#contract_items" class="filter_link"><i class="fas fa-list pr-lg-2"></i><span class="d-none d-lg-flex">Contract items</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="user_contract_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <!-- Contract has already been signed -->
+                    <div id="contract_signature_details" class="p-4 mt-3 col-md-4 hidden" style="display: flex; justify-content: space-between; border: 2px solid lightgrey; border-radius: 0.25rem;">
+
+                        <!--Signature & date-->
+                        <div>
+                            <div>
+                                <strong style="font-size: 17px;">Signature:</strong> &nbsp; <span id="signature_name"></span>
+                            </div>
+                            <div>
+                                <strong style="font-size: 17px;">Date:</strong> &nbsp; <span id="signature_date"></span>
+                            </div>
+                        </div>
+
+                        <!--Print to PDF-->
+                        <button class="btn btn-primary" onclick="user_contract.bl.print_to_pdf();">
+                            <i class="icon-file-pdf position-left"></i> View PDF
+                        </button>
+                    </div>
+
+                    <!-- Contract has not been signed yet -->
+                    <div>
+
+                        <!--Contract body-->
+                        <div id="contract_body" class="hidden">
+                            <div class="text-right" style="padding: 20px 20px 0px 0px; ">
+                                <button class="btn btn-primary" type="button" onclick="user_contract.ui.change_contract_lng('28');" style="background:none; border:none; padding: 0">
+                                    <img src="../assets/images/icons/flags/hr.svg" style="height: 15px;">
+                                </button>
+                                <button class="btn btn-primary" type="button" onclick="user_contract.ui.change_contract_lng('1');" style="background:none; border:none; padding: 0">
+                                    <img src="../assets/images/icons/flags/gb.svg" style="height: 15px;">
+                                </button>
+                            </div>
+
+                            <div id="contract_general_version" style="height: calc(100vh - 285px); overflow-y: auto;">
+                            </div>
+
+                            <hr />
+
+                        </div>
+
+                        <!--Contract footer - Card does not exist-->
+                        <div id="card_doesnt_exist" class="hidden">
+                            <div class="text-right" style="margin-right: 20px">
+                                <button type="button" class="btn btn-primary" style="cursor: not-allowed;" disabled>
+                                    <i class="fa fa-check pr-2"></i>Sign contract
+                                </button>
+                            </div>
+                            <div class="text-right" style="margin: 10px 20px 20px 0; opacity: 0.7;">
+                                Contract can be signed after entering card details
+                            </div>
+                        </div>
+
+                        <!--Contract footer - Sign button-->
+                        <div id="contract_sign_button" class="text-right hidden" style="margin: 20px">
+                            <button type="button" class="btn btn-primary btn-ladda btn-ladda-spinner" data-spinner-color="#fff" data-style="fade" onclick="user_contract.bl.sign_contract();">
+                                <i class="fa fa-check pr-2"></i>Sign contract
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--templates-->
+<div>
+    <!-- Template for contract items list -->
+    <template id="table_body_contract_items">
+        <li style="font-size: 16px;">
+            ${item_name}, Quantity: ${amount}, Neto price: ${price} EUR
+        </li>
+    </template>
+
+   
+</div>
+
+<script>
+
+    var user_contract = {};
+
+    user_contract.user_id = bl.workers.current_user_id();
+    user_contract.zaggy_company_id = bl.workers.current_user_zaggy_company_id();
+    user_contract.contract_engl = '';
+    user_contract.contract_cro = '';
+    user_contract.card_exist = '';
+    user_contract.current_lng_id = '1';
+    user_contract.contract_id = '';
+
+    // settings load function
+    user_contract.load = () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        ui.display_title("User contract");
+
+        // Load contract
+        user_contract.bl.load_contract();
+
+    }
+
+    user_contract.ui = new function () {
+
+        this.change_contract_lng = (lng_id) => {
+
+            user_contract.current_lng_id = lng_id;
+
+            if (lng_id == '28') {
+                contract_general_version.innerHTML = user_contract.contract_cro;
+            }
+            else {
+                contract_general_version.innerHTML = user_contract.contract_engl;
+            }
+
+        }
+
+    }
+
+    user_contract.bl = new function () {
+
+        this.load_contract = async () => {
+
+            var url_contract = `api/users_zaggy_contract/get?id=${user_contract.user_id}`;
+            var res_contract = await ajax.get_json(url_contract);
+            var contract = res_contract[0];
+
+            user_contract.contract_id = contract['id'];
+
+            // Contract is already signed
+            if (contract['contract_signed'] == 'Y') {
+
+                contract_signature_details.classList.remove('hidden');
+                contract_body.classList.add('hidden');
+                card_doesnt_exist.classList.add('hidden');
+                contract_sign_button.classList.add('hidden');
+
+                var contract_signed_date = js.date.toIso(contract['contract_signed_date']);
+                contract_signed_date = contract_signed_date.split("-").reverse().join(".");
+
+                signature_name.innerText = contract['guest_name'];
+                signature_date.innerText = contract_signed_date;
+
+            }
+
+            else {
+
+                ui.content_loading("user_contract_content_loading");
+
+                contract_signature_details.classList.add('hidden');
+                contract_body.classList.remove('hidden');
+
+                var b2b_id = '380'; // Revolut
+                var url_card = `/api/users_zaggy_cards/get?user_id=${user_contract.user_id}&b2b_id=${b2b_id}`;
+                var res_card = await ajax.get_json(url_card);
+                var card = res_card[0];
+
+                user_contract.card_exist = !card['card_bin'] ? 'N' : 'Y';
+
+                // Card exists
+                if (user_contract.card_exist == 'Y') {
+                    card_doesnt_exist.classList.add('hidden');
+                    contract_sign_button.classList.remove('hidden');
+                }
+                else {
+                    card_doesnt_exist.classList.remove('hidden');
+                    contract_sign_button.classList.add('hidden');
+                }
+
+                // Get English and Croatian versions of contract
+                user_contract.contract_engl = await user_contract.bl.get_contract_body('1');
+                user_contract.contract_cro = await user_contract.bl.get_contract_body('28');
+
+                // Initially set english contract version
+                contract_general_version.innerHTML = user_contract.contract_engl;
+
+                ui.content_loading_hide("user_contract_content_loading");
+
+            }
+        }
+
+        this.get_contract_body = async (lng_id) => {
+
+            var data = {};
+            
+            data.zaggy_company_id = user_contract.zaggy_company_id;
+            data.user_id = user_contract.user_id;
+            data.language_id = lng_id;
+
+            var url_contract = '/api/users_zaggy_contract_types/get_contract_body';
+            var res_contract = await ajax.post_json(url_contract, data);
+
+            // Get contract items
+            var url_items = `/api/users_zaggy_contract_items/list/${user_contract.user_id}`;
+            var res_items = await ajax.get_json(url_items);
+            var table_body_all = '';
+
+            for (var r of res_items) {
+                var template = table_body_contract_items.innerHTML;
+
+                template = template.replaceAll('${item_name}', r['item_name']);
+                template = template.replaceAll('${amount}', r['amount']);
+                template = template.replaceAll('${price}', r['price']);
+
+                table_body_all += template;
+            }
+
+            return res_contract.replaceAll('@contract_items_list', table_body_all);
+
+        }
+
+        this.sign_contract = async () => {
+
+            if (user_contract.card_exist != 'Y') {
+                return;
+            }
+
+            ui.content_loading("user_contract_content_loading");
+
+            var data = {};
+
+            data.user_id = user_contract.user_id;
+            data.contract_id = user_contract.contract_id;
+            data.contract_text = contract_general_version.innerHTML;
+            data.language_id = user_contract.current_lng_id;
+            data.company_id = user_contract.zaggy_company_id;
+
+            var url = '/api/users_zaggy_contract/sign_contract';
+            await ajax.post_json(url, data);
+
+            // Reload
+            user_contract.bl.load_contract();
+
+            ui.content_loading_hide("user_contract_content_loading");
+
+        }
+
+        this.print_to_pdf = async () => {
+
+            var url = `/contracts/pdf_get/?id=${user_contract.contract_id}`;
+            window.open(url, '_blank');
+
+        }
+    }
+
+    // Load
+    user_contract.load();
+
+</script>

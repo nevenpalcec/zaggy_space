@@ -1,0 +1,58 @@
+﻿@code {
+
+    [Parameter] public string object_id { get; set; }
+
+    public bool in_a_feed = false;
+
+    protected override void OnParametersSet()
+    {
+        in_a_feed = bl.rss_feeds.check_object_if_in_feed(object_id, bl.B2B.zaggy.shared.b2b_id);
+        StateHasChanged();
+    }
+
+    void feed_add()
+    {
+        bl.rss_feeds.add(object_id, bl.B2B.zaggy.shared.b2b_id);
+        in_a_feed = bl.rss_feeds.check_object_if_in_feed(object_id, bl.B2B.zaggy.shared.b2b_id);
+        StateHasChanged();
+    }
+
+    void feed_remove()
+    {
+        bl.rss_feeds.delete(object_id, bl.B2B.zaggy.shared.b2b_id);
+        in_a_feed = bl.rss_feeds.check_object_if_in_feed(object_id, bl.B2B.zaggy.shared.b2b_id);
+        StateHasChanged();
+    }
+
+}
+
+<div class="card mb-3 @(in_a_feed == false ? "bg-dark" : "bg-dark")">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <a href="/settings/rss_feeds" class="text-decoration-none">
+                <h6 class="mb-2 fs-0 text-white fw-bold">Rss feed</h6>
+                @if (in_a_feed == false)
+                {
+                    <p class="mb-0 fs--1 text-white"> Add this property in Rss Feed </p>
+                }
+                else
+                {
+                    <p class="mb-0 fs--1 text-white"> Property is in RSS Feed </p>
+                }
+                </a>
+           
+        </div>
+
+            @if (in_a_feed == false)
+            {
+                 <button class="btn btn-primary" @onclick="feed_add"> Add </button>
+            }
+            else
+            {
+                <button class="btn btn-danger" @onclick="feed_remove"> Remove </button>
+            }
+
+    </div>
+
+</div>

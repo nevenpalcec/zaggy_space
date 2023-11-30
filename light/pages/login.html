@@ -1,0 +1,158 @@
+<div class="view_items d-flex flex-column">
+    <div class="view_content">
+        <div class="mx-3">
+            <div class="sign" id="login_div_sign">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="sign_logo"><img src="/assets/images/icons/syncbeds-icon.png" alt=""></div>
+                        <div class="font_7 font-weight-bold text-center pb-3">Sign in</div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-user"></i></div>
+                            </div>
+                            <input type="text" class="form-control focus" placeholder="Username" id="login_username" autocomplete="off" autofocus>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" class="form-control focus" placeholder="Password" id="login_password" autocomplete="off">
+                        </div>
+                        <button onclick="document.activeElement.blur(); bl.workers.worker_login();"
+                                class="btn btn_secondary d-block w-100">Let's go</button>
+                        <div class="sign_social mt-3">
+                            <a href="https://www.facebook.com/myyrent/" class="icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/zaggy.channel.manager/" class="icon instagram"><i class="fab fa-instagram"></i></a>
+                            <!--<a href="#" class="icon google"><i class="fab fa-google-plus-g"></i></a>-->
+                            <a href="https://twitter.com/zaggy_net" class="icon twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                        <a href="#" class="text-center mt-3 font_3 text-black-50">Forgot password?</a>
+                        <hr>
+                        <div class="p font_3 mb-2">Dont have an account?</div>
+                        <a href="" class="btn btn_secondary w-100">Sign up</a>
+                    </div>
+                    <div id="login_content_loading" class="view_loading" style="display: none;">
+                        <img src="/assets/images/icons/loading.svg" />
+                    </div>
+                    <div class="col-md-6 d-flex flex-column">
+                        <div class="font_8 font-weight-bold pt-3">zaggy</div>
+                        <div>Channel manager & Property management system</div>
+                        <div class="border-top mt-2 pt-2 qod_container invisible">
+                            <div class="font-weight-bold pb-1">Story</div>
+                            <div class="font_3 qod_text">There is no one right way. Just figure out what works for you!</div>
+                            <div class="d-flex justify-content-between pt-2 font_medium">         
+                                <a id="quote_likes" onclick=" add_like(this);" data-href="api/registars/qod_like/90" class="cursor_point user_select_none">
+                                    <div class="d-flex heart font_3">
+                                        <div class="icon_heart pr-1 text-red"><i class="fas fa-heart"></i></div>
+                                        <div class="counter qod_likes" id="qod_likes">37</div>
+                                        <div class="pl-1">likes</div>
+                                    </div>
+                                </a> 
+                                <div class="signature qod_author">Lorii Myers</div>
+                            </div>
+                        </div>
+                        <div class="font_5 font-weight-bold pt-3 mt-auto">We connect:</div>
+                        <div class="d-flex flex-wrap justify-content-between sign_portals">
+                            <div><img src="/assets/images/icons/portals/booking.svg" alt="booking"></div>
+                            <div><img src="/assets/images/icons/portals/airbnb.svg" alt="airbnb"></div>
+                            <div><img src="/assets/images/icons/portals/agoda.svg" alt="agoda"></div>
+                            <div><img src="/assets/images/icons/portals/b2book.svg" alt="b2book"></div>
+                            <div><img src="/assets/images/icons/portals/expedia.svg" alt="expedia"></div>
+                            <!--<div><img src="/assets/images/icons/portals/holidu-touch-icon-ipad-retina.png" alt="holidu"></div>-->
+                            <div><img src="/assets/images/icons/portals/holidu.svg" alt="holidu"></div>
+                            <div><img src="/assets/images/icons/portals/atraveo.svg" alt="atraveo"></div>
+                            <div><img src="/assets/images/icons/portals/traum.svg" alt="traum"></div>
+                            <!--<div><img src="/assets/images/icons/portals/homeaway.png" alt="homeaway"></div>-->
+                            <div><img src="/assets/images/icons/portals/homeaway.svg" alt="homeaway"></div>
+                            <div><img src="/assets/images/icons/portals/hometogo.svg" alt="hometogo"></div>
+                            <div><img src="/assets/images/icons/portals/trivago.svg" alt="trivago"></div>
+                            <div><img src="/assets/images/icons/portals/traum.svg" alt="traum"></div>
+                            <!--<div><img src="/assets/images/icons/portals/tripadivosr.png" alt="tripadivosr"></div>-->
+                            <div><img src="/assets/images/icons/portals/tripadvisor.svg" alt="tripadivosr"></div>
+                            <div><img src="/assets/images/icons/portals/kroatide.svg" alt="kroatide"></div>
+                            <div><img src="/assets/images/icons/portals/edomizil.svg" alt="edomizil"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login_div_error" class="pop_up_top failed" style="display: none;">
+    <div class="pop_up_top_label bg_red">Something went wrong username or password!</div>
+</div>
+
+<script>
+
+    var login = {};
+
+    login.load = function () {
+        //login.bl.left_nav_hidden();
+        login.bl.enter_key_login();
+
+        fetch('/api/registars/qod').then(res => res.json()).then(quote => {
+
+            let quote_id = quote[0]['id'];
+            let likes_counter = document.querySelector('.qod_likes').getAttribute('data-href');
+            likes_counter = "api/registars/qod_like/" + quote_id;
+
+            document.querySelector('.qod_text').innerText = quote[0]['text'];
+            document.querySelector('.qod_author').innerText = quote[0]['author'];
+            document.querySelector('.qod_likes').innerText = quote[0]['like']; 
+            document.querySelector('.qod_container').classList.remove('invisible');
+
+        });
+
+    }
+
+    //add option to like quote
+    async function add_like (el) {
+
+        // Check if user liked this quote before
+        if (sessionStorage.getItem('quote_liked') !== 'Y') {
+
+            let url = el.dataset.href;
+            var likes = await fetch(url).then(res => res.text());
+            likes = likes.replaceAll('"', '');
+            document.querySelector('.qod_likes').innerText = likes;
+
+            sessionStorage.setItem('quote_liked', 'Y');
+
+        }
+
+    }
+
+    // Logic
+    login.bl = new function () {
+
+        $(".main_menu_left").addClass("hidden");
+        $(".bg_screen_img_blur_shadow").addClass("hidden");
+        $(".bg_screen_img_blur").addClass("hidden");
+        $(".bg_sign").removeClass("hidden");
+        $(".main_background").addClass("hidden");
+
+        this.enter_key_login = function () {
+
+            addEventListener("keyup", async function (event) {
+
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+
+                    // Remove focus from input
+                    if (document.activeElement.tagName === 'INPUT') {
+                        document.activeElement.blur();
+                    }
+                    
+                    await bl.workers.worker_login();
+                }
+            });
+        }
+    }
+
+    // focus input
+    login_username.focus();
+
+    login.load();
+
+</script>

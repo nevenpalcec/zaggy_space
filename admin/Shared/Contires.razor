@@ -1,0 +1,28 @@
+﻿@code {
+
+    [Parameter]
+    public string selC { get; set; }
+    //var dt = bl.countries.contires_list();
+    System.Data.DataTable dt;
+
+    protected override void OnInitialized()
+    {
+        dt = bl.countries.contires_list();
+    }
+}
+
+    @foreach (System.Data.DataRow r in dt.Rows)
+{
+    @if (r["id"].ToString() == selC)
+    {
+        <option selected value="@r["id"]">
+            <img data-name="@r["country"]" style="width:20px" src="/assets/images/icons/flags/@(r["code2"]).svg" />&nbsp; @r["country"]
+        </option>
+    }
+    else
+    {
+        <option value="@r["id"]">
+            <img data-name="@r["country"]" style="width:20px" src="/assets/images/icons/flags/@(r["code2"]).svg" />&nbsp; @r["country"]
+        </option>
+    }
+}

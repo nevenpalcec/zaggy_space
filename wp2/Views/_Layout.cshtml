@@ -1,0 +1,308 @@
+﻿@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.settings_current.registars.booking_engine_user.Rows[0];
+    var booking_engine_db = bl.settings_current.registars.booking_engine.Rows[0];
+    var lng = Request.Cookies["lng"].Values[0].ToString();
+    var remove_header_footer = booking_engine_db["remove_header_footer"].ToString();
+
+    var title = booking_engine_db["moto_header"].ToString();
+
+    if (string.IsNullOrWhiteSpace(title))
+    {
+        title = user_db["company_name"].ToString();
+    }
+}
+
+<!DOCTYPE html lang="@bl.settings_current.lng" PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="@lng">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=”robots” content="index, follow">
+    <link rel="canonical" href="@Request.RawUrl" />
+    <meta name="robots" content="all" />
+    <meta name="publisher" content="@booking_engine_db["meta_title"]" />
+    <meta name="author" content="@booking_engine_db["meta_title"]">
+
+    <!-- seo details -->
+    <title> @title | @ViewBag.Title</title>
+    <meta name="description" content="@booking_engine_db["meta_description"]">
+
+    <!-- for FF, Chrome, Opera -->
+    <link rel="icon" type="image/png" href="/assets/images/icons/logo-zaggy.png" sizes="16x16">
+
+</head>
+<body>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/assets/js/bootstrap/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <link rel="stylesheet" href="~/assets/js/jquery/jquery-ui.css">
+    <script src="~/assets/js/jquery/jquery-3.4.1.js"></script>
+    <script src="~/assets/js/jquery/jquery-ui.js"></script>
+
+    <!-- hiza -->
+    <script src="https://cdn.jsdelivr.net/gh/nevenpalcec/hiza_js/hiza/core/hiza.core.js"></script>
+    @*<script src="https://raw.githubusercontent.com/nevenpalcec/hiza_js/main/hiza/engine/hiza.engine.js"></script>*@
+    <script>
+        // set for backwords with old version
+        var js = hiza.core;
+    </script>
+
+    <!-- Font Awesome -->
+    @*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">*@
+    @*<script src="https://kit.fontawesome.com/fcebcb1410.js" crossorigin="anonymous"></script>*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+
+    <!-- Slick -->
+    @*<link rel="stylesheet" type="text/css" href="~/assets/js/slick/slick.css" />*@
+    <link href="~/assets/css/slick.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/assets/js/slick/slick.js"></script>
+
+    <!-- Lightgallery -->
+    @*<link rel="stylesheet" href="~/assets/js/lightgallery/lightgallery.css">
+        <script src="~/assets/js/lightgallery/lightgallery.min.js"></script>*@
+
+    <!-- ekko-lightbox -->
+    <link href="~/assets/js/ekko-lightbox/ekko-lightbox.css" rel="stylesheet" />
+    <script src="~/assets/js/ekko-lightbox/ekko-lightbox.js"></script>
+
+    <!-- Light Gallery -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/css/lightgallery.min.css" integrity="sha512-kwJUhJJaTDzGp6VTPBbMQWBFUof6+pv0SM3s8fo+E6XnPmVmtfwENK0vHYup3tsYnqHgRDoBDTJWoq7rnQw2+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js" integrity="sha512-b4rL1m5b76KrUhDkj2Vf14Y0l1NtbiNXwV+SzOzLGv6Tz1roJHa70yr8RmTUswrauu2Wgb/xBJPR8v80pQYKtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- flatpickr -->
+    <link href="~/assets/js/flatpicker/flatpickr.min.css" rel="stylesheet" />
+    <script src="~/assets/js/flatpicker/flatpickr.js"></script>
+
+    <!-- zaggy Js -->
+    @*<script src="/assets/js/js.js"></script>*@
+    <script src="/assets/js/fr.js"></script>
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!-- Hiza CSS -->
+    <link rel="stylesheet" href="~/assets/css/hiza-dropdown.css">
+    <script src="~/assets/js/hiza-dropdown.js"></script>
+
+    <!-- semantic -->
+    <link href="~/assets/js/semantic/semantic.min.css" rel="stylesheet" />
+    <script src="~/assets/js/semantic/semantic.min.js"></script>
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    @{
+        // Localize datepicker and flatpickr
+        var lang = Request.Cookies["lng"] != null ? Request.Cookies["lng"].Value.ToString().Substring(4, 2) : "en";
+        if (lang != "en")
+        {
+            // jQuery datepicker
+            <script src="~/assets/js/jquery/localization/datepicker-@(lang).js"></script>
+            // flatpickr
+            <script src="https://npmcdn.com/flatpickr/dist/l10n/@(lang).js"></script>
+            <script>
+                flatpickr.localize(flatpickr.l10ns.@lang);
+            </script>
+        }
+    }
+
+    <!-- custom top -->
+    @Html.Raw(booking_engine_db["wp2_scripts_top"].ToString().Trim())
+
+    <!-- top bar -->
+    <div class="top-bar white-links">
+        <div class="wrapper">
+            <div class="top-bar-item">
+                <div class="top-bar-label pr-3">
+                    <a href="/">
+                        <i class="fas fa-home"></i><span>&nbsp;</span>
+                    </a>
+                </div>
+                <div class="top-bar-label pr-3">
+                    <a href="/objects/list">
+                        <i class="fas fa-bed"></i><span>&nbsp;</span>
+                    </a>
+                </div>
+                <div class="top-bar-label pr-3">
+                    <a href="tel:@user_db["telephone"] ">
+                        <i class="fas fa-phone pr-2"></i><span>@user_db["telephone"] &nbsp; &nbsp;</span>
+                    </a>
+                </div>
+                <div class="top-bar-label pr-3">
+                    <a href="mailto:@user_db["email"]">
+                        <i class="fas fa-envelope pr-2"></i><span>@user_db["email"]</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="top-bar-item">
+                <!-- Language -->
+                <div class="top-bar-btn lang">
+                    <div class="dropdown pr-2" id="dropdown_lang">
+                        <button id="topBar-lang" data-lang-id="@lng" class="btn dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="init_dropdown_select('dropdown_lang')">
+                            <img src="/assets/images/flags/@string.Concat(lng, ".svg")" alt="">
+                            <span> @lng.ToUpper() </span>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a data-lang-id="en" class="dropdown-item lang-01" href="/users/language_set/1">
+                                <img src="/assets/images/flags/gb.svg"
+                                     alt=""><span>ENG</span>
+                            </a>
+                            <a data-lang-id="hr" class="dropdown-item lang-02" href="/users/language_set/28">
+                                <img src="/assets/images/flags/hr.svg"
+                                     alt=""><span>CRO</span>
+                            </a>
+                            <a data-lang-id="it" class="dropdown-item lang-03" href="/users/language_set/6"><img src="/assets/images/flags/it.svg" alt=""><span>IT</span></a>
+                            <a data-lang-id="de" class="dropdown-item lang-04" href="/users/language_set/2"><img src="/assets/images/flags/de.svg" alt=""><span>DE</span></a>
+
+                            <a data-lang-id="pl" class="dropdown-item lang-04" href="/users/language_set/3"><img src="/assets/images/flags/pl.svg" alt=""><span>PL</span></a>
+                            <a data-lang-id="fr" class="dropdown-item lang-04" href="/users/language_set/4"><img src="/assets/images/flags/fr.svg" alt=""><span>FR</span></a>
+                            <a data-lang-id="es" class="dropdown-item lang-04" href="/users/language_set/5"><img src="/assets/images/flags/es.svg" alt=""><span>ES</span></a>
+                            <a data-lang-id="cs" class="dropdown-item lang-04" href="/users/language_set/10"><img src="/assets/images/flags/cz.svg" alt=""><span>CS</span></a>
+                            <a data-lang-id="ru" class="dropdown-item lang-04" href="/users/language_set/13"><img src="/assets/images/flags/ru.svg" alt=""><span>RU</span></a>
+                            <a data-lang-id="hu" class="dropdown-item lang-04" href="/users/language_set/18"><img src="/assets/images/flags/hu.svg" alt=""><span>HU</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currency -->
+                @*<div class="top-bar-btn currency">
+                        <div class="dropdown" id="dropdown_currency">
+                            <button id="topBar-currency" data-currency-id="1" class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="init_dropdown_select('dropdown_currency')">
+                                <i class="fas fa-euro-sign pr-2"></i><span>EUR</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a data-currency-id="1" class="dropdown-item currency-01"><i class="fas fa-euro-sign pr-2"></i><span>EUR</span></a>
+                                <a data-currency-id="2" class="dropdown-item currency-02"><i class="fas fa-coins pr-2"></i><span>HRK</span></a>
+                                <a data-currency-id="3" class="dropdown-item currency-03"><i class="fas fa-dollar-sign pr-2"></i><span>USD</span></a>
+                                <a data-currency-id="4" class="dropdown-item currency-04"><i class="fas fa-pound-sign pr-2"></i><span>GBP</span></a>
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+
+    <!-- body -->
+    <div>
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    @if (remove_header_footer == "N")
+    {
+        <footer class="footer white-links">
+            <div class="container-wrapper">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="footer-info">
+                            <span class="footer-nav-link">
+                                <a href="/"> @bl.lng.l.Home </a>
+                            </span>
+                            &nbsp; | &nbsp;
+                            <span class="footer-nav-link">
+                                <a href="/pictures/gallery"> @bl.lng.l.Photo_Gallery </a>
+                            </span>
+                            &nbsp; | &nbsp;
+                            <span class="footer-nav-link">
+                                <a href="/objects/list"> @bl.lng.l.Accommodation </a>
+                            </span>
+                            &nbsp; | &nbsp;
+                            <span class="footer-nav-link">
+                                <a href="/users/about"> @bl.lng.l.About_us </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="footer-info">
+                            <a href="/users/general_terms"> @bl.lng.l.Terms_and_conditions </a>
+                            &nbsp; | &nbsp;
+                            <a href="/users/privacy_policy"> @bl.lng.l.Privacy_policy </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-underline" style="margin-top: 25px; margin-bottom: 0px;"></div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer-info">
+                            <div>
+                                @user_db["company_name"] <br />
+                                @user_db["address"],
+                                @user_db["city_zip"],
+                                @user_db["city_name"]
+                                <br />
+                                OIB: @user_db["oib"]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <div class="footer-info">
+                            <div>
+                                <a href="https://zaggys.com" target="_blank" style="color: white;">
+                                    <strong> @bl.lng.l.Booking_portals_we_connect: </strong> &nbsp;
+                                    @*<strong>User_id: @bl.settings_current.user_id</strong>*@
+                                </a>
+                                @*<div>
+                                        Domain: @Session["domain"], UserID: @Session["user"]
+                                    </div>*@
+                            </div>
+                            <div>
+                                <a href="https://www.zaggys.com/booking-com/" target="_blank" style="color: white;">Booking.com</a>, &nbsp;
+                                <a href="https://www.zaggys.com/airbnb-channel-manager/" target="_blank" style="color: white;">AirBNB</a>, &nbsp;
+                                <a href="https://www.zaggys.com/vrbo/" target="_blank" style="color: white;">VRBO</a>, &nbsp;
+                                <a href="https://www.zaggys.com/expedia/" target="_blank" style="color: white;">Expedia</a>, &nbsp;
+                                <a href="https://www.zaggys.com/booking-kanali/" target="_blank" style="color: white;"> and many more ... </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center mt-2">
+                        <a href="https://zaggys.com" target="_blank" style="color: white;">
+                            Design & Development by: <strong> zaggy </strong>
+                            Channel Manager & Property Management system
+                            &nbsp; | &nbsp; &copy;@DateTime.Now.Year
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    }
+
+
+    <script src="~/assets/js/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- custom bottom -->
+    @Html.Raw(booking_engine_db["wp2_scripts_bottom"].ToString().Trim())
+
+    <!-- lightgallery plugins -->
+    <!-- final scripts -->
+    <script>
+        window.onload = function () { fr.img_lazy_load(); }
+    </script>
+
+</body>
+</html>

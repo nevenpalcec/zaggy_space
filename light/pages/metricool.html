@@ -1,0 +1,22 @@
+﻿
+<div>
+    <iframe id="metricool_app" class="w-100" style="height: 100vh;"></iframe>
+</div>
+
+<script>
+
+    var mcool = {};
+
+    mcool.on_load = async function () {
+
+        //debugger;
+        var msrc = await fetch('/api/users/metricool/' + bl.workers.current_user_id()).then(res => res.text());
+        metricool_app.src = msrc;
+
+        metricool_app.addEventListener('load', () => alert('DONE'));
+
+    }
+
+    mcool.on_load();
+
+</script>

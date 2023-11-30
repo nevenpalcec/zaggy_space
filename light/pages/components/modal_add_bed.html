@@ -1,0 +1,425 @@
+﻿<!-- Modal add new room -->
+<div id="modal_add_beds" class="view_modal hidden visuallyhidden ">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold" id="modal_add_beds_title"><i class="fas fa-plus pr-2"></i>Add new bed</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+
+            <!-- New update -->
+
+            <div class="modal-body pb-0">
+                <div class="row">
+                    <div class="col-12 col-lg-4 d-flex mb-3">
+                        <div class="w-100">
+                            <div class="text-uppercase font_bold mb-2">Select bed type</div>
+                            <div id="modal_add_beds_select_bed_type" class="select">
+                                <button class="custom-select focus" id="modal_add_bed_type_btn"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden" id="modal_add_bed_list_type" >
+                                    <li class="select_li" data-id="1">Example 01</li>
+                                    <li class="select_li" data-id="2">Example 02</li>
+                                    <li class="select_li" data-id="3">Example 03</li>
+                                    <li class="select_li" data-id="4">Example 04</li>
+                                    <li class="select_li" data-id="5">Example 05</li>
+                                    <li class="select_li" data-id="6">Example 06</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="text-uppercase font_bold mb-2">Width (cm)</div>
+                        <div><input type="text" id="modal_add_bed_dimension_X" class="form-control focus" /></div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="text-uppercase font_bold mb-2">Length (cm)</div>
+                        <div><input type="text" id="modal_add_bed_dimension_Y" class="form-control focus" /></div>
+                    </div>
+                    <div class="mr-4 col-1 ml-auto mb-3">
+                        <div class="mb-2">&nbsp;</div>
+                        <button class="btn btn_primary" onclick="modal_add_beds.bl.add_bed();"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+
+                <div class="modal-body pb-0">
+
+                    <table class="col-12" id="modal_add_bed_list">
+
+                    </table>
+                    
+                </div>
+
+                <div class="modal_add_bed_box">
+
+
+                    <!--<div class="modal_add_bed_wrapper">
+                        <hr class="m-0 mb-2" />
+                        <div class="d-flex align-items-center">
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-3 mb-2">
+                                    <input type="text" id="modal_add_bed_dimension_X" class="form-control focus border-white" value="Example01" />
+                                </div>
+                                <div class="col-sm-6 col-lg-3 mb-2">
+                                    <input type="text" id="modal_add_bed_dimension_Y" class="form-control focus border-white" value="Example01" />
+                                </div>
+                                <div class="col-12 col-lg-6 d-flex mb-2">
+                                    <input type="text" id="modal_add_bed_type" class="form-control focus border-white" value="Example01" />
+                                </div>
+                            </div>
+                            <div class="pl-3 mb-2">
+                                <button class="btn trash btn_hover_trash"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal_add_bed_wrapper">
+                        <hr class="m-0 mb-2" />
+                        <div class="d-flex align-items-center">
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-3 mb-2">
+                                    <input type="text" id="modal_add_bed_dimension_X" class="form-control focus border-white" value="Example01" />
+                                </div>
+                                <div class="col-sm-6 col-lg-3 mb-2">
+                                    <input type="text" id="modal_add_bed_dimension_Y" class="form-control focus border-white" value="Example01" />
+                                </div>
+                                <div class="col-12 col-lg-6 d-flex mb-2">
+                                    <input type="text" id="modal_add_bed_type" class="form-control focus border-white" value="Example01" />
+                                </div>
+                            </div>
+                            <div class="pl-3 mb-2">
+                                <button class="btn trash btn_hover_trash"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>-->
+     
+
+
+                <!--<div class="view_table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="border-top-0 w-auto">Dimension X</th>
+                    <th scope="col" class="border-top-0">Dimension Y</th>
+                    <th scope="col" class="border-top-0">Select bed type</th>
+                    <th scope="col" class="border-top-0"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="pl-0">
+                        <div><input type="text" id="modal_add_bed_dimension_X" class="form-control focus" /></div>
+                    </td>
+                    <td>
+                        <div><input type="text" id="modal_add_bed_dimension_Y" class="form-control focus" /></div>
+                    </td>
+                    <td>
+                        <div id="modal_add_beds_select_bed_type" class="select">
+                            <button class="custom-select focus" id="modal_add_bed_type_btn"></button>
+                            <i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden" id="modal_add_bed_list_type">
+                                <li class="select_li" data-id="1">Example 01</li>
+                                <li class="select_li" data-id="2">Example 02</li>
+                                <li class="select_li" data-id="3">Example 03</li>
+                                <li class="select_li" data-id="4">Example 04</li>
+                                <li class="select_li" data-id="5">Example 05</li>
+                                <li class="select_li" data-id="6">Example 06</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pr-0">
+                        <div> <button class="btn btn_primary"><i class="fas fa-plus"></i></button></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pl-0">
+                        <div><input type="text" id="modal_add_bed_dimension_X" class="form-control focus" /></div>
+                    </td>
+                    <td>
+                        <div><input type="text" id="modal_add_bed_dimension_Y" class="form-control focus" /></div>
+                    </td>
+                    <td>
+                        <div id="modal_add_beds_select_bed_type" class="select">
+                            <button class="custom-select focus" id="modal_add_bed_type_btn"></button>
+                            <i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden" id="modal_add_bed_list_type">
+                                <li class="select_li" data-id="1">Example 01</li>
+                                <li class="select_li" data-id="2">Example 02</li>
+                                <li class="select_li" data-id="3">Example 03</li>
+                                <li class="select_li" data-id="4">Example 04</li>
+                                <li class="select_li" data-id="5">Example 05</li>
+                                <li class="select_li" data-id="6">Example 06</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pr-0 icons edit_trash">
+                        <span class="trash"><i class="far fa-trash-alt"></i></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+
+            </div>
+
+            <!-- End new update -->
+
+            <!--<div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="mb-1">Dimension X</label>
+                            <input type="text" class="form-control focus" id="modal_add_beds_dimension_x">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="mb-1">Dimension Y</label>
+                            <input type="text" class="form-control focus" id="modal_add_beds_dimension_y">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Select bed type</label>
+                            <div id="modal_add_beds_select_bed_type" class="select">
+                        <button class="custom-select focus" id="modal_add_bed_type_btn"></button>
+                        <i class="fas fa-angle-down"></i>
+                        <ul class="select_ul hidden" id="modal_add_bed_list_type">
+                            <li class="select_li" data-id="1">Example 01</li>
+                            <li class="select_li" data-id="2">Example 02</li>
+                            <li class="select_li" data-id="3">Example 03</li>
+                            <li class="select_li" data-id="4">Example 04</li>
+                            <li class="select_li" data-id="5">Example 05</li>
+                            <li class="select_li" data-id="6">Example 06</li>
+                        </ul>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="modal-footer justify-content-end">
+                <button class="btn btn_silver hidden" data-dismiss="modal">Cancel</button>
+                <div>
+
+                    <button class="btn btn_primary hidden" id="modal_add_beds_save_btn">Save</button>
+                    <button class="btn btn_primary " data-dismiss="modal" id="modal_add_beds_add_btn" >Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <template id="template_beds_type">
+        <li class="select_li" data-id="${id}" onclick="modal_add_beds.bl.get_bed_data(this)">${name}</li>
+    </template>
+
+    <template id="bed_list_template">
+        
+        <tr class="d-block col-12 pt-2 mb-2 align-content-center" style="border-top: 1px solid lightgray">
+            <td style="width:2rem" onclick="modal_add_beds.bl.delete_bed(${bed_id});"><i class="far fa-trash-alt text-danger-800" style="color:red;"></i></td>
+            <td class="col-6">${bed_name}</td>
+            <td class="col-6">${bed_width} X ${bed_length} CM</td>
+        </tr>
+
+    </template>
+
+</section>
+
+
+
+<script>
+
+    var modal_add_beds = {};
+
+    modal_add_beds.room_id = '';
+
+    // Load function
+    modal_add_beds.load = () => {
+
+        // Global components
+        
+        // BL components
+        modal_add_beds.bl.close_modal("modal_add_beds");
+        modal_add_beds.bl.load_beds_type();
+
+    };
+
+    // UI logic
+    modal_add_beds.ui = new function () {
+
+    };
+
+    // BL logic
+    modal_add_beds.bl = new function () {
+
+        // CLose modal
+        this.close_modal = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        this.open_modal = (room_id) => {
+
+            this.show_modal('modal_add_beds');
+            modal_add_beds.room_id = room_id;
+            modal_add_beds.bl.load_beds(room_id);
+        }
+
+        this.load_beds = async (room_id) => {
+
+            var url = '/api/objects_rooms_beds/list/' + room_id;
+            var response = await ajax.get(url);
+            var data = JSON.parse(response);
+
+            console.log("BEDS", data);
+
+            modal_add_bed_list.innerHTML = "";
+
+            for (var b of data) {
+                t = bed_list_template.innerHTML;
+
+                t = t.replace('${bed_id}', b['id']);
+                t = t.replace('${bed_name}', b['bed_type_name']);
+                t = t.replace('${bed_width}', b['dimenzion_x']);
+                t = t.replace('${bed_length}', b['dimenzion_y']);
+
+                js.html.insertAdjacentHTML('modal_add_bed_list', t)
+            }
+
+            //ui.custom_select("modal_add_beds_select_bed_type");
+
+        }
+
+        // save changes
+        this.add_bed = async () => {
+
+            
+            //bed_id = bed_id.slice(1, -1)
+
+            var b = {};
+            b.dimenzion_x = modal_add_bed_dimension_X.value;
+            b.dimenzion_y = modal_add_bed_dimension_Y.value;
+            //b.bed_id = bed_id;
+            b.bed_type_id = modal_add_bed_type_btn.dataset.id;
+            //b.bed_id = bed_id;
+            b.room_id = modal_add_beds.room_id;
+
+            var url = '/api/objects_rooms_beds/add';
+            var bed_id = await ajax.post_json(url,b);
+
+            //var url = '/api/objects_rooms_beds/save';
+            //await ajax.post(url, b);
+
+            modal_add_beds.bl.load_beds(modal_add_beds.room_id);
+
+            //this.close_modal('modal_add_beds');
+            this.clear_data();
+
+        }
+
+        this.delete_bed = async (id) => {
+
+            let url = "/api/objects_rooms_beds/delete/" + id;
+            await ajax.get(url);
+
+            modal_add_beds.bl.load_beds(modal_add_beds.room_id);
+
+        }
+
+        this.clear_data = () => {
+            modal_add_bed_dimension_X.value = '';
+            modal_add_bed_dimension_Y.value = '';
+        }
+
+        this.load_beds_type = async () => {
+
+            var url = '/api/objects_rooms_beds_type/list_basic';
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            modal_add_bed_list_type.innerHTML = '';
+
+            for (var b of json_response) {
+                t = template_beds_type.innerHTML;
+
+                t = t.replace('${name}', b['name']);
+                t = t.replace('${id}', b['id']);
+
+                js.html.insertAdjacentHTML('modal_add_bed_list_type', t)
+            }
+
+            ui.custom_select("modal_add_beds_select_bed_type");
+        }
+
+        this.get_bed_data = async (elem) => {
+
+
+            let bed_id = elem.dataset.id;
+
+            modal_add_bed_type_btn.dataset.id = bed_id;
+            modal_add_bed_type_btn.innerText = elem.innerText;
+
+            let url = "/api/objects_rooms_beds/beds_type_get/" + bed_id;
+            let data = await ajax.get_json(url);
+
+            modal_add_bed_dimension_X.value = data[0]['dimenzion_x'];
+            modal_add_bed_dimension_Y.value = data[0]['dimenzion_y'];
+
+            console.log(data);
+
+        }
+
+    };
+
+    // On load
+    modal_add_beds.load();
+
+</script>

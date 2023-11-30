@@ -1,0 +1,23 @@
+﻿    <!-- header -->
+<div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+    <!-- left side -->
+    <div class="d-flex align-self-center">
+
+        <!-- Mobile btn -->
+        <div class="mobile_button black"></div>
+
+        <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+            <i class="fas fa-coins pr-2"></i>Price
+        </div>
+    </div>
+
+    <!-- right shortcuts -->
+    <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+</div>
+
+<script>
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html").promise();
+    $(".mobile_button").load("/pages/partals/mobile_navigation.html").promise();
+</script>

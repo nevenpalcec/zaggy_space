@@ -1,0 +1,897 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+
+    var settings = bl.sys.json.obj(booking_engine_db["settings"].ToString());
+    var share_buttons_show = (string)(settings["share_buttons_show"] ?? "N");
+
+
+    var object_id = (ViewData["object_id"] ?? "").ToString();
+
+    // check if we have object_id
+    if (string.IsNullOrWhiteSpace(object_id) == true)
+    {
+        Response.Redirect("/");
+    }
+
+    var date_from = (ViewData["date_from"] ?? System.DateTime.Now.ToString("yyyy-MM-dd")).ToString();
+    var date_until = (ViewData["date_until"] ?? System.DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")).ToString();
+    var adults = (ViewData["adults"] ?? "1").ToString();
+    var pets = (ViewData["pets"] ?? "0").ToString();
+    var promo_code = (ViewData["promo_code"] ?? "").ToString();
+
+    var obj = bl.objects.get_all(object_id, bl.settings_current.language_id);
+
+    var persons = int.Parse(obj.Tables["realstate"].Rows[0]["can_sleep_max"].ToString());
+
+    ViewBag.Title = obj.Tables["general"].Rows[0]["name"].ToString();
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<style>
+    /* Override .bg-img with booking image */
+    .bg-img {
+        background: url('@booking_engine_db["picture_main_link"]') !important;
+        background-position: center !important;
+        background-size: cover !important;
+    }
+
+    .price_night_center {
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "objects_list" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- Property details -->
+<section class="section-rd">
+
+    <div class="bg-img">
+        <div class="container-wrapper">
+            <div class="rd-title"> @obj.Tables["general"].Rows[0]["name"] </div>
+        </div>
+    </div>
+
+    <div class="container-wrapper py-5">
+
+        <div class="row">
+
+            <!-- Property details -->
+            <div class="col-lg-8">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Supplements</th>
+                            <th scope="col">Rate</th>
+                            <th scope="col">Charge</th>
+                            <th scope="col"></th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>mdo</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>fat</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Book details  -->
+            <div class="col-lg-4">
+                <div class="card rent-details">
+                    <div class="wrapper">
+                        <div class="loading" id="div_loading_calendar_small" style="display: none;">
+                            <div class="icon"><img src="/assets/images/icons/spinner.gif" alt=""></div>
+                        </div>
+                        <div class="card-main">
+                            <hr>
+                            <div class="card-main-stars d-none">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="d-flex justify-content-between pt-2">
+                                <div class="card-main-wrapper position-relative price_night_center">
+                                    <div class="card-main-value pl-2">
+                                        <span id="price_per_night_price">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
+                                        <span id="price_per_night_currency_label">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
+                                    </div>
+                                    <div class="card-main-p">
+                                        <span>
+                                            @bl.lng.l.Night
+                                        </span>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="card-main-wrapper position-relative d-none">
+                                    <div class="card-main-value pr-2">
+                                        <span id="price_per_night_person_price">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
+                                        <span id="price_per_night_person_currency_label">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
+                                    </div>
+                                    <div class="card-main-p">
+                                        <span>
+                                            @bl.lng.l.Person.ToLower()
+                                        </span>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+
+                            <!-- calendar -->
+                            <div class="card-body-item calendar" id="rd-flatpickr" style="margin-top: -15px;"></div>
+
+                            <!-- item price -->
+                            @if (obj.Tables["items"].Rows.Count > 1)
+                            {
+                                <div class="card-body-item dropdown">
+                                    <div class="dropdown" id="dropdown_items">
+                                        <i class="fas fa-grip-vertical mr-4"></i>
+                                        <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_item_id" data-toggle="dropdown" style="padding-left: 30px !important;"
+                                             contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="-1">
+                                            @bl.lng.l.Standard
+                                        </div>
+                                        <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton">
+                                            @foreach (System.Data.DataRow r in obj.Tables["items"].Rows)
+                                            {
+                                                <a data-id="@r["item_id"]" class="dropdown-item py-2" onclick="property.set_item_id('@r["item_id"]');">
+                                                    <i class="fas fa-grip-vertical mr-4" style="margin-top: -3px;"></i> &nbsp; @r["name"]
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row m-0" style="display: none;">
+                                <div class="col-4 px-1">
+                                    <!--  adults -->
+                                    <div class="card-body-item dropdown flex-grow-1 m-1">
+                                        <div class="dropdown" id="dropdown_adults">
+                                            <i class="fas fa-user mr-4"></i>
+                                            <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_adult_id" data-toggle="dropdown" style="padding-left: 30px !important;"
+                                                 contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@adults">
+                                                @adults
+                                            </div>
+                                            <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="min-width: unset;">
+                                                @for (int i = 1; i <= persons; i++)
+                                                {
+                                                    <a data-id="@i" class="dropdown-item">@i</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 px-1">
+                                    <!--  children -->
+                                    <div class="card-body-item dropdown flex-grow-1 m-1">
+                                        <div class="dropdown" id="dropdown_children">
+                                            <i class="fas fa-child"></i>
+                                            <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_children_left" data-toggle="dropdown" style="padding-left: 30px !important;"
+                                                 contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@pets">
+                                                @pets
+                                            </div>
+                                            <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="min-width: unset;">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    <a data-id="@i" class="dropdown-item">@i</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 px-1">
+                                    <!--  pets -->
+                                    <div class="card-body-item dropdown flex-grow-1 m-1">
+                                        <div class="dropdown" id="dropdown_pets">
+                                            <i class="fas fa-dog"></i>
+                                            <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_pets_left" data-toggle="dropdown" style="padding-left: 30px !important;"
+                                                 contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@pets">
+                                                @pets
+                                            </div>
+                                            <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton" style="min-width: unset;">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    <a data-id="@i" class="dropdown-item">@i</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body-item pt-2 pb-3">
+                                <div id="div_items_extra" class="hidden">
+                                    <hr class="m-0" />
+                                </div>
+                                <div class="d-flex justify-content-between total py-2">
+                                    <div class="card-body-item-label"> @bl.lng.l.Total </div>
+                                    <div class="card-body-item-value"><span id="price_total_price"> - </span>&nbsp; <span id="price_total_currency_label"> € </span> </div>
+                                </div>
+                                <hr class="m-0">
+                            </div>
+
+                            <!-- make reservation -->
+                            <div id="div_right_book_now" class="card-body-btns d-flex mb-3" style="display: none;">
+                                <button id="btnExtraPrice" class="btn btn-primary btn-effect mr-2" style="width: 2.5rem;" onclick="property.price_calculate();"><i class="fas fa-search"></i></button>
+                                <a onclick="property.got_to_payment();" class="btn btn-primary btn-effect"> @bl.lng.l.Make_reservation </a>
+                            </div>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn border text-white d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#modal_lowest_price">
+                                <i class="fas fa-percentage"></i>
+                                <div class="pl-2">Lowest price guarantee</div>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Encourage  -->
+                    <div class="payment-badges pt-3 pb-2" style="background-color: white;">
+                        <img src="/assets/images/icons/badges-safe.png" alt="100% Safe">
+                        <img src="/assets/images/icons/badges-prices.png" alt="Best price">
+                        <img src="/assets/images/icons/badges-match.png" alt="Best match">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_lowest_price" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lowest price guarantee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                When you book your reservation on our website you can be confident you've received the best rate for your booking.
+                For each reservation through our website we guarantee the lowest online price. If you find a lower price anywhere on the Internet, within 24 hours of making your booking, we will match that price and give you an additional 5% discount.
+                In order to claim your right, please contact us.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- templates -->
+<div>
+
+    <template id="template_price_item_extra">
+        <div class="d-flex justify-content-between py-2">
+            <div class="card-body-item-label"> ${name} </div>
+            <div class="card-body-item-value"><span>  ${price} </span>&nbsp; ${currency_label} </div>
+        </div>
+        <hr>
+    </template>
+
+    <!-- itmes -->
+    <template id="template_item_long">
+        <div class="d-flex justify-content-between py-2">
+            <div> ${name} </div>
+            <div> ${price} &nbsp; ${currency_label} </div>
+        </div>
+        <hr class="m-0" />
+    </template>
+
+    <!-- price types -->
+    <template id="template_price_type_button">
+        <div>
+            <button type="button" onclick="property.set_item_id('${item_id}');" class="btn btn-primary w-0"> ${item_name}: ${price_period_b2b} ${currency_lable} </button>
+        </div>
+    </template>
+
+</div>
+
+<!-- scripts -->
+<script>
+
+    var property = {};
+
+    property.calendar_book_dates = [];
+    property.calendar_date_from = '@date_from';
+    property.calendar_date_until = '@date_until';
+    property.price_sum = [];
+    property.object_id = '@object_id';
+    property.item_id = '-1';
+    property.price_calculate = {};
+
+    // SHow/Hide extra price
+    let btnExtraPrice = document.getElementById("btnExtraPrice");
+    let itemExtraPrice = document.getElementById("div_items_extra");
+
+    btnExtraPrice.addEventListener("click", function () {
+        if (!itemExtraPrice.classList.contains("active")) {
+            itemExtraPrice.classList.add("active");
+            itemExtraPrice.classList.remove("hidden");
+            btnExtraPrice.classList.add("rotate-180");
+        } else {
+            itemExtraPrice.classList.remove("active");
+            itemExtraPrice.classList.add("hidden");
+            btnExtraPrice.classList.remove("rotate-180");
+        }
+    });
+
+    window.addEventListener('load', (event) => {
+        property.calendar_set();
+
+        // set rates
+        property.rate_set();
+
+        // load map
+        property.load_map();
+
+        // dropdown
+        fr.dropdown('dropdown_adults');
+        fr.dropdown('dropdown_pets');
+        fr.dropdown('dropdown_children');
+
+        if (document.getElementById('dropdown_items') != null) {
+            fr.dropdown('dropdown_items');
+        }
+
+        // calculate price
+        property.price_calculate();
+
+    });
+
+    // load map
+    property.load_map = function () {
+
+        // set get data
+        var lng = @obj.Tables["general"].Rows[0]["longitude"];
+        var lat = @obj.Tables["general"].Rows[0]["latitude"];
+
+        // Location map
+        var map = L.map('rd-map').setView([lat, lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://zaggy.hr">zaggy</a>'
+        }).addTo(map);
+
+        // add marker
+        L.marker([lat, lng]).addTo(map).openPopup();
+    }
+
+    property.got_to_payment = function () {
+
+        div_loading_calendar_small.style.display = 'flex';
+        div_loading_calendar_big.style.display = 'flex';
+
+        var adults = input_adults.value;
+        var pets = input_pets.value;
+        var children = input_children.value;
+        var promo_code_value = document.getElementById('promo_code') != null ? document.getElementById('promo_code').value : '';
+
+        // open final page
+        location.href = '/objects/payment/@object_id?date_from=' + property.calendar_date_from + '&date_until=' + property.calendar_date_until + '&item_id=' + property.item_id + '&persons=' + adults + '&children=' + children + '&pets=' + pets + '&promo_code=' + promo_code_value;
+
+    }
+
+    property.rate_set = function () {
+        //fr.rate_stars('rate_accuracy');
+        //fr.rate_stars('rate_cleanliness');
+        //fr.rate_stars('rate_checkIn');
+        //fr.rate_stars('rate_communication');
+        //fr.rate_stars('rate_location');
+        //fr.rate_stars('rate_value');
+    }
+
+    // set current id_id
+    property.set_item_id = (id) => {
+        property.item_id = id;
+        property.price_calculate();
+    }
+
+    var day_before_booked = false;
+
+    // set calenadr datepiceker
+    property.set_rd_calendar = function () {
+
+        // Calendar on content
+        $("#rd-calendar").datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            minDate: 0,
+            numberOfMonths: 2,
+            defaultDate: new Date('@date_from'),
+
+            // mark blocke or selected days
+            beforeShowDay: function (date) {
+
+                var d = js.date.toIsoFormat(date);
+                var include = property.calendar_book_dates.includes(d);
+                var day_current = (d == property.calendar_date_from);
+                var css = '';
+
+                // mark selected days
+                if (!property.calendar_date_until == false) {
+
+                    // check if date is in select dates
+                    var v = js.date.if_day_is_between(property.calendar_date_from, property.calendar_date_until, date);
+
+                    if (day_current == true) {
+                        css = 'fp-select-all';
+                        return [true, css];
+                    }
+
+                    else if (v == true) {
+                        css = 'fp-select-all';
+                        return [true, css];
+                    }
+
+                    else {
+                        return mark_blok_day();
+                    }
+
+                }
+
+                // mark normal blok days
+                else {
+                    return mark_blok_day();
+                }
+
+                // mark blokec day
+                function mark_blok_day() {
+
+                    if (include == true) {
+
+                        if (day_before_booked == true) {
+                            css = 'fp-booked-all';
+                        }
+
+                        else {
+                            css = 'fp-booked-first';
+                        }
+
+                        day_before_booked = true;
+
+                    }
+
+                    else {
+
+                        if (day_before_booked == true) {
+                            css = 'fp-booked-last';
+                        }
+
+                        day_before_booked = false;
+
+                    }
+
+                    return [true, css];
+
+                }
+
+            },
+
+            // handle on click
+            onSelect: function (date) {
+
+                if (!property.calendar_date_until == false) {
+                    property.calendar_date_from = date;
+                    property.calendar_date_until = null;
+                    $("#rd-check-in").datepicker("setDate", date);
+                    $("#rd-check-out").datepicker("setDate", null);
+                }
+
+                else if (!property.calendar_date_from == true) {
+                    property.calendar_date_from = date;
+                    $("#rd-check-in").datepicker("setDate", date);
+                }
+
+                else {
+                    property.calendar_date_until = date;
+                    $("#rd-check-out").datepicker("setDate", date);
+
+                    property.price_calculate();
+                }
+
+                property.set_rd_flatpickr();
+            }
+        });
+
+    }
+
+    // set calendar flat picker
+    property.set_rd_flatpickr = function () {
+
+        // flatpickr calendar
+        flatpickr("#rd-flatpickr", {
+            inline: true,
+            mode: "range",
+            minDate: "today",
+
+            defaultDate: [property.calendar_date_from, property.calendar_date_until],
+            locale: {
+                firstDayOfWeek: 1
+            },
+
+            onDayCreate: function (dObj, dStr, fp, dayElem) {
+
+                var day = js.date.toIso(dayElem.dateObj);
+                var include = property.calendar_book_dates.includes(day);
+
+                if (include == true) {
+
+                    if (day_before_booked == true) {
+                        dayElem.classList.add('fp-booked-all');
+                    }
+
+                    else {
+                        dayElem.classList.add('fp-small-booked-first');
+                    }
+
+                    dayElem.innerHTML += "<span class='event busy'></span>"; 4
+                    day_before_booked = true;
+
+                }
+                else {
+
+                    if (day_before_booked == true) {
+                        dayElem.classList.add('fp-small-booked-last');
+                    }
+
+                    dayElem.innerHTML += "<span class='event'></span>";
+                    day_before_booked = false;
+
+                }
+
+            },
+
+            onClose: function (selectedDates, dateStr, instance) {
+
+                var date_from = js.date.toIso(selectedDates[0]);
+                var date_until = js.date.toIso(selectedDates[1]);
+                property.calendar_date_from = date_from;
+                property.calendar_date_until = date_until;
+                property.price_calculate();
+
+                $("#rd-calendar").datepicker('refresh');
+            }
+        });
+    }
+
+    // set calendar
+    property.calendar_set = function () {
+        var url = 'https://api.zaggy.net/objects/days_blocked/@object_id';
+        $.getJSON(url, function (data) {
+
+            property.calendar_book_dates = data;
+            property.set_rd_calendar();
+            property.set_rd_flatpickr();
+        });
+    }
+
+    // calculate price
+    property.price_calculate = async function () {
+
+        div_loading_calendar_small.style.display = 'flex';
+        div_loading_calendar_big.style.display = 'flex';
+
+        var adults = input_adults.value;
+        var pets = input_pets.value;
+        var children = input_children.value;
+
+        var item_id = property.item_id; // dropdown_item_id.dataset.id;
+        var promo_code_value = document.getElementById('promo_code') != null ? document.getElementById('promo_code').value : '';
+
+        var url = '/api/objects_prices_days/price_calculation_b2b/@object_id?from=' + property.calendar_date_from + '&until=' + property.calendar_date_until + '&adults=' + adults + '&children=' + children + '&pets=' + pets + '&item_id=' + item_id + '&b2b_id=@bl.B2B.Web.shared.b2b_id&promo_code=' + promo_code_value;
+
+        var data = await js.http.async.get_json(url);
+
+        property.price_sum = data;
+        property.price_dispaly();
+
+        div_loading_calendar_small.style.display = 'none';
+        div_loading_calendar_big.style.display = 'none';
+
+        //var elmnt = document.getElementById("div_panel_calendar");
+        //elmnt.scrollIntoView();
+
+        var enable = property.price_sum["sum"][0]["enable"];
+        var days = property.price_sum["sum"][0]["days"];
+        let min_stay = property.price_sum["sum"][0]["min_stay"];
+        let is_booked = property.price_sum["sum"][0]["period_booked_without_min_stay"];
+
+        if (enable == "Y") {
+            div_book_now.style.display = 'block';
+            div_right_book_now.style.display = 'block';
+            div_not_available.style.display = 'none';
+            div_minimum_stay.style.display = 'none';
+        }
+        else if (is_booked == "N" && min_stay > days) {
+            div_book_now.style.display = 'none';
+            div_not_available.style.display = 'none';
+            div_right_book_now.style.setProperty('display', 'none', 'important');
+            div_minimum_stay.style.display = 'block';
+            span_min_stay.innerHTML = min_stay;
+        }
+        else {
+            div_minimum_stay.style.display = 'none';
+            div_book_now.style.display = 'none';
+            div_right_book_now.style.setProperty('display', 'none', 'important');
+            div_not_available.style.display = 'block';
+        }
+
+        // show extra price
+        var url = '/api/objects_prices_days/object_period_prices_list/@object_id?date_from=' + property.calendar_date_from + '&date_until=' + property.calendar_date_until + '&adults=' + adults + '&children=' + children + '&pets=' + pets;
+        var prices_list = await js.http.async.get_json(url);
+
+        // price_types_list.innerHTML = '';
+        //for (var r of prices_list) {
+        //    var item_name = r['item_name'];
+        //    var currency_lable = r['currency_lable'];
+        //    var price_period_b2b = r['price_period_b2b'];
+        //    var item_id = r['item_id'];
+        //    var t = template_price_type_button.innerHTML;
+        //    t = t.replaceAll('${item_id}', item_id);
+        //    t = t.replaceAll('${price_period_b2b}', Number(price_period_b2b).toFixed(2));
+        //    t = t.replaceAll('${item_name}', item_name);
+        //    t = t.replaceAll('${currency_lable}', currency_lable);
+        //    js.html.insertAdjacentHTML('price_types_list', t);
+        //}
+
+    }
+
+    // disply price
+    property.price_dispaly = function () {
+
+        var display_additionl_text = false;
+        div_items_extra.innerText = '';
+        div_items_main.innerHTML = '';
+
+        var price_b2b = Number(property.price_sum["sum"][0]["price_b2b"]);
+        var full_price_b2b = Number(property.price_sum["sum"][0]["full_price_b2b"]);
+        var currency_label = property.price_sum["sum"][0]["currency_label"];
+        var item_name = property.price_sum['general'][0]['item_name'];
+
+        var nights = Number(property.price_sum['general'][0]['days']);
+
+        calendar_book_display_date_from.innerText = property.calendar_date_from;
+        calendar_book_display_date_until.innerText = property.calendar_date_until;
+
+        var t = template_price_item_extra.innerHTML.trim();
+
+        t = t.replace('${price}', price_b2b.toFixed(2));
+        t = t.replace('${currency_label}', currency_label)
+
+        if (nights > 1) {
+            t = t.replace('${name}', item_name + ':' + '&nbsp;&nbsp;' + property.price_sum['general'][0]['days'] + ' @bl.lng.l.nights.ToLower()');
+        }
+        else {
+            t = t.replace('${name}', item_name + ':' + '&nbsp;&nbsp;' + property.price_sum['general'][0]['days'] + ' @bl.lng.l.Night.ToLower()');
+        }
+
+
+        t = template_item_long.innerHTML.trim();
+        t = t.replace('${price}', price_b2b.toFixed(2));
+        t = t.replace('${currency_label}', currency_label);
+
+        if (nights > 1) {
+            t = t.replace('${name}', item_name + ':' + '&nbsp;&nbsp;' + property.price_sum['general'][0]['days'] + ' @bl.lng.l.nights.ToLower()');
+        }
+        else {
+            t = t.replace('${name}', item_name + ':' + '&nbsp;&nbsp;' + property.price_sum['general'][0]['days'] + ' @bl.lng.l.Night.ToLower()');
+        }
+
+        div_items_extra.insertAdjacentHTML('beforeend', t);
+        div_items_main.insertAdjacentHTML('beforeend', t);
+
+        // prices
+        for (i in property.price_sum.items_auto) {
+
+            var r = property.price_sum.items_auto[i];
+            if (Number(r['discount_total']) != 0) {
+
+                // left side
+                t = template_price_item_extra.innerHTML.trim();
+                t = t.replace('${name}', r['name']);
+                t = t.replace('${price}', Number(r['full_price']).toFixed(2));
+                t = t.replace('${currency_label}', r['label']);
+                div_items_extra.insertAdjacentHTML('beforeend', t);
+
+                // main items
+                t = template_item_long.innerHTML.trim();
+                t = t.replace('${name}', r['name']);
+                t = t.replace('${price}', Number(r['full_price']).toFixed(2));
+                t = t.replace('${currency_label}', r['label']);
+                div_items_main.insertAdjacentHTML('beforeend', t);
+            }
+
+        }
+
+
+        // promo code
+        for (var pc of property.price_sum.promo_codes) {
+
+            var price_percent = pc['price_percent'];
+            var price_fix = pc['price_fix'];
+            var price = price_b2b * (price_percent / 100) + price_fix;
+
+            // display promo code
+            promo_code_price.innerHTML = `<span style="margin-right: 20px;"> ${pc['name']}: </span>  ${Number(price).toFixed(2)} ${currency_label}  `;
+
+            // left side
+            t = template_price_item_extra.innerHTML.trim();
+            t = t.replace('${name}', pc['name']);
+            t = t.replace('${price}', Number(price).toFixed(2));
+            t = t.replace('${currency_label}', currency_label);
+            div_items_extra.insertAdjacentHTML('beforeend', t);
+
+            // main items
+            t = template_item_long.innerHTML.trim();
+            t = t.replace('${name}', pc['name']);
+            t = t.replace('${price}', Number(price).toFixed(2));
+            t = t.replace('${currency_label}', currency_label);
+            div_items_main.insertAdjacentHTML('beforeend', t);
+
+        }
+
+        // cencalation policy
+        var cancelation_policy_text = property.price_sum['price_settings'][0]['cancellation_policies_note'];
+        if (!cancelation_policy_text == false) {
+            display_additionl_text = true;
+            addition_text_cancelation_policy_div.style.display = 'block';
+            additional_text_canncelation_policy_name.innerHTML = property.price_sum['price_settings'][0]['cancellation_policies_name'];
+            additional_text_canncelation_policy_text.innerHTML = cancelation_policy_text;
+        }
+        else {
+            addition_text_cancelation_policy_div.style.display = 'none';
+        }
+
+        //  pament policy
+        var cancellation_policies_payment_policy_text = property.price_sum['price_settings'][0]['cancellation_policies_payment_policy'];
+        if (!cancellation_policies_payment_policy_text == false) {
+            display_additionl_text = true;
+            addition_text_cancelation_policy_payment_div.style.display = 'block';
+            addition_text_cancelation_policy_payment_text.innerHTML = cancellation_policies_payment_policy_text;
+        }
+        else {
+            addition_text_cancelation_policy_payment_div.style.display = 'none';
+        }
+
+        // pricec include
+        var objects_prices_price_inculde = property.price_sum['price_settings'][0]['objects_prices_price_inculde'];
+        if (!objects_prices_price_inculde == false) {
+            display_additionl_text = true;
+            addition_text_price_include_div.style.display = 'block';
+            additional_text_price_include_text.innerHTML = objects_prices_price_inculde;
+        }
+        else {
+            addition_text_price_include_div.style.display = 'none';
+        }
+
+        // price not include
+        var objects_prices_price_note_inculde = property.price_sum['price_settings'][0]['objects_prices_price_not_inculde'];
+        if (!objects_prices_price_note_inculde == false) {
+            display_additionl_text = true;
+            addition_text_price_note_include_div.style.display = 'block';
+            additional_text_price_note_include_text.innerHTML = objects_prices_price_note_inculde;
+        }
+        else {
+            addition_text_price_note_include_div.style.display = 'none';
+        }
+
+        // addition_text_price_note_div
+        var objects_prices_price_note = property.price_sum['price_settings'][0]['objects_prices_note'];
+        if (!objects_prices_price_note == false) {
+            display_additionl_text = true;
+            addition_text_price_note_div.style.display = 'block';
+            addition_text_price_note_text.innerHTML = objects_prices_price_note;
+        }
+        else {
+            addition_text_price_note_div.style.display = 'none';
+        }
+
+        if (display_additionl_text == false) {
+            div_additional_text.style.display = 'none';
+        }
+        else {
+            div_additional_text.style.display = 'block';
+        }
+
+        var price_per_day = full_price_b2b / nights;
+        var price_per_day_person = price_per_day / dropdown_adult_id.dataset.id;
+
+        price_per_night_currency_label.innerText = property.price_sum["sum"][0]["currency_label"];
+        price_per_night_price.innerText = price_per_day.toFixed(2);
+
+        price_per_night_person_price.innerText = price_per_day_person.toFixed(2);
+        price_per_night_person_currency_label.innerText = property.price_sum["sum"][0]["currency_label"];
+
+        price_total_currency_label.innerText = property.price_sum["sum"][0]["currency_label"];
+        price_total_price.innerText = full_price_b2b.toFixed(2);
+
+        calendar_book_display_price_currency_label.innerText = property.price_sum["sum"][0]["currency_label"];
+        calendar_book_display_price_total.innerText = full_price_b2b.toFixed(2);
+
+        div_main_sum_total.innerHTML = full_price_b2b.toFixed(2) + ' ' + property.price_sum["sum"][0]["currency_label"];
+    }
+
+    property.tabs_content = function () {
+
+
+    }
+        const prices = document.querySelector(".property_prices");
+        const btns = document.querySelectorAll(".tab_prices_btn");
+        const contents = document.querySelectorAll(".tab_price_content");
+        const boxs = document.querySelectorAll(".property_prices_box");
+
+        prices.addEventListener("click", (e) => {
+
+            // Fetch ID by clicking
+            let id = e.target.dataset.id;
+
+            // Check
+            if (id) {
+
+                // Remove all active
+                boxs.forEach(box => {
+
+                    box.classList.remove("active");
+
+                });
+
+                // Reset all hidden
+                contents.forEach(item => {
+
+                    item.classList.add("d-none");
+
+                });
+
+                e.target.parentElement.parentElement.parentElement.parentElement.classList.add("active");
+
+                // Get ID from content
+                let element = document.getElementById(id);
+
+                // Show content
+                element.classList.remove('d-none');
+
+            }
+
+        });
+
+</script>

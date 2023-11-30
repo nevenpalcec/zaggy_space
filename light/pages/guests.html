@@ -1,0 +1,373 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-users pr-2"></i>Guests
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Calendar -->
+        <div class="d-flex ">
+            <button class="btn btn_hover" onclick="guests.bl.go_before();"><i class="fas fa-angle-left"></i></button>
+            <div id="guests_filter_calendar" class="view_dropdown filter_calendar d-md-block d-none">
+                <button class="btn btn_hover  px-2 py-1 d-lg-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1 text-left">
+                            <div class="font_1 text-uppercase font_bold">Calendar</div>
+                            <div id="custom_calendar" class="font_3 font_light text-left">-</div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div id="guests_form_calendar" class="dropdown_menu calendar hidden">
+                    <div id="guests_filter_dropdown_calendar">
+                    </div>
+                    <hr class="m-0">
+                    <div class="dropdown_footer d-flex">
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;"><i class="fas fa-angle-left"></i></div>
+                        <div class="dropdown_btn flex_1 text-center font_3">Today</div>
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <a id="guests_filter_calendar_btn" class="filter_link d-lg-none d-block mobile"><i class="far fa-calendar-alt"></i></a>
+            <button class="btn btn_hover" onclick="guests.bl.go_next();"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Input - number of day -->
+        <div class="input_remove_number_arrow">
+            <input type="number" class="form-control focus text-center" value="25" style="max-width: 3.5rem; min-width: 3.5rem;" id="prices_days" onchange="guests.ui.load_guests();">
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control font_3" style="min-width: 15rem;" placeholder="Search name, date or year" id="guests_input_search" onkeyup="guests.ui.search()">
+            <span class="search_icon"><i class="fas fa-search"></i></span>
+        </div>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <div class="view_table">
+            <div class="table_wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th class="text-center" scope="col">&nbsp;</th>
+                            <th scope="col" style="min-width: 15rem;">Guests</th>
+                            <th scope="col">Contact</th>
+                            <th scope="col" style="min-width: 8rem;">Period</th>
+                            <th scope="col" style="min-width: 6rem;">Payed</th>
+                            <th scope="col">Notice</th>
+                            <th class="text-right hidden"><i class="fas fa-ellipsis-v"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="guests_list_tbody">
+                        <tr>
+                            <td scope="row"></td>
+                            <td class="td_item01"></td>
+                            <td class="td_item01"></td>
+                            <td class="td_item02 contact"></td>
+                            <td class="td_item03 period"></td>
+                            <td class="td_item04 paid"></td>
+                            <td class="td_item05 notice"></td>
+                            <td class="td_item06 icons"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <!--template for guests list-->
+    <template id="template_guest_list">
+        <tr style="cursor: pointer" onclick="modal_details_rent.ui.show_details(${rent_id})">
+            <th scope="row">${row_number}</th>
+            <td class="td_item01" style="width: 2rem;">
+                <div class="align-items-center">
+                    <div class="td_icon d-inline-block mr-0" data-toggle="modal"
+                         data-target="#exampleModal">
+                        <img src="./assets/images/icons/portals/${rent_source_icon}.svg"
+                             alt="">
+                    </div>
+                </div>
+            </td>
+            <td class="td_item01 td_guest">
+                <div class="d-flex align-items-center">
+                    <div class="td_wrapper">
+                        <div class="td_guest guest_name">
+                            <strong>
+                                <span><img src="./assets/images/icons/flags/${country_code}.svg" alt=""></span>${name_first} ${name_last}
+                            </strong>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <div class="item"><span>2</span><i class="fas fa-user"></i></div>
+                            <div class="line"></div>
+                            <div class="item"><span>2</span><i class="fas fa-child"></i></div>
+                            <div class="line"></div>
+                            <div class="item"><span>1</span><i class="fas fa-paw"></i></div>
+                            <div class="line"></div>
+                            <div class="item"><i class="fas fa-parking"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="td_item02 contact">
+                <div>${email}</div>
+                <span>${telephone}</span>
+            </td>
+            <td class="td_item03 period">
+                <div><strong>${from_date} - ${until_date}</strong></div>
+                <span>${days} nights, ${year}.g.</span>
+            </td>
+            <td class="td_item04 paid">
+                <div><strong>€ ${guest_rent_price}</strong></div>
+                <div>${guest_rent_price_day} p/n</div>
+            </td>
+            <td class="td_item05 notice">
+                <span class="notice_icon"><i class="far fa-comment"></i></span>
+                <span class="notice_text">
+                    ${note}
+                </span>
+            </td>
+            <td class="td_item06 icons">
+                <div class="d-flex pb-1">
+                    <a><i class="fas ${sync}"></i></a>
+                    <a><i class="fas fa-comment-dollar"></i></a>
+                </div>
+                <div class="d-flex">
+                    <a><i class="far fa-file-alt"></i></a>
+                    <a><i class="fas fa-sign-in-alt"></i></a>
+                </div>
+            </td>
+        </tr>
+    </template>
+</div>
+
+<script>
+
+    var guests = {};
+    guests.date_from = js.date.toIso(new Date());
+
+    // Onload function
+    guests.load = function () {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        ui.dropdown_date("guests_filter_calendar");
+        ui.display_title("Guests");
+        ui.content_loading("guests_content_loading");
+        ui.filter_mobile_btn("guests_filter_calendar_btn", "guests_filter_calendar");
+
+        // Local
+        guests.ui.filter_calendar();
+        guests.ui.load_guests();
+
+        //guests_worker_picture.src = 'https://api.zaggy.net/workers/picture/' + bl.workers.current_worker_id();
+
+        ui.content_loading_hide('guests_content_loading');
+
+    }
+
+    // ui components
+    guests.ui = new function () {
+
+        // Search by  guest name
+        this.search = () => {
+
+            // Declare variables
+            var input, filter, tr, td, a, i, txtValue;
+            input = document.getElementById('guests_input_search');
+            filter = input.value.toUpperCase();
+            let table = document.getElementById('guests_list_tbody').children;
+            //td = document.querySelectorAll('.td_guest');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < table.length; i++) {
+
+                a = table[i];
+
+                let guest_name = a.querySelectorAll('.guest_name');
+                let arrival_date = a.querySelectorAll('.period');
+
+                if (guest_name[0].innerText.toUpperCase().indexOf(filter) > -1 || arrival_date[0].innerText.toUpperCase().indexOf(filter) > -1) {
+                    a.style.display = '';
+                } else {
+                    //td[i].style.display = "none";
+                    a.style.display = 'none';
+                }
+
+            }
+
+        }
+
+        // Filter calendar
+        this.filter_calendar = function () {
+
+            $("#guests_filter_dropdown_calendar").datepicker({
+                firstDay: 1,
+                //minDate: 0,
+                numberOfMonths: 1,
+                onSelect: function (dateText, inst) {
+                    $("#guests_form_calendar").addClass("hidden");
+                    document.querySelector(".filter_calendar > button").classList.remove("open");
+                    custom_calendar.innerHTML = dateText;
+                    guests.date_from = js.date.toIso(dateText.toString());
+                    guests.ui.load_guests();
+                }
+
+            });
+            
+        }
+
+
+        // Loading guests into template
+        this.load_guests = async () => {
+
+
+            var user_id = bl.workers.current_user_id();
+
+            var url = '/api/guests/get_guests_filtered';
+
+            custom_calendar.innerText = guests.date_from;
+            let days = prices_days.value;
+            var data = {};
+            data['user_id'] = user_id;
+            data['date_from'] = guests.date_from;
+            data['date_until'] = js.date.add_day(guests.date_from, parseInt(days));
+            data['guest_name'] = guests_input_search.value;
+
+
+
+            var guests_list = await ajax.post_json(url, data);
+
+            // get rents
+
+            url = "/api/rents/list_filtered";
+
+            rents_data = {};
+            rents_data['user_id'] = user_id;
+            rents_data['date_from'] = js.date.toIso(guests.date_from);
+            rents_data['date_until'] = js.date.add_day(js.date.toIso(guests.date_from), parseInt(days));
+
+            var rents_list = await ajax.post_json(url, rents_data);
+
+            //var rents_list = await bl.get_all_rents();
+
+            //sort list by arrival date from newest to oldest
+            guests_list.sort((a, b) => (a.from_date > b.from_date) ? 1 : ((b.from_date > a.from_date) ? -1 : 0)).reverse();
+
+            guests_list_tbody.innerHTML = '';
+
+            var source;
+            var row_number = 1;
+
+            guests_list = guests_list.reverse();
+            for (var gl of guests_list) {
+
+                for (rl of rents_list) {
+                    if (gl['object_id'] == rl['object_id']) {
+                        source = rl['rent_source_icon'];
+                        break;
+                    }
+                }
+
+                var date_from = new Date(gl['from_date']);
+                var date_until = new Date(gl['until_date']);
+                var year = date_from.getFullYear();
+                date_from = date_from.getDate() + '.' + (date_from.getMonth() + 1);
+                date_until = date_until.getDate() + '.' + (date_until.getMonth() + 1);
+                var t = template_guest_list.innerHTML;
+
+                t = t.replace('${row_number}', row_number++);
+                t = t.replace('${rent_source_icon}', !source || source == '-' ? 'syncbeds' : source);
+                t = t.replace('${year}', year);
+                t = t.replace('${country_code}', gl['country_code']);
+                t = t.replace('${from_date}', date_from);
+                t = t.replace('${until_date}', date_until);
+                t = t.replace('${name_first}', gl['name_first']);
+                t = t.replace('${name_last}', gl['name_last']);
+                t = t.replace('${email}', gl['email'] == null ? '-' : gl['email']);
+                t = t.replace('${telephone}', gl['telephone'] == null ? '-' : gl['telephone']);
+                t = t.replace('${days}', gl['days']);
+                t = t.replace('${guest_rent_price}', gl['guest_rent_price'].toFixed([2]));
+                t = t.replace('${guest_rent_price_day}', gl['guest_rent_price_day'].toFixed([2]));
+                t = t.replace('${rent_id}', gl['rent_id']);
+                t = t.replace('${note}', gl['note'] == null ? '' : gl['note']);
+                t = t.replace('${sync}', gl['sync'] == 'Y' ? 'fa-cloud-download-alt' : '');
+
+                js.html.insertAdjacentHTML('guests_list_tbody', t);
+                source = '';
+            }
+
+            ui.content_loading_hide('guests_content_loading');
+        }
+    }
+
+    guests.bl = new function () {
+
+        // go next with calendar
+        this.go_next = () => {
+
+            var date_from = guests.date_from;
+
+            var date_from_new = js.date.add_day(date_from, 30);
+            guests.date_from = date_from_new;
+
+            $('#guests_filter_dropdown_calendar').datepicker('setDate', new Date(date_from_new));
+
+            // load rents
+            guests.ui.load_guests();
+
+        }
+
+        // go before with calendar
+        this.go_before = () => {
+
+            var date_from = guests.date_from;
+
+            var date_from_new = js.date.add_day(date_from, -30);
+            guests.date_from = date_from_new;
+
+            $('#guests_filter_dropdown_calendar').datepicker('setDate', new Date(date_from_new));
+
+            // load rents
+            guests.ui.load_guests();
+
+        }
+    }
+
+    // On load
+    guests.load();
+
+</script>

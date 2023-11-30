@@ -1,0 +1,38 @@
+﻿@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor _httpContextAccessor
+@inject HttpClient Http
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var givenName =
+         _httpContextAccessor.HttpContext.User
+         .FindFirst(ClaimTypes.NameIdentifier);
+
+            var authenticationState = await AuthenticationStateTask;
+
+            if (authenticationState?.User?.Identity is null || !authenticationState.User.Identity.IsAuthenticated)
+            {
+                Navigation.NavigateTo("/403", true);
+            }
+        }
+    }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //var guid = await localStorage.GetItemAsync<string>("guid");
+    //    //var name = await localStorage.GetItemAsync<string>("name");
+    //    //((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(name, guid);
+
+
+    //}
+}

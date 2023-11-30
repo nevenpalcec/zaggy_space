@@ -1,0 +1,975 @@
+<!-- page -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+        <!-- left side -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-coins pr-2"></i>Prices
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Months -->
+        <div id="prices_filter_month" class="view_dropdown toggle">
+            <button class="btn btn_hover px-2" style="padding-top: .6rem; padding-bottom: .6rem;" id="price_button_filter_month">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-calendar-alt font_7"></i>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" id="price_modal_filter_month">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-month="1" onclick="prices.ui.choose_month(1);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">1</div>
+                                <div class="align-self-center">January</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="2" onclick="prices.ui.choose_month(2);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">2</div>
+                                <div class="align-self-center">February</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="3" onclick="prices.ui.choose_month(3);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">3</div>
+                                <div class="align-self-center">March</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="4" onclick="prices.ui.choose_month(4);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">4</div>
+                                <div class="align-self-center">April</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="5" onclick="prices.ui.choose_month(5);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">5</div>
+                                <div class="align-self-center">May</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="6" onclick="prices.ui.choose_month(6);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">6</div>
+                                <div class="align-self-center">June</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="7" onclick="prices.ui.choose_month(7);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">7</div>
+                                <div class="align-self-center">July</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="8" onclick="prices.ui.choose_month(8);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">8</div>
+                                <div class="align-self-center">August</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="9" onclick="prices.ui.choose_month(9);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">9</div>
+                                <div class="align-self-center">September</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="10" onclick="prices.ui.choose_month(10);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">10</div>
+                                <div class="align-self-center">October</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="11" onclick="prices.ui.choose_month(11);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">11</div>
+                                <div class="align-self-center">November</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="12" onclick="prices.ui.choose_month(12);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">12</div>
+                                <div class="align-self-center">December</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Calendar -->
+        <div class="d-flex">
+            <button class="btn btn_hover" onclick="prices.ui.go_before();"><i class="fas fa-angle-left"></i></button>
+            <div id="prices_filter_calendar" class="view_dropdown filter_calendar d-lg-block d-none">
+                <button class="btn btn_hover  px-2 py-1 d-lg-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1 text-left">
+                            <div class="font_1 text-uppercase font_bold">Calendar</div>
+                            <div id="prices_date_from" class="font_3 font_light text-left">-</div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div id="prices_form_calendar" class="dropdown_menu calendar hidden">
+                    <div id="prices_filter_dropdown_calendar" class="filter_dropdown_calendar">
+                    </div>
+                    <hr class="m-0">
+                    <div class="dropdown_footer d-flex">
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;" onclick="prices.ui.today_diff_change(-1)"><i class="fas fa-angle-left"></i></div>
+                        <div class="dropdown_btn flex_1 text-center font_3" onclick="prices.ui.datepicker_set_today();" data-today_diff="0">Today</div>
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;" onclick="prices.ui.today_diff_change(1)"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <a id="prices_filter_calendar_btn" class="filter_link d-lg-none d-block mobile">
+                <i class="far fa-calendar-alt"></i>
+            </a>
+            <button class="btn btn_hover" onclick="prices.ui.go_next();"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Input - number of day -->
+        <div class="input_remove_number_arrow">
+            <input type="number" class="form-control focus text-center" value="40" style="max-width: 3.5rem; min-width: 3.5rem;" id="prices_days" onchange="prices.ui.change_number_of_display_days();">
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control focus font_3" style="min-width: 9rem;" placeholder="Search name" id="prices_objects_search">
+            <span class="search_icon"><i class="fas fa-search"></i></span>
+        </div>
+
+        <!-- refresh page -->
+        <div class="ml-auto">
+            <button class="btn btn_hover" onclick="prices.bl.refresh_page();">
+                <i class="fas fa-sync"></i>
+            </button>
+        </div>
+
+        <div id="prices_filter_tip" class="view_dropdown filter_tip d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-cog"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold text-left">Tip</div>
+                        <div class="font_3">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Tip</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-tip="1">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Default</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="2">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Price</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="3">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Min stay</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="4">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Check in/out</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="5">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Extra</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="6">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Special</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="6">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Stock</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="7">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Enable</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="8">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Advance</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="9">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Single</span>
+                            </span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="prices_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <div class="view_calendar price">
+            <div style="overflow-y: auto;">
+                <div id="prices_table_calendar" class="custom_table d-flex">
+
+                    <!-- list of objects -->
+                    <div class="pos_left">
+
+                        <div class="left_head">
+                            <div class="font-weight-bold" id="prices_total_objects">Objects -</div>
+                        </div>
+
+                        <div class="left_body" id="prices_objects_list">
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 1 (1+2)</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- prices -->
+                    <div class="calendar_wrapper">
+
+                        <!--thead -->
+                        <div class="thead" id="prices_thead">
+                            <div class="headcol holiday">
+                                <div class="headcol_sub">Sun</div>
+                                <div class="headcol_label">01</div>
+                            </div>
+                        </div>
+
+                        <!-- table -->
+                        <div class="tbody" id="prices_tbody">
+
+                        </div>
+
+                        <!-- End - Calendar -->
+                        <div class="d-flex flex-wrap text-uppercase font_1 pt-1 footer_calendar position-sticky bg-white" style="height: max-content; bottom:0">
+                            <!--<div class="px-2 py-1 position-relative m-1 today" style="z-index: 1;">Today</div>-->
+                            <div class="px-2 py-1 position-relative m-1 weekend" style="z-index: 1;">Weekend</div>
+                            <div class="px-2 py-1 position-relative m-1 overbooking" style="z-index: 1;">Overbooking</div>
+                            <div class="px-2 py-1 position-relative m-1 reservation" style="z-index: 1;">Reservation</div>
+                            <!--<div class="px-2 py-1 position-relative m-1 disable" style="z-index: 1;">Disable</div>-->
+                            <div class="px-2 py-1 position-relative m-1 no_stock" style="z-index: 1;">No stock</div>
+                            <!--<div class="px-2 py-1 position-relative m-1 min_stay" style="z-index: 1;">Min stay to high</div>-->
+                            <div class="px-2 py-1 position-relative m-1 same_day" style="z-index: 1;">Same day in / out</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Pop up -->
+            <!-- price & per night -->
+            <div class="modal_price_perNight" style="display: none;">
+                <div class="position-relative">
+                    <div class="modal_close"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="d-flex">
+                    <div class="mr-3">
+                        <label class="mb-1 font_3">Price</label>
+                        <div class="input-group input_remove_number_arrow">
+                            <input type="number" class="form-control pr-5 focus font_7" style="max-width: 10rem;">
+                            <div class="position-relative">
+                                <span class="value">EUR</span>
+                            </div>
+                            <div class="input-group-append">
+                                <label class="input-group-text cursor_point"><i class="fas fa-check"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="mb-1 font_3">min stay</label>
+                        <div class="input-group input_remove_number_arrow">
+                            <input type="number" class="form-control pr-4 focus font_7" style="max-width: 7rem;">
+                            <div class="position-relative">
+                                <span class="night"><i class="fas fa-moon"></i></span>
+                            </div>
+                            <div class="input-group-append">
+                                <label class="input-group-text cursor_point"><i class="fas fa-check"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modals-->
+<section>
+    <div id="prices_price_change_modal"></div>
+</section>
+
+<!-- templates -->
+<section>
+
+    <!-- template object name -->
+    <template id="template_object">
+        <div class="left_body_box">
+            <!-- Name -->
+            <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                <a href="#object_general?${id}" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                   data-placement="top" data-original-title="Link for details">
+                    <i class="fas fa-link"></i>
+                </a>
+                <a href="#object_prices?${id}" class="left_body_name"> ${object_name} </a>
+            </div>
+        </div>
+    </template>
+
+    <!-- template thead -->
+    <template id="template_thead">
+        <div class="headcol">
+            <div class="headcol_sub font_1">${month_name}</div>
+            <div class="headcol_label font-weight-bold font_2">${day}</div>
+            <div class="headcol_sub font_1">${day_name}</div>
+        </div>
+    </template>
+
+    <!-- template price day -->
+    <template id="template_day_price">
+        <div class="bodycol ${holiday} ${disabled} ${no_stock}" data-day="${day}" data-price="${price}" data-stay="${min_stay}" data-enable="${enable}" data-check_in="${check_in}" data-check_out="${check_out}" data-object="${object_name}" data-id="${object_id}" style="opacity: 0.8;">
+            <div class="col_td">
+                <div class="value">${price}</div>
+                <div>${min_stay}<i class="fas fa-moon fa-xs pl-1"></i></div>
+            </div>
+            <div class="tiny_circles ${check_in_circles} ${check_out_circles}"></div>
+            <div class="col_event ${reservation} ${overbooking}"></div>
+            <!--<div class="tiny_circles green"></div>-->
+        </div>
+    </template>
+
+</section>
+
+<!-- scripts -->
+<script>
+
+    var prices = {}
+
+    // Onload function
+    prices.load = function () {
+
+        prices_objects_list.innerHTML = '';
+        prices_tbody.innerHTML = '';
+
+        // Load
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#prices_price_change_modal").load("/pages/components/price_change.html");
+        prices_days.value = prices.bl.days;
+
+        // Global ui
+        ui.dropdown_date("prices_filter_calendar");
+        ui.dropdown_text("prices_filter_month");
+        ui.display_title("Prices");
+        ui.filter_mobile_btn("prices_filter_calendar_btn", "prices_filter_calendar");
+
+        // Local ui
+        prices.ui.filter_calendar();
+        prices.ui.range_of_clicking_on_table();
+
+        prices.ui.search_objects();
+        prices.ui.pop_up_close();
+
+        prices.ui.dropdown_label("prices_filter_tip");
+
+        // Logic bl
+        prices.bl.laod_thead();
+        prices.bl.load_prices();
+
+    }
+
+    // Logic
+    prices.bl = new function () {
+
+        // variables
+        this.objects_ids = [];
+        this.dispay_max_objects = 50;
+        this.days = bl.varables.get('price_days');
+        this.date_from = bl.varables.get('price_date_from');
+
+        // load thead days
+        this.laod_thead = () => {
+
+            prices_thead.innerHTML = '';
+            var date_from = bl.varables.get('price_date_from');
+
+            for (var i = 0; i <= this.days; i++) {
+
+                var t = template_thead.innerHTML;
+
+                var date = new Date(date_from.replace(/-/g, '\/'));
+
+
+                var date_new = js.date.add_day(date, i);
+                var date_new_d = new Date(date_new.replace(/-/g, '\/'));
+                var day_name = new Date(date_new.replace(/-/g, '\/')).toLocaleString('en', { weekday: 'short' });
+                var month_name = date_new_d.toLocaleString('en', { month: 'short' });
+                var day_week = date_new_d.getDay();
+
+                var day = js.date.get_day(date_new.replace(/-/g, '\/'));
+
+                t = t.replace('${day}', day);
+                t = t.replace('${month_name}', month_name);
+                t = t.replace('${day_name}', day_name);
+                t = t.replace('${holiday}', (day_week == 0 || day_week == 6) ? 'td_highlight' : '');
+
+                js.html.insertAdjacentHTML('prices_thead', t);
+
+            }
+
+        }
+
+        // load prices
+        this.load_prices = async () => {
+
+
+            ui.content_loading("prices_content_loading");
+
+
+            // string id, string date_from, string days, string object_name,
+            var user_id = bl.workers.current_user_id();
+            var date_from = bl.varables.get('price_date_from');
+            var object_name = prices_objects_search.value;
+            var worker_id = bl.workers.current_worker_id();
+            var worker_object_count = JSON.parse(localStorage.getItem('worker'))['count']
+
+            
+            
+            var url = '/api/objects_prices_days/prices_period_objects_list/' + user_id + '?date_from=' + date_from + '&days=' + prices.bl.days + '&object_name=' + object_name + '&worker_id=' + worker_id + '&worker_object_count=' + worker_object_count;
+
+
+            var data = await ajax.get_json(url);
+
+            var number_of_objects = 0;
+            prices_objects_list.innerHTML = '';
+            prices_tbody.innerHTML = '';
+
+
+            for (var o of data) {
+                number_of_objects++;
+                var object_id = o['object_id'];
+                var object_name = o['object_name'];
+
+                var t = template_object.innerHTML;
+                t = t.replace('${object_name}', object_name);
+                t = t.replace('${id}', object_id);
+                t = t.replace('${id}', object_id);
+
+                js.html.insertAdjacentHTML('prices_objects_list', t);
+
+                var object_price_tr = document.createElement("tr");
+                object_price_tr.classList.add("tr");
+
+                // display prices
+                for (var d of o['days']) {
+                    //debugger;
+                    var day = new Date(d['day'].replace(/-/g, '\/'));// ako je datum formata year-month-date, klasa Date stvara datum za dan ranije(npr. 24.02 u 23.02), datum formata year/month/date nema taj problem
+
+                    var day_of_week = day.getDay();
+                    day = js.date.toIso(day);
+                    var stock = d['stock'];
+                    var stock_taken = d['stock_taken'];
+                    var stock_available = d['stock_available'];
+
+                    var tr = template_day_price.innerHTML;
+                    tr = tr.replace("${price}", !d['price'] == false ? Number(d['price']).toFixed(2) : '-');
+                    tr = tr.replace("${price}", !d['price'] == false ? Number(d['price']).toFixed(2) : '-');
+                    tr = tr.replace("${holiday}", (day_of_week == 0 || day_of_week == 6) ? 'weekend' : '');
+                    tr = tr.replace("${disabled}", d['enable'] == 'N' ? 'disabled' : '');
+                    tr = tr.replace("${enable}", d['enable'] == 'Y' ? 'Y' : 'N');
+                    tr = tr.replace("${min_stay}", js.text.check_if_empty(d["min_stay"]));
+                    tr = tr.replace("${min_stay}", js.text.check_if_empty(d["min_stay"]));
+                    tr = tr.replace("${day}", day);
+                    tr = tr.replace("${no_stock}", !d['price'] == true ? 'no_stock' : '');
+                    tr = tr.replace("${check_in_circles}", d['check_in'] == 'Y' ? 'green_left' : 'red_left');
+                    tr = tr.replace("${check_in}", d['check_in'] == 'Y' ? 'Y' : 'N');
+                    tr = tr.replace("${check_out_circles}", d['check_out'] == 'Y' ? 'green_right' : 'red_right');
+                    tr = tr.replace("${check_out}", d['check_out'] == 'Y' ? 'Y' : 'N');
+                    tr = tr.replace("${object_name}", d['object_name']);
+                    tr = tr.replace("${object_id}", d['object_id']);
+
+
+                    if (stock_available < 0) {
+                        tr = tr.replace("${overbooking}", stock_available < 0 ? 'overbooking' : '');
+                        tr = tr.replace('${reservation}', '');
+                    }
+                    else {
+                        tr = tr.replace("${overbooking}", '');
+                        tr = tr.replace('${reservation}', stock_taken > 0 ? 'reservation' : '');
+                    }
+
+                    object_price_tr.insertAdjacentHTML('beforeend', tr);
+                }
+
+                prices_tbody.insertAdjacentElement('beforeend', object_price_tr);
+
+            }
+
+            prices_total_objects.innerText = 'Objects (' + number_of_objects + ')';
+
+            // enable drag
+            prices.ui.range_of_clicking_on_table();
+            ui.content_loading_hide('prices_content_loading');
+
+
+        }
+
+        // refreshing page
+        this.refresh_page = () => {
+            var page_current = page.get_current_page();
+            if (page_current == 'prices') {
+                prices.bl.load_prices();
+            }
+        }
+    }
+
+    // ui components
+    prices.ui = new function () {
+
+        this.datepicker_set_today = function () {
+
+            let today_diff = parseInt(document.querySelector('[data-today_diff]').dataset.today_diff);
+            let today = new Date();
+            today.setDate(today.getDate() + today_diff);
+
+            $("#prices_filter_dropdown_calendar").datepicker('setDate', today);
+            //setTimeout(function () {
+            //    $('.ui-datepicker-current-day').click();
+            //}, 250);
+        }
+
+        this.today_diff_change = function (change) {
+
+            let today_el = document.querySelector('[data-today_diff]');
+            let today_diff = parseInt(today_el.dataset.today_diff);
+            today_diff += change;
+
+            today_el.dataset.today_diff = today_diff;
+
+            let print = '';
+            if (today_diff > 0) {
+                print = '+' + today_diff;
+            }
+            else if (today_diff < 0) {
+                print = today_diff;
+            }
+
+            today_el.innerText = 'Today ' + print;
+        }
+
+        this.dropdown_label = function (id) {
+            var id = document.getElementById(id);
+            var btn = id.children[0];
+            var dropdown = id.lastElementChild;
+            var dropdown_li = id.lastElementChild.lastElementChild.children;
+            var label = id.children[0].children[0].children[1].lastElementChild;
+
+            for (let i = 0; i < dropdown_li.length; i++) {
+                dropdown_li[i].addEventListener("click", function (e) {
+                    var value = e.currentTarget.children[0].children[0].lastElementChild.textContent;
+                    label.innerText = value;
+                    dropdownToggle();
+                });
+            }
+            var close = id.lastElementChild.children[0].lastElementChild;
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            close.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+            $(document).mouseup(function (e) {
+                if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+        }
+
+        // Filter - double calendar
+        this.filter_calendar = function () {
+            $("#prices_filter_dropdown_calendar").datepicker({
+                firstDay: 1,
+                //minDate: 0,
+                numberOfMonths: 1,
+                altFormat: "yy-mm-dd",
+                onSelect: function (dateText, inst) {
+
+                    $("#prices_form_calendar").addClass("hidden");
+                    document.querySelector(".filter_calendar > button").classList.remove("open");
+
+                    var date_iso = js.date.toIso(new Date(dateText));
+                    prices_date_from.innerHTML = date_iso;
+
+                    // save new date
+                    bl.varables.set('price_date_from', date_iso);
+
+                    // load prices
+                    prices.bl.laod_thead();
+                    prices.bl.load_prices();
+
+                }
+            });
+
+            $('#double_calendar').datepicker('setDate', new Date(prices.bl.date_from));
+            prices_date_from.innerHTML = prices.bl.date_from;
+        }
+
+        // Range of clicking on table
+        this.range_of_clicking_on_table = function () {
+            let table = $("#prices_table_calendar");
+            let td = $(".bodycol");
+
+            let isMouseDown = false;
+            let startRowIndex = null;
+            let startCellIndex = null;
+
+            function selectTo(cell) {
+
+                let row = cell.parent();
+                let cellIndex = cell.index();
+                let rowIndex = row.index();
+
+
+                let rowStart, rowEnd, cellStart, cellEnd;
+
+                if (rowIndex < startRowIndex) {
+                    rowStart = rowIndex;
+                    rowEnd = startRowIndex;
+                } else {
+                    rowStart = startRowIndex;
+                    rowEnd = rowIndex;
+                }
+
+                if (cellIndex < startCellIndex) {
+                    cellStart = cellIndex;
+                    cellEnd = startCellIndex;
+                } else {
+                    cellStart = startCellIndex;
+                    cellEnd = cellIndex;
+                }
+
+                for (let i = rowStart; i <= rowEnd; i++) {
+                    let rowCells = table.find(".tr").eq(i).find(td);
+                    for (let j = cellStart; j <= cellEnd; j++) {
+                        rowCells.eq(j).addClass("clicked");
+                    }
+                }
+            }
+
+            var tds = table.find(td);
+
+            // mouse down
+            tds.mousedown(function (e) {
+                isMouseDown = true;
+                let cell = $(this);
+
+                table.find(".clicked").removeClass("clicked"); // deselect everything
+
+                if (e.shiftKey) {
+                    selectTo(cell);
+                } else {
+                    cell.addClass("clicked");
+                    startCellIndex = cell.index();
+                    startRowIndex = cell.parent().index();
+                }
+
+                return false; // prevent text selection
+            });
+
+            // mouse over
+            tds.mouseover(function () {
+                if (!isMouseDown) return;
+                table.find(".clicked").removeClass("clicked");
+                selectTo($(this));
+            });
+
+            // select start
+            tds.bind("selectstart", function () {
+                return false;
+            });
+
+            $(document).mouseup(function () {
+
+                if (isMouseDown == true) {
+
+                    var table = document.querySelectorAll('#prices_tbody > .tr > .bodycol')
+                    var selected_days = [];
+                    var arr_objects_name = [];
+                    var arr_objects_id = [];
+                    var price = '';
+                    for (var i of table) {
+                        if (i.classList.contains('clicked')) {
+
+                            arr_objects_id.push(i.dataset.id);
+                            arr_objects_name.push(i.dataset.object);
+
+                            selected_days.push(i)
+                        }
+                    }
+
+                    // removing duplicate
+                    var unique_objects_id = [...new Set(arr_objects_id)];
+                    var unique_objects_name = [...new Set(arr_objects_name)];
+
+                    // show popup
+                    var page = 'prices';
+                    var price = selected_days[0].dataset.price;
+                    var min_stay = selected_days[0].dataset.stay;
+                    var date_from = selected_days[0].dataset.day;
+                    var date_until = selected_days[selected_days.length - 1].dataset.day;
+                    var enabled = selected_days[0].dataset.enable;
+                    var check_in = selected_days[0].dataset.check_in;
+                    var check_out = selected_days[0].dataset.check_out;
+
+                    price_change.ui.open(page, date_from, date_until, price, min_stay, enabled, check_in, check_out, unique_objects_name, unique_objects_id);
+
+                }
+
+                isMouseDown = false;
+
+            });
+
+        }
+
+        // Mobile open dropdown by click btn
+        this.filter_mobile_btn = function (id, dropdown_id) {
+            let mobile_btn = document.getElementById(id);
+            let dropdown = document.getElementById(dropdown_id);
+            let dropdown_btn = dropdown.getElementsByTagName("button")[0];
+            let dropdown_menu = dropdown.getElementsByClassName("dropdown_menu")[0];
+            mobile_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown.classList.remove("d-none");
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("d-none");
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+        }
+
+        // Handle search objects
+        this.search_objects = () => {
+
+            // Get the input box
+            var textInput = document.getElementById('prices_objects_search');
+
+            // Init a timeout variable to be used below
+            var timeout = null;
+
+            // Listen for keystroke events
+            textInput.onkeyup = function (e) {
+
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 800ms
+                timeout = setTimeout(function () {
+                    prices.bl.load_prices();
+                    //console.log('Input Value:', textInput.value);
+                }, 500);
+            };
+
+        }
+
+        // Pop up - close
+        this.pop_up_close = function () {
+
+            let pop_up = document.querySelector(".modal_price_perNight");
+            let close = pop_up.getElementsByClassName("modal_close")[0];
+            close.onclick = function () {
+                $(pop_up).fadeOut(100);
+            }
+
+            $(document).mouseup(function (e) {
+                if (!$(pop_up).is(e.target) && $(pop_up).has(e.target).length === 0) {
+                    $(pop_up).fadeOut(100);
+                }
+            });
+
+        }
+
+        // filter by month
+        this.choose_month = function (month) {
+
+            var current_year = new Date().getFullYear();
+
+            // hide modal
+            price_modal_filter_month.classList.add("hidden");
+            price_button_filter_month.classList.remove("open");
+
+            // getting date from modal
+            var date = new Date(current_year, month -1, 2);
+            var date_iso = date.toISOString().split('T')[0];
+            prices_date_from.innerHTML = date_iso;
+
+            // save new date
+            bl.varables.set('price_date_from', date_iso);
+
+            // load prices
+            prices.bl.laod_thead();
+            prices.bl.load_prices();
+
+        }
+
+        // change number of days that will be display in table
+        this.change_number_of_display_days = function () {
+            prices.bl.days = prices_days.value - 1;
+            bl.varables.set('price_days', prices.bl.days);
+            // load prices
+            prices.bl.laod_thead();
+            prices.bl.load_prices();
+        }
+
+        // go next with calendar
+        this.go_next = function () {
+
+            var date_from = bl.varables.get('price_date_from');
+            var days = bl.varables.get('price_days');
+            var date_from_new = js.date.add_day(date_from, days);
+
+            // store new date
+            bl.varables.set('price_date_from', date_from_new);
+
+            $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('price_date_from')));
+            prices_date_from.innerHTML = bl.varables.get('price_date_from');
+
+            // load rents
+            prices.bl.laod_thead();
+            prices.bl.load_prices();
+
+        }
+
+        // go before with calendar
+        this.go_before = function () {
+
+            var date_from = bl.varables.get('price_date_from');
+            var days = bl.varables.get('price_days');
+            var date_from_new = js.date.add_day(date_from, -1 * days);
+
+            // store new date
+            bl.varables.set('price_date_from', date_from_new);
+
+            $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('price_date_from')));
+            prices_date_from.innerHTML = bl.varables.get('price_date_from');
+
+            // load rents
+            prices.bl.laod_thead();
+            prices.bl.load_prices();
+        }
+
+    }
+
+    // On load
+    prices.load();
+
+</script>

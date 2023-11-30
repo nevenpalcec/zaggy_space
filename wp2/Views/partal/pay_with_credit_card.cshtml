@@ -1,0 +1,11 @@
+﻿@{ 
+    string pg = bl.settings.get(bl.settings.set.payment_getway, bl.settings_current.user_id);
+}
+
+<h1>
+    @bl.lng.l.Pay_with_credit_card
+</h1>
+
+<div>
+    @bl.lng.l.Credit_card @bl.lng.l.Details.ToLower()
+</div>

@@ -1,0 +1,343 @@
+﻿@code {
+
+    public string user_type = "Agent";
+    public string reseller_worker_perm = "";
+    public string reseller_worker_type_id = "";
+
+    string link = "#";
+    string getLng = "en";
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        user_type = await Perm.resellers_workers_types_name();
+        reseller_worker_type_id = await Perm.reseller_worker_type_id();
+        await Perm.reseller_worker_perm();
+
+        StateHasChanged();
+
+    }
+
+}
+
+<div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+
+    <div class="navbar-vertical-content scrollbar">
+
+        <!-- Navbar left side -->
+        <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
+                          
+            <!-- Nav section 01 -->
+            <li class="nav-item ">
+                @if (Perm.dashboard == true)
+                {
+                    <!--Vertical divider-->
+                    <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard -->
+                    <a class="nav-link" href="/dashboard/general" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><i class="fas fa-tachometer-alt"></i> </span><span class="nav-link-text ps-1"> @lng.l.Dashboard </span>
+                        </div>
+                    </a>
+
+                    <!-- Dashboard -->
+                   @*  <a class="nav-link" href="/dashboard/statistics" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fas fa-chart-area"></i> </span><span class="nav-link-text ps-1"> @bl.lng.l.Statistics </span>
+                        </div>
+                    </a> *@
+
+                    <!-- CRM -->
+                    @if( 1 == 2 ) {
+                        <a class="nav-link" href="/dashboard/crm" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"> <i class="fas fa-chart-pie"></i> </span><span class="nav-link-text ps-1"> CRM </span>
+                            </div>
+                        </a>
+                    }
+                    
+                }
+            </li>
+
+            @if (Perm.users_list == true)
+            {
+                <!-- Nav section 02 -->
+                <li class="nav-item">
+
+                    <!--Vertical divider-->
+                    <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div>
+
+                    <!-- Users -->
+                 @*    <a class="nav-link" href="/users/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><i class="fas fa-user-alt"></i></span><span class="nav-link-text ps-1"> @lng.l.Users </span>
+                        </div>
+                    </a> *@
+
+                    <!-- KPI -->
+                    @if (1 == 2)
+                    {
+                        <a class="nav-link" href="/users/kpi" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><i class="fas fa-chart-bar"></i></span><span class="nav-link-text ps-1"> KPI </span>
+                            </div>
+                        </a>
+                    }
+
+                    <!--Vertical divider-->
+             @*        <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div> *@
+
+                </li>
+            }
+            <!-- Nav section 03 -->
+
+            <li class="nav-item">
+
+                <!-- Units -->
+                @if (Perm.units_list == true)
+                {
+                   @*  <a class="nav-link" href="/units/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fas fa-map-marker-alt"></i> </span><span class="nav-link-text ps-1"> @lng.l.Location </span>
+                        </div>
+                    </a> *@
+                }
+
+                <!-- Properties -->
+                @if (Perm.objects_list == true)
+                {
+                    <a class="nav-link" href="/objects/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fas fa-home"></i> </span><span class="nav-link-text ps-1"> @lng.l.Properties </span>
+                        </div>
+                    </a>
+                }
+
+                <!--Property stats-->
+                @if (Perm.objects_status == true)
+                {
+                    @* <a class="nav-link" href="/objects/status" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fas fa-star"></i> </span><span class="nav-link-text ps-1"> @lng.l.Property_stats </span>
+                        </div>
+                    </a> *@
+                }
+
+                <!--Image verification-->
+                @if (Perm.objects_pictures == true)
+                {
+                  @*   <a class="nav-link" href="/objects/pictures" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fas fa-images"></i> </span><span class="nav-link-text ps-1"> @lng.l.Image_verification </span>
+                        </div>
+                    </a> *@
+                }
+
+            </li>
+
+            <!-- Nav section 04 -->
+            <li class="nav-item">
+
+                <!--Vertical divider-->
+                <div class="row">
+                    <div class="col ps-0">
+                        <hr class="navbar-vertical-divider" />
+                    </div>
+                </div>
+
+                <!--Reservations-->
+                @if (Perm.rents_list == true)
+                {
+                    <a class="nav-link" href="/rents/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fab fa-connectdevelop"></i> </span><span class="nav-link-text ps-1">  @lng.l.Reservations </span>
+                        </div>
+                    </a>
+                }
+
+
+                <!--Reservations no show-->
+                @if (Perm.rents_no_show_list == true)
+                {
+                    @* <a class="nav-link" href="/rents/no-show/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fas fa-toilet-paper-slash"></i> </span><span class="nav-link-text ps-1"> @lng.l.No_show </span>
+                        </div>
+                    </a> *@
+
+
+                    <!--Vertical divider-->
+                    @* <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div> *@
+                }
+
+            </li>
+
+            <!-- Nav section 05 -->
+            <li class="nav-item">
+
+                @*inquires*@
+                @if (Perm.inquires_list == true)
+                {
+                  @*   <a class="nav-link" href="/inquires/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="far fa-comment-alt"></i> </span><span class="nav-link-text ps-1"> @bl.lng.l.Inquiries  </span>
+                        </div>
+                    </a> *@
+                }
+
+                <!-- Reviews -->
+                @if (Perm.reviews_list == true)
+                {
+                   @*  <a class="nav-link" href="/reviews/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"> <i class="fab fa-rev"></i></span> <span class="nav-link-text ps-1"> @lng.l.Reviews </span>
+                        </div>
+                    </a> *@
+
+                    <!--Vertical divider-->
+                @*     <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div> *@
+                }
+
+            </li>
+
+            <!-- Nav section 06 -->
+            <li class="nav-item">
+
+                <!-- Regions -->
+                @if (Perm.regions_list == true)
+                {
+                    <a class="nav-link" href="/regions/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-draw-polygon"></span></span><span class="nav-link-text ps-1"> @lng.l.Regions </span>
+                        </div>
+                    </a>
+
+                @*     <!--Vertical divider-->
+                    <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div> *@
+                }
+
+            </li>
+
+            <!-- Nav section 06 -->
+            <li class="nav-item">
+
+                <!-- Regions -->
+                @if (Perm.contract_list == true)
+                {
+                  @*   <a class="nav-link" href="/contracts/units/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-file-signature"></span></span><span class="nav-link-text ps-1">@bl.lng.l.Contracts</span>
+                        </div>
+                    </a> *@
+
+                   @* <a class="nav-link" href="/contracts/history/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-file-signature"></span></span><span class="nav-link-text ps-1">@lng.l.Contracts_History</span>
+                        </div>
+                    </a>*@
+
+                    <!--Vertical divider-->
+                   @*  <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div> *@
+                }
+            </li>
+
+            <!-- Nav section 07 -->
+            <li class="nav-item">
+
+                <!-- Invoices -->
+                @if (Perm.invoces_list == true)
+                {
+                  @*   <a class="nav-link" href="/invoces/list" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-file-invoice-dollar"></span></span><span class="nav-link-text ps-1"> @lng.l.Invoices </span>
+                        </div>
+                    </a> *@
+
+                   @* <a class="nav-link" href="/invoces/payments-return" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-file-invoice-dollar"></span></span><span class="nav-link-text ps-1"> @lng.l.Payments_return </span>
+                        </div>
+                    </a>
+
+                    <a class="nav-link" href="/invoces/payments-recive" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-file-invoice-dollar"></span></span><span class="nav-link-text ps-1"> @lng.l.Payments_receive </span>
+                        </div>
+                    </a>*@
+
+                }
+            </li>
+
+            @if ((Perm.faq == true) && (user_type == "Marketing"))
+            {
+               @*  <li class="nav-item">
+                    <a class="nav-link" href="/faq" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><i class="fas fa-tachometer-alt"></i> </span><span class="nav-link-text ps-1"> FAQ </span>
+                        </div>
+                    </a>
+                </li> *@
+            }
+
+            @if ((user_type == "Finance"))
+            {
+                @* <li class="nav-item">
+                    <a class="nav-link" href="/users/functions" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><i class="fas fa-cog"></i> </span><span class="nav-link-text ps-1"> Postavke - RačunI </span>
+                        </div>
+                    </a>
+                </li> *@
+            }
+
+            <!-- Admin area -->
+            @if (Perm.settings == true)
+            {
+                <li class="nav-item">
+                    <div class="row">
+                        <div class="col ps-0">
+                            <hr class="navbar-vertical-divider" />
+                        </div>
+                    </div>
+
+                    <a class="nav-link" href="/workers/settings" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-cog"></span></span><span class="nav-link-text ps-1"> @lng.l.Settings </span>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+
+    </div>
+
+</div>

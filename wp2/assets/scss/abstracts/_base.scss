@@ -1,0 +1,44 @@
+html {
+    font-size: 16px !important;
+    @media screen and (max-width: 575px) {
+        font-size: 90% !important;
+    }
+
+    cursor: default;
+}
+
+body {
+    font-size: 16px !important;
+}
+
+p span {
+    line-height: normal;
+}
+
+p {
+    line-height: 25px !important;
+}
+
+p::selection, li::selection, ul::selection, nav::selection, span::selection, h1::selection, h2::selection, h3::selection, h4::selection,
+h5::selection, h6::selection {
+    background: rgba(32, 189, 190, 0.4);
+    text-decoration: none;
+}
+
+.img-fluid.lazy {
+    height: 13rem;
+}
+
+
+input:focus {
+    // background-color: yellow !important;
+}
+
+.form-control.border {
+    border: 1px solid #DDD !important;
+}
+
+// Add custom pointer for role="button"
+[role="button"] {
+    cursor: pointer;
+}

@@ -1,0 +1,159 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>User settings <!--<i class="fas fa-users pr-2"></i>Rents sources-->
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#settings" class="filter_link"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_status" class="filter_link"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Status</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_sources" class="filter_link active"><i class="fas fa-code-branch pr-lg-2"></i><span class="d-none d-lg-flex">Sources</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#payments_methods" class="filter_link hidden"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Payment methods</span></a>
+        <div class="filter_line_y hidden"></div>
+        <a href="#evisitor" class="filter_link"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">eVisitor</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoice_text" class="filter_link"><i class="fas fa-file-invoice pr-lg-2"></i><span class="d-none d-lg-flex">Invoice text</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#email_templates" class="filter_link"><i class="fas fa-envelope pr-lg-2"></i><span class="d-none d-lg-flex">Email templates</span></a>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3 justify-content-end">
+
+        <button class="btn bg_primary text-white font_medium py-1" onclick="modal_add_rents_source.bl.show_modal('modal_add_rents_source');"><i class="fas fa-plus pr-2"></i>Add</button>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <div class="view_table">
+            <div class="table_wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" style="min-width: 11rem;">Name</th>
+                            <th scope="col" style="min-width: 6rem;">Icon</th>
+                            <th scope="col" style="min-width: 6rem;">Email</th>
+                            <th scope="col" style="min-width: 6rem;">Password</th>
+                            <th scope="col" style="min-width: 6rem;">Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sources_list_tbody">
+                        
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<section>
+    <template id="rents_sources_list">
+        <tr onclick="modal_add_rents_source.bl.edit_source(`${source_id}`)" style="cursor: pointer;">
+            <th scope="row">${number}</th>
+            <td class="td_item01"><span class="d-block mr-2" style="width: .7rem; height: .7rem; margin-top: .2rem; float:left; background-color: ${color};"></span><span class="d-block">${name}</span></td>
+            <td class="td_item03"><a href="${link}"><img src="/assets/images/icons/portals/${img}.svg" alt="Alternate Text" style="width: 1.5rem; height: 1.5rem;" /></a> </td>
+            <td class="td_item02">${email}</td>
+            <td class="td_item02">${password}</td>
+            <td class="td_item02">${note}</td>
+        </tr>
+    </template>
+</section>
+
+<!-- Modal add review -->
+<section class="modal_add_rents_source"></section>
+
+
+<script>
+
+    $(".modal_add_rents_source").load("/pages/components/modal_add_rents_source.html");
+    $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+    var sources = {};
+
+
+    // Load function
+    sources.load = () => {
+
+        // Title
+        document.title = "Sources";
+
+        // UI components
+
+        // BL components
+        sources.bl.load_status();
+    }
+
+    // UI logic
+    sources.ui = new function () {
+
+    }
+
+    // BL logic
+    sources.bl = new function () {
+
+        this.load_status = async () => {
+
+            var user_id = bl.workers.current_user_id();
+
+            var url = '/api/rents_sources/list/' + user_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            sources_list_tbody.innerHTML = '';
+            var number = 1;
+
+            for (var r of json_response) {
+
+                var t = rents_sources_list.innerHTML;
+
+                t = t.replace('${name}', !r['name'] == true ? '-' : r['name']);
+                t = t.replace('${img}', r['icon'] );
+                t = t.replace('${color}', r['color']);
+                t = t.replace('${number}', number);
+                t = t.replace('${source_id}', r['id']);
+                t = t.replace('${link}', r['link']);
+                t = t.replace('${email}', !r['email'] || r['email'] == '' ? '-' : r['email']);
+                t = t.replace('${password}', !r['password'] || r['password'] == '' ? '-' : r['password']);
+                t = t.replace('${note}', !r['note'] || r['note'] == '' ? '-' : r['note']);
+
+                number++;
+
+                js.html.insertAdjacentHTML('sources_list_tbody', t);
+            }
+
+        }
+
+    }
+
+    // On load
+    sources.load();
+
+</script>

@@ -1,0 +1,2674 @@
+﻿@{
+    Layout = "~/Views/_Layout.cshtml";
+
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+
+    var date_from = System.DateTime.Now.ToString("yyyy-MM-dd");
+    var date_until = System.DateTime.Now.AddDays(3).ToString("yyyy-MM-dd");
+
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "objects_list" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- hotel details -->
+<section class="section-rd">
+
+    <div class="bg-img">
+        <div class="container-wrapper">
+            <div class="rd-title">jskjdlaks</div>
+        </div>
+    </div>
+
+    <div class="px-3">
+
+        <div class="container box_shadow_none pt-3">
+
+            <!-- Gallery -->
+            <div class="hotel_gallery mb-3 cursor-pointer open_pop_up_gallery">
+                <div class="">
+                    <img src="https://images.unsplash.com/photo-1587213811864-46e59f6873b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100" />
+                </div>
+                <div class="">
+                    <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80" class="w-100 h-100" />
+                </div>
+                <div class="">
+                    <img src="https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="w-100 h-100" />
+                </div>
+                <div class="">
+                    <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" class="w-100 h-100" />
+                </div>
+                <div class="">
+                    <img src="https://images.unsplash.com/photo-1565031491910-e57fac031c41?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80" class="w-100 h-100" />
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="heading-title mb-2" style="font-size: 1.4rem; margin-top: 0px; padding-top: 0px;">Blue sea Villa +1</div>
+
+            <!-- Features -->
+            <div class="d-md-flex justify-content-between mb-3">
+                <div class="flex-grow-1">
+                    <!-- Icon features -->
+                    <div class="d-flex flex-wrap hotel_icon_features">
+                        <div class="m-1 border p-2 text-center">
+                            <i class="fas fa-wifi text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Wifi</div>
+                        </div>
+                        <div class="m-1 border p-2 text-center">
+                            <i class="far fa-snowflake text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Air conditioner</div>
+                        </div>
+                        <div class="m-1 border p-2 text-center">
+                            <i class="fas fa-parking text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Free parking</div>
+                        </div>
+                        <div class="m-1 border p-2 text-center">
+                            <i class="fas fa-swimming-pool text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Swimming pool</div>
+                        </div>
+                        <div class="m-1 border p-2 text-center">
+                            <i class="fas fa-hot-tub text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Sauna</div>
+                        </div>
+                        <div class="m-1 border p-2 text-center">
+                            <i class="fas fa-utensils text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Breakfast & Dinner</div>
+                        </div>
+                        <div class="m-1 border p-2 text-center">
+                            <i class="fas fa-dumbbell text_4xl"></i>
+                            <div class="text-uppercase text_xs font_semiBold line_normal pt-1">Fitness</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 pt-md-0" style="width:200px;">
+                    <div class="d-flex border p-3">
+                        <div class="bg_primary text-white text_3xl mr-2 p-2 line_normal">4.7</div>
+                        <div>
+                            <div class="text_2xl font-weight-bold">Great</div>
+                            <div class="text_sm">87 reviews</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety and health -->
+            <div class="border p-3 mb-3 border_primary">
+                <div class="mb-2 heading-title mt-0 pt-0">Dodatne mjere za zdravlje i sigurnost</div>
+                <div>Ovaj je objekt poduzeo dodatne mjere vezane za zdravlje i higijenu, što pokazuje da im je vaša sigurnost na prvom mjestu</div>
+                <div>Prikaži informacije o zdravlju i sigurnosti</div>
+            </div>
+
+            <!-- hotel picker -->
+            <div>
+
+                <!-- Finder -->
+                <section class="section-finder hotel_finder">
+
+                    <div class="wrapper mb-3">
+
+                        <div class="finder">
+
+                            <!-- calendar date from -->
+                            <div class="finder-item calendar">
+                                <i class="far fa-calendar-alt"></i>
+                                <input id="calendar_date_from" type="text" class="form-control hasDatepicker" placeholder="Check-in" name="date_from">
+                            </div>
+
+                            <!-- calendar date from -->
+                            <div class="finder-item calendar">
+                                <i class="far fa-calendar-alt"></i>
+                                <input id="calendar_date_until" type="text" class="form-control hasDatepicker" placeholder="Check-out" name="date_until">
+                            </div>
+
+                            <div class="finder-item">
+                                <div class="dropdown" id="dropdown_adults">
+                                    <i class="fas fa-user mr-4"></i>
+
+                                    <div class="btn dropdown-toggle" data-adult-id="1" type="text" id="dropdown_adults_id" data-toggle="dropdown" name="adults" style="padding-left: 30px !important;" contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="1">
+                                        1
+                                    </div>
+
+                                    <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton">
+                                        <a data-id="1" class="dropdown-item">1</a>
+                                        <a data-id="2" class="dropdown-item">2</a>
+                                        <a data-id="3" class="dropdown-item">3</a>
+                                        <a data-id="4" class="dropdown-item">4</a>
+                                        <a data-id="5" class="dropdown-item">5+</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="finder-item">
+                                <div class="dropdown" id="dropdown_pets">
+                                    <i class="fas fa-dog mr-4"></i>
+                                    <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_pets_id" data-toggle="dropdown" style="padding-left: 30px !important;" contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="0">
+                                        0
+                                    </div>
+                                    <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton">
+                                        <a data-id="0" class="dropdown-item"> - - - </a>
+                                        <a data-id="1" class="dropdown-item">1</a>
+                                        <a data-id="2" class="dropdown-item">2</a>
+                                        <a data-id="3" class="dropdown-item">3</a>
+                                        <a data-id="4" class="dropdown-item">4</a>
+                                        <a data-id="5" class="dropdown-item">5+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="finder-btn">
+                                <button type="button" class="btn btn-effect" onclick="property_finder.search();">Check Availability</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- List of cards room -->
+                <div class="hotel_list_of_cards" id="div_hotel_list_of_cards">
+
+                    <!-- First - Card -->
+                    <div class="border hotel_object_card mb-3 d-none d-xl-block">
+
+                        <div class="p-3 d-md-flex">
+                            <div class="hotel_object_card_img mr-0 mr-md-3 mb-2 mb-md-0 cursor_pointer" data-toggle="modal" data-target="#modal_hotel_object_details">
+                                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80"
+                                     class="w-100 h-100 object_cover">
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mt-0 pt-0 mb-md-0 heading-title justify-content-between w-100 d-md-flex pb-0">
+                                        <div class="font_semiBold text-uppercase pt-1 mb-2 ">SMART Standard Double room</div>
+                                        <div class="mb-2 mb-md-1 d-flex">
+                                            <div>
+                                                <div class="cursor-pointer border border_primary line_height_normal px-2 text_sm text-center user-select-none" data-toggle="modal" data-target="#modal_hotel_object_gallery">Gallery</div>
+                                            </div>
+                                            <div>
+                                                <div class="cursor-pointer border border_primary line_height_normal px-2 text_sm text-center user-select-none ml-2" data-toggle="modal" data-target="#modal_hotel_object_details">More</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6 mb-md-0 mb-3">
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1 border-right">
+                                                <div>1 krevet</div>
+                                                <div>1 krevet</div>
+                                                <div>1 krevet</div>
+                                                <div class="text_sm">(200 x 200)</div>
+                                            </div>
+                                            <div class="flex-grow-1 pl-3">
+                                                <div>50 m2</div>
+                                                <div>Pogled na grad</div>
+                                                <div>Klima</div>
+                                                <div>Terasa</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 border-left">
+                                        <div class="d-flex flex-wrap">
+                                            <div class="d-flex align-items-center pr-3">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                <span class="pl-1">Tuš</span>
+                                            </div>
+                                            <div class="d-flex align-items-center pr-3">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                <span class="pl-1">WC</span>
+                                            </div>
+                                            <div class="d-flex align-items-center pr-3">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                <span class="pl-1">drveni ili parketni pod</span>
+                                            </div>
+                                            <div class="d-flex align-items-center pr-3">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                <span class="pl-1">posteljina</span>
+                                            </div>
+                                            <div class="d-flex align-items-center pr-3">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                <span class="pl-1">utičnica pokraj kreveta</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="d-flex border-top">
+                            <div class="flex-grow-1">
+
+                                <div>
+
+                                    <!-- 1. row -->
+                                    <div class="border-bottom d-flex bg_primary_10">
+                                        <div class="row m-0 w-100">
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Persons -->
+                                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Advantage -->
+                                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                                    <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                            <div><strong>Breakfast</strong> included</div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div>
+                                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                                23:59
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div><strong>No payment</strong> - pay in the object</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Price -->
+                                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                                    <div class="px-3 border_md_end h-100 text-left d-flex flex-column justify-content-center">
+                                                        <div class="text_3xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                        <div class="green text_sm line_height_normal">
+                                                            All taxes included
+                                                        </div>
+                                                        <div class="text_sm">for a night for 2 guests</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Select room -->
+                                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                                    <div class="border-end py-2 px-3 h-100">
+                                                        <div class="text_sm">Select rooms:</div>
+                                                        <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2. row -->
+                                    <div class="border-bottom d-flex">
+                                        <div class="row m-0 w-100">
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Persons -->
+                                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Advantage -->
+                                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                                    <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                            <div><strong>Breakfast</strong> included</div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div>
+                                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                                23:59
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div><strong>No payment</strong> - pay in the object</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Price -->
+                                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                                    <div class="px-3 border_md_end h-100 text-left d-flex flex-column justify-content-center">
+                                                        <div class="text_3xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                        <div class="green text_sm line_height_normal">
+                                                            All taxes included
+                                                        </div>
+                                                        <div class="text_sm">for a night for 2 guests</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Select room -->
+                                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                                    <div class="border-end py-2 px-3 h-100">
+                                                        <div class="text_sm">Select rooms:</div>
+                                                        <div class="dropdown position-relative">
+                                                            <span class="position-absolute position_y_center left_0 ml-2 z_index_10">
+                                                                <i class="fas fa-cube" style="position: unset !important;"></i>
+                                                            </span>
+                                                            <button class="btn dropdown-toggle text-center border w-100 rounded-0 bg-white" type="button"
+                                                                    id="hotel_object_card_dropdown" data-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                                0
+                                                            </button>
+                                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                                aria-labelledby="hotel_object_card_dropdown">
+                                                                <a data-id="1" class="dropdown-item">0</a>
+                                                                <a data-id="1" class="dropdown-item">1</a>
+                                                                <a data-id="2" class="dropdown-item">2</a>
+                                                                <a data-id="3" class="dropdown-item">3</a>
+                                                                <a data-id="4" class="dropdown-item">4</a>
+                                                                <a data-id="5" class="dropdown-item">5+</a>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3. row -->
+                                    <div class="border-bottom d-flex">
+                                        <div class="row m-0 w-100">
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Persons -->
+                                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Advantage -->
+                                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                                    <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                            <div><strong>Breakfast</strong> included</div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div>
+                                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                                23:59
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div><strong>No payment</strong> - pay in the object</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Price -->
+                                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                                    <div class="px-3 border_md_end h-100 text-left d-flex flex-column justify-content-center">
+                                                        <div class="text_3xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                        <div class="green text_sm line_height_normal">
+                                                            All taxes included
+                                                        </div>
+                                                        <div class="text_sm">for a night for 2 guests</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Select room -->
+                                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                                    <div class="border-end py-2 px-3 h-100">
+                                                        <div class="text_sm">Select rooms:</div>
+                                                        <div class="dropdown position-relative">
+                                                            <span class="position-absolute position_y_center left_0 ml-2 z_index_10">
+                                                                <i class="fas fa-cube" style="position: unset !important;"></i>
+                                                            </span>
+                                                            <button class="btn dropdown-toggle text-center border w-100 rounded-0 bg-white" type="button"
+                                                                    id="hotel_object_card_dropdown" data-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                                0
+                                                            </button>
+                                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                                aria-labelledby="hotel_object_card_dropdown">
+                                                                <a data-id="1" class="dropdown-item">0</a>
+                                                                <a data-id="1" class="dropdown-item">1</a>
+                                                                <a data-id="2" class="dropdown-item">2</a>
+                                                                <a data-id="3" class="dropdown-item">3</a>
+                                                                <a data-id="4" class="dropdown-item">4</a>
+                                                                <a data-id="5" class="dropdown-item">5+</a>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="border-top border_primary">
+
+                                    <!-- 1. row -->
+                                    <div class="border-bottom d-flex bg_primary_10">
+                                        <div class="row m-0 w-100">
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Persons -->
+                                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Advantage -->
+                                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                                    <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                            <div><strong>Breakfast</strong> included</div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div>
+                                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                                23:59
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div><strong>No payment</strong> - pay in the object</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Price -->
+                                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                                    <div class="px-3 border_md_end h-100 text-left d-flex flex-column justify-content-center">
+                                                        <div class="text_3xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                        <div class="green text_sm line_height_normal">
+                                                            All taxes included
+                                                        </div>
+                                                        <div class="text_sm">for a night for 2 guests</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Select room -->
+                                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                                    <div class="border-end py-2 px-3 h-100">
+                                                        <div class="text_sm">Select rooms:</div>
+                                                        <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2. row -->
+                                    <div class="border-bottom d-flex">
+                                        <div class="row m-0 w-100">
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Persons -->
+                                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Advantage -->
+                                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                                    <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                            <div><strong>Breakfast</strong> included</div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div>
+                                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                                23:59
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div><strong>No payment</strong> - pay in the object</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Price -->
+                                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                                    <div class="px-3 border_md_end h-100 text-left d-flex flex-column justify-content-center">
+                                                        <div class="text_3xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                        <div class="green text_sm line_height_normal">
+                                                            All taxes included
+                                                        </div>
+                                                        <div class="text_sm">for a night for 2 guests</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Select room -->
+                                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                                    <div class="border-end py-2 px-3 h-100">
+                                                        <div class="text_sm">Select rooms:</div>
+                                                        <div class="dropdown position-relative">
+                                                            <span class="position-absolute position_y_center left_0 ml-2 z_index_10">
+                                                                <i class="fas fa-cube" style="position: unset !important;"></i>
+                                                            </span>
+                                                            <button class="btn dropdown-toggle text-center border w-100 rounded-0 bg-white" type="button"
+                                                                    id="hotel_object_card_dropdown" data-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                                0
+                                                            </button>
+                                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                                aria-labelledby="hotel_object_card_dropdown">
+                                                                <a data-id="1" class="dropdown-item">0</a>
+                                                                <a data-id="1" class="dropdown-item">1</a>
+                                                                <a data-id="2" class="dropdown-item">2</a>
+                                                                <a data-id="3" class="dropdown-item">3</a>
+                                                                <a data-id="4" class="dropdown-item">4</a>
+                                                                <a data-id="5" class="dropdown-item">5+</a>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3. row -->
+                                    <div class="border-bottom d-flex">
+                                        <div class="row m-0 w-100">
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Persons -->
+                                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Advantage -->
+                                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                                    <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                            <div><strong>Breakfast</strong> included</div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div>
+                                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                                23:59
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                            <div><strong>No payment</strong> - pay in the object</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 d-md-flex px-0">
+
+                                                <!-- Price -->
+                                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                                    <div class="px-3 border_md_end h-100 text-left d-flex flex-column justify-content-center">
+                                                        <div class="text_3xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                        <div class="green text_sm line_height_normal">
+                                                            All taxes included
+                                                        </div>
+                                                        <div class="text_sm">for a night for 2 guests</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Select room -->
+                                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                                    <div class="border-end py-2 px-3 h-100">
+                                                        <div class="text_sm">Select rooms:</div>
+                                                        <div class="dropdown position-relative">
+                                                            <span class="position-absolute position_y_center left_0 ml-2 z_index_10">
+                                                                <i class="fas fa-cube" style="position: unset !important;"></i>
+                                                            </span>
+                                                            <button class="btn dropdown-toggle text-center border w-100 rounded-0 bg-white" type="button"
+                                                                    id="hotel_object_card_dropdown" data-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                                0
+                                                            </button>
+                                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                                aria-labelledby="hotel_object_card_dropdown">
+                                                                <a data-id="1" class="dropdown-item">0</a>
+                                                                <a data-id="1" class="dropdown-item">1</a>
+                                                                <a data-id="2" class="dropdown-item">2</a>
+                                                                <a data-id="3" class="dropdown-item">3</a>
+                                                                <a data-id="4" class="dropdown-item">4</a>
+                                                                <a data-id="5" class="dropdown-item">5+</a>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Book now -->
+                            <div class="py-2 px-3 w-100 bg_primary_10" style="max-width: 250px;">
+                                <div class="position-sticky" style="top: 2rem;">
+                                    <div class="text_sm"><strong>13</strong> jedinica za</div>
+                                    <div class="text_xl py-1">HRK 14.874</div>
+                                    <div class="text_sm">Uključujući poreze i naknade</div>
+                                    <div class="text_sm">Stvarite HRK 1.041 bonusa</div>
+                                    <a href="#payment" class="btn bg_primary text-white px-4 mb-2 rounded-0 d-block mt-2">Book now</a>
+                                    <!-- <button class="btn border border_secondary rounded-0 mb-2">Add to cart</button> -->
+                                    <ul class="text_sm">
+                                        <li>Za samo 2 minute</li>
+                                        <li>Trenutna potvrda</li>
+                                        <li>Bez troškova rezervacije ili naknada za plaćanje kreditnom karticom!</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Second - Card -->
+                    <div class="border hotel_object_card mb-3 d-none d-xl-block">
+
+                        <!-- Header -->
+                        <div class="d-flex bg_secondary font-weight-bold text-white position-sticky top-0 z_index_10">
+                            <div class="d-flex flex_1">
+                                <div class="p-2 border-right" style="width: 240px; min-width: 240px;">Vrste smještaja</div>
+                                <div class="p-2 border-right" style="width: 90px; min-width: 90px;">Kapacitet</div>
+                                <div class="p-2 border-right" style="width: 160px; min-width: 160px;">Cijena za noćenja</div>
+                                <div class="p-2 border-right" style="width: 270px; min-width: 270px;">Vaše opcije</div>
+                                <div class="p-2 border-right" style="width: 120px; min-width: 120px;">Odaberite iznos</div>
+                            </div>
+                            <div class="p-2" style="width: 250px; min-width: 250px;"></div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="d-flex">
+
+                            <div class="flex_1">
+
+                                <!-- List - Main card -->
+                                <div class="d-flex flex_1 border-top border-bottom">
+
+                                    <!-- Types of accommodation -->
+                                    <div class="border-right" style="width: 240px; min-width: 240px;">
+                                        <div class="p-2 d-flex flex-column" style="gap: .5rem;">
+                                            <div class="text_lg font-weight-bold underline">Obiteljska soba sa zajedničkom</div>
+                                            <div class="alert alert-success px-2 py-1 mb-0">Preporučeno za 2 odraslih, 1 dijete</div>
+                                            <div class="alert alert-danger px-2 py-1 mb-0">Ostale su još samo 2 jedinice na našoj stranici</div>
+                                            <div class="border-bottom"></div>
+                                            <div class="d-flex flex-wrap text_xs" style="column-gap: .5rem;">
+                                                <div>• 50 m2</div>
+                                                <div>• Pogled na grad</div>
+                                                <div>• klima-uređaj</div>
+                                                <div>• Besplatni Wi-Fi</div>
+                                            </div>
+                                            <div class="border-bottom"></div>
+                                            <div class="d-flex flex-wrap text_xs" style="column-gap: .5rem;">
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">Tuš</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">WC</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">drveni ili parketni pod</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">posteljina</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">utičnica pokraj kreveta</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Wrapper - Capacity, Price, Your options, Select room -->
+                                    <div class="flex_1">
+
+                                        <!-- List card -->
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex flex_1 border-top border-bottom">
+
+                                    <!-- Types of accommodation -->
+                                    <div class="border-right" style="width: 240px; min-width: 240px;">
+                                        <div class="p-2 d-flex flex-column" style="gap: .5rem;">
+                                            <div class="text_lg font-weight-bold underline">Obiteljska soba sa zajedničkom</div>
+                                            <div class="alert alert-success px-2 py-1 mb-0">Preporučeno za 2 odraslih, 1 dijete</div>
+                                            <div class="alert alert-danger px-2 py-1 mb-0">Ostale su još samo 2 jedinice na našoj stranici</div>
+                                            <div class="border-bottom"></div>
+                                            <div class="d-flex flex-wrap text_xs" style="column-gap: .5rem;">
+                                                <div>• 50 m2</div>
+                                                <div>• Pogled na grad</div>
+                                                <div>• klima-uređaj</div>
+                                                <div>• Besplatni Wi-Fi</div>
+                                            </div>
+                                            <div class="border-bottom"></div>
+                                            <div class="d-flex flex-wrap text_xs" style="column-gap: .5rem;">
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">Tuš</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">WC</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">drveni ili parketni pod</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">posteljina</span>
+                                                </div>
+
+                                                <div class="flex align-items-center" style="gap: .5rem;">
+                                                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                                    <span class="pl-1">utičnica pokraj kreveta</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Wrapper - Capacity, Price, Your options, Select room -->
+                                    <div class="flex_1">
+
+                                        <!-- List card -->
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px; min-width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px; min-width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px; min-width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px; min-width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px; min-width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px; min-width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px; min-width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px; min-width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px; min-width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px; min-width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px; min-width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px; min-width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="d-flex border-bottom">
+
+                                            <!-- Capacity -->
+                                            <div class="border-right" style="width: 90px; min-width: 90px;">
+                                                <div class="text-center p-2">
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                    <span><i class="fas fa-user fa-sm"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="border-right py-2" style="width: 160px; min-width: 160px;">
+                                                <div class="px-3 text-left d-flex flex-column justify-content-center">
+                                                    <div class="text_2xl text_primary font_semiBold mb-1">HRK 494</div>
+                                                    <div class="green text_sm line_height_normal">
+                                                        All taxes included
+                                                    </div>
+                                                    <div class="text_sm">for a night for 2 guests</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Your options -->
+                                            <div class="border-right py-2" style="width: 270px; min-width: 270px;">
+                                                <div class="px-3 d-flex flex-column justify-content-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                                        <div><strong>Breakfast</strong> included</div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div>
+                                                            <strong>Free cancellation</strong> until 8. january 2022 at
+                                                            23:59
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                                        <div><strong>No payment</strong> - pay in the object</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select room -->
+                                            <div class="py-2 hotel_object_card_wrapper_select_room" style="width: 120px; min-width: 120px;">
+                                                <div class="border-end py-2 px-3 h-100">
+                                                    <div class="text_sm">Select rooms:</div>
+                                                    <input type="number" min="0" class="form-control border border-0" style="width: 5rem;" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Book now -->
+                            <div class="py-2 px-3 w-100 bg_primary_10" style="width: 250px; min-width: 250px;">
+                                <div class="position-sticky" style="top: 5rem;">
+                                    <div class="text_sm"><strong>13</strong> jedinica za</div>
+                                    <div class="text_xl py-1">HRK 14.874</div>
+                                    <div class="text_sm">Uključujući poreze i naknade</div>
+                                    <div class="text_sm">Stvarite HRK 1.041 bonusa</div>
+                                    <a href="#payment" class="btn bg_primary text-white px-4 mb-2 rounded-0 d-block mt-2">Book now</a>
+                                    <!-- <button class="btn border border_secondary rounded-0 mb-2">Add to cart</button> -->
+                                    <ul class="text_sm pl-3">
+                                        <li>Za samo 2 minute</li>
+                                        <li>Trenutna potvrda</li>
+                                        <li>Bez troškova rezervacije ili naknada za plaćanje kreditnom karticom!</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Mobile - Card -->
+                    <div class="border p-4 d-xl-none">
+                        <div class="d-flex justify-content-between mb-1">
+                            <div class="text_lg font-weight-bold">Vila</div>
+                            <div><i class="fas fa-image"></i></div>
+                        </div>
+                        <div class="mb-1">Cijena za do: <i class="fas fa-user"></i> x 8</div>
+                        <div>
+                            <div><strong>Spavaća soba 1:</strong>1 veliki bračni krevet</div>
+                            <div><strong>Spavaća soba 2:</strong>1 veliki bračni krevet</div>
+                            <div><strong>Spavaća soba 3:</strong>1 veliki bračni krevet</div>
+                            <div><strong>Spavaća soba 4:</strong>1 veliki bračni krevet</div>
+                            <div>Dječji krevet dostupan je na zahtjev</div>
+                            <div class="mb-2"><strong>Kupaonice: </strong>5</div>
+
+                            <div class="d-flex flex-wrap mb-2" style="gap: .5rem;">
+                                <div>• 50 m2</div>
+                                <div>• Pogled na grad</div>
+                                <div>• klima-uređaj</div>
+                                <div>• Besplatni Wi-Fi</div>
+                            </div>
+
+                            <div class="d-flex text-success">
+                                <i class="fas fa-check fa-sm mt-2"></i>
+                                <div class="pl-2 flex_1">Ukljuleno 0 za hranu/piće + parkiralište + ranija prijava + kasnija prijava + brzi internet</div>
+                            </div>
+
+                            <div class="d-flex text-success">
+                                <i class="fas fa-check fa-sm mt-2"></i>
+                                <div class="pl-2"><strong>Besplatno otkazivanje</strong> prije 9. listopada 2023</div>
+                            </div>
+
+                            <div class="mb-2">• Ne plaćate ništa do 6. listopada 2023.</div>
+                            <div class="d-flex flex-wrap mb-2" style="gap: .5rem;">
+                                <div class="alert alert-success px-2 py-1 mb-0">27% niža cijena</div>
+                                <div class="alert alert-success px-2 py-1 mb-0">Ponuda za kraj godine</div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div>Cijena za <strong>9 Noći:</strong></div>
+                                    <div class="d-flex gap-3">
+                                        <div>€ 3.150</div>
+                                        <div class="text_2xl font-weight-bold">€ 2.315</div>
+                                    </div>
+                                    <div class="text_xs opacity_50">Uključujući poreze i naknade</div>
+                                </div>
+                                <div>
+                                    <div class="text-danger font-weight-bold">• Još samo 11</div>
+                                    <button class="btn bg_primary text-white btn-effect text_lg" type="button">Rezerviraj</button>
+                                    <div class="">
+                                        <button type="button" class="btn p-2 d-flex align-items-center" style="gap:.5rem;">
+                                            <i class="fas fa-times"></i>
+                                            Ukloni
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden -->
+                            <div class="">
+                                <div class="p-2 text-center border-bottom mb-2">
+                                    <div class="text-danger font-weight-bold pb-1">Odabrali ste posljednju!</div>
+                                    <div class="input-group mb-3 justify-content-center">
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="btn input-group-text">-</button>
+                                        </div>
+                                        <input type="text" class="form-control border text-center" value="1" style="width: 4rem; max-width: 4rem;">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn input-group-text">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Description -->
+            <div class="heading-title" style="margin-bottom: 15px;">Hotel Description </div>
+            <div class="mb-5">
+                The 20-storey business hotel offers all kinds of services and facilities for its guests. For their convenience there is a modern business centre and a conference hall with capacity of up to 60 people. Set in the beating heart of Moscow, near the world-famous Arbat Street, it is in the immediate vicinity of the most important governmental and administrative buildings, as well as cultural venues and entertainment centres.
+            </div>
+
+            <!-- Facilities -->
+            <div class="heading-title">Facilities</div>
+            <div class="pt-3 hotel_facilities">
+
+                <!-- Foreign language -->
+                <div class="mb-3">
+                    <div class="font_semiBold mb-1">Foreign language</div>
+                    <ul class="p-0 m-0 list_style_none">
+                        <li class="d-flex align-items-center">
+                            <div class="hotel_flag pr-2"><img src="/assets/images/flags/en.svg" alt="flag"></div>
+                            <div>English</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="hotel_flag pr-2"><img src="/assets/images/flags/de.svg" alt="flag"></div>
+                            <div>German</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="hotel_flag pr-2"><img src="/assets/images/flags/it.svg" alt="flag"></div>
+                            <div>Italian</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- General -->
+                <div class="mb-3">
+                    <div class="font_semiBold mb-1">General</div>
+                    <ul class="p-0 m-0 list_style_none">
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>ATM</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Air conditioning</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>All Spaces Non-Smoking (public and private)</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Currency exchange</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Gift shop</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Heating</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Newspapers</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Reception desk</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Shopping on site</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Smoke-free property</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Television in lobby</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Terrace</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Services and amenities -->
+                <div class="mb-3">
+                    <div class="font_semiBold mb-1">
+                        Services and amenities
+                    </div>
+                    <ul class="p-0 m-0 list_style_none">
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Concierge services</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Dry-cleaning</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Iron and board</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Ironing</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Laundry</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Luggage storage</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Safe-deposit box</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Telephone</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Wake-up service</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Meals -->
+                <div class="mb-3">
+                    <div class="font_semiBold mb-1">
+                        Services and amenities
+                    </div>
+                    <ul class="p-0 m-0 list_style_none">
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Bar</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Bottled water</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Breakfast</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Coffee/tea for guests</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Coffeemaker</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Kettle</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Kitchen</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Microwave oven</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Restaurant</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Vending machine</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Internet -->
+                <div class="mb-3">
+                    <div class="font_semiBold mb-1">
+                        Internet
+                    </div>
+                    <ul class="p-0 m-0 list_style_none">
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Free Wi-Fi</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>In-room internet</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Internet</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Accessibility -->
+                <div class="mb-3">
+                    <div class="font_semiBold mb-1">
+                        Accessibility
+                    </div>
+                    <ul class="p-0 m-0 list_style_none">
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Accessibility features</div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="pr-2 text_xs"><i class="fas fa-check"></i></div>
+                            <div>Elevator/lift</div>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            <!-- Location -->
+            <div class="heading-title" style="margin-bottom: 15px;"> Location </div>
+            <div id="hotel_map" class="mb-3" style="height: 300px;"></div>
+            <script>
+
+                var hotel_map = {};
+
+                var map = L.map('hotel_map').setView([51.505, -0.09], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.marker([51.5, -0.09]).addTo(map)
+                    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                    .openPopup();
+
+
+            </script>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="font-weight-bold mb-2">Places neary</div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="font-weight-bold mb-2">Places neary</div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="font-weight-bold mb-2">Places neary</div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Name</div>
+                        <div>000m</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policies -->
+            <div class="heading-title" style="margin-bottom: 15px;"> Policies </div>
+
+            <div class="border p-3 pb-0 mb-3">
+                <div class="row">
+                    <div class="col-lg-4 mb-3">
+                        <div class="font_semiBold mb-1">Check-in / Check-out</div>
+                        <div class="d-flex align-items-center">
+                            <div class="pr-2"><i class="fas fa-sign-in-alt"></i></div>
+                            <div>Application form 14:00h</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="pr-2"><i class="fas fa-sign-out-alt"></i></div>
+                            <div>Until 14:00h</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <div class="font_semiBold mb-1">Added</div>
+                        <div class="d-flex align-items-center">
+                            <div class="pr-2"><i class="fas fa-coffee"></i></div>
+                            <div>Breakfast charge (unless included in room rate): 167 HRK</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="pr-2"><i class="fas fa-utensils"></i></div>
+                            <div>Breakfast and Dinner charge (unless included in room rate): 257 HRK</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <div class="font_semiBold mb-1">Real estate</div>
+                        <div class="d-flex align-items-center">
+                            <div class="pr-2"><i class="fas fa-cube"></i></div>
+                            <div>Number room: : 306</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Children and extra beds -->
+            <div class="border p-3 pb-0 mb-3">
+                <div class="font_semiBold mb-1 text_lg">Children and extra beds</div>
+                <div class="mb-1">
+                    Extra beds depend on the room you choose, please check the room capacity for more details.
+                    <br /><br />
+                    All children are welcome.
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="font_semiBold">0 - 2 years</div>
+                        <div>Baby cot on request - free</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="font_semiBold">3 - 11 years</div>
+                        <div>Extra bed on request - € 30 per child, per night</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="font_semiBold">12+ years</div>
+                        <div>Extra bed on request - € 50 per child, per night</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visa information -->
+            <div class="border p-3 mb-3">
+                <div class="font_semiBold mb-1 text_lg">Visa information</div>
+                <div> If you need a visa to enter the country, in the majority of cases, your hotel is supposed to provide you with the necessary documents. For more information, please contact the hotel. You will find the contact details in the e-mail with your booking confirmation. You can be charged extra for this service, even if you end up canceling the booking. All the agreements are only made between you and the hotel.</div>
+            </div>
+
+            <!-- Additional information -->
+            <div class="border p-3 mb-3">
+                <div class="font_semiBold mb-1 text_lg">Additional information</div>
+                <div>
+                    If you need a visa to enter the country, your hotel will in most cases provide you with the necessary documents to receive it. For more information, please contact the hotel, contact details can be found on the booking confirmation. For these services, an additional fee may apply, even if the reservation is subsequently canceled. All arrangements are made exclusively between you and the hotel.
+                    <br />
+                    Fee for extra bed is indicated per night.
+                    <br /><br />
+                    A security deposit is required.
+                </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="border p-3 pb-0 mb-3 hotel_payment">
+                <div class="font_semiBold mb-1 text_lg">Payment</div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="font_semiBold mb-1">By cash</div>
+                        <div>With the hotel's currency: EUR</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="font_semiBold mb-1">By card</div>
+                        <div class="d-flex flex-wrap">
+                            <div class="m-1"><img src="~/assets/images/icons/icon-card-american-express.svg" alt="icon card" /></div>
+                            <div class="m-1"><img src="~/assets/images/icons/icon-card-diners.svg" alt="icon card" /></div>
+                            <div class="m-1"><img src="~/assets/images/icons/icon-card-discover.svg" alt="icon card" /></div>
+                            <div class="m-1"><img src="~/assets/images/icons/icon-card-maestro.svg" alt="icon card" /></div>
+                            <div class="m-1"><img src="~/assets/images/icons/icon-card-mastercard.svg" alt="icon card" /></div>
+                            <div class="m-1"><img src="~/assets/images/icons/icon-card-visa.svg" alt="icon card" /></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Reviews -->
+            <div class="heading-wrapper">
+                <div class="heading-title">Reviews</div>
+                <div class="rd-reviews-value ml-auto align-self-end pb-2">
+                    <i class="fas fa-star pr-2"></i><span>5.0</span>
+                </div>
+            </div>
+
+            <!-- Review comments -->
+            <div class="rd-comments" style="display: inherit">
+                <div class="heading-wrapper">
+                    <div class="heading-title"> Comments </div>
+                    <div class="heading-sub ml-auto pb-2 align-self-end">Total: 3 </div>
+                </div>
+
+                <div class="rd-comments-item">
+                    <div class="d-flex justify-content-between">
+                        <div class="rd-comments-guest">
+                            <span style="margin-top: -2px;">
+                                <img src="/assets/images/icons/flags/DK.svg" alt="">
+                            </span>
+
+
+                        </div>
+                        <div class="rd-comments-rating">
+                            <span class="line"></span> &nbsp;
+                            <span> 5.00 </span>
+                        </div>
+                    </div>
+
+                    <!-- review -->
+                    <div class="rd-comments-text">
+                        „A beautiful hotel with professional and friendly staff, food, wine, music and the sea are great. I'm definitely coming again. "
+                    </div>
+
+                    <!-- review datae -->
+                    <div class="rd-comments-date">
+                        Date: &nbsp;
+                        2020-08-28
+                    </div>
+
+
+                </div>
+                <hr class="m-0">
+                <div class="rd-comments-item">
+                    <div class="d-flex justify-content-between">
+                        <div class="rd-comments-guest">
+                            <span style="margin-top: -2px;">
+                                <img src="/assets/images/icons/flags/BE.svg" alt="">
+                            </span>
+
+
+                        </div>
+                        <div class="rd-comments-rating">
+                            <span class="line"></span> &nbsp;
+                            <span> 5.00 </span>
+                        </div>
+                    </div>
+
+                    <!-- review -->
+                    <div class="rd-comments-text">
+                        „I love location of this hotel and I love how staff is polite.”
+                    </div>
+
+                    <!-- review datae -->
+                    <div class="rd-comments-date">
+                        Date: &nbsp;
+                        2020-07-21
+                    </div>
+
+
+                </div>
+                <hr class="m-0">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- pop up gallery -->
+<div id="pop_up_gallery" class="pop_up_gallery position-fixed" style="top: 0; left: 0; bottom: 0; right:0; z-index:999;">
+    <div class="position-relative swiper-container gallery-top pt-3">
+        <div class="top-0 mt-3 position-absolute cursor-pointer pop_up_gallery_close mr-4 text_3xl text-white p-3 d-flex" style="right: 0; z-index:99"
+             data-dismiss='pop_up'><i class="fas fa-times"></i></div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1542317148-8b4bdccb33ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1606819422797-74627f4dac0b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1542928658-22251e208ac1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1552454799-ca5cfdc612c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1536745511564-a5fa6e596e7b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1996&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1628012209120-d9db7abf7eab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1936&q=80"
+                     alt="">
+            </div>
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"><i class="fas fa-chevron-right"></i></div>
+        <div class="swiper-button-prev"><i class="fas fa-chevron-left"></i></div>
+    </div>
+    <div class="mt-4 swiper-container gallery-thumbs">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1542317148-8b4bdccb33ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1606819422797-74627f4dac0b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1542928658-22251e208ac1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1552454799-ca5cfdc612c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1536745511564-a5fa6e596e7b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1996&q=80"
+                     alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1628012209120-d9db7abf7eab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1936&q=80"
+                     alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_hotel_card_details" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title font_bold">SMART Standard Double room</div>
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal_hotel_details_wrapper d-lg-flex">
+                    <div class="position-relative swiper-container modal_hotel_details mb-3 flex-grow-1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1560185127-6d2eb05d7088?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                                     alt="">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1560448075-57d0285fc59b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                                     alt="">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.unsplash.com/photo-1616593969747-4797dc75033e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80"
+                                     alt="">
+                            </div>
+
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"><i class="fas fa-chevron-right"></i></div>
+                        <div class="swiper-button-prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="pl-0 pl-lg-3 modal_hostel_details_content">
+                        <div class="mb-3">
+                            <div class="font_semiBold mb-1">Settings</div>
+                            <ul class="p-0 m-0 list_style_none">
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>2x twin beds</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>2x twin beds</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Free Wifi</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="font_semiBold mb-1">Bathroom and toiletries</div>
+                            <ul class="p-0 m-0 list_style_none">
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Accessible toilet</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Sušilo za kosu</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Telefon u kupaonici</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="font_semiBold mb-1">Comfort</div>
+                            <ul class="p-0 m-0 list_style_none">
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Heating</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Air conditioning</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Sleep comfort items</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Slippers</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Wake-up service</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="font_semiBold mb-1">Dinner, drinks and snacks</div>
+                            <ul class="p-0 m-0 list_style_none">
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Tea / coffee maker</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Mini bar</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="font_semiBold mb-1">Appearance and furniture</div>
+                            <ul class="p-0 m-0 list_style_none">
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Table</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Carpet</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Trash cans</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <div class="font_semiBold mb-1">Security settings</div>
+                            <ul class="p-0 m-0 list_style_none">
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Smoke detector</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Carpet</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="pr-2 text_xs"><i class="fas fa-check" aria-hidden="true"></i></div>
+                                    <div>Safe in the room</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- templates -->
+<div>
+
+    <template id="template_hotel_card">
+
+        <!-- New -->
+        <div class="border hotel_object_card mb-3">
+
+            <div class="p-3 d-md-flex">
+                <div class="hotel_object_card_img mr-0 me-md-3 mb-2 mb-md-0 cursor_pointer" data-bs-toggle="modal" data-bs-target="#modal_hotel_object_details">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80"
+                         class="w-100 h-100 object_cover">
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="heading_title justify-content-between w-100 d-md-flex pb-0">
+                            <div class="font_semiBold text-uppercase pt-1 mb-2 mb-md-0">SMART Standard Double room</div>
+                            <div class="mb-2 mb-md-1 d-flex">
+                                <div class="cursor_pointer border border_secondary line_height_normal px-2 py-1 text_sm text-center user-select-none" data-bs-toggle="modal" data-bs-target="#modal_hotel_object_gallery">Gallery</div>
+                                <div class="cursor_pointer border border_secondary line_height_normal px-2 py-1 text_sm text-center user-select-none ml-2" data-bs-toggle="modal" data-bs-target="#modal_hotel_object_details">More</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6 mb-md-0 mb-3">
+                            <div class="d-flex">
+                                <div class="flex-grow-1 border-end">
+                                    <div>1 krevet</div>
+                                    <div>1 krevet</div>
+                                    <div>1 krevet</div>
+                                    <div class="text_sm">(200 x 200)</div>
+                                </div>
+                                <div class="flex-grow-1 pl-3">
+                                    <div>50 m2</div>
+                                    <div>Pogled na grad</div>
+                                    <div>Klima</div>
+                                    <div>Terasa</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 border-left">
+                            <div class="d-flex flex-wrap">
+                                <div class="d-flex align-items-center gap-1 pr-3">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <span>Tuš</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 pr-3">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <span>WC</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 pr-3">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <span>drveni ili parketni pod</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 pr-3">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <span>posteljina</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 pr-3">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <span>utičnica pokraj kreveta</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="flex-grow-1">
+
+                    <!-- 1. row -->
+                    <div class="border-bottom d-flex bg_primary_10">
+                        <div class="row m-0 w-100">
+                            <div class="col-lg-6 d-md-flex px-0">
+
+                                <!-- Persons -->
+                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                    <div class="border_md_end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                    </div>
+                                </div>
+
+                                <!-- Advantage -->
+                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                    <div class="px-3 border-end h-100 d-flex flex-column justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                            <div><strong>Breakfast</strong> included</div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                            <div>
+                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                23:59
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                            <div><strong>No payment</strong> - pay in the object</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6 d-md-flex px-0">
+
+                                <!-- Price -->
+                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                    <div class="px-3 border_md_end h-100 text-right d-flex flex-column justify-content-center">
+                                        <div class="text_3xl text_color font_semiBold">HRK 494</div>
+                                        <div class="green text_sm line_height_normal">
+                                            All taxes included
+                                        </div>
+                                        <div class="text_sm">for a night for 2 guests</div>
+                                    </div>
+                                </div>
+
+                                <!-- Select persons -->
+                                @*<div class="py-2 hotel_object_card_wrapper_select_room">
+                                        <div class="border-end py-2 px-3 h-100">
+                                            <div class="text_sm">Persons:</div>
+                                            <div class="dropdown">
+                                                <button class="btn dropdown-toggle border rounded-0 text-left w-100 pr-4 bg-white" type="button" id="hotel_object_card_dropdown"
+                                                        data-toggle="dropdown" aria-expanded="false"
+                                                        onclick="objects_in_hotel.bl.dropdown_select(this)">
+                                                    0
+                                                </button>
+                                                <ul class="dropdown-menu w-100 rounded-0" style="min-width: 4rem;"
+                                                    aria-labelledby="hotel_object_card_dropdown">
+                                                    <a data-id="1" class="dropdown-item">0</a>
+                                                    <a data-id="1" class="dropdown-item">1</a>
+                                                    <a data-id="2" class="dropdown-item">2</a>
+                                                    <a data-id="3" class="dropdown-item">3</a>
+                                                    <a data-id="4" class="dropdown-item">4</a>
+                                                    <a data-id="5" class="dropdown-item">5+</a>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                                <!-- Select room -->
+                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                    <div class="border-end py-2 px-3 h-100">
+                                        <div class="text_sm">Select rooms:</div>
+                                        <div class="dropdown position-relative">
+                                            <span class="position-absolute position_y_center left_0 ms-2">
+                                                <i class="fas fa-cube"></i>
+                                            </span>
+                                            <button class="btn dropdown-toggle border w-100 rounded-0 bg-white" type="button"
+                                                    id="hotel_object_card_dropdown" data-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                0
+                                            </button>
+                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                aria-labelledby="hotel_object_card_dropdown">
+                                                <a data-id="1" class="dropdown-item">0</a>
+                                                <a data-id="1" class="dropdown-item">1</a>
+                                                <a data-id="2" class="dropdown-item">2</a>
+                                                <a data-id="3" class="dropdown-item">3</a>
+                                                <a data-id="4" class="dropdown-item">4</a>
+                                                <a data-id="5" class="dropdown-item">5+</a>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Book now -->
+                <div class="py-2 px-3 w-100 bg_primary_10" style="max-width: 250px;">
+                    <div class="position-sticky" style="top: 13.5rem;">
+                        <div class="text_sm"><strong>13</strong> jedinica za</div>
+                        <div class="text_xl">HRK 14.874</div>
+                        <div class="text_sm">Uključujući poreze i naknade</div>
+                        <div class="text_sm">Stvarite HRK 1.041 bonusa</div>
+                        <a href="#payment" class="btn bg_secondary text-white px-4 mb-2 rounded-0 d-block mt-2">Book now</a>
+                        <!-- <button class="btn border border_secondary rounded-0 mb-2">Add to cart</button> -->
+                        <ul class="text_sm">
+                            <li>Za samo 2 minute</li>
+                            <li>Trenutna potvrda</li>
+                            <li>Bez troškova rezervacije ili naknada za plaćanje kreditnom karticom!</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Old -->
+        <!--<div class="border hotel_card mb-3">
+            <div class="p-3 d-md-flex">
+                <div class="hotel_card_img mr-0 mr-md-3 mb-2 mb-md-0 cursor-pointer" data-toggle="modal" data-target="#modal_hotel_card_details">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80" class="w-100 h-100" />
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="heading-wrapper justify-content-between w-100">
+                            <div class="heading-title mt-0 pb-0 line_normal pt-1">SMART Standard Double room</div>
+                            <div class="mb-1">
+                                <div class="cursor-pointer border border_primary line_normal px-2 py-1 text_sm text-center user-select-none" data-toggle="modal" data-target="#modal_hotel_card_details">More details</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap hotel_card_features pt-2">
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-bath text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">Private bathroom</div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-bed text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">2x twin beds</div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-smoking-ban text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">Not smoking</div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-wifi text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">Wi-fi</div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-tv text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">Satelit TV</div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="far fa-snowflake text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">Air conditioner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top d-flex">
+
+                <div class="row m-0 w-100">
+                    <div class="col-lg-6 d-flex px-0">-->
+        <!-- Persons -->
+        <!--<div class="py-2 hotel_card_wrapper_persons">
+            <div class="border-right h-100 d-flex flex-wrap justify-content-center align-items-center">
+                <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+            </div>
+        </div>-->
+        <!-- Advantage -->
+        <!--<div class="py-2 flex-grow-1 hotel_card_wrapper_advantage">
+                <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                        <div><strong>Breakfast</strong> included</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                        <div><strong>Free cancellation</strong> until 8. january 2022 at 23:59</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                        <div><strong>No payment</strong> - pay in the object</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6 d-flex px-0">-->
+        <!-- Select room -->
+        <!--<div class="py-2 hotel_card_wrapper_select_room">
+            <div class="border-right py-2 px-3 h-100">
+                <div class="">Select rooms:</div>
+                <div class="dropdown border" id="dropdown_adults">
+                    <i class="fas fa-cube mr-4"></i>
+
+                    <div class="btn dropdown-toggle" data-adult-id="1" type="text" id="dropdown_adults_id" data-toggle="dropdown" name="adults" style="padding-left: 30px !important;" contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="1">
+                        0
+                    </div>
+
+                    <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                        <a data-id="1" class="dropdown-item">0</a>
+                        <a data-id="1" class="dropdown-item">1</a>
+                        <a data-id="2" class="dropdown-item">2</a>
+                        <a data-id="3" class="dropdown-item">3</a>
+                        <a data-id="4" class="dropdown-item">4</a>
+                        <a data-id="5" class="dropdown-item">5+</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>-->
+        <!-- Price -->
+        <!--<div class="py-2 hotel_card_wrapper_price flex-grow-1">
+            <div class="px-3 border-right h-100 text-right d-flex flex-column justify-content-center">
+                <div class="text_3xl text_primary font-weight-bold">HRK 494</div>
+                <div class="green text_sm line_normal">All taxes included</div>
+                <div class="text_sm">for a night for 2 guests</div>
+            </div>
+        </div>-->
+        <!-- Book now -->
+        <!--<div class="py-2 px-3 d-flex flex-column justify-content-center">
+                        <a href="#" class="btn btn-primary btn-effect px-4 mb-2">Book now</a>
+                        <button class="btn border border_primary">Add to cart</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="border-top d-flex">
+
+            <div class="row m-0 w-100">
+                <div class="col-lg-6 d-flex px-0">-->
+        <!-- Persons -->
+        <!--<div class="py-2 hotel_card_wrapper_persons">
+            <div class="border-right h-100 d-flex flex-wrap justify-content-center align-items-center">
+                <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+            </div>
+        </div>-->
+        <!-- Advantage -->
+        <!--<div class="py-2 flex-grow-1 hotel_card_wrapper_advantage">
+                <div class="px-3 border-right h-100 d-flex flex-column justify-content-center">
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2"><i class="fas fa-utensils fa-sm"></i></div>
+                        <div><strong>Breakfast</strong> & <strong>Dinner</strong> included</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                        <div><strong>Free cancellation</strong> until 8. january 2022 at 23:59</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                        <div><strong>No payment</strong> - pay in the object</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6 d-flex px-0">-->
+        <!-- Select room -->
+        <!--<div class="py-2 hotel_card_wrapper_select_room">
+            <div class="border-right py-2 px-3 h-100">
+                <div class="">Select rooms:</div>
+                <div class="dropdown border" id="dropdown_hotel_card_select_rooms">
+                    <i class="fas fa-cube mr-4"></i>
+
+                    <div class="btn dropdown-toggle" data-adult-id="1" type="text" id="dropdown_hotel_card_select_rooms_id" data-toggle="dropdown" name="adults" style="padding-left: 30px !important;" contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="1">
+                        0
+                    </div>
+
+                    <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                        <a data-id="1" class="dropdown-item">0</a>
+                        <a data-id="1" class="dropdown-item">1</a>
+                        <a data-id="2" class="dropdown-item">2</a>
+                        <a data-id="3" class="dropdown-item">3</a>
+                        <a data-id="4" class="dropdown-item">4</a>
+                        <a data-id="5" class="dropdown-item">5+</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>-->
+        <!-- Price -->
+        <!--<div class="py-2 hotel_card_wrapper_price flex-grow-1">
+            <div class="px-3 border-right h-100 text-right d-flex flex-column justify-content-center">
+                <div class="text_3xl text_primary font-weight-bold">HRK 596</div>
+                <div class="green text_sm line_normal">All taxes included</div>
+                <div class="text_sm">for a night for 2 guests</div>
+            </div>
+        </div>-->
+        <!-- Book now -->
+        <!--<div class="py-2 px-3 d-flex flex-column justify-content-center">
+                            <a href="#" class="btn btn-primary btn-effect px-4 mb-2">Book now</a>
+                            <button class="btn border border_primary">Add to cart</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>-->
+
+    </template>
+
+</div>
+
+<!-- scripts  -->
+<script>
+
+    var modal_hotel_details = {};
+
+    modal_hotel_details.load = () => {
+
+        $(document).ready(function () {
+            $(".modal").on('show.bs.modal', function () {
+                setTimeout(function () {
+
+                    var galleryTop = new Swiper('.modal_hotel_details', {
+                        spaceBetween: 10,
+                        loop: true,
+                        keyboard: {
+                            enabled: true,
+                        },
+                        pagination: {
+                            el: ".swiper-pagination",
+                            type: "fraction",
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                    });
+
+                }, 500);
+            });
+        });
+
+        // load calendars
+        modal_hotel_details.calendars_int();
+
+    }
+
+
+    modal_hotel_details.calendars_int = async () => {
+
+        // Datepicker - check in
+        $("#calendar_date_from").datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            minDate: 0,
+            defaultDate: 1,
+
+            onSelect: function (date) {
+                $("#calendar_date_until").datepicker("setDate", date);
+            },
+
+            onClose: function () {
+                $("#calendar_date_until").datepicker("show");
+            }
+
+        });
+
+        // Datepicker - check out
+        $("#calendar_date_until").datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            minDate: 0,
+            defaultDate: 3,
+
+        });
+
+        // set dates
+        $("#calendar_date_from").datepicker("setDate", "@date_from");
+        $("#calendar_date_until").datepicker("setDate", "@date_until");
+
+    }
+
+    modal_hotel_details.load();
+
+    var pop_up_gallery = {};
+
+    // load function
+    pop_up_gallery.load = () => {
+
+        // UI components
+        pop_up_gallery.ui.gallery_swipper();
+
+        // BL components
+        pop_up_gallery.bl.pop_up_gallery("pop_up_gallery", "open_pop_up_gallery");
+
+    }
+
+    // UI logic
+    pop_up_gallery.ui = new function () {
+
+        // Swiper
+        this.gallery_swipper = function () {
+
+            // Swiper
+            var galleryThumbs = new Swiper('.gallery-thumbs', {
+                spaceBetween: 10,
+                slidesPerView: 2,
+                loop: true,
+                freeMode: true,
+                loopedSlides: 5, //looped slides should be the same
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                breakpoints: {
+                    575: {
+                        slidesPerView: 3,
+                        spaceBetween: 10
+                    },
+                    // when window width is >= 480px
+                    767: {
+                        slidesPerView: 4,
+                        spaceBetween: 10
+                    },
+                    // when window width is >= 640px
+                    1199: {
+                        slidesPerView: 7,
+                        spaceBetween: 10
+                    }
+                }
+            });
+            var galleryTop = new Swiper('.gallery-top', {
+                spaceBetween: 10,
+                loop: true,
+                keyboard: {
+                    enabled: true,
+                },
+                loopedSlides: 5, //looped slides should be the same
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                thumbs: {
+                    swiper: galleryThumbs,
+                },
+            });
+
+
+        }
+
+
+
+    };
+
+    // BL logic
+    pop_up_gallery.bl = new function () {
+
+        this.pop_up_gallery = function (id, btn_class) {
+
+            let pop_up_gallery_id = document.getElementById(id);
+            let pop_up_gallery_close = pop_up_gallery_id.getElementsByClassName("pop_up_gallery_close")[0];
+
+            // Close
+            pop_up_gallery_close.onclick = function () {
+                pop_up_gallery_id.classList.remove("open");
+            }
+
+            let button = document.querySelector("." + btn_class);
+
+            button.addEventListener("click", function () {
+                pop_up_gallery_id.classList.add("open");
+            })
+
+            // Key ESC to close pop up
+            document.addEventListener("keydown", function (e) {
+
+                if (e.key === "Escape") {
+                    pop_up_gallery_id.classList.remove("open");
+                }
+
+            });
+
+        }
+
+    }
+
+    // On load
+    pop_up_gallery.load();
+
+</script>

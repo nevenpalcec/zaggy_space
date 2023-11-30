@@ -1,0 +1,1650 @@
+ <!-- Modal add new reservaiton -->
+<div id="modal_add_new_reservation" class="view_modal">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content position-relative">
+
+            <!--loading -->
+            <div id="modal_new_rent_content_loading" class="view_loading" >
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                    <i class="fab fa-connectdevelop pr-2"></i>Add new reservation
+                </div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row mb-2">
+                    <div class="col-md-7 d-flex">
+                        <div class="img_object mr-2 d-none d-sm-block">
+                            <img id="modal_rent_new_object_picture" src="/assets/images/pictures/no-image.png"
+                                 alt="img object">
+                        </div>
+                        <div class="w-100">
+
+                            <!-- Object -->
+                            <div id="modal_new_rent_object" class="view_dropdown dropdown w-100 h-auto" data-id="">
+                                <button class="btn btn_hover px-2 py-1 w-100">
+                                    <div class="d-flex align-items-center w-100">
+                                        <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-cube"></i></span>
+                                        <div class="dropdown_label mr-1">
+                                            <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                Object
+                                            </div>
+                                            <div class="font_3 dropdown_name white text-left">-</div>
+                                        </div>
+                                        <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown_menu w-100 hidden">
+                                    <ul class="dropdown_ul dropdown_icon ul_icon_white font_3"
+                                        style="max-height: 15rem; overflow-y: auto;" id="modal_rent_new_object_list_li">
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Calendar -->
+                            <div id="modal_new_rent_calendar" class="view_dropdown calendar h-auto">
+                                <button class="btn btn_hover px-2 py-1 w-100">
+                                    <div class="d-flex align-items-center w-100">
+                                        <span class="mr-3 font_8 d-flex py-2"><i class="far fa-calendar-alt"></i></span>
+                                        <div class="dropdown_label mr-1">
+                                            <div class="font_1 text-uppercase font_bold text-left">Calendar</div>
+                                            <div class="font_3 dropdown_name white text-left">
+                                                <span id="modal_new_rent_date_from" onchange="console.log('MJENa')"></span>
+                                                <span> - </span>
+                                                <span id="modal_new_rent_date_until"></span>
+                                            </div>
+                                        </div>
+                                        <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown_menu calendar hidden">
+                                    <div id="modal_new_rent_double_calendar" class="pt-2"></div>
+                                    <hr class="m-0">
+                                    <div class="dropdown_footer">
+                                        <div class="dropdown_btn text-red text-center font_3">Remove</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-12">
+                                <!-- Source -->
+                                <div id="modal_new_rent_source" class="view_dropdown dropdown w-100 h-auto" data-id="">
+                                    <button class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-book"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Source
+                                                </div>
+                                                <div class="font_3 dropdown_name white text-left" data-id="">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="name align-self-center" id="modal_rent_new_source_name">-</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <ul class="dropdown_ul dropdown_icon ul_icon_white font_3"
+                                            style="max-height: 15rem; overflow-y: auto;" id="modal_rent_new_source_li">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-12">
+                                <!-- Status -->
+                                <div id="modal_new_rent_status" class="view_dropdown dropdown h-auto" data-id="">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2">
+                                                <i class="fas fa-layer-group"></i>
+                                            </span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Status
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <ul class="dropdown_ul ul_icon_white font_3"
+                                            style="max-height: 15rem; overflow-y: auto;" id="modal_rent_new_status_list">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal_tabs pt-2 border-top">
+                    <div class="overflow_x_auto">
+                        <ul class="nav nav-tabs tab_pills_06 flex-nowrap" style="border-bottom: none!important;" id="modal_rent_new_tabs_menu">
+                            <li>
+                                <a data-toggle="tab" href="#modal_tabs_person" id="modal_rent_new_default_tab" class="active">
+                                    <i class="fas fa-user-friends pr-2 fa-sm pb-1 pb-md-0"></i>People
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#modal_tabs_guest" class="">
+                                    <i class="fas fa-user pr-2 fa-sm"></i>Guest
+                                </a>
+                            </li>
+                            <li class="hidden">
+                                <a data-toggle="tab" href="#modal_tabs_services" class="">
+                                    <i class="fas fa-user-tag pr-2 fa-sm"></i>Services
+                                </a>
+                            </li>
+                            <li class="hidden">
+                                <a data-toggle="tab" href="#modal_tabs_whole_day" class="">
+                                    <i class="far fa-calendar-check pr-2 fa-sm"></i>Whole day
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#modal_tabs_notice" class="">
+                                    <i class="far fa-clipboard pr-2 fa-sm"></i>Note
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#modal_tabs_option" class="">
+                                    <i class="far fa-calendar-plus pr-2 fa-sm"></i>Option
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content px-2 py-3">
+
+                        <!-- Person -->
+                        <div id="modal_tabs_person" class="tab-pane active">
+                            <div class="row pt-2">
+                                <div class="col-md-4 col-sm-6 mb-3 text-center">
+                                    <label class="mb-1"><i class="fas fa-user pr-2"></i>Adults</label>
+                                    <div id="modal_counter_adults" class="input-group mx-auto input_remove_number_arrow" style="width: 130px;">
+                                        <div class="input-group-prepend cursor_point">
+                                            <span class="input-group-text minus"><i class="fas fa-minus"></i></span>
+                                        </div>
+                                        <input type="number" class="form-control focus text-center" value="1" id="modal_rent_new_adult_number">
+                                        <div class="input-group-append cursor_point">
+                                            <span class="input-group-text plus"><i class="fas fa-plus"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-6 mb-3 text-center">
+                                    <label class="mb-1"><i class="fas fa-child pr-2"></i>Children</label>
+                                    <div id="modal_counter_child" class="input-group mx-auto input_remove_number_arrow" style="width: 130px;">
+                                        <div class="input-group-prepend cursor_point">
+                                            <span class="input-group-text minus"><i class="fas fa-minus"></i></span>
+                                        </div>
+                                        <input type="number" class="form-control focus text-center" value="0" id="modal_rent_new_children_number">
+                                        <div class="input-group-append cursor_point">
+                                            <span class="input-group-text plus"><i class="fas fa-plus"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3 text-center">
+                                    <label class="mb-1"><i class="fas fa-paw pr-2"></i>Pets</label>
+                                    <div id="modal_counter_paw" class="input-group mx-auto input_remove_number_arrow" style="width: 130px;">
+                                        <div class="input-group-prepend cursor_point">
+                                            <span class="input-group-text minus"><i class="fas fa-minus"></i></span>
+                                        </div>
+                                        <input type="number" class="form-control focus text-center" value="0" id="modal_rent_new_pets_number">
+                                        <div class="input-group-append cursor_point">
+                                            <span class="input-group-text plus"><i class="fas fa-plus"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom mt-2 hidden">
+                                <div class="font-weight-bold text-uppercase font_3"><i class="fas fa-list-ul pr-2"></i>List guest details</div>
+                                <div class="font-weight-bold font_3 cursor_point" onclick="modal_add_guest_details.ui.show_modal('modal_rent_add_guest_details');">Add guest details</div>
+                            </div>
+                            <div class="d-flex flex-wrap py-2 hidden">
+                                 No added 
+                                <div class="font_3 text-center w-100">No guest details added</div>
+                                 List guests details 
+                                <div class="list_guest_details d-flex flex-wrap" id="modal_rent_new_list_guest_details">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Guest -->
+                        <div id="modal_tabs_guest" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">First name and surname</label>
+                                                <input type="text" class="form-control focus" id="modal_rent_new_contact_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Phone</label>
+                                                <input type="number" class="form-control focus" id="modal_rent_new_contact_tel">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Email</label>
+                                                <input type="email" class="form-control focus" id="modal_rent_new_contact_email">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="mb-1">Country</label>
+                                                <div id="modal_new_rent_select_filter_countries" class="select">
+                                                    <button class="custom-select focus" id="modal_new_rent_select_filter_countries_btn"></button>
+                                                    <i class="fas fa-angle-down"></i>
+                                                    <div class="select_ul_filter_wrapper hidden">
+                                                        <div class="select_search m-2">
+                                                            <input type="text" class="form-control" placeholder="Search">
+                                                        </div>
+                                                        <ul class="select_filter_ul mt-2" id="modal_rent_new_select_filter_countries_ul">
+                                                            <li class="select_filter_li">
+                                                                <span data-id="1">
+                                                                    <span><img src="./assets/images/icons/flags/ad.svg" alt="icon"></span>
+                                                                    <span>Example so looooook nameeeeeeeeeeee</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="select_filter_li">
+                                                                <span data-id="2">
+                                                                    <span><img src="./assets/images/icons/flags/at.svg" alt="icon"></span>
+                                                                    <span>Austria</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="select_filter_li">
+                                                                <span data-id="3">
+                                                                    <span><img src="./assets/images/icons/flags/es.svg" alt="icon"></span>
+                                                                    <span>Spain</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="select_filter_li">
+                                                                <span data-id="4">
+                                                                    <span><img src="./assets/images/icons/flags/fi.svg" alt="icon"></span>
+                                                                    <span>Finska</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="select_filter_li">
+                                                                <span data-id="5">
+                                                                    <span><img src="./assets/images/icons/flags/fr.svg" alt="icon"></span>
+                                                                    <span>France</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="select_filter_li">
+                                                                <span data-id="6">
+                                                                    <span><img src="./assets/images/icons/flags/hr.svg" alt="icon"></span>
+                                                                    <span>Croatia</span>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="col-md-5">
+                                    <textarea class="form-control focus" placeholder="Guest note" rows="6" id="modal_add_new_rent_guest_note"></textarea>
+                                </div>-->
+
+                            </div>
+                        </div>
+
+                        <!-- Services -->
+                        <div id="modal_tabs_services" class="tab-pane position-relative">
+                            <div class="pb-5">
+                                <table class="table modal_table m-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Tax</th>
+                                            <th scope="col" class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="modal_rent_new_tbody">
+                                        <tr>
+                                            <td scope="row" class="trash"><i class="fas fa-trash-alt"></i></td>
+                                            <td style="min-width: 13rem;">
+                                                <div class="form-group m-0">
+                                                    <div id="modal_new_rent_service" class="select">
+                                                        <button class="custom-select focus"></button>
+                                                        <i class="fas fa-angle-down"></i>
+                                                        <ul class="select_ul hidden" id="modal_rent_new_items_list">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-0">
+                                                    <input type="text" class="form-control focus" id="modal_rent_new_item_price">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-0">
+                                                    <input type="text" class="form-control focus">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-0">
+                                                    <input type="text" class="form-control focus pr-4" id="modal_rent_new_item_tax">
+                                                    <span class="value font_2">%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-0">
+                                                    <input type="text" class="form-control pr-5" readonly>
+                                                    <span class="value font_2">EUR</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-right position-absolute" style="bottom: .5rem; right: 0;">
+                                <button class="btn btn_primary font_2" onclick="modal_add_new_rent.ui.add_service();">
+                                    <i class="fas fa-plus pr-2"></i>Add a service
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Whole day -->
+                        <div id="modal_tabs_whole_day" class="tab-pane hidden">
+                            <div class="mb-2 font-weight-bold border-bottom">
+                                <i class="far fa-calendar-check pr-2"></i>Individual prices per night
+                            </div>
+                            <div class="d-flex flex-wrap mb-4">
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">01.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">02.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">03.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">03.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">03.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">03.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                                <div class="mr-2 mb-1">
+                                    <label class="mb-0 w-100 text-center">03.02.</label>
+                                    <input type="text" class="form-control focus" style="max-width: 5rem;">
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-weight-bold text-uppercase font_2">Total:</div>
+                                <div class="font-weight-bold font_7">140,00 €</div>
+                            </div>
+                        </div>
+
+                        <!-- Note -->
+                        <div id="modal_tabs_notice" class="tab-pane">
+
+                            <div id="accordion" class="accordion pb-2">
+                                <div class="card m-0 border">
+                                    <div class="card-header p-1" id="headingOne" style="background-color:rgba(206, 212, 218, 0.5);">
+                                        <button class="btn w-100 text-left" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Short Note</button>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div class="card-body" style="padding: 0!important;">
+                                            <textarea name="notice" style="border: none!important;"  id="modal_rent_new_note_short" class="form-control focus" rows="2" placeholder="Text here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card m-0 border">
+                                    <div class="card-header p-1" id="headingTwo" style="background-color:rgba(206, 212, 218, 0.5);">
+                                        <button class="btn w-100 text-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Note</button>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                        <div class="card-body" style="padding: 0!important;">
+                                            <textarea name="notice" style="border: none!important;" id="modal_rent_new_note_owner" class="form-control focus" rows="4" placeholder="Text here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card m-0 border">
+                                    <div class="card-header p-1" id="headingThree" style="background-color:rgba(206, 212, 218, 0.5);">
+                                        <button class="btn w-100 text-left" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Price Note</button>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                        <div class="card-body" style="padding: 0!important;">
+                                            <textarea name="notice" style="border: none!important;" id="modal_rent_new_apartment_note" class="form-control focus" rows="4" placeholder="Text here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Option -->
+                        <div id="modal_tabs_option" class="tab-pane modal_tabs_option">
+                            <div class="d-flex align-items-center pt-2">
+                                <div class="pr-2">The option is active until</div>
+                                <div class="position-relative">
+                                    <input id="modal_datepicker_input_option" type="text"
+                                           class="form-control focus modal_datepicker_input_option"
+                                           style="max-width: 8rem">
+                                    <div id="modal_datepicker_option" class="modal_datepicker_option hidden"></div>
+                                    <div id="modal_input_close" class="modal_input_close">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                                <div class="pl-2">days it expires: 0</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="border-bottom my-2 font-weight-bold text-uppercase font_3">
+                    <i class="fas fa-coins pr-2"></i>Price
+                </div>
+                <div class="d-flex flex-wrap modal_total_price pt-2">
+                    <div class="modal_wrapper_price pr-md-3">
+                        <div class="d-flex mb-1 flex-wrap justify-content-end">
+                            <div class="pr-2 mt-2">Price</div>
+                            <div class="form-group input_remove_number_arrow">
+                                <input type="number" class="form-control focus pr-2" value="100" style="width: 9rem;" id="modal_rent_new_price_per_day" onchange="modal_add_new_rent.bl.calculate_price_by_price_per_day()">
+                                <span class="value font_2">€/day</span>
+                            </div>
+                            <div class="mx-2 mt-2">x</div>
+                            <!--<div class="pr-2 mt-2">per night</div>-->
+                            <div class="form-group">
+                                <input type="text" class="form-control focus" value="1" style="max-width: 4rem;" id="modal_rent_new_number_of_nights" disabled onchange="modal_add_new_rent.bl.calculate_price()">
+                                <span class="value font_2"><i class="fas fa-moon"></i></span>
+                            </div>
+                            <div class="mx-2 mt-2">=</div>
+                            <div class="form-group">
+                                <input type="text" class="form-control pr-2" readonly="" style="width: 7rem;" id="modal_rent_new_price_sum">
+                                <span class="value font_2" id="modal_add_new_rent_price_sum_label">€</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-end">
+                            <div class="pr-2 mt-2">Discount</div>
+                            <div class="form-group input_remove_number_arrow">
+                                <input type="number" class="form-control focus pr-4" value="0" style="width: 5rem;" id="modal_rent_new_discount" onchange="modal_add_new_rent.bl.count_discount()">
+                                <span class="value font_2">%</span>
+                            </div>
+                            <div class="mx-2 mt-2">=</div>
+                            <div class="form-group">
+                                <input type="text" class="form-control pr-2" value="0" readonly style="width: 7rem;" id="modal_rent_new_discount_sum">
+                                <span class="value font_2">€</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 text-right d-flex flex-column ml-auto modal_wrapper_total">
+                        <div class="font-weight-bold text-uppercase font_2 mt-auto">Total:</div>
+                        <div class="font-weight-bold font_8" id="modal_rent_new_total_price">0 €</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div class="d-flex flex-wrap m-0">
+                    <button class="btn btn_silver m-1" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn_primary m-1" disabled onclick="modal_add_new_rent.bl.price_calculation();"><i class="fas fa-sync"></i></button>
+                    <div class="btn m-1 hidden bg-danger text-white" id="modal_add_new_rent_over"
+                         data-toggle="tooltip" title="This rent may cause overbooking.">
+                        Overbooking
+                        <!--<i class="fas fa-exclamation-circle"></i>-->
+                    </div>
+                    <button class="btn btn_silver m-1 hidden bg-warning text-white" id="modal_add_new_rent_minimal_stay"
+                         data-toggle="tooltip" title="This rent does not fit minimum stay.">
+                        <!--Min-->
+                        Minimum stay
+                        <!--<i class="fas fa-moon"></i>-->
+                    </button>
+                    <button class="btn btn_silver m-1 hidden bg-warning text-dark" id="modal_add_new_rent_check_in">Check in</button>
+                </div>
+
+                <button class="btn btn_primary" onclick="modal_add_new_rent.bl.rent_add(); "><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- templates -->
+<div>
+    <!--template for list of objects-->
+    <template id="template_object_list_new_reservation">
+        <li class="dropdown_li" data-id="${object_id}" data-picture="${picture}">${name}</li>
+    </template>
+
+    <!--template for source list-->
+    <template id="template_source_list_new_reservation">
+        <li class="dropdown_li" data-id="${apartment_rent_source_id}" data-name="${name}">
+            <div class="d-flex align-items-center">
+                <div class="icon icon_img">
+                    <img src="./assets/images/icons/portals/${icon}.svg" alt="">
+                </div>
+                <div class="name align-self-center">${name}</div>
+            </div>
+        </li>
+    </template>
+
+    <!--template for status list-->
+    <template id="template_status_list_new_reservation">
+        <li class="dropdown_li" data-id="${rent_status_id}">
+            <div class="d-flex align-items-center">
+                <div class="icon" style="background-color: ${color};"></div>
+                <div class="align-self-center">${name}</div>
+            </div>
+        </li>
+    </template>
+
+    <!--template for countries list-->
+    <template id="template_countries_list_new_reservation">
+
+        <li class="select_filter_li">
+            <span data-id="${id}">
+                <span><img src="./assets/images/icons/flags/${code2}.svg" alt="icon"></span>
+                <span>${country}</span>
+            </span>
+        </li>
+    </template>
+
+    <!--template for prices per day-->
+    <template id="template_prices_per_day">
+        <div class="mr-2 mb-1">
+            <label class="mb-0 w-100 text-center">${day}</label>
+            <input type="text" class="form-control focus" style="max-width: 5rem;">
+        </div>
+    </template>
+
+    <!--template for modal new guest details-->
+    <template id="template_modal_new_guest_service">
+        <tr>
+            <td scope="row" class="trash"><i class="fas fa-trash-alt" onclick="modal_add_new_rent.ui.remove_services(this)"></i></td>
+            <td style="min-width: 13rem;">
+                <div class="form-group m-0">
+                    <div id="modal_new_rent_service" class="select">
+                        <button class="custom-select focus"></button>
+                        <i class="fas fa-angle-down"></i>
+                        <ul class="select_ul hidden" id="modal_rent_new_items_list">
+                        </ul>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group m-0">
+                    <input type="text" class="form-control focus" id="modal_rent_new_item_price">
+                </div>
+            </td>
+            <td>
+                <div class="form-group m-0">
+                    <input type="text" class="form-control focus">
+                </div>
+            </td>
+            <td>
+                <div class="form-group m-0">
+                    <input type="text" class="form-control focus pr-4" id="modal_rent_new_item_tax">
+                    <span class="value font_2">%</span>
+                </div>
+            </td>
+            <td>
+                <div class="form-group m-0">
+                    <input type="text" class="form-control pr-5" readonly>
+                    <span class="value font_2">EUR</span>
+                </div>
+            </td>
+        </tr>
+    </template>
+
+    <!--template for guest details-->
+    <template id="template_modal_rent_new_list_guest_details">
+        <div class="mr-3 p-1 cursor_point btn btn_hover" onclick="modal_edit_guest_details.ui.show_modal('modal_rent_edit_guest_details');">${name}</div>
+    </template>
+</div>
+
+<!-- scripts -->
+<script>
+
+    //$('#template_modal_new_guest_details').load('../guest/modal_add_guest_details.html');
+
+    //$(".modal_rent_edit_guest").load("/pages/guest/modal_edit_guest_details.html");
+    //$(".modal_rent_add_guest").load("/pages/guest/modal_add_guest_details.html");
+
+    var modal_add_new_rent = {};
+    modal_add_new_rent.date_from = '';
+    modal_add_new_rent.date_until = '';
+    modal_add_new_rent.object_id = '';
+    modal_add_new_rent.currency_id = '1';
+    modal_add_new_rent.price_full = '0';
+    modal_add_new_rent.price_calculation = [];
+
+    let object_list = bl.objects.list_get();
+
+    // Modal - add new rent -----------------------------------------------------------------------
+
+    // show modal
+
+    // Modal add new rent ----------------------------------------------------------
+    //modal_add_new_rent.modal_add_reservation("modal_new_rent", "add_new_reservation");
+
+    modal_add_new_rent.load = () => {
+
+        //modal_add_new_rent.ui.load_items_list();
+        modal_add_new_rent.ui.load_object_list();
+        modal_add_new_rent.ui.load_source_list();
+        modal_add_new_rent.ui.load_status_list();
+        modal_add_new_rent.ui.load_countries_list();
+        //modal_add_new_rent.bl.count_price();
+        $('[data-toggle="tooltip"]').tooltip();
+
+        modal_add_new_rent.ui.dropdown_calendar("modal_new_rent_calendar");
+        modal_add_new_rent.ui.double_calendar("modal_new_rent_double_calendar", "modal_new_rent_date_from", "modal_new_rent_date_until", "modal_new_rent_calendar > .dropdown_menu");
+        modal_add_new_rent.ui.dropdown("modal_new_rent_object");
+        modal_add_new_rent.ui.dropdown("modal_new_rent_status");
+        modal_add_new_rent.ui.dropdown("modal_new_rent_source");
+        //modal_add_new_rent.ui.select_custom("modal_new_rent_select_countries");
+        modal_add_new_rent.ui.select_custom("modal_new_rent_service");
+        modal_add_new_rent.ui.input_counter("modal_counter_adults", 1);
+        modal_add_new_rent.ui.input_counter("modal_counter_child", 0);
+        modal_add_new_rent.ui.input_counter("modal_counter_paw", 0);
+        modal_add_new_rent.ui.modal_option_calendar("modal_datepicker_input_option");
+
+        modal_add_new_rent.ui.modal_rent_new_close("modal_new_rent");
+
+        modal_add_new_rent.ui.filter_search_list("modal_new_rent_select_filter_countries");
+        modal_add_new_rent.ui.select_filter_custom("modal_new_rent_select_filter_countries");
+
+        document.getElementById("modal_rent_new_object_list_li").addEventListener("click", function (e) {
+            if (e.target && e.target.matches("li")) {
+                console.log(e.target);
+                modal_add_new_rent.bl.change_picture(e.target.dataset.picture); // new class name here
+            }
+        });
+
+        ui.content_loading('modal_new_rent_content_loading');
+    }
+
+    modal_add_new_rent.ui = new function () {
+
+        this.close_on_esc = () => {
+
+            $(document).keydown(function (e) {
+                // ESCAPE key pressed
+                if (e.keyCode == 27) {
+                    modal_add_new_rent.ui.hide_modal();
+                }
+            });
+        }
+
+        this.clear_modal = () => {
+
+            modal_rent_new_tabs_menu.querySelectorAll(".active")[0].classList.remove("active");
+            modal_rent_new_tabs_menu.querySelectorAll("#modal_rent_new_default_tab")[0].classList.add("active");
+
+            modal_tabs_person.classList.add("active");
+            modal_tabs_guest.classList.remove("active");
+            modal_tabs_notice.classList.remove("active");
+            modal_tabs_option.classList.remove("active");
+
+            modal_rent_new_adult_number.value = 1;
+            modal_rent_new_children_number.value = 0;
+            modal_rent_new_pets_number.value = 0;
+            modal_rent_new_price_per_day.value = 0;
+            modal_rent_new_discount.value = 0;
+            modal_rent_new_discount_sum.value = 0;
+            modal_rent_new_contact_name.value = "";
+            modal_rent_new_contact_tel.value = "";
+            modal_rent_new_contact_email.value = "";
+            modal_new_rent_select_filter_countries_btn.value = "";
+            //modal_add_new_rent_guest_note.value = "";
+            modal_rent_new_note_short.value = "";
+            modal_rent_new_note_owner.value = "";
+            modal_rent_new_apartment_note.value = "";
+            modal_datepicker_input_option.value = "";
+
+            modal_new_rent_source.dataset.name = "";
+            modal_new_rent_source.dataset.id = "";
+            modal_new_rent_source.children[0].querySelectorAll(".dropdown_name")[0].innerText = "-";
+
+            modal_new_rent_status.dataset.name = "";
+            modal_new_rent_status.dataset.id = "";
+            modal_new_rent_status.children[0].querySelectorAll(".dropdown_name")[0].innerText = "-";
+
+        }
+
+
+        this.remove_services = function (e) {
+            e.offsetParent.parentElement.remove();
+        }
+
+        // Load list of objects into dropdown list
+        this.load_object_list = function () {            
+            
+            modal_rent_new_object_list_li = '';
+
+            for (var ol of object_list) {
+                var t = template_object_list_new_reservation.innerHTML;
+                t = t.replace('${object_id}', ol['id']);
+                t = t.replace('${name}', ol['name']);
+                t = t.replace('${picture}', ol['picture_url_amazon']);
+
+                js.html.insertAdjacentHTML('modal_rent_new_object_list_li', t);
+            }
+        }
+
+        // Load items into dropdown list
+        //this.load_items_list = function () {
+
+        //    var items_list = JSON.parse(localStorage.getItem('items'));
+        //    modal_rent_new_items_list = '';
+
+        //    for (var il of items_list) {
+        //        var t = template_items_list.innerHTML;
+        //        t = t.replace('${name}', il['name']);
+        //        t = t.replace('${id}', il['id']);
+
+        //        js.html.insertAdjacentHTML('modal_rent_new_items_list', t);
+        //    }
+        //}
+
+        // Load rents source into dropdown list
+        this.load_source_list = function () {
+
+            var source_list = bl.rents_sources.list();
+            modal_rent_new_source_li = '';
+            for (var sl of source_list) {
+                var t = template_source_list_new_reservation.innerHTML;
+                t = t.replace('${apartment_rent_source_id}', sl['id']);
+                t = t.replace('${name}', sl['name']);
+                t = t.replace('${icon}', sl['icon']);
+                t = t.replace('${name}', sl['name']);
+                js.html.insertAdjacentHTML('modal_rent_new_source_li', t);
+            }
+        }
+
+        // Load rents status into dropdown list
+        this.load_status_list = function () {
+
+            var status = bl.rents_status.list();
+            modal_rent_new_status_list.innerHTML = '';
+
+            for (var s of status) {
+                var t = template_status_list_new_reservation.innerHTML;
+                t = t.replace('${rent_status_id}', s['id']);
+                t = t.replace('${color}', s['color']);
+                t = t.replace('${name}', s['name']);
+                t = t.replace('${name}', s['name']);
+                js.html.insertAdjacentHTML('modal_rent_new_status_list', t);
+            }
+        }
+
+        //Load countries list into dropdown list
+        this.load_countries_list = function () {
+
+            var countries = bl.countries.list();
+            modal_rent_new_select_filter_countries_ul.innerHTML = '';
+
+            for (var c of countries) {
+                var t = template_countries_list_new_reservation.innerHTML;
+                t = t.replace('${id}', c['id']);
+                t = t.replace('${code2}', c['code2']);
+                t = t.replace('${country}', c['country']);
+                js.html.insertAdjacentHTML('modal_rent_new_select_filter_countries_ul', t);
+            }
+        }
+
+        // Open modal add guest details
+        this.show_modal = function (id) {
+            //console.log("clicked");
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        }
+
+        this.add_service = function () {
+
+            modal_rent_new_tbody = '';
+
+            var t = template_modal_new_guest_service.innerHTML;
+            js.html.insertAdjacentHTML('modal_rent_new_tbody', t);
+
+        }
+
+        this.load_guests = function () {
+            var guest = JSON.parse(localStorage.getItem('list of guests'));
+            modal_rent_new_list_guest_details = '';
+            var t = template_modal_rent_new_list_guest_details.innerHTML;
+            t = t.replace('${name}', guest['name_first']);
+            t = t.replace('${}', guest['name_first']);
+
+            js.html.insertAdjacentHTML('modal_rent_new_list_guest_details', t);
+
+        }
+
+        this.show = function (object_id, date_from, date_until) {
+
+            modal_add_new_rent.ui.clear_modal();
+
+            modal_add_new_rent.object_id = object_id;
+            modal_add_new_rent.date_until = date_until;
+            modal_add_new_rent.date_from = date_from;
+
+            // select object for drop down
+            var list_object = document.querySelectorAll('#modal_rent_new_object_list_li > li');
+            for (var l of list_object) {
+                if (l.dataset.id == object_id) {
+                    l.click();
+                }
+            }
+
+            var modal_id = document.getElementById("modal_new_rent");
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+            modal_add_new_reservation.classList.remove('visuallyhidden');
+            modal_add_new_reservation.classList.remove('hidden');
+
+
+
+            document.getElementById('modal_new_rent_date_from').innerHTML = modal_add_new_rent.date_from || '';
+            document.getElementById('modal_new_rent_date_until').innerHTML = modal_add_new_rent.date_until || '';
+
+            //ui.content_loading('modal_new_rent_content_loading');
+            if (modal_add_new_rent.date_from) {
+                modal_add_new_rent.bl.price_calculation();
+            } else {
+                ui.content_loading_hide('modal_new_rent_content_loading')
+            }
+            
+            //ui.content_loading_hide('modal_new_rent_content_loading');
+
+        }
+
+        // Dropdown
+        this.dropdown = function (id) {
+
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            let dropdown_btn = dropdown_id.getElementsByTagName("button")[0];
+            let dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            let dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            let modal_icon = document.getElementsByClassName("modal_icon")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                dropdown_ul.children[i].onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                    if (dropdown_ul.classList.contains("dropdown_icon")) {
+                        modal_icon.children[0].src = e.target.getElementsByClassName("icon_img")[0].children[0].src;
+                    }
+                }
+            }
+
+            //dropdown_close.onclick = function () {
+            //    if (!dropdown_menu.classList.contains("open")) {
+            //        dropdown_menu.classList.add("hidden");
+            //        dropdown_btn.classList.remove("open");
+            //    }
+            //}
+
+            //document.addEventListener("mouseup", function (e) {
+            //    if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+            //        dropdown_menu.classList.add("hidden");
+            //        dropdown_btn.classList.remove("open");
+            //    }
+            //})
+
+            document.addEventListener("mouseup", function (e) {
+                if (dropdown_id.outerHTML.includes(e.target.outerHTML) == false) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+
+                element.onclick = function (e) {
+
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    if (id == 'modal_new_rent_select_countries') {
+
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+                    } else {
+                        document.querySelector('#' + id).dataset.name = e.currentTarget.innerText;
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+
+                    }
+
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            }
+        }
+
+        this.dropdown_calendar = function (id) {
+
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_btn = dropdown_id.getElementsByClassName("btn")[0];
+            let dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+            document.addEventListener("mouseup", function (e) {
+                if (dropdown_id.outerHTML.includes(e.target.outerHTML) == false) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+        }
+
+        // input counter
+        this.input_counter = function (id, value) {
+            let input_id = document.getElementById(id);
+            let minus = input_id.getElementsByClassName("minus")[0];
+            let plus = input_id.getElementsByClassName("plus")[0];
+            let input = input_id.getElementsByClassName("form-control")[0];
+
+            minus.addEventListener("click", function () {
+                if (value < input.value) {
+                    input.value--;
+                    modal_add_new_rent.bl.calculate_price();
+                }
+            });
+            plus.addEventListener("click", function () {
+                input.value++;
+                modal_add_new_rent.bl.calculate_price();
+            });
+        }
+
+        // Custom select
+        this.select_custom = function (id) {
+
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul = select_id.getElementsByTagName("ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul.classList.remove("hidden");
+                    let ulOffset = $(ul).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul.classList.add("reverse");
+                    } else {
+                        ul.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul.classList.add("hidden");
+                }
+            };
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(ul).has(e.target).length === 0) {
+                    if (!$(ul).is(e.target) && $(ul).has(e.target).length === 0) {
+                        ul.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+
+            for (let i = 0; i < ul.children.length; i++) {
+                const element = ul.children[i];
+
+                element.onclick = function (e) {
+
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    if (id == 'modal_new_rent_select_countries') {
+
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+                    } else {
+                        document.querySelector('#' + id).dataset.name = e.currentTarget.innerText;
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+
+                    }
+
+
+                    ul.classList.add("hidden");
+                    //button.classList.remove("open");
+                }
+            }
+
+        }
+
+        // Double calendar
+        this.double_calendar = function (cal, input_from, input_until, close_calendar) {
+
+            $("#" + cal).datepicker({
+
+                firstDay: 1,
+                //minDate: 0,
+                numberOfMonths: 1,
+                showOtherMonths: true,
+                dateFormat: 'yy-mm-dd',
+
+                beforeShowDay: function (date) {
+
+                    let startDate = new Date(modal_add_new_rent.date_from);
+                    let endDate = new Date(modal_add_new_rent.date_until);
+
+                    let className = "";
+
+                    if (startDate && (date.getTime() == startDate.getTime())) {
+                        className = "start-date td-highlight"
+                        
+                    }
+                    else if (endDate && (date.getTime() == endDate.getTime())) {
+                        className = "end-date td-highlight";
+                    }
+                    else if ((startDate && endDate) && (startDate < date && date < endDate)) {
+                        className = "between-date td-highlight";
+                    }
+                    else {
+                        className = "";
+                    }
+
+                    return [true, className];
+
+                },
+
+                onSelect: function (date, inst) {
+
+                    if (!modal_add_new_rent.date_from == true || !modal_add_new_rent.date_until == false) {
+
+                        modal_add_new_rent.date_from = date;
+                        modal_add_new_rent.date_until = '';
+
+                        $(this).datepicker();
+                    }else {
+                        modal_add_new_rent.date_until = date;
+
+                        modal_new_rent_date_from.innerText = modal_add_new_rent.date_from;
+                        modal_new_rent_date_until.innerText = modal_add_new_rent.date_until;
+                        $(this).datepicker();
+                        
+                        $("#" + close_calendar).addClass("hidden");
+                        $(".btn").removeClass("open");
+
+                        //calculate number of nights from changing dates and calculate total price
+                        let start_date = new Date(modal_add_new_rent.date_from);
+                        let end_date = new Date(modal_add_new_rent.date_until);
+
+                        let time_difference = end_date.getTime() - start_date.getTime();
+
+                        let date_difference = time_difference / (1000 * 60 * 60 * 24);
+
+                        modal_rent_new_number_of_nights.value = date_difference;
+                        modal_add_new_rent.bl.calculate_price();
+
+
+                    }
+
+                }
+
+            });
+
+            $("#" + cal).on('mouseenter', 'td a', function () {
+                $(".td-highlight-hover").removeClass("td-highlight-hover"); // Reset
+                isBetween = false;
+                foundFirst = 0;
+                calendar = $(this).closest('.ui-datepicker');
+                if (calendar.find('.start-date').length > 0 && calendar.find('.end-date').length == 0) {
+                    calendar.find(".ui-state-default").each(function () {
+                        if ($(this).hasClass("ui-state-active")) {
+                            if (foundFirst == 0) foundFirst = -1;
+                            isBetween = (foundFirst == -1 ? true : false);
+                        }
+                        if ($(this).hasClass("ui-state-hover")) {
+                            if (foundFirst == 0) foundFirst = 1;
+                            isBetween = (foundFirst == 1 ? true : false);
+                        }
+                        if (isBetween) {
+                            $(this).parent().addClass("td-highlight-hover");
+                        }
+                    });
+                }
+            })
+        }
+
+        // Modal - close details
+        this.modal_close = function (id) {
+
+            modal_add_new_rent.ui.clear_modal();
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                }
+            }
+
+            document.addEventListener("mousedown", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    }
+                }
+            });
+
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+
+            // closing modal on esc key
+            addEventListener('keyup', (event) => {
+                if (event.key === 'Escape') {
+                    hide_modal();
+                }
+            })
+
+            function hide_modal() {
+
+
+                modal_add_new_rent.date_from = '';
+                modal_add_new_rent.date_until = '';
+
+                modal_new_rent.classList.add('visuallyhidden');
+                modal_new_rent.addEventListener('transitionend', function (e) {
+                    modal_new_rent.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+                //modal_add_new_rent.date_from = '';
+                //modal_add_new_rent.date_until = '';
+
+                //details_id.classList.add('visuallyhidden');
+                //details_id.addEventListener('transitionend', function (e) {
+                //details_id.classList.add('hidden');
+                //}, {
+                //    capture: false,
+                //    once: true,
+                //    passive: false
+                //});
+            }
+
+        }
+
+        this.hide_modal = () => {
+
+            modal_add_new_rent.date_from = '';
+            modal_add_new_rent.date_until = '';
+
+            modal_new_rent.classList.add('visuallyhidden');
+            modal_new_rent.addEventListener('transitionend', function (e) {
+            modal_new_rent.classList.add('hidden');
+            }, {
+                capture: false,
+                once: true,
+                passive: false
+            });
+        }
+
+        // Modal - option - active until
+        this.modal_option_calendar = function (id, dropdown_calendar) {
+
+            var input = document.getElementById(id);
+            var dropdown_calendar = document.getElementById("modal_datepicker_option");
+            var clean = document.getElementById("modal_input_close");
+            input.onclick = () => {
+                dropdown_calendar.classList.remove("hidden");
+                input.classList.add("open");
+            }
+
+            clean.addEventListener("click", function () {
+                input.value = "";
+            });
+
+            $(dropdown_calendar).datepicker({
+                firstDay: 1,
+                minDate: 0,
+                onSelect: function (dateText, inst) {
+                    input.value = dateText;
+                    dropdown_calendar.classList.add("hidden");
+                    input.classList.remove("open");
+                }
+            });
+
+            document.addEventListener("mouseup", function (e) {
+                if (input.classList.contains("open")) {
+                    if (!$(dropdown_calendar).is(e.target) && $(dropdown_calendar).has(e.target).length === 0) {
+                        dropdown_calendar.classList.add("hidden");
+                        input.classList.remove("open");
+                    }
+                }
+            })
+
+        }
+
+        // CLose modal rent new
+        this.modal_rent_new_close = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            let add_guest_details = document.getElementById('modal_rent_add_guest_details');
+            let edit_guest_details = document.getElementById('modal_rent_edit_guest_details');
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                }
+            }
+
+            //document.addEventListener("mouseup", function (e) {
+            document.addEventListener("mousedown", function (e) {
+
+                if (add_guest_details.classList.contains("hidden") && edit_guest_details.classList.contains("hidden")) {
+                    if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                        if (!details_id.classList.contains("hidden")) {
+                            hide_modal();
+                        }
+                    }
+                }
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+            }
+        }
+
+        // Custom select
+        this.select_filter_custom = function (id) {
+
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul_wrapper = select_id.getElementsByClassName("select_ul_filter_wrapper")[0];
+            let ul = select_id.getElementsByClassName("select_filter_ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul_wrapper.classList.remove("hidden");
+                    let ulOffset = $(ul_wrapper).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul_wrapper).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul_wrapper).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul_wrapper.classList.add("reverse");
+                    } else {
+                        ul_wrapper.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul_wrapper.classList.add("hidden");
+                }
+            };
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(btn).has(e.target).length === 0) {
+                    if (!$(ul_wrapper).is(e.target) && $(ul_wrapper).has(e.target).length === 0) {
+                        ul_wrapper.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    //console.log(e.currentTarget);
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul_wrapper.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+
+        }
+
+
+        this.filter_search_list = function (id) {
+
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".select_filter_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            });
+
+        }
+
+
+    }
+
+    modal_add_new_rent.bl = new function () {
+
+        this.change_picture = (pic) => {
+            console.log(pic);
+            modal_rent_new_object_picture.src = pic;
+        }
+
+        var sum = 0;
+        var sum_disc = 0;
+
+        this.price_calculation = async () => {
+
+            // Reset UI and set loading
+            modal_add_new_rent_over.classList.add('hidden');
+            modal_add_new_rent_minimal_stay.classList.add('hidden');
+            modal_add_new_rent_check_in.classList.add('hidden');
+            ui.content_loading('modal_new_rent_content_loading');
+
+            if (!modal_add_new_rent.object_id == true) {
+                modal_add_new_rent.object_id = modal_new_rent_object.dataset.id;
+            }
+
+            if (!modal_add_new_rent.date_from == true) {
+                //modal_add_new_rent.date_from =  new Date();
+            }
+
+            var adults = document.getElementById('modal_rent_new_adult_number').value;
+            var children = document.getElementById('modal_rent_new_children_number').value;
+            var pets = document.getElementById('modal_rent_new_pets_number').value;
+
+            var url = `/api/rents_prices_days/price_calculation/${modal_add_new_rent.object_id}?date_from=${modal_add_new_rent.date_from}&date_until=${modal_add_new_rent.date_until}&adults=${adults}&children=${children}&pets=${pets}`;
+
+            var json = await ajax.get(url);
+            var j = JSON.parse(json);
+
+            if (!j) {
+                ui.content_loading_hide('modal_new_rent_content_loading');
+                console.log('Error in price calculation.');
+                return;
+            }
+
+            modal_add_new_rent.price_calculation = j;
+
+            var sum = parseFloat(j['sum'][0]['full_price']).toFixed([2]);
+
+            document.getElementById('modal_rent_new_price_sum').value = sum;
+            document.getElementById('modal_rent_new_number_of_nights').value = j['sum'][0]['days'];
+            document.getElementById('modal_rent_new_price_per_day').value = parseFloat(j['sum'][0]['full_price'] / j['sum'][0]['days']).toFixed([2]);
+            document.getElementById('modal_rent_new_total_price').innerHTML = sum + j['sum'][0]['currency_label'];
+            document.getElementById('modal_add_new_rent_price_sum_label').innerHTML = j['sum'][0]['currency_label'];
+            modal_add_new_rent.currency_id = j['sum'][0]['currency_id'];
+
+            //check if is overbooked
+            j['sum'][0]['is_booked'] == 'Y' ? document.getElementById('modal_add_new_rent_over').classList.remove('hidden') : document.getElementById('modal_add_new_rent_over').classList.add('hidden');
+
+            //check if minimum stay is okey
+            if (j['sum'][0]['min_stay'] > j['sum'][0]['days']) {
+                document.getElementById('modal_add_new_rent_minimal_stay').classList.remove('hidden');
+            }
+            else {
+                document.getElementById('modal_add_new_rent_minimal_stay').classList.add('hidden');
+            }
+
+            //check if check in is enable
+            j['sum'][0]['check_in'] == 'Y' ? document.getElementById('modal_add_new_rent_check_in').classList.add('hidden') : document.getElementById('modal_add_new_rent_check_in').classList.remove('hidden');
+
+            // hide loading
+            ui.content_loading_hide('modal_new_rent_content_loading');
+
+
+        }
+
+        // Count price
+        //this.count_price = () => {
+        //    sum = parseFloat(document.getElementById('modal_rent_new_number_of_nights').value) * parseFloat(document.getElementById('modal_rent_new_price_per_day').value)
+        //    document.getElementById('modal_rent_new_price_sum').value = sum;
+        //    document.getElementById('modal_rent_new_total_price').innerHTML = sum + ' €';
+        //}
+
+        // Count price after discount
+        this.count_discount = () => {
+
+            modal_rent_new_discount_sum.value = (-parseFloat(modal_rent_new_discount.value || 0) / 100 * parseFloat(modal_rent_new_price_sum.value)).toFixed(2);
+            modal_rent_new_total_price.innerText = (parseFloat(modal_rent_new_price_sum.value || 0) + parseFloat(modal_rent_new_discount_sum.value)).toFixed(2);
+
+        }
+
+        this.calculate_price = async () => {
+
+            await ui.content_loading('modal_new_rent_content_loading');
+
+            if (!modal_add_new_rent.object_id == true) {
+                modal_add_new_rent.object_id = modal_new_rent_object.dataset.id;
+            }
+
+            var adults = document.getElementById('modal_rent_new_adult_number').value;
+
+            var object_id = modal_add_new_rent.object_id;
+            var date_from = modal_add_new_rent.date_from;
+            var date_until = modal_add_new_rent.date_until;
+
+            if (!object_id == true) {
+                var dropdownButton = document.querySelector('#modal_new_rent_object button');
+                var dropdownMenu = document.querySelector('#modal_new_rent_object .dropdown_menu');
+                var firstListItem = document.querySelector('#modal_rent_new_object_list_li li:first-child');
+
+                dropdownButton.click();
+                firstListItem.click()
+
+                object_id = modal_new_rent_object.dataset.id;                
+            }
+
+            if (date_from != date_until) {
+
+                var url = `/api/rents_prices_days/price_calculation/${object_id}?date_from=${date_from}&date_until=${date_until}&adults=${adults}`;
+
+                var response = await ajax.get_json(url);
+
+                var full_price = response['sum'][0]['full_price'];
+                var nights = response['sum'][0]['days'];
+                var price_per_day = (full_price / nights).toFixed(2);
+                var discount_percent = modal_rent_new_discount.value;
+                var discount_value = (discount_percent / 100 * full_price).toFixed(2);
+                var total_price_after_disc = (full_price - discount_value).toFixed(2);
+
+                modal_rent_new_price_per_day.value = price_per_day;
+                modal_rent_new_price_sum.value = full_price;
+                modal_rent_new_discount_sum.value = discount_value;
+                modal_rent_new_total_price.innerHTML = total_price_after_disc + modal_add_new_rent_price_sum_label.innerHTML;
+
+            }
+
+            await ui.content_loading_hide('modal_new_rent_content_loading');
+
+
+        }
+
+
+        this.calculate_price_by_price_per_day = async () => {
+
+            let from = new Date(modal_add_new_rent.date_from);
+            let until = new Date(modal_add_new_rent.date_until);
+
+            if (js.date.is_date_smaler(from, until)) {
+
+                await ui.content_loading('modal_new_rent_content_loading');
+
+                var price_per_day = modal_rent_new_price_per_day.value;
+                var nights = modal_rent_new_number_of_nights.value;
+                var full_price = (price_per_day * nights).toFixed(2);
+                var discount_percent = modal_rent_new_discount.value;
+                var discount_value = (discount_percent / 100 * full_price).toFixed(2);
+                var total_price_after_disc = (full_price - discount_value).toFixed(2);
+
+                modal_rent_new_price_sum.value = full_price;
+                modal_rent_new_discount_sum.value = discount_value;
+                modal_rent_new_total_price.innerHTML = total_price_after_disc + modal_add_new_rent_price_sum_label.innerHTML;
+
+                await ui.content_loading_hide('modal_new_rent_content_loading');
+
+            }
+
+        }
+
+        // Save new rent
+        this.rent_add = async () => {
+
+            ui.content_loading('modal_new_rent_content_loading');
+            var rent = {};
+
+            rent.adults = modal_rent_new_adult_number.value;
+            rent.children = modal_rent_new_children_number.value;
+            rent.pets = modal_rent_new_pets_number.value;
+            rent.contact_email = modal_rent_new_contact_email.value;
+            rent.contact_name = modal_rent_new_contact_name.value;
+            rent.contact_tel = modal_rent_new_contact_tel.value;
+            rent.rent_source_id = modal_new_rent_source.dataset.id;
+            rent.rent_status_id = modal_new_rent_status.dataset.id;
+            rent.object_name = modal_new_rent_object.dataset.name;
+
+            rent.note_short = modal_rent_new_note_short.value;
+            rent.note = modal_rent_new_apartment_note.value;
+            rent.note_owner = modal_rent_new_note_owner.value;
+            //rent.note_user = modal_add_new_rent_guest_note.value;
+
+            if (modal_new_rent_select_filter_countries_btn.innerText != "") {
+                rent.contact_country_id = document.querySelector('#modal_new_rent_select_filter_countries > button > span').dataset.id;
+            }
+
+            rent.price = modal_rent_new_price_sum.value;
+            rent.discount = -modal_rent_new_discount.value;
+            rent.date_until = modal_add_new_rent.date_until;
+            rent.date_from = modal_add_new_rent.date_from;
+            rent.object_id = modal_new_rent_object.dataset.id;
+            rent.currency_id = modal_add_new_rent.currency_id;
+
+            try {
+                rent.until_date = js.date.toIso(rent.date_until);
+                rent.from_date = js.date.toIso(rent.date_from);
+            }
+            catch (err) {
+                alert('Dates are missing.');
+                return;
+            }
+
+            //console.log(rent);
+            var url = '/api/rents/add';
+            var rent_id = await ajax.post_json(url, rent);
+
+            //closing modal after new reservation added
+           
+            ui.content_loading_hide('modal_new_rent_content_loading');
+            modal_add_new_reservation.classList.add('hidden');
+
+            //refreshing calendar too see new reservations
+            var current_page = page.get_current_page();
+
+            if (current_page == 'calendar') {
+                calendar.bl.refresh_page();
+            }
+
+            if (current_page == "object_calendars") {
+                routing.reload();
+            }
+
+            if (current_page == "rents") {
+                rents.load();
+            }
+
+
+        }
+
+        this.clear_data = () => {
+
+
+        }
+
+
+    }
+
+    modal_add_new_rent.load();
+
+</script>

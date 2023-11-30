@@ -1,0 +1,122 @@
+﻿
+@code {
+
+    string getLng = "hr";
+
+    public class lngSelect
+    {
+        public string name { get; set; }
+        public string code { get; set; }
+    }
+
+    public List<lngSelect> LngList = new List<lngSelect>();
+
+
+    protected override void OnInitialized()
+    {
+        Culture = CultureInfo.CurrentCulture;
+
+        CultureInfo currentCulture = Thread.CurrentThread.CurrentUICulture;
+        getLng = currentCulture.IetfLanguageTag;
+
+        LngList.Add(new lngSelect { name = "HR", code = "hr-HR" });
+        LngList.Add(new lngSelect { name = "SL", code = "sl-SI" });
+        LngList.Add(new lngSelect { name = "EN", code = "en-GB" });
+
+        StateHasChanged();
+
+    }
+
+    async Task lngChange(ChangeEventArgs e)
+    {
+        var lng = e.Value.ToString();
+        //CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(lng);
+
+        //getLng = lng;
+
+        // CultureInfo. = new CultureInfo(lng);
+
+        await localStorage.SetItemAsStringAsync("lng", lng);
+        var return_url = "/dashboard/general";
+
+        NavManager.NavigateTo(
+                   $"Culture/Set?culture={lng}&redirectUri={return_url}",
+                   forceLoad: true);
+
+
+        //NavManager.NavigateTo(NavManager.Uri, true);
+    }
+
+    private CultureInfo[] supportedCultures = new[]
+    {
+        new CultureInfo("en-GB"),
+        new CultureInfo("hr-HR"),
+        new CultureInfo("sl-SI"),
+    };
+
+    private CultureInfo Culture
+    {
+
+        get => CultureInfo.CurrentCulture;
+        set
+        {
+
+
+            if (CultureInfo.CurrentCulture != value)
+            {
+                var uri = new Uri(NavManager.Uri)
+                    .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+                var cultureEscaped = Uri.EscapeDataString(value.Name);
+                var uriEscaped = Uri.EscapeDataString(uri);
+
+                NavManager.NavigateTo(
+                    $"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}",
+                    forceLoad: true);
+            }
+        }
+
+    }
+
+}
+<div >
+
+    <ul class="navbar-nav flex-column " id="navbarVerticalNav">
+        <li class="nav-item ">
+            <div class="nav-link" href="/" role="button" data-bs-toggle="" aria-expanded="false">
+                <div class="d-flex align-items-center">
+                    <select name="lng" id="lng" @onchange="lngChange" class="form-select form-select-sm bg-light" 
+                        style="@(bl.B2B.zaggy.shared.app_db_conn == "dev" ? "background-color: #fdc0c0 !important;" : "")">
+                        @foreach (var l in LngList)
+                        {
+                            @if (l.code == getLng)
+                            {
+                                <option selected value="@l.code">@l.name</option>
+                            }
+                            else
+                            {
+                                <option value="@l.code">@l.name</option>
+                            }
+                        }
+                    </select>
+
+                    @*
+                    <select @bind="Culture">
+                        @foreach (var culture in supportedCultures)
+                        {
+                            @if (@CultureInfo.CurrentUICulture.Name == culture.Name)
+                            {
+                                <option selected value="@culture">@culture.DisplayName</option>
+                            }
+                            else
+                            {
+                                <option value="@culture">@culture.DisplayName</option>
+                            }
+                            
+                        }
+                    </select>*@
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

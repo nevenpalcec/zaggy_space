@@ -1,0 +1,272 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IConfiguration Configuration
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+@using System.Text;
+@using System.Text.RegularExpressions;
+
+@code {
+
+    private string _helpUriBase;
+    public string guid { get; set; }
+    public string NewPass;
+    public string NewPass2;
+    public string PassMsg = "";
+    public string PassStrong = "";
+    public string user_id = "";
+    public string currentPass = "";
+    string resellers_workers_types_name = "";
+
+
+    public enum PasswordScore
+    {
+        Blank = 0,
+        VeryWeak = 1,
+        Weak = 2,
+        Medium = 3,
+        Strong = 4,
+        VeryStrong = 5
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await Perm.reseller_worker_perm();
+
+        guid = await localStorage.GetItemAsync<string>("guid");
+        user_id = bl.resellers_workers.get_id_by_guid(guid);
+
+        bl.B2B.zaggy.pictures.uid = guid;
+
+        _helpUriBase = Configuration.GetSection("HelpUriBase").ToString();
+
+        resellers_workers_types_name = await Perm.resellers_workers_types_name();
+    }
+
+    private void Logout()
+    {
+        ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsLogout();
+    }
+
+    void Checkpass()
+    {
+        PassStrong = PasswordAdvisor.check_strength(NewPass).ToString();
+    }
+
+    void ConfirmNewPass()
+    {
+        if (bl.resellers_workers.check_password(user_id) != currentPass)
+        {
+            PassMsg = "The current password is not correct!";
+            return;
+        }
+
+        if (NewPass.Contains("\"") || NewPass.Contains("'"))
+        {
+            PassMsg = "Password cannot contain characters quotes or double quotes";
+            return;
+        }
+
+        if (NewPass.Length < 11)
+        {
+            PassMsg = "Password must contain at least 12 characters";
+            return;
+        }
+
+        if (NewPass == NewPass2)
+        {
+            //ok
+            if ((int)PasswordAdvisor.check_strength(NewPass) < 5)
+            {
+                PassMsg = "Password is not strong enough!";
+                return;
+            }
+            change_password(NewPass);
+            PassMsg = "Password has been changed";
+        }
+        else
+        {
+            PassMsg = "Passwords are not the same";
+            return;
+        }
+        //PassMsg += PasswordAdvisor.CheckStrength(PassMsg).ToString();
+    }
+
+    void change_password(string password)
+    {
+        bl.resellers_workers.change_password(user_id, password);
+    }
+
+    void Cpass()
+    {
+        currentPass = "";
+        NewPass = "";
+        NewPass2 = "";
+        PassMsg = "";
+    }
+
+    public class PasswordAdvisor
+    {
+        public static PasswordScore check_strength(string password)
+        {
+            int score = 0;
+
+            //if (password.Length > 4)
+            //{ score++; }
+
+            if (password.Length >= 8)
+            { score++; }
+            if (password.Length >= 12)
+            { score++; }
+            if (Regex.Match(password, @"\d+", RegexOptions.ECMAScript).Success)
+            { score++; }
+            if (Regex.Match(password, @"[a-z]", RegexOptions.ECMAScript).Success &&
+              Regex.Match(password, @"[A-Z]", RegexOptions.ECMAScript).Success)
+            { score++; }
+            if (Regex.Match(password, @".[!,"",@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success)
+            { score++; }
+
+            return (PasswordScore)score;
+        }
+    }
+
+}
+
+<nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
+
+    <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+    <a class="navbar-brand me-1 me-sm-3" href="index.html">
+        <div class="d-flex align-items-center">
+            <img class="me-2 w-50" src="/assets/images/zagreb_logo.png" alt="" />
+        </div>
+    </a>
+    <ul class="navbar-nav align-items-center d-none d-lg-block">
+        <li class="nav-item">
+            <h3>
+                <img src="/assets/images/zagreb_logo_small.png" style="height: 45px;" /> &nbsp; @Settings.app_name, za grad Zagreb - Grad Tisuću Srca!
+            </h3>
+        </li>
+    </ul>
+    <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+
+        <li class="nav-item">
+            <div>
+                <AuthorizeView>
+                    <Authorized>
+                        <span>
+                            @context.User.Identity.Name
+                        </span>
+                        <span>
+                            |
+                        </span>
+                        <span class="fw-light">
+                            @resellers_workers_types_name
+                        </span>
+                    </Authorized>
+                    <NotAuthorized>
+                        <span class="text-danger">
+                            Who are you ?
+                        </span>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </li>
+
+        <li class="nav-item">
+
+            <LangSelect></LangSelect>
+        </li>
+
+        <li class="nav-item">
+            <div class="theme-control-toggle fa-icon-wait px-2">
+                <input class="form-check-input ms-0 theme-control-toggle-input" id="themeControlToggle" type="checkbox" data-theme-control="theme" value="dark" />
+                <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@lng.l.Switch_to_light_theme"><span class="fas fa-sun fs-0"></span></label>
+                <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="@lng.l.Switch_to_dark_theme"><span class="fas fa-moon fs-0"></span></label>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-xl">
+                    <img class="rounded-circle" src="" alt="" />
+                </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
+                <div class="bg-white dark__bg-1000 rounded-2 py-2">
+
+                    <AuthorizeView>
+                        <Authorized>
+                            <a class="dropdown-item fw-bold text-warning">
+                                <span>
+                                    @lng.l.Hello, @context.User.Identity.Name !
+                                </span>
+                            </a>
+                        </Authorized>
+                        <NotAuthorized>
+                            <a class="dropdown-item" role="button" href="/Login"> @lng.l.Log_in </a>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                    
+                    @if (Perm.settings == true)
+                    {
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/workers/settings">Settings</a>
+                    }
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#pass-modal" role="button" @onclick="Cpass"> @lng.l.Change_password </a>
+                    <a class="dropdown-item" role="button" href="/logout"> @lng.l.Logout </a>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<!-- modal datails object -->
+<div class="modal fade" id="pass-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+        <div class="modal-content position-relative">
+            <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="rounded-top-lg py-3 ps-4 pe-6">
+                    <h4 class="mb-1 text-dark">@lng.l.Change_password</h4>
+                </div>
+                <div class="p-4 pt-0">
+                    <form>
+
+                        <div class="mb-3">
+                            <label title="Enter current pass" class="col-form-label fs--1" for="current">@lng.l.Enter_current_password </label>
+                            <input class="form-control" id="current" @bind="currentPass" @bind:event="oninput" type="password"></input>
+                        </div>
+
+                        <div class="mb-3">
+                            <label title="Enter new pass" class="col-form-label fs--1" for="address">@lng.l.Enter_new_password</label>
+                            <input class="form-control" id="pass1" @bind="NewPass" @onkeyup="Checkpass" @bind:event="oninput" type="password"></input>
+                        </div>
+                        <div class="mb-4">
+                            <label title="Enter nwe pass again" class="col-form-label fs--1" for="address" value="0">@lng.l.Enter_new_password_again</label>
+                            <input class="form-control" id="pass2" @bind="NewPass2" @bind:event="oninput" type="password" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label title="msg" class="col-form-label fw-bold fs--1">@PassMsg</label>
+                            <div class="col-form-label fs--1">@PassStrong</div>
+                            <div class="col-form-label fs--1">@lng.l.Password_must_be_at_least_12_characters__and_at_least_1_uppercase__A_Z___and_at_least_1_lowercase__a_z___and_at_least_1_number__0_9__and_at_least_1_special_character_ </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal"> @lng.l.Close </button>
+
+                <button class="btn btn-dark" type="button" @onclick="ConfirmNewPass"> @bl.lng.l.Confirm </button>
+
+            </div>
+        </div>
+    </div>
+</div>

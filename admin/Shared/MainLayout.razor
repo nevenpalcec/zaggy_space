@@ -1,0 +1,53 @@
+﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration
+
+<AuthorizeView>
+
+    <Authorized>
+        <main class="main" id="top">
+
+            <div class="container-fluid" data-layout="container">
+
+                <nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
+
+                    <!-- app logo -->
+                    <a class="navbar-brand" href="/dashboard/general">
+                        <div class="d-flex align-items-center mt-2">
+                            <img class="me-2 w-75" src="/assets/images/zagreb_logo.png" alt="" />
+                        </div>
+                    </a>
+
+                    <!-- navbar left -->
+                    <NavMenu></NavMenu>
+
+                </nav>
+
+                <div class="content">
+
+                    <!-- navbar -->
+                    <admin.Shared.Toolbar></admin.Shared.Toolbar>
+                    
+                    <!-- content -->
+                    @Body
+
+                    <!-- footer -->
+                    <Footer></Footer>
+
+                </div>
+
+            </div>
+
+            <BlazoredToasts Position="ToastPosition.TopRight"
+                            Timeout="3"
+                            IconType="IconType.FontAwesome"
+                            SuccessClass="success-toast-override toast_css"
+                            ErrorIcon="fa fa-bug" />
+        </main>
+
+    </Authorized>
+
+    <NotAuthorized>
+        <RedirectToLogin />
+    </NotAuthorized>
+
+</AuthorizeView>

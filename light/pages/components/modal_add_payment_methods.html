@@ -1,0 +1,318 @@
+﻿<!-- Modal add payments -->
+<div id="modal_add_payment_methods" class="view_modal  hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-list-ul pr-2"></i>Add payment methods</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Name</label>
+                            <input type="text" class="form-control focus" id="modal_add_payment_methods_name" value="">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="mb-1">Type</label>
+                        <div id="modal_add_payment_methods_type" class="select">
+                            <button class="custom-select focus" id="modal_add_payment_methods_type_btn">Choose type</button>
+                            <i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden">
+                                <li class="select_li" data-id="cash">Cash</li>
+                                <li class="select_li" data-id="card">Card</li>
+                                <li class="select_li" data-id="bank">Bank</li>
+                                <li class="select_li" data-id="paypal">Paypal</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div>
+                    <button class="btn btn_silver" data-dismiss="modal" id="modal_add_payment_methods_cancel_btn">Cancel</button>
+                    <button class="btn btn_red hidden" onclick="modal_add_payment_methods.bl.delete_payment();" id="modal_add_payment_methods_delete_btn">Delete</button>
+                </div>
+                <div>
+                    <button class="btn btn_primary" onclick="modal_add_payment_methods.bl.save_payment();" id="modal_add_payment_methods_add_btn"><i class="fas fa-plus pr-2"></i>Add</button>
+                    <button class="btn btn_primary hidden" onclick="modal_add_payment_methods.bl.update_payment()" id="modal_add_payment_methods_save_btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var modal_add_payment_methods = {};
+
+    modal_add_payment_methods.payment_id = '';
+
+    // Load function
+    modal_add_payment_methods.load = () => {
+
+        modal_add_payment_methods.ui.select_custom('modal_add_payment_methods_type');
+        // Global components
+        // ui.select_custom("modal_edit_room_select_type_bed");
+        //ui.filter_search_list("modal_add_review_select_filter_countries");
+        //ui.select_filter_custom("modal_add_review_select_filter_countries");
+
+        // BL components
+        modal_add_payment_methods.bl.close_modal("modal_add_payment_methods");
+
+    };
+
+    // UI logic
+    modal_add_payment_methods.ui = new function () {
+
+        // Custom select of dropdown menus
+        this.select_custom = function (id) {
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul = select_id.getElementsByTagName("ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul.classList.remove("hidden");
+                    let ulOffset = $(ul).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul.classList.add("reverse");
+                    } else {
+                        ul.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul.classList.add("hidden");
+                }
+            };
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(ul).has(e.target).length === 0) {
+                    if (!$(ul).is(e.target) && $(ul).has(e.target).length === 0) {
+                        ul.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+    };
+
+    // BL logic
+    modal_add_payment_methods.bl = new function () {
+
+        // Close modal
+        this.close_modal = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+                modal_add_payment_methods_save_btn.classList.add('hidden');
+                modal_add_payment_methods_add_btn.classList.remove('hidden');
+
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            modal_add_payment_methods_delete_btn.classList.add('hidden');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        this.dropdown = function (id) {
+
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            let dropdown_btn = dropdown_id.getElementsByTagName("button")[0];
+            let dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            let dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            let modal_icon = document.getElementsByClassName("modal_icon")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                dropdown_ul.children[i].onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                    if (dropdown_ul.classList.contains("dropdown_icon")) {
+                        modal_icon.children[0].src = e.target.getElementsByClassName("icon_img")[0].children[0].src;
+                    }
+                }
+            }
+
+            dropdown_close.onclick = function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            }
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+
+                element.onclick = function (e) {
+
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    if (id == 'modal_new_rent_select_countries') {
+
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+                    } else {
+                        document.querySelector('#' + id).dataset.name = e.currentTarget.innerText;
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+
+                    }
+
+                    dropdown_menu.classList.add("hidden");
+                    //button.classList.remove("open");
+                }
+            }
+        }
+
+        this.save_payment = async () => {
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/payment_methods/add/' + user_id;
+
+            var response = await ajax.get(url);
+            var payment_id = response.slice(1, -1);
+
+            var pay = {};
+
+            var type = modal_add_payment_methods_type.innerText;
+            type = type.toLowerCase();
+
+            pay.name = modal_add_rents_status_name.value;
+            pay.type = type;
+            pay.id = payment_id;
+
+            var url = '/api/rents_status/save';
+            var response = await ajax.post_json(url, ren_stat)
+
+            this.clear_modal();
+        }
+
+        // clear data from inputs and close modal
+        this.clear_modal = () => {
+
+            modal_add_payment_methods_cancel_btn.click();
+            modal_add_rents_status_name.value = '';
+
+        }
+
+        // show data from database into modal
+        this.edit_payment = async (payment_id) => {
+
+            // change button
+            modal_add_payment_methods_save_btn.classList.remove('hidden');
+            modal_add_payment_methods_add_btn.classList.add('hidden');
+
+            // set up id of payment
+            modal_add_payment_methods.payment_id = payment_id;
+
+            this.show_modal('modal_add_payment_methods');
+
+            modal_add_payment_methods_delete_btn.classList.remove('hidden');
+
+            var url = '/api/payment_methods/get/' + payment_id;
+            var response = await ajax.get(url);
+            var payment = JSON.parse(response);
+
+            modal_add_payment_methods_name.value = payment[0]['name'];
+            modal_add_payment_methods_type_btn.innerText = payment[0]['type'];
+
+        }
+
+        // change data into database
+        this.update_payment = async () => {
+
+            var url = '/api/payment_methods/save';
+
+            var type = modal_add_payment_methods_type.innerText;
+            type = type.toLowerCase();
+
+            var pay_met = {};
+
+            pay_met.name = modal_add_payment_methods_name.value;
+            pay_met.type = type;
+            pay_met.id = modal_add_payment_methods.payment_id;
+
+            await ajax.post(url, pay_met);
+
+            this.clear_modal();
+
+        }
+
+        // delete payment from database
+        this.delete_payment = async () => {
+
+            var url = '/api/payment_methods/del/' + modal_add_payment_methods.payment_id;
+            await ajax.get(url);
+        }
+
+    };
+
+    // On load
+    modal_add_payment_methods.load();
+
+</script>

@@ -1,0 +1,18 @@
+﻿.heading-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding-top: 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid $color-silver;
+    @include underline;
+    text-transform: uppercase;
+    margin-top: 25px;
+}
+
+.heading-wrapper {
+    border-bottom: 1px solid $color-silver;
+    display: flex;
+    .heading-title {
+        border-bottom: none !important;
+    }
+}

@@ -1,0 +1,399 @@
+﻿<!--<div id="modal_add_guest_details" class="view_modal" style="z-index: 1200;">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                    <i class="fab fa-connectdevelop pr-2"></i>Add guest details
+                </div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>-->
+<!--<div id="nesto" class="tab-pane">
+    <div class="modal-body">
+        <div class="modal-body pb-0">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">First name and surname</label>
+                        <input type="text" class="form-control focus" id="modal_add_guest_details_first_name">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Phone</label>
+                        <input type="text" class="form-control focus" id="modal_add_guest_details_phone">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Email</label>
+                        <input type="text" class="form-control focus" id="modal_add_guest_details_email">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Country</label>
+                        <div id="modal_add_guest_details_select_country" class="select">-->
+                            <!--<button class="custom-select focus" id="
+                                "></button>-->
+                            <!--<i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden" id="modal_add_guest_details_countries_ul">
+                                <li class="select_li" data-id="1"><span><img src="./assets/images/icons/flags/ad.svg" alt=""></span>Example</li>
+                                <li class="select_li" data-id="2"><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</li>
+                                <li class="select_li" data-id="3">
+                                    <span><img src="./assets/images/icons/flags/es.svg" alt=""></span>Spain
+                                </li>
+                                <li class="select_li" data-id="4"><span><img src="./assets/images/icons/flags/fi.svg" alt=""></span>Finska</li>
+                                <li class="select_li" data-id="5"><span><img src="./assets/images/icons/flags/fr.svg" alt=""></span>France</li>
+                                <li class="select_li" data-id="6"><span><img src="./assets/images/icons/flags/hr.svg" alt=""></span>Croatia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Date birth</label>
+                        <input type="text" class="form-control focus" id="modal_add_guest_details_date_birth">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Sex</label>
+                        <div class="d-flex flex-wrap mt-1">
+                            <div class="custom_radio radio_lg mr-4">
+                                <label for="modal_add_guest_details_sex_type_M">
+                                    Male
+                                    <input type="radio" id="modal_add_guest_details_sex_type_M" checked="checked" name="add_guest_details_sex_radio">
+                                    <span></span>
+                                </label>
+                            </div>
+                            <div class="custom_radio radio_lg">
+                                <label for="modal_add_guest_details_sex_type_F">
+                                    Female
+                                    <input type="radio" id="modal_add_guest_details_sex_type_F" name="add_guest_details_sex_radio">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Type of document</label>
+                        <div id="modal_add_guest_details_select_type_of_document" class="select">
+                            <button class="custom-select focus" id="modal_add_guest_details_country_btn"></button>
+                            <i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden">
+                                <li class="select_li" data-id="1">Osobna iskaznica (domaća)</li>
+                                <li class="select_li" data-id="2">Pomorska iskaznica (domaća)</li>
+                                <li class="select_li" data-id="3">Vozačka dozvola (domaća)</li>
+                                <li class="select_li" data-id="4">Obiteljska putovnica (domaća)</li>
+                                <li class="select_li" data-id="5">Osobna putovnica (domaća)</li>
+                                <li class="select_li" data-id="6">Zajednička putovnica (domaća)</li>
+                                <li class="select_li" data-id="7">Službena putovnica (domaća)</li>
+                                <li class="select_li" data-id="8">Dječja putovnica (domaća)</li>
+                                <li class="select_li" data-id="9">Diplomatska putovnica (domaća)</li>
+                                <li class="select_li" data-id="10">Progranička propusnica (strana)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Document number</label>
+                        <input type="text" class="form-control focus" id="modal_add_guest_details_document_number">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Citizenship</label>
+                        <div id="modal_add_guest_details_select_citizenship" class="select">
+                            <button class="custom-select focus"></button>
+                            <i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden">
+                                <li class="select_li" data-id="1"><span><img src="./assets/images/icons/flags/ad.svg" alt=""></span>Example</li>
+                                <li class="select_li" data-id="2"><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</li>
+                                <li class="select_li" data-id="3">
+                                    <span><img src="./assets/images/icons/flags/es.svg" alt=""></span>Spain
+                                </li>
+                                <li class="select_li" data-id="4"><span><img src="./assets/images/icons/flags/fi.svg" alt=""></span>Finska</li>
+                                <li class="select_li" data-id="5"><span><img src="./assets/images/icons/flags/fr.svg" alt=""></span>France</li>
+                                <li class="select_li" data-id="6"><span><img src="./assets/images/icons/flags/hr.svg" alt=""></span>Croatia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="mb-1">Description</label>
+                        <textarea name="description" id="modal_add_guest_details_note" class="form-control focus" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Place of residence</label>-->
+                        <!--<input type="text" class="form-control focus" id="modal_add_guest_details_place_of_residence">-->
+                    <!--</div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1">Country of birth</label>
+                        <div id="modal_add_guest_details_select_country_of_birth" class="select">-->
+                            <!--<button class="custom-select focus" id="modal_add_guest_details_select_country_btn"></button>-->
+                            <!--<i class="fas fa-angle-down"></i>
+                            <ul class="select_ul hidden" id="modal_add_guest_details_select_country_of_birth_ul">
+                                <li class="select_li" data-id="1"><span><img src="./assets/images/icons/flags/ad.svg" alt=""></span>Example</li>
+                                <li class="select_li" data-id="2"><span><img src="./assets/images/icons/flags/at.svg" alt=""></span>Austria</li>
+                                <li class="select_li" data-id="3">
+                                    <span><img src="./assets/images/icons/flags/es.svg" alt=""></span>Spain
+                                </li>
+                                <li class="select_li" data-id="4"><span><img src="./assets/images/icons/flags/fi.svg" alt=""></span>Finska</li>
+                                <li class="select_li" data-id="5"><span><img src="./assets/images/icons/flags/fr.svg" alt=""></span>France</li>
+                                <li class="select_li" data-id="6"><span><img src="./assets/images/icons/flags/hr.svg" alt=""></span>Croatia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="mb-1 w-100">&nbsp;</label>
+                        <button class="btn_evisitor btn btn_primary font_medium text-uppercase w-100" onclick="modal_add_guest_details.ui.evisitor_toggle('modal_add_guest_details', 'add_inside_evisitor')">Evisitor data<i class="fas fa-chevron-down pl-2"></i></button>
+                    </div>
+                </div>
+                <div class="add_inside_evisitor col-12 hidden">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Arrival organization</label>
+                                <div id="modal_add_guest_details_select_arrival_organization" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="1">Agencijski (Grupno)</li>
+                                        <li class="select_li" data-id="2">Osobno</li>
+                                        <li class="select_li" data-id="3">Agencijski - (60 dana odgode)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Type of service</label>
+                                <div id="modal_add_guest_details_select_type_of_service" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="1">Noćenje</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="mb-1">Category obv.bp</label>
+                                <div id="modal_add_guest_details_select_category" class="select">
+                                    <button class="custom-select focus" id="modal_add_guest_details_category"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="1">Osobe do 29 godina : članovi međunarodne omladinske organizacije</li>
+                                        <li class="select_li" data-id="2">Đaci koji nemaju prebivalište u općini ili gradu u kojem se školuju</li>
+                                        <li class="select_li" data-id="3">Turist koji boravi u ugostiteljskom objektu</li>
+                                        <li class="select_li" data-id="4">Djeca : od navršenih 12-18 godina</li>
+                                        <li class="select_li" data-id="5">Turist koji koristi usluge chartera</li>
+                                        <li class="select_li" data-id="6">Pratitelj osobe sa tjelesnim invaliditetom 70% i više</li>
+                                        <li class="select_li" data-id="7">Sudionici školskih paket aranžmana odobrenih od strane školske ustanove</li>
+                                        <li class="select_li" data-id="8">Vlasnici kuće za odmor i članovi njegove obitelji</li>
+                                        <li class="select_li" data-id="9">Osobe koje uslugu noćenja koriste u okviru ostvarivanja programa socijalne skrbi</li>
+                                        <li class="select_li" data-id="9">Prijatelji i ostale osobe koje borave u stanu ili kući stanovnika općine ili grada</li>
+                                        <li class="select_li" data-id="9">Prijatelji i ostale osobe vlasnika kuće ili stana za odmor</li>
+                                        <li class="select_li" data-id="9">Član posade na brodu</li>
+                                        <li class="select_li" data-id="9">Putnik na brodu</li>
+                                        <li class="select_li" data-id="9">Kapetan broda</li>
+                                        <li class="select_li" data-id="9">Djeca do 12 godina : charter</li>
+                                        <li class="select_li" data-id="9">Djeca od navršenih 12-18 godina : charter</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+            <button class="btn btn_silver" data-dismiss="modal">Close</button>
+            <button class="btn btn_primary" onclick="modal_add_guest_details.bl.add_guest();"><i class="fas fa-plus pr-2"></i>Add</button>
+        </div>
+    </div>
+</div>-->
+<!--</div>-->
+
+<div>
+    <template id="template_countries_list">
+        <li class="select_li" data-id="${id}"><span><img src="./assets/images/icons/flags/${code2}.svg" alt=""></span>${country}</li>
+    </template>
+</div>
+
+<script>
+
+    //var guests_list = [];
+
+    var modal_add_guest_details = {};
+
+    modal_add_guest_details.load = () => {
+
+        //modal_add_guest_details.ui.load_countries();
+
+        modal_add_guest_details.ui.modal_close("modal_rent_add_guest_details");
+
+        //ui.custom_select("modal_add_guest_details_select_country");
+        //ui.custom_select("modal_add_guest_details_select_type_of_document");
+        //ui.custom_select("modal_add_guest_details_select_citizenship");
+        //ui.custom_select("modal_add_guest_details_select_country_of_birth");
+        //ui.custom_select("modal_add_guest_details_select_arrival_organization");
+        //ui.custom_select("modal_add_guest_details_select_type_of_service");
+        //ui.custom_select("modal_add_guest_details_select_category");
+    }
+
+    modal_add_guest_details.ui = new function () {
+
+        // Open modal add guest details
+        this.show_modal = function (id) {
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        }
+
+        // open/close evisitor
+        this.evisitor_toggle = function (id, inside) {
+
+            const btn = document.querySelector(id);
+            const inside_btn = document.querySelector("." + inside);
+
+            inside_btn.classList.toggle("hidden");
+
+        }
+
+        // Close modal
+        this.modal_close = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                    //modal_add_guest_details.bl.clear();
+                }
+            }
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                        //modal_add_guest_details.bl.clear();
+                    }
+                }
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+        }
+
+        // Load countries into dropdown menu
+        this.load_countries = function () {
+
+            var countries = JSON.parse(localStorage.getItem('registars'))['countries'];
+
+            modal_add_guest_details_countries_ul.innerHTML = '';
+            modal_add_guest_details_select_country_of_birth_ul.innerHTML = '';
+
+            let t = template_countries_list.innerHTML;
+
+            for (let c of countries) {
+
+                t = t.replace('${id}', c['id']);
+                t = t.replace('${code2}', c['code2']);
+                t = t.replace('${country}', c['country']);
+
+                js.html.insertAdjacentHTML('modal_add_guest_details_countries_ul', t);
+                js.html.insertAdjacentHTML('modal_add_guest_details_select_country_of_birth_ul', t);
+            }
+
+        }
+
+    }
+
+    modal_add_guest_details.bl = new function () {
+
+        //adding new guest
+        //this.add_guest = () => {
+
+        //    var guest = {};
+
+        //    guest.name_first = document.getElementById('modal_add_guest_details_first_name').value;
+        //    guest.email = document.getElementById('modal_add_guest_details_email').value;
+        //    guest.phone = document.getElementById('modal_add_guest_details_phone').value;
+        //    guest.document_number = document.getElementById('modal_add_guest_details_document_number').value;
+        //    guest.document_type = document.getElementById('modal_add_guest_details_select_type_of_document').innerText;
+        //    guest.gender = document.getElementById('modal_add_guest_details_sex_type_M').checked == true ? 'M' : 'F';
+        //    //guest.guest_year = document.getElementById('');
+        //    guest.note = document.getElementById('modal_add_guest_details_note').value;
+        //    guest.country = document.getElementById('modal_add_guest_details_country').innerText;
+        //    guest.country_id = document.getElementById('modal_add_guest_details_country').dataset.id;
+        //    guest.category = document.getElementById('modal_add_guest_details_category').innerText;
+        //    guest.category_id = document.getElementById('modal_add_guest_details_category').dataset.id;
+        //    guest.offered_service_type = document.getElementById('modal_add_guest_details_select_type_of_service').innerText;
+        //    guest_country_of_birth = document.getElementById('modal_add_guest_details_select_country_btn').innerText;
+        //    guest_country_of_birth_id = document.getElementById('modal_add_guest_details_select_country_btn').dataset.id;
+        //    guest_birth_city = document.getElementById('modal_add_guest_details_place_of_residence').value;
+
+        //    guests_list.push(guest);
+        //    console.log(guests_list);
+
+        //    localStorage.setItem('list of guests', JSON.stringify(guest));
+        //    alert('Gost uspiješno spremljen');
+        //    modal_add_new_rent.ui.load_guests();
+
+        //    this.clear();
+        //}
+
+        //this.clear = () => {
+        //    document.getElementById('modal_add_guest_details_first_name').value = '';
+        //    document.getElementById('modal_add_guest_details_email').value = '';
+        //    document.getElementById('modal_add_guest_details_phone').value = '';
+        //    document.getElementById('modal_add_guest_details_document_number').value = '';
+        //    document.getElementById('modal_add_guest_details_country_btn').innerText = '';
+        //    document.getElementById('modal_add_guest_details_country_btn').dataset.id = '';
+        //    //document.getElementById('modal_add_guest_details_sex_type_M').value = '';
+        //    document.getElementById('modal_add_guest_details_note').value = '';
+        //    document.getElementById('modal_add_guest_details_country').innerText = '';
+        //    document.getElementById('modal_add_guest_details_category').innerText = '';
+        //    document.getElementById('modal_add_guest_details_country').innerText = '';
+        //    document.getElementById('modal_add_guest_details_select_country_btn').innerText = '';
+        //    document.getElementById('modal_add_guest_details_place_of_residence').value = '';
+        //    document.getElementById('modal_add_guest_details_date_birth').value = '';
+        //}
+
+    }
+
+    // load
+    modal_add_guest_details.load();
+
+
+</script>

@@ -1,0 +1,87 @@
+.top-bar {
+    @media screen and (max-width: 991px) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding-left: 5.2rem;
+        width: 100%;
+    }
+    .wrapper {
+        background-color: $bg-secondary;
+        display: flex;
+        justify-content: space-between;
+        color: $text-primary;
+        font-size: .9rem;
+        padding: .3rem .7rem;
+    }
+
+    .top-bar-item {
+        display: flex;
+        flex-direction: row;
+
+        @media screen and (max-width: 500px) {
+            flex-direction: column;
+        }
+
+        .top-bar-label {
+            @media screen and (max-width: 500px) {
+                padding-bottom: .2rem;
+            }
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: $text-secondary;
+
+        &:hover {
+            text-decoration: none;
+            color: $text-secondary;
+        }
+    }
+
+    .top-bar-btn {
+        img {
+            width: 1rem;
+            display: block;
+            float: left;
+            padding-top: .3rem;
+            margin-right: .4rem;
+        }
+
+        .dropdown-menu {
+            min-width: 6rem !important;
+
+            img {
+                padding-top: .4rem;
+            }
+        }
+    }
+}
+.banner {
+    margin-top: 1.5rem;
+    .logo {
+        a {
+            color: $color-black;
+            text-align: center;
+            &:hover {
+                text-decoration: none;
+                color: $color-black;
+            }
+            .banner-title {
+                font-size: 1.8rem;
+            }
+            span {
+                display: block;
+                text-transform: uppercase;
+                font-size: .7rem;
+                letter-spacing: 3px;
+                width: 180px;
+                margin: .4rem auto;
+                border-top: 1px solid $color-silver;
+                padding-top: .4rem;
+                opacity: .5;
+            }
+        }
+    }
+}

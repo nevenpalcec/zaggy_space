@@ -1,0 +1,182 @@
+﻿@code {
+
+    [Parameter] public System.Data.DataTable rents { get; set; }
+
+    string char_check(string a)
+    {
+        return (a == "" ? " - - - " : a);
+    }
+
+}
+
+
+@if (rents != null)
+{
+
+    <div class="table-responsive scrollbar">
+        <table class="table table-striped table-hover pt-3">
+            <thead class="bg-white" style="border-bottom-width: 2px">
+                <tr>
+                    <th scope="col"> </th>
+                    <th scope="col" style="max-width: 250px;">@lng.l.Reservation</th>
+                    <th scope="col" style="max-width: 250px;">@lng.l.Contact</th>
+                 
+                        <th scope="col" style="max-width: 250px;">@lng.l.Property</th>
+                    <th scope="col">@lng.l.Dates</th>
+                    <th scope="col">@lng.l.Period</th>
+                    <th scope="col" class="text-center">@lng.l.Status</th>
+                    <th scope="col" class="text-end me-1">@lng.l.Commission</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow r in rents.Rows)
+                {
+                    <tr>
+
+                        <td class="align-middle">
+                            <a class="text-dark text-decoration-none" href="/reservations/@r["id_hash"]">
+                                <img class="rounded-circle" src="@Settings.img_avatar_small" style="height: 30px;" />
+                            </a>
+                        </td>
+
+                        <td>
+                            <div style="display:flex">
+                                        <div class="text-truncate" style="max-width: 250px;">
+                                    <a class="text-dark text-decoration-none" href="/reservations/@r["id_hash"]" style="color: @(r["active"].ToString() == "Y" ? "" : "red") !important;">
+
+                                        <span class="text-truncate">@char_check(r["contact_name"].ToString())</span>
+                                        <div>
+                                            @if (string.IsNullOrWhiteSpace(r["country_code"].ToString()) == false)
+                                            {
+                                                <img src="/assets/images/icons/flags/@(r["country_code"]).svg" style="height: 15px; margin-right: 10px;" loading="lazy" />
+                                            }
+                                            <span class="link-secondary fs--1 mb-0" style="color: @(r["active"].ToString() == "Y" ? "" : "red");">
+                                                @r["id_hash"]
+                                            </span>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="text-dark">
+                            <div style="display:flex">
+                                <div class="text-truncate" style="max-width: 250px;">
+                                    <a class="link-dark text-decoration-none" style="color: @(r["active"].ToString() == "Y" ? "" : "red");" href="mailto:@r["contact_email"]">@char_check(r["contact_email"].ToString())</a>
+                                    <div>
+                                        <a class="text-decoration-none" href="tel:@r["contact_tel"].ToString()">
+                                            <span class="link-secondary fs--1 mb-0 text-truncate" style="color: @(r["active"].ToString() == "Y" ? "" : "red");">@char_check(r["contact_tel"].ToString())</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                      
+                        <!-- property -->
+                        <td class="text-dark ">
+                            <div style="display: flex;">
+                                <div class="text-truncate" style="max-width: 250px;">
+                                    <div class="text-truncate">
+
+                                        <div>
+                                            <a class="link-dark text-decoration-none" href="/objects/details/@r["object_id_hash"]" style="color: @(r["active"].ToString() == "Y" ? "" : "red");"> @r["object_name"]</a>
+                                        </div>
+
+
+                                        <div>
+                                            <a class="text-decoration-none fs--1 text-secondary" href="/objects/details/@r["object_id_hash"]">
+                                                <span>
+                                                    @lng.l.Created:
+                                                </span>
+                                                <span class="">
+                                                    @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yyyy") | @r["days"].ToString()d
+                                                </span>
+                                            </a>
+                                        </div>
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- period -->
+                        <td class="text-dark text-nowrap" style="color: @(r["active"].ToString() == "Y" ? "" : "red !important");">
+                            <div>
+                                @System.DateTime.Parse(r["from_datetime"].ToString() ?? "").ToString("dd.MM.yy") - @System.DateTime.Parse(r["from_datetime"].ToString() ?? "").ToString("HH:mm")h
+                            </div>
+                            <div>
+                                @System.DateTime.Parse(r["until_datetime"].ToString() ?? "").ToString("dd.MM.yy") - @System.DateTime.Parse(r["until_datetime"].ToString() ?? "").ToString("HH:mm")h
+                            </div>
+                        </td>
+
+                        <!-- period -->
+                        <td class="text-dark">
+                            <div>
+                                @System.DateTime.Parse(r["from_datetime"].ToString() ?? "").ToString("dd.MM.yy") - @System.DateTime.Parse(r["from_datetime"].ToString() ?? "").ToString("HH:mm")h
+                            </div>
+                            <div class="fs--1 text-secondary" style="color: @(r["active"].ToString() == "Y" ? "" : "red !important");">
+                                <span>
+                                    @lng.l.Days: @r["days"] | @bl.lng.l.Hours: @r["hours"]h
+                                </span>
+                            </div>
+                        </td>
+
+
+                        <!-- status -->
+                        <td class="text-dark text-center" >
+
+                            <div>
+                                <div class="badge" style="background-color: @r["rent_status_color"]; color: @r["rent_status_color_font"]">
+                                    @r["rent_status_name"]
+                                </div>
+                            </div>
+
+                            @if(r["active"].ToString() == "Y")
+                            {
+                                <div>
+                                    <div class="badge badge-soft-success">
+                                        Active &nbsp; <i class="fas fa-check"></i>
+                                     </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <div class="badge badge-soft-danger">
+                                        Disable &nbsp; <i class="fas fa-ban"></i>
+                                    </div>
+                                </div>
+                            }
+
+                        </td>
+
+                        <!-- price -->
+                        <td class="text-dark text-end text-dark me-1" style="color: @(r["active"].ToString() == "Y" ? "" : "red !important");">
+                            <span class="fw-bold">@r["price"] @r["currency_label"]</span>
+                            <p class="link-secondary fs--1 mb-0" style="color: @(r["active"].ToString() == "Y" ? "" : "red !important");"> @r["rent_source_provision"] @r["currency_label"]</p>
+ 
+                        </td>
+
+                        <td class="text-center">
+
+                            @if(r["over_booking"].ToString().is_null() == false)
+                            {
+                                <i class="fas fa-exclamation-triangle text-warning" title="overbooning"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-thumbs-up text-success" title="ok"></i>
+                            }
+                             
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

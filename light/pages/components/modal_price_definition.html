@@ -1,0 +1,263 @@
+﻿<!-- modal for price changing on calendar  -->
+<div>
+    <div class="modal_definition_price hidden" id="price_definition_modal">
+
+        <div class="modal_put_rent_header position-relative">
+            <div class="text-left font_6 mb-3 pr-4" id="price_change_object_name">Price definition on a day </div>
+            <span class="modal_put_rent_close" onclick="price_definition.ui.close_modal();"><i class="fas fa-times"></i></span>
+        </div>
+
+        <hr />
+
+        <div class="modal_put_rent_body">
+
+            <!-- Date -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="modal_put_rent_date_from" class="form-group">
+                        <label class="mb-1 font_3">Date: </label>
+                        <input type="text" id="modal_price_definition_date"
+                               class="form-control focus" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="modal_put_rent_date_until" class="form-group">
+                        <label class="mb-1 font_3">Day: </label>
+                        <input type="text" id="modal_price_definition_day" class="form-control focus" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-top py-2"></div>
+
+            <div class="border-top py-2"></div>
+
+            <!-- Loading -->
+            <div id="prices_change_content_loading" class="view_loading" style="display: none;">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-xl-6">
+                    <!-- Price -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Price</div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <div class="input-group-prepend cursor_point">
+                                <span class="input-group-text" id="modal_price_definition_price_currency_label"></span>
+                            </div>
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_price" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Special price -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Special price: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <div class="input-group-prepend cursor_point">
+                                <span class="input-group-text" id="modal_price_definition_price_special_currency_label"></span>
+                            </div>
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_price_special" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Price extra -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Price extra: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <div class="input-group-prepend cursor_point">
+                                <span class="input-group-text" id="modal_price_definition_price_extra_currency_label"></span>
+                            </div>
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_price_extra" readonly>
+                        </div>
+                    </div>
+
+                    <!-- From -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">From: </div>
+                        <div id="" class="input-group input_remove_number_arrow" style="width: 130px;">
+                            <div class="input-group-prepend cursor_point">
+                                <span class="input-group-text"><i class="far fa-user"></i></span>
+                            </div>
+                            <input type="number" class="form-control focus text-center" value="1" id="modal_price_definition_from" readonly>
+                        </div>
+                    </div>
+
+                    <!-- B2B price -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">B2B price: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <div class="input-group-prepend cursor_point">
+                                <span class="input-group-text" id="modal_price_definition_b2b_currency_label"></span>
+                            </div>
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_b2b" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Min stay -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Minimal stay: </div>
+                        <div id="" class="input-group input_remove_number_arrow" style="width: 130px;">
+                            <div class="input-group-prepend cursor_point">
+                                <span class="input-group-text"><i class="fas fa-moon fa-xs"></i></span>
+                            </div>
+                            <input type="number" class="form-control focus text-center" value="1" id="modal_price_definition_min_stay" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Check in -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Check in: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_check_in" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Check out -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Check out: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_check_out" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-xl-6">
+                    <!-- Stock -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Stock: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_stock" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Stock rent -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Stock rent: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_stock_rent" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Stock offer -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Stock offer: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_stock_offer" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Stock ical -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Stock ical: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_stock_ical" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Stock available -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Stock available: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_stock_available" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Advance rez -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Advance rez: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_advance_rez" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Enable -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="text-uppercase font_medium mr-auto">Enable: </div>
+                        <div id="" class="input-group" style="width: 130px;">
+                            <input type="text" class="form-control focus text-center" value="1" id="modal_price_definition_enable" readonly>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="border-top py-2"></div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <button class="btn btn_primary" onclick="price_definition.ui.close_modal();">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <include class="pop_up_save_notification_success"></include>
+    <include class="pop_up_save_notification_failed"></include>
+
+</div>
+
+<script>
+
+    var price_definition = {};
+
+
+    price_definition.ui = new function () {
+
+
+
+        this.close_modal = function () {
+
+            document.getElementById('price_definition_modal').classList.add('hidden');
+
+        }
+
+        // open modal
+        this.open = async (day) => {
+
+            var object_id = page.get_id();
+
+            var url = `/api/objects_prices_days/price_get?day=${day}&object_id=${object_id}`
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response)[0];
+
+            //console.log(json_response);
+
+            var currency_label = json_response['currency_label'];
+
+            modal_price_definition_price_currency_label.innerHTML = currency_label;
+            modal_price_definition_price_special_currency_label.innerHTML = currency_label;
+            modal_price_definition_price_extra_currency_label.innerHTML = currency_label;
+            modal_price_definition_b2b_currency_label.innerHTML = currency_label;
+
+            var date = json_response['day'].split('T')[0];
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var day = new Date(date);
+            day = days[day.getDay()]
+
+            modal_price_definition_day.value = day;
+            modal_price_definition_date.value = date;
+
+            modal_price_definition_from.value = json_response['extra_from'];
+            modal_price_definition_check_in.value = json_response['check_in'] == 'Y' ? 'Allowed' : 'Not allowed';
+            modal_price_definition_check_out.value = json_response['check_out'] == 'Y' ? 'Allowed' : 'Not allowed';
+            modal_price_definition_stock.value = json_response['stock'];
+            modal_price_definition_stock_rent.value = json_response['is_booked_rent_count'];
+            modal_price_definition_stock_offer.value = json_response['is_offer_rent_count'];
+            modal_price_definition_stock_ical.value = json_response['is_offer_rent_count'];
+            modal_price_definition_stock_available.value = json_response['stock_available'];
+            modal_price_definition_min_stay.value = json_response['min_stay'];
+            modal_price_definition_price.value = json_response['price'];
+            modal_price_definition_price_extra.value = json_response['price_extra'];
+            modal_price_definition_b2b.value = json_response['price_b2b'];
+            modal_price_definition_price_special.value = json_response['price_special'];
+            modal_price_definition_advance_rez.value = json_response['min_advance_res'];
+            modal_price_definition_enable.value = json_response['enable'] == 'Y' ? 'Yes' : 'No';
+
+            document.getElementById('price_definition_modal').classList.remove('hidden');
+
+        }
+
+    }
+
+</script>

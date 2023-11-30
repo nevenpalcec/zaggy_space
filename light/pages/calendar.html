@@ -1,0 +1,1408 @@
+<!-- page -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white" style="z-index: 999;">
+
+        <!-- left side -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="far fa-calendar-alt pr-2"></i>Calendar
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filters -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+
+        <!-- Months -->
+        <div id="calendar_filter_month" class="view_dropdown toggle">
+            <button class="btn btn_hover px-2" style="padding-top: .6rem; padding-bottom: .6rem;" id="calendar_button_filter_month">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-calendar-alt font_7"></i>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" id="calendar_modal_filter_month">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-month="1" onclick="calendar.ui.choose_month(1);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">1</div>
+                                <div class="align-self-center">January</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="2" onclick="calendar.ui.choose_month(2);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">2</div>
+                                <div class="align-self-center">February</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="3" onclick="calendar.ui.choose_month(3);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">3</div>
+                                <div class="align-self-center">March</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="4" onclick="calendar.ui.choose_month(4);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">4</div>
+                                <div class="align-self-center">April</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="5" onclick="calendar.ui.choose_month(5);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">5</div>
+                                <div class="align-self-center">May</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="6" onclick="calendar.ui.choose_month(6);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">6</div>
+                                <div class="align-self-center">June</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="7" onclick="calendar.ui.choose_month(7);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">7</div>
+                                <div class="align-self-center">July</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="8" onclick="calendar.ui.choose_month(8);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">8</div>
+                                <div class="align-self-center">August</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="9" onclick="calendar.ui.choose_month(9);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">9</div>
+                                <div class="align-self-center">September</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="10" onclick="calendar.ui.choose_month(10);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">10</div>
+                                <div class="align-self-center">October</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="11" onclick="calendar.ui.choose_month(11);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">11</div>
+                                <div class="align-self-center">November</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="12" onclick="calendar.ui.choose_month(12);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">12</div>
+                                <div class="align-self-center">December</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Calendar -->
+        <div class="d-flex">
+            <button class="btn btn_hover" onclick="calendar.ui.go_before();"><i class="fas fa-angle-left"></i></button>
+            <div id="calendar_filter_date" class="view_dropdown filter_calendar d-lg-block d-none">
+                <button class="btn btn_hover  px-2 py-1 d-lg-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1 text-left">
+                            <div class="font_1 text-uppercase font_bold">Calendar</div>
+                            <div id="calendar_filter_date_from" class="font_3 font_light text-left">-</div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div id="form_calendar" class="dropdown_menu calendar hidden">
+                    <div class="hidden">
+                        <div class="font_bold">
+                            Calendar <span id="input_from"></span><span id="input_until"></span>
+                        </div>
+
+                    </div>
+                    <div id="double_calendar" class="filter_dropdown_calendar">
+                    </div>
+                    <hr class="m-0">
+                    <div class="dropdown_footer d-flex">
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;" onclick="calendar.bl.today_diff_change(-1)"><i class="fas fa-angle-left"></i></div>
+                        <div class="dropdown_btn flex_1 text-center font_3" onclick="calendar.bl.datepicker_set_today();" data-today_diff="0">Today</div>
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;" onclick="calendar.bl.today_diff_change(1)"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <a id="cal_filter_calendar_btn" class="filter_link d-lg-none d-block mobile"><i class="far fa-calendar-alt"></i></a>
+            <button class="btn btn_hover" onclick="calendar.ui.go_next();"><i class="fas fa-angle-right"></i></button>
+        </div>
+
+        <div class="filter_line_y"></div>
+
+        <!-- Input - number of day -->
+        <div class="input_remove_number_arrow">
+            <input type="number" class="form-control focus text-center" value="230" style="max-width: 3.5rem; min-width: 3.5rem;" id="calendar_filter_days" onchange="calendar.ui.change_number_of_display_days();">
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control focus" style=" min-width: 9rem;" placeholder="Search name" id="calendar_object_search_name">
+            <span class="search_icon" style="margin-top: .15rem;"><i class="fas fa-search"></i></span>
+        </div>
+
+        <!-- Refresh page -->
+        <div class="ml-auto">
+            <button class="btn btn_hover" onclick="calendar.bl.refresh_page();">
+                <i class="fas fa-sync"></i>
+            </button>
+        </div>
+
+
+        <!-- Tools -->
+        <div id="calendar_filter_tools" class="view_dropdown toggle hidden">
+            <button class="btn btn_hover">
+                <div class="d-flex align-items-center">
+                    <span class="font_6"><i class="fas fa-cog"></i></span>
+                    <span class="font_1 ml-2"><i class="fas fa-chevron-down"></i></span>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Tools</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fab fa-connectdevelop"></i></div>
+                                <div class="align-self-center">Default</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-coins"></i></div>
+                                <div class="align-self-center">Price</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Min stay</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Check in/out</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-csv"></i></div>
+                                <div class="align-self-center">Extra</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-word"></i></div>
+                                <div class="align-self-center">Special</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                                <div class="align-self-center">Stock</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-users"></i></div>
+                                <div class="align-self-center">Enable</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-users"></i></div>
+                                <div class="align-self-center">Advance</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-users"></i></div>
+                                <div class="align-self-center">Single</div>
+                                <div class="ml-auto icon_check"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Loading -->
+    <div id="calendar_content_loading" class="view_loading" style="display: none;">
+        <img src="/assets/images/icons/loading.svg" />
+    </div>
+
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- calendar page -->
+        <div class="view_calendar">
+
+            <div id="calendar_outer_table">
+
+                <div id="calendar_table_calendar" class="custom_table d-flex">
+
+                    <!-- properties -->
+                    <div class="pos_left">
+
+                        <div class="left_head">
+                            <div class="font-weight-bold" id="prices_total_objects">Objects -</div>
+                        </div>
+
+                        <!-- list of properties -->
+                        <div class="left_body" id="calendar_div_object_list"></div>
+                    </div>
+
+                    <div>
+                        <!--header-->
+                        <div class="cleaners_table_header" style="width: 50px">
+                            <div class="headcol_label font-weight-bold font_2" id="">Main.</div>
+                        </div>
+                        <div class="tbody" id="cleaners_table_status">
+                        </div>
+                    </div>
+
+                    <!-- days -->
+                    <div class="calendar_wrapper">
+                        <div class="thead" id="calendar_thead">
+                            <div class="headcol holiday">
+                                <div class="headcol_sub">Sun</div>
+                                <div class="headcol_label">01</div>
+                            </div>
+
+                        </div>
+
+                        <!-- days -->
+                        <div class="tbody" id="calendar_tbody">  </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- templates-->
+<section>
+    <!-- tempalate object (left side) -->
+    <template id="template_object_body">
+        <div class="left_body_box">
+            <!-- Name -->
+            <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                <a href="#object_general?${object_id}" onclick="document.querySelector('.tooltip').remove()" class="left_body_icon d-block p-1" data-toggle="tooltip" data-placement="top" data-original-title="Object details">
+                    <i class="fas fa-link"></i>
+                </a>
+                <div class="left_body_icon py-1 mr-1 text-danger open_overbooking d-none" data-toggle="tooltip" data-placement="top" data-original-title="Open overbooking">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <a href="#object_calendars?${object_id}" class="left_body_name">
+                    <div class="limit_row_text_3"> ${object_name} </div>
+                    <!--<div> A+2 </div>-->
+                </a>
+            </div>
+        </div>
+    </template>
+
+    <!-- template hading days -->
+    <template id="template_header_days">
+        <div class="headcol" id="">
+            <div class="headcol_sub ${bold_month} font_1">${day_name_short}</div>
+            <div class="headcol_label font-weight-bold font_2">${day}</div>
+            <div class="headcol_sub ${bold_day_name} font_1">${day_name}</div>
+        </div>
+    </template>
+
+
+
+    <!--template for cleaning-->
+    <template id="template_is_cleaning">
+        <div class="" style="display: flex; background: transparent !Important; justify-content: center; align-items: center; height: 60px; border-bottom: 1px solid #dee2e6; border-right: 1px solid #dee2e6; ">
+            <div id="object_cleaning_${object_id}_${object_cleaning_id}" class="view_dropdown toggle" style="display: flex; justify-content: center; align-items: center;">
+                <button class="btn btn_hover px-2" style="padding-top: .6rem; padding-bottom: .6rem;" id="calendar_button_filter_month">
+                    <div class="d-flex align-items-center">
+                        <span style="display: block; width: 20px; height: 20px; background-color: ${object_cleans_color};"></span>
+                    </div>
+                </button>
+                <div class="dropdown_menu filter_min_width hidden" id="list_container_${object_id}">
+                    ${object_clean_statuses}
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--object cleans statuses-->
+    <template id="template_cleans_statuses">
+        <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+            ${object_li_cleans_statuses}
+        </ul>
+    </template>
+
+    <!--object cleaning status for dropdown-->
+    <template id="tempalte_object_status">
+        <li class="dropdown_li" onclick="${function_to_call}">
+            <a class="dropdown_a">
+                <div class="d-flex align-items-center">
+                    <div class="icon font_2 font_medium" style="background-color:${color}!Important;" id="object_cleans_item_id_${object_id}_${clean_id}"></div>
+                    <div class="align-self-center" id="object_cleans_item_name">${name}</div>
+                </div>
+            </a>
+        </li>
+    </template>
+
+    <!-- template reservation -->
+    <template id="template_reservation">
+        <div id="rent_id_${rent_id}" draggable="true" ondragstart="calendar.ui.reservation_drag(event)" data-rent_id="${rent_id}" data-object_id="${object_id}" data-day="${days}" class="rent_div" onmouseenter="calendar.ui.rent_mouse_enter();" onmouseleave="calendar.ui.rent_mouse_leave();">
+            <a onclick="modal_details_rent.ui.show_details('${rent_id}');" class="card-reservation">
+                <div class="col-wrapper">
+                    <div class="col-reservation" style="margin-left: ${margin_left}px; color: ${color_font} !important; background-color: ${color}; width: ${width}px;">
+                        <div class="reservation-wrapper">
+                            <div class="reservation-status ${rent_status_color}"></div>
+                            <div class="">
+                                <div class="d-flex">
+                                    <div class="icon-flag">
+                                        <img src="./assets/images/icons/flags/${code2}.svg" alt="">
+                                    </div>
+                                    <div class="label"> ${contact_name} </div>
+                                    <div class="icon-sync pl-1 ml-auto">
+                                        <i class="fas fa-cloud-download-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <div class="item-icon">
+                                    <img src="./assets/images/icons/portals/${rent_source_icon}.svg" alt="">
+                                </div>
+                                <div class="item person">
+                                    <span class="px-1"><strong> ${total_guests} </strong></span><i class="fas fa-user"></i>
+                                </div>
+                                <div class="item value pl-1 ml-auto">
+                                    <span class="pl-1"> ${label} <strong> ${price_sum} </strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </template>
+
+</section>
+
+<!-- scripts -->
+<script>
+
+    /*DragEvent*/
+
+    var calendar = {};
+
+    calendar.last_day = '';
+    calendar.rent_hover = false;
+
+    calendar.add_new_rent = true;
+
+    // on load function
+    calendar.load = async function () {
+
+        calendar_content_loading.style.display = 'block';
+        calendar_table_calendar.style.visibility = 'hidden';
+
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        //Global ui
+        ui.display_title("Calendar");
+
+        // components
+        ui.dropdown_date("calendar_filter_date");
+        ui.dropdown_text("calendar_filter_month");
+
+
+        ui.dropdown_check("calendar_filter_tools");
+
+        // variables
+        calendar_filter_days.value = bl.varables.get('calendar_days');
+        calendar_filter_date_from.innerHTML = bl.varables.get('calendar_date_from');
+
+        // front
+        calendar.ui.filter_calendar();
+        calendar.ui.filter_mobile_btn("cal_filter_calendar_btn", "calendar_filter_date");
+        calendar.ui.auto_resize_col_rent();
+        calendar.ui.search_objects();
+        calendar.ui.range_of_clicking_on_table();
+
+        // logic
+        await calendar.bl.objects_display();
+
+        await calendar.bl.days_load();
+
+        calendar_table_calendar.style.visibility = 'visible';
+
+    }
+
+    // logic
+    calendar.bl = new function () {
+
+        // variables
+        this.dispay_max_objects = 50;
+        this.objects_ids = [];
+
+        // display list of objects
+        this.objects_display = async () => {
+
+            let worker_id = bl.workers.current_worker_id();
+            //debugger;
+
+            // get objects
+            var objects = await bl.objects.list_get_db(worker_id);
+
+            if (objects.length > 10) {
+                calendar_outer_table.style.overflowY = "auto";
+                calendar_table_calendar.style.overflowX = "none";
+            } else {
+                calendar_outer_table.style.overflowY = "none";
+                calendar_table_calendar.style.overflowX = "auto";
+                calendar_table_calendar.style.width = "calc(100vw - 96px)";
+            }
+
+            cleaners_table_status.innerHTML = '';
+            calendar_div_object_list.innerHTML = '';
+
+            this.objects_ids = [];
+
+            var object_name_search = calendar_object_search_name.value.toLowerCase();
+
+            var object_cleans_data = bl.object_cleans.get_data();
+
+            for (var o of objects) {
+
+                var object_clean_statuses = template_cleans_statuses.innerHTML;
+
+
+                var li_statuses = '';
+                var i = 1;
+                // generate li for list
+                for (var oc of object_cleans_data) {
+                    var s = tempalte_object_status.innerHTML;
+
+                    s = s.replaceAll('${color}', oc['color']);
+                    s = s.replaceAll('${name}', oc['name']);
+                    s = s.replaceAll('${function_to_call}', `calendar.bl.on_object_cleans_statuses_click(${o['id']}, ${oc['id']})`);
+                    //generate uniqe id
+                    s = s.replaceAll('${object_id}', o['id']);
+                    s = s.replaceAll('${clean_id}', oc['id']);
+                    li_statuses += s;
+                    i++;
+                }
+
+                //hard code last dropdown item
+                var s = tempalte_object_status.innerHTML;
+                s = s.replaceAll('${color}', '#000');
+                s = s.replaceAll('${name}', 'Nothing');
+                s = s.replaceAll('${function_to_call}', `calendar.bl.on_object_cleans_statuses_click(${o['id']}, -1)`);
+                s = s.replaceAll('${object_id}', o['id']);
+                s = s.replaceAll('${clean_id}', -1);
+                li_statuses += s;
+
+                // add full list li of statuses
+                object_clean_statuses = object_clean_statuses.replaceAll('${object_li_cleans_statuses}', li_statuses);
+
+                var object_name = o['name'].toLowerCase();
+                var object_id = o['id'];
+                var object_cleaning_id = o['clean_id'];
+                let result = object_name.includes(object_name_search);
+                var object_cleans_color = o['object_cleans_color'];
+
+                //list of object cleans
+                if (!object_name == true || result == true) {
+
+                    var i = objects.indexOf(o);
+
+                    if (i <= this.dispay_max_objects) {
+                        this.objects_ids.push(o['id']);
+
+                        var tc = template_is_cleaning.innerHTML;
+                        tc = tc.replaceAll('${object_cleans_color}', object_cleans_color);
+                        tc = tc.replaceAll('${cleaning_id}', object_cleaning_id);
+                        tc = tc.replaceAll('${object_id}', object_id);
+                        tc = tc.replaceAll('${object_cleaning_id}', object_cleaning_id);
+                        tc = tc.replaceAll('${object_clean_statuses}', object_clean_statuses);
+
+                        var t = template_object_body.innerHTML;
+                        t = t.replace('${object_name}', o['name']);
+                        t = t.replace('${object_id}', object_id);
+                        t = t.replace('${object_id}', object_id);
+
+
+                        js.html.insertAdjacentHTML('cleaners_table_status', tc);
+                        js.html.insertAdjacentHTML('calendar_div_object_list', t);
+                        ui.dropdown_text(`object_cleaning_${object_id}_${object_cleaning_id}`);
+                    }
+                }
+            }
+        }
+
+        this.datepicker_set_today = function () {
+
+            let today_diff = parseInt(document.querySelector('[data-today_diff]').dataset.today_diff);
+            let today = new Date();
+            today.setDate(today.getDate() + today_diff);
+
+            $('#double_calendar').datepicker('setDate', today);
+            setTimeout(function () {
+                $('.ui-datepicker-current-day').click();
+            }, 250);
+
+        }
+
+        //when status is changed
+        this.on_object_cleans_statuses_click = async function (object, clean_id) {
+            var user_id = bl.workers.current_user_guid();
+            var data = {
+                user_id: user_id,
+                object_id: object,
+                clean_id: clean_id,
+            }
+            var url = 'api/objects_maintance/add';
+            var response = await ajax.post_json(url, data);
+            await calendar.load();
+        }
+
+
+        this.today_diff_change = function (change) {
+
+            let today_el = document.querySelector('[data-today_diff]');
+            let today_diff = parseInt(today_el.dataset.today_diff);
+            today_diff += change;
+
+            today_el.dataset.today_diff = today_diff;
+
+            let print = '';
+            if (today_diff > 0) {
+                print = '+' + today_diff;
+            }
+            else if (today_diff < 0) {
+                print = today_diff;
+            }
+
+            today_el.innerText = 'Today ' + print;
+        }
+
+        // displaay calendar header
+        this.days_header_display = () => {
+
+            calendar_thead.innerHTML = '';
+
+            var v = bl.varables.list();
+            var date_from = v['calendar_date_from'];
+            var days = v['calendar_days'];
+
+            for (var i = 0; i <= days; i++) {
+
+                var date = new Date(date_from);
+                var date_new = js.date.add_day(date, i);
+                var date_format_new = new Date(date_new);
+                var day_name = new Date(date_new).toLocaleString('en', { weekday: 'short' });
+                var month_name = new Date(date_new).toLocaleString('en', { month: 'short' });
+
+                var day = js.date.get_day(date_new);
+
+                var t = template_header_days.innerHTML;
+
+                if (date_format_new.getDay() == 0 || date_format_new.getDay() == 6) {
+                    t = t.replace('${bold_month}', 'font-weight-bold');
+                    t = t.replace('${bold_day_name}', 'font-weight-bold');
+                } else {
+                    t = t.replace('${bold_month}', '');
+                    t = t.replace('${bold_day_name}', '');
+                }
+
+                t = t.replace('${day}', day);
+                t = t.replace('${day_name}', day_name);
+                t = t.replace('${day_name_short}', month_name);
+                js.html.insertAdjacentHTML('calendar_thead', t);
+
+                calendar.last_day = date_new;
+
+            }
+        }
+
+        // display days in calendar
+        this.days_display = () => {
+
+            calendar_tbody.innerHTML = '';
+
+            var v = bl.varables.list();
+            var date_from = v['calendar_date_from'];
+            var days = v['calendar_days'];
+
+            for (var o of this.objects_ids) {
+
+                var tr = document.createElement("div");
+                tr.classList.add('tr');
+
+                for (var i = 0; i <= days; i++) {
+
+                    var date = new Date(date_from);
+                    var date_new = js.date.add_day(date, i);
+                    var day_of_week = new Date(date_new).getDay();
+
+                    var bodycol = document.createElement('div');
+                    bodycol.classList.add('bodycol');
+
+                    bodycol.addEventListener("drop", async function (ev) {
+
+                        ev.preventDefault();
+
+                        ui.content_loading('calendar_content_loading');
+
+                        var rent_id = ev.dataTransfer.getData('rent_id');
+                        var object_id = ev.currentTarget.dataset.object_id;
+                        var day = ev.currentTarget.dataset.day;
+
+                        // save date to db
+                        var url = `/api/rents/rents_move/${rent_id}?date_from=${day}&object_id=${object_id}`;
+                        var response = await ajax.get(url);
+
+                        calendar.bl.rents_load();
+
+                        ui.content_loading_hide('calendar_content_loading');
+
+
+                    });
+
+                    bodycol.addEventListener("dragover", function (event) {
+                        event.preventDefault();
+                    });
+
+                    if (day_of_week == 0 || day_of_week == 6) {
+                        bodycol.classList.add('holiday');
+                    }
+
+                    bodycol.dataset.object_id = o;
+                    bodycol.dataset.day = date_new;
+
+                    bodycol.innerHTML = '<div class="col_td">-</div>';
+                    tr.insertAdjacentElement('beforeend', bodycol);
+                    bodycol.add
+
+                }
+
+                calendar_tbody.insertAdjacentElement('beforeend', tr);
+
+            }
+
+            // enable range select
+            calendar.ui.range_of_clicking_on_table();
+
+        }
+
+        // load rents
+        this.rents_load = async () => {
+            //debugger;
+            // delete all reservation div from calendar
+            var divs = document.querySelectorAll('.rent_div');
+
+            for (var d of divs) {
+                d.remove();
+            }
+
+            var v = bl.varables.list();
+
+            var user_id = bl.workers.current_user_id();
+            var date_from = v['calendar_date_from'];
+            var days = v['calendar_days'];
+
+            var objs = this.objects_ids.join();
+
+            var url = '/api/rents/list_calendar/' + user_id + '?date_from=' + date_from + '&days=' + days + '&objs=' + objs;
+
+            var data = await ajax.get_json(url);
+
+            localStorage.setItem('rents_calendar', JSON.stringify(data));
+
+            var number_of_objects = 0;
+
+            // create div rent
+            this.reservation_create = (r, before, date_until_last_day) => {
+
+                var col_width = document.querySelector('.bodycol').offsetWidth;
+                var date_from_rent = r['from_date'];
+                var date_until_rent = !date_until_last_day == true ? r['until_date'] : date_until_last_day;
+
+                // if reservation starts before
+                if (before == true) {
+                    if (date_until_rent > calendar.last_day) {
+                        days = js.date.days_between(calendar.last_day, date_from);
+                    }
+                    else {
+                        days = js.date.days_between(date_until_rent, date_from);
+                    }
+
+                }
+                else {
+
+                    // if reservation longer than calendar
+                    if (!date_until_last_day == false) {
+
+                        days = js.date.days_between(date_until_rent, date_from_rent);
+                    }
+
+                    // reservation in calendar days
+                    else {
+                        days = r['days'];
+                    }
+                }
+
+                var extended_pixels_for_last_day = 0;
+
+                if (date_until_rent == calendar.last_day) {
+                    // extended for few pixels last cell
+                    // unknown bug
+                    extended_pixels_for_last_day = 0;
+                }
+                // calculate width reservation
+                var rent_width = (extended_pixels_for_last_day + col_width * days) - 10;
+
+                var t = template_reservation.innerHTML;
+
+                t = t.replace('${width}', rent_width);
+                t = t.replace('${color}', r['color']);
+                t = t.replace('${color_font}', r['color_font']);
+                t = t.replace('${rent_id}', r['id']);
+                t = t.replace('${rent_id}', r['id']);
+                t = t.replace('${rent_id}', r['id']);
+                t = t.replace('${object_id}', r['object_id']);
+                t = t.replace('${days}', r['from_date']);
+                if (r['price_sum'] == null) {
+                    t = t.replace('${price_sum}', '');
+                } else {
+                    t = t.replace('${price_sum}', r['price_sum'].toFixed(2));
+                }
+
+                t = t.replace('${label}', r['label']);
+                t = t.replace('${code2}', r['code2']);
+                t = t.replace('${total_guests}', r['adults'] + r['children']);
+                t = t.replace('${margin_left}', before == true ? '0' : '0');
+
+                t = t.replace('${rent_source_icon}', r['rent_source_icon'] || 'syncbeds');
+                t = t.replace('${contact_name}', js.text.check_if_empty(r['contact_name']));
+
+                if (r['over_booking'] != null) {
+                    t = t.replace('${adults}', r['adults']);
+                    t = t.replace('${rent_status_color}', 'red');
+                }
+                else {
+                    t = t.replace('${adults}', r['adults']);
+                    t = t.replace('${rent_status_color}', 'green');
+                }
+
+                return t;
+
+            }
+
+            for (var r of data['rents']) {
+
+                number_of_objects++;
+
+                var date_from_rent = r['from_date'];
+                var date_until_rent = r['until_date'];
+                var object_id = r['object_id'];
+                var days = r['days'];
+
+                var q = '[data-object_id="' + object_id + '"][data-day="' + date_from_rent + '"]';
+                var td = document.querySelector(q);
+
+                if (!td == false) {
+
+                    var date_until_last_day = new Date(calendar.last_day);
+                    var date_until_rent_day = new Date(date_until_rent);
+                    if (date_until_last_day < date_until_rent_day) {
+
+                        date_until_rent = calendar.last_day;
+
+                        var t = this.reservation_create(r, false, date_until_rent);
+                        td.insertAdjacentHTML('beforeend', t);
+
+                    } else {
+                        var t = this.reservation_create(r, false, '');
+                        td.insertAdjacentHTML('beforeend', t);
+
+                    }
+
+                }
+
+                else {
+
+                    var q = '[data-object_id="' + object_id + '"][data-day="' + date_from + '"]';
+                    var td = document.querySelector(q);
+
+                    if (!td == false) {
+                        var t = this.reservation_create(r, true);
+                        td.insertAdjacentHTML('beforeend', t);
+                    }
+
+                    else {
+
+                        try {
+
+                            console.log('Missing td: ', object_id, date_from, date_until, days);
+
+                        } catch (error) {
+
+                            console.log(error);
+                        }
+
+                    }
+
+                }
+
+            }
+
+            prices_total_objects.innerText = 'Objects (' + number_of_objects + ')';
+
+            // hide for small rents
+            calendar.ui.auto_resize_col_rent();
+
+            // hover efect
+            calendar.ui.rent_hover_popup();
+
+            //calendar.ui.check_live_overbooking();
+
+        }
+
+        // load days in calendar
+        this.days_load = async () => {
+
+            ui.content_loading("calendar_content_loading");
+
+            await this.days_header_display();
+            await this.days_display();
+            await this.rents_load();
+
+            ui.content_loading_hide("calendar_content_loading");
+
+        }
+
+        this.calendar_load = async () => {
+            await this.objects_display();
+            await this.days_header_display();
+            await this.days_display();
+            await this.rents_load();
+        }
+
+        this.refresh_page = () => {
+
+            this.calendar_load();
+        }
+    }
+
+    // front
+    calendar.ui = new function () {
+
+        this.rent_mouse_enter = () => {
+            calendar.rent_hover = true;
+        }
+
+        this.rent_mouse_leave = () => {
+            calendar.rent_hover = false;
+        }
+
+        this.rent_drop = (ev) => {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("rent_id");
+            var data2 = ev.dataTransfer.getData("object_id");
+            var data3 = ev.dataTransfer.getData("days");
+            ev.target.appendChild(document.getElementById(data));
+            ev.target.appendChild(document.getElementById(data2));
+            ev.target.appendChild(document.getElementById(data3));
+        }
+
+        this.reservation_drag = (ev) => {
+            ev.dataTransfer.setData("rent_id", ev.target.dataset.rent_id);
+        }
+
+
+        this.close_modal = function () {
+            document.getElementById('modal_add_new_reservation').classList.add('hidden')
+        }
+
+        // Card col rent on table, when one day or two will hide person and value
+        this.auto_resize_col_rent = function () {
+            let cards = document.querySelectorAll(".col-reservation");
+            for (let i = 0; i < cards.length; i++) {
+                let card_person = cards[i].getElementsByClassName("person")[0];
+                let card_value = cards[i].getElementsByClassName("value")[0];
+                let width = cards[i].clientWidth;
+                if (width < 100) {
+                    card_person.classList.add("hidden");
+                }
+                if (width < 90) {
+                    card_value.classList.add("hidden");
+                }
+            }
+        }
+
+        // Modal details open calendar
+        this.modal_details_show_calendar = function (id) {
+
+            let btn = document.querySelector("." + id);
+            let dropdown = btn.getElementsByClassName("modal_dropdown_menu_calendar")[0];
+
+            btn.addEventListener("click", function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    dropdown.classList.remove("hidden");
+                }
+            });
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            })
+        }
+
+        // Filter check all
+        this.filter_check_all = function (id) {
+            let check_id = document.getElementById(id);
+            let check_btn = check_id.getElementsByClassName("all")[0];
+            let checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (let i in checkboxes) {
+                    checkboxes.item(i).checked = true;
+                }
+            });
+        }
+
+        // Filter uncheck all
+        this.filter_unCheck_all = function (id) {
+            let check_id = document.getElementById(id);
+            let check_btn = check_id.getElementsByClassName("remove")[0];
+            let checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (let i in checkboxes) {
+                    checkboxes.item(i).checked = false;
+                }
+            });
+        }
+
+        // Modal details - filter for search country
+        this.filter_search_list = function () {
+            let filter_id = document.getElementById("modal_country");
+            let li = filter_id.querySelectorAll(".dropdown_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            filter = input.value.toUpperCase();
+            for (let i = 0; i < li.length; i++) {
+                let list = li[i].children[0].lastElementChild;
+                textValue = list.textContent || list.innerText;
+                if (textValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+
+        // Modal - open details
+        this.show_details = function () {
+
+            var selected_items = document.querySelectorAll('#calendar_tbody > .tr > .bodycol');
+            var arr = [];
+
+            for (var i of selected_items) {
+                if (i.classList.contains('clicked'))
+                    arr.push(i);
+            }
+
+            var object_id = arr[0].dataset.object_id;
+            var date_from = arr[0].dataset.day;
+            var date_until = arr[arr.length - 1].dataset.day
+
+            // show modal
+            modal_add_new_rent.ui.show(object_id, date_from, date_until);
+
+            modal_add_new_rent.ui.modal_close('modal_add_new_reservation');
+
+        }
+
+        // Filter - double calendar
+        this.filter_calendar = function () {
+            $("#double_calendar").datepicker({
+                firstDay: 1,
+                //minDate: 0,
+                numberOfMonths: 1,
+                altFormat: "yy-mm-dd",
+                //setDate: new Date(bl.varables.get('calendar_date_from')),
+                onSelect: function (dateText, inst) {
+
+                    $("#form_calendar").addClass("hidden");
+                    document.querySelector(".filter_calendar > button").classList.remove("open");
+
+                    var date_iso = js.date.toIso(new Date(dateText));
+                    calendar_filter_date_from.innerHTML = date_iso;
+
+                    // save new date
+                    bl.varables.set('calendar_date_from', date_iso);
+
+                    // load calendar
+                    calendar.bl.days_load();
+
+                }
+            });
+
+            $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('calendar_date_from')));
+            calendar_filter_date_from.innerHTML = bl.varables.get('calendar_date_from');
+        }
+
+        // range of clicking on table
+        this.range_of_clicking_on_table = function () {
+
+            let table = $("#calendar_table_calendar");
+            let td = $(".bodycol");
+
+            let isMouseDown = false;
+            let startRowIndex = null;
+            let startCellIndex = null;
+
+            function selectTo(cell) {
+
+                let row = cell.parent();
+                let cellIndex = cell.index();
+                let rowIndex = row.index();
+
+                let rowStart, rowEnd, cellStart, cellEnd;
+
+                if (rowIndex < startRowIndex) {
+                    rowStart = rowIndex;
+                    rowEnd = startRowIndex;
+                } else {
+                    rowStart = startRowIndex;
+                    rowEnd = rowIndex;
+                }
+
+                if (cellIndex < startCellIndex) {
+                    cellStart = cellIndex;
+                    cellEnd = startCellIndex;
+                } else {
+                    cellStart = startCellIndex;
+                    cellEnd = cellIndex;
+                }
+
+                for (let i = rowStart; i <= rowEnd; i++) {
+                    let rowCells = table.find(".tr").eq(i).find(td);
+                    for (let j = cellStart; j <= cellEnd; j++) {
+                        rowCells.eq(j).addClass("clicked");
+                    }
+                }
+            }
+
+            table.find(td).mousedown(function (e) {
+                if (calendar.rent_hover == false) {
+                    isMouseDown = true;
+                    let cell = $(this);
+
+                    table.find(".clicked").removeClass("clicked"); // deselect everything
+
+                    if (e.shiftKey) {
+                        selectTo(cell);
+                    } else {
+                        cell.addClass("clicked");
+                        startCellIndex = cell.index();
+                        startRowIndex = cell.parent().index();
+                    }
+
+                    return false; // prevent text selection
+                }
+
+            }).mouseover(function () {
+                if (!isMouseDown) return;
+                table.find(".clicked").removeClass("clicked");
+                selectTo($(this));
+            }).bind("selectstart", function () {
+                return false;
+            });
+
+            $(document).mouseup(function () {
+
+                if (isMouseDown == true) {
+
+                    if (calendar.add_new_rent == true) {
+                        //modal_add_new_rent.show();
+                        // proba kalendara
+                        calendar.ui.show_details();
+
+                    }
+
+                }
+
+                isMouseDown = false;
+
+            });
+        }
+
+        // Over on card/object active or disable
+        this.rent_hover_popup = function () {
+            $('.col-reservation').hover(function () {
+
+                calendar.add_new_rent = false;
+            }, function () {
+
+                calendar.add_new_rent = true;
+            });
+        }
+
+        // filter mobile btn
+        this.filter_mobile_btn = function (id, dropdown_id) {
+            let mobile_btn = document.getElementById(id);
+            let dropdown = document.getElementById(dropdown_id);
+            let dropdown_btn = dropdown.getElementsByTagName("button")[0];
+            let dropdown_menu = dropdown.getElementsByClassName("dropdown_menu")[0];
+            mobile_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown.classList.remove("d-none");
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("d-none");
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+        }
+
+        // handle search objects
+        this.search_objects = () => {
+
+            // Get the input box
+            var textInput = document.getElementById('calendar_object_search_name');
+
+            // Init a timeout variable to be used below
+            var timeout = null;
+
+            // Listen for keystroke events
+            textInput.onkeyup = function (e) {
+
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 800ms
+                timeout = setTimeout(function () {
+                    calendar.bl.calendar_load();
+                }, 500);
+            };
+
+        }
+
+        // go next with calendar
+        this.go_next = () => {
+
+            var date_from = bl.varables.get('calendar_date_from');
+            var days = bl.varables.get('calendar_days');
+            var date_from_new = js.date.add_day(date_from, days);
+
+            // store new date
+            bl.varables.set('calendar_date_from', date_from_new);
+
+            $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('calendar_date_from')));
+            calendar_filter_date_from.innerHTML = bl.varables.get('calendar_date_from');
+
+            // load rents
+            calendar.bl.days_load();
+
+        }
+
+        // go before with calendar
+        this.go_before = () => {
+
+            var date_from = bl.varables.get('calendar_date_from');
+            var days = bl.varables.get('calendar_days');
+            var date_from_new = js.date.add_day(date_from, -1 * days);
+
+            // store new date
+            bl.varables.set('calendar_date_from', date_from_new);
+
+            $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('calendar_date_from')));
+            calendar_filter_date_from.innerHTML = bl.varables.get('calendar_date_from');
+
+            // load rents
+            calendar.bl.days_load();
+
+        }
+
+        // Expand row and make it red
+        this.show_overbooking = function (bodycol) {
+
+            let row = bodycol.parentElement;
+            let overbooking_card = bodycol.children[2];
+
+            // Set calendar heights
+
+            row.classList.add('has_overbooking');
+            row.style.height = '120px';
+
+            for (let col of row.children) {
+                col.style.height = '120px'
+            }
+
+            // Set object name height
+
+            let row_idx = Array.from(row.parentElement.children).indexOf(row);
+            let object_el = calendar_div_object_list.children[row_idx];
+            object_el.style.height = '120px';
+            object_el.classList.add('has_overbooking');
+
+            let button = object_el.querySelector('.open_overbooking');
+            button.classList.remove('d-none');
+            button.onclick = () => overbooking_card.click();
+
+        }
+
+        this.change_number_of_display_days = async () => {
+
+            var days = calendar_filter_days.value;
+            bl.varables.set('calendar_days', days - 1);
+
+            await calendar.bl.days_display();
+            await calendar.bl.rents_load();
+            await calendar.bl.days_header_display();
+
+        }
+
+        this.choose_month = async function (month) {
+
+            var current_year = new Date().getFullYear();
+
+            // hide modal
+            calendar_modal_filter_month.classList.add("hidden");
+            calendar_button_filter_month.classList.remove("open");
+
+            // getting date from modal
+            var date = new Date(current_year, month - 1, 2);
+            var date_iso = date.toISOString().split('T')[0];
+            calendar_filter_date_from.innerHTML = date_iso;
+
+            // save new date
+            bl.varables.set('calendar_date_from', date_iso);
+            calendar_filter_date_from.innerHTML = bl.varables.get('calendar_date_from');
+
+            // load prices
+            await calendar.bl.days_display();
+            await calendar.bl.rents_load();
+            await calendar.bl.days_header_display();
+        }
+
+        // Check live overbooking
+        this.check_live_overbooking = function () {
+
+            let id = document.querySelector(".view_calendar");
+            let bodycol = id.querySelectorAll(".bodycol");
+            for (let i = 0; i < bodycol.length; i++) {
+
+                const element = bodycol[i];
+                if (element.children[2]) {
+
+                    element.children[2].classList.add("card-overbooking");
+                    calendar.ui.show_overbooking(element);
+                }
+            };
+
+            let overbooking_card = document.querySelector('.card-overbooking');
+            if (overbooking_card) {
+
+                // Do not show notification until development finished
+                if (routing.is_development()) {
+
+                    // Notify
+                    let rent_id = overbooking_card.dataset.rent_id;
+                    notify.bl.warning(rent_id, function () {
+                        modal_details_rent.ui.show_details(rent_id);
+                    });
+                }
+            }
+        };
+
+    }
+
+    // on load
+    calendar.load();
+
+</script>

@@ -1,0 +1,35 @@
+﻿<!-- Mobile navigation -->
+<div class="view_mobile_nav">
+    <button class="view_mobile_btn btn text-white mr-2"><i class="fas fa-align-justify"></i></button>
+</div>
+
+<script>
+
+    var mobile_navigation = {};
+
+    // Mobile navigation load function
+    mobile_navigation.load = () => {
+
+        // Local
+        mobile_navigation.ui.nav_mobile();
+
+    }
+
+    // Mobile navigation ui
+    mobile_navigation.ui = new function () {
+
+        // Mobile navigation Open/hide
+        this.nav_mobile = function () {
+
+            let btn = document.querySelector(".view_mobile_btn");
+            btn.addEventListener("click", function () {
+                $(".view_menu_nav_mobile").fadeIn();
+            });
+        }
+
+    }
+
+    // Load
+    mobile_navigation.load();
+
+</script>

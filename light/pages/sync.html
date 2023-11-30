@@ -1,0 +1,1248 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-none d-md-block"> <i class="fas fa-users pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_sync_header_object_name"></span>
+            </div>
+        </div>
+      
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <div class="row pt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="font-weight-bold">List</div>
+                        <div class="d-flex">
+                            <!--<div class="card-header_icon" data-toggle="tooltip" data-placement="top" data-original-title="Add link to Channel Manager" onclick="modal_add_b2b_connection.bl.show_modal('modal_add_b2b_connection')"><i class="fas fa-plus"></i></div>
+                            <div class="card-header_icon" data-toggle="tooltip" data-placement="top" data-original-title="Import rents"><i class="fas fa-cloud-upload-alt"></i></div>-->
+                            <div class="card-header_icon" data-toggle="tooltip" data-placement="top" data-original-title="Sync all channels" onclick="sync.bl.sync_all();"><i class="fas fa-sync-alt"></i></div>
+                            <!--<div class="card-header_icon" data-toggle="tooltip" data-placement="top" data-original-title="Send DONAS"><i class="fas fa-check-square"></i></div>-->
+                        </div>
+                    </div>
+                    <div class="card-body font_3">
+
+                        <!-- Table -->
+                        <div class="view_table">
+                            <div class="table_wrapper" style="overflow: unset !important;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sync_tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between flex-wrap pt-3">
+                            <button class="btn btn_secondary mr-2" data-toggle="tooltip" data-placement="top" data-original-title="Import bookings"><i class="fas fa-cloud-upload-alt pr-2"></i>Import</button>
+                            <button class="btn btn_secondary" data-toggle="tooltip" data-placement="top" data-original-title="Send connection verification to email.">
+                                <i class="far fa-check-circle"></i>
+                                Verify
+                            </button>
+                            <button class="btn btn_primary ml-auto" onclick="modal_add_b2b_connection.bl.show_modal('modal_add_b2b_connection')" data-toggle="tooltip" data-placement="top" data-original-title="Add new booking channel"><i class="fas fa-plus pr-2"></i>Add</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 col-xxl-6">
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold"><i class="fas fa-tasks pr-2"></i>Channel settings</div>
+                  
+                    </div>
+                    <div class="card-body">
+                        <ul class="tab_pills nav nav-pills nav-tabs pt-2">
+                            <li>
+                                <a data-toggle="pill" href="#tab_sync_details_a_link" class="active px-3" id="sync_details_a_link">
+                                    <i class="fas fa-cube pr-2"></i>Details
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="pill" href="#tab_sync_settings" class="px-3">
+                                    <i class="fas fa-cogs pr-2"></i>Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="pill" href="#tab_sync_cancelation" class="px-3">
+                                    <i class="fas fa-ban pr-2"></i>Cancelation
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="pill" href="#tab_sync_payment_terms" class="px-3">
+                                    <i class="fas fa-money-bill-wave pr-2"></i>Payment terms
+                                </a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab_sync_details_a_link" class="tab-pane active show">
+                                <div class="row font_3">
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Value</label>
+                                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="main external ID">
+                                                    <i class="fas fa-question fa-xs px-1"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control focus text-center" id="sync_value">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Percent</label>
+                                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="How much will price increase or decrease with percent">
+                                                    <i class="fas fa-question fa-xs px-1"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control focus text-center pr-4" id="sync_percente">
+                                            <span class="position-absolute" style="bottom: .4rem; right: .5rem;">%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Extra</label>
+                                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="Fix add to a price">
+                                                    <i class="fas fa-question fa-xs px-1"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control focus text-center" id="sync_extra">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-1">Tolken</label>
+                                            <input type="text" class="form-control focus text-center" id="sync_tolken">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-1">Web</label>
+                                            <input type="text" class="form-control focus" id="sync_web">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Exchange rate</label>
+                                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will multiply price with the exchange rate and send it to your partner">
+                                                    <i class="fas fa-question fa-xs px-1"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control focus text-center" id="sync_exchange_rate">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <div class="d-flex">
+                                                <label class="mb-1">Round price</label>
+                                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                                    <i class="fas fa-question fa-xs px-1"></i>
+                                                </div>
+                                            </div>
+
+                                            <div id="sync_round_price" class="select">
+                                                <button class="custom-select focus open" id="sync_round_price_btn"></button>
+                                                <i class="fas fa-angle-down"></i>
+                                                <ul class="select_ul hidden">
+                                                    <li class="select_li" data-id="">- - -</li>
+
+                                                    <li class="select_li" data-id="up">Up</li>
+
+                                                    <li class="select_li" data-id="middle">Middle</li>
+
+                                                    <li class="select_li" data-id="down">Down</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-1">Price id</label>
+                                            <input type="text" class="form-control focus text-center" id="sync_price_id">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-1">Option 1 (num)</label>
+                                            <input type="text" class="form-control focus text-center" id="sync_option_1">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-1">Option 2 (text)</label>
+                                            <input type="text" class="form-control focus text-center" id="sync_option_2">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label class="mb-1">Price type</label>
+                                            <input type="text" class="form-control focus text-center" id="sync_price_type">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-12">
+                                        <div class="form-group">
+                                            <label class="mb-1">Name of object in a source</label>
+                                            <input type="text" class="form-control focus" id="sync_name_of_object_in_a_source">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-12 d-flex justify-content-between">
+                                        <button class="btn btn_red" id="sync_delete_btn" onclick="sync.bl.delete_b2b()">Delete</button>
+                                        <button class="btn btn_primary" id="sync_save_btn" onclick="sync.bl.save_b2b();">Save</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="tab_sync_settings" class="tab-pane">
+                                <div class="row font_3">
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <label class="checkbox">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" id="sync_ota_commision">
+                                                <div class="check check_md"></div>
+                                                <div class="pl-2">Save OTA commision</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <label class="checkbox">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" id="sync_add_items">
+                                                <div class="check check_md"></div>
+                                                <div class="pl-2">Save items</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <label class="checkbox">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" id="sync_share_content">
+                                                <div class="check check_md"></div>
+                                                <div class="pl-2">Content</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <label class="checkbox">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" id="sync_active">
+                                                <div class="check check_md"></div>
+                                                <div class="pl-2">Active</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4">
+                                        <label class="checkbox">
+                                            <div class="d-flex align-items-center user_select_none">
+                                                <input type="checkbox" id="sync_save_payout_price">
+                                                <div class="check check_md"></div>
+                                                <div class="pl-2">Save payout price</div>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <hr />
+
+                                <div class="row mt-3">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group input_remove_number_arrow">
+                                            <label class="mb-1">Agency profit</label>
+                                            <input type="number" min="0" class="form-control focus text-center" id="sync_settings_agency_profit">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-1">Option 3</label>
+                                            <input type="text" class="form-control focus text-center" id="sync_settings_agency_profit">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-6 col-md-12 d-flex justify-content-end">
+
+                                    <button class="btn btn_primary" id="sync_settings_save_btn" onclick="sync.bl.save_b2b()">Save</button>
+
+                                </div>
+                            </div>
+                            <div id="tab_sync_cancelation" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3"
+                                          placeholder="Example 01"></textarea>
+                            </div>
+                            <div id="tab_sync_payment_terms" class="tab-pane">
+                                <textarea name="" id="" cols="30" rows="5" class="form-control focus font_3"
+                                          placeholder="Example 02"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- New version tabs -->
+                    <!-- Tabs 01 -->
+
+                    <!-- End new version tabs -->
+                    <!--<div class="view_filter d-flex align-items-center">
+        <div class="btn_hover font-weight-bold ml-2 font_6 filter_link active" onclick="sync.ui.change_tab('sync_tab_details');" id="sync_tab_details_active">Details</div>
+        <div class="filter_line_y"></div>
+        <div class="btn_hover font-weight-bold font_6 filter_link" onclick="sync.ui.change_tab('sync_tab_settings');" id="sync_tab_settings_active">Settings</div>
+        <div class="filter_line_y"></div>
+        <div class="btn_hover font-weight-bold font_6 filter_link hidden" onclick="sync.ui.change_tab('sync_tab_cancelation_policy');" id="sync_tab_cancelation_policy_active">Cancelation policy</div>
+        <div class="filter_line_y hidden" id="sync_tab_line"></div>
+        <div class="btn_hover font-weight-bold font_6 filter_link hidden" onclick="sync.ui.change_tab('sync_tab_payment_terms');" id="sync_tab_payment_terms_active">Payment terms</div>
+    </div>
+    <div class="card-body font_3 d-flex" id="sync_tab_details">
+        <div class="row">
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-1">Value</label>
+                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="main external ID">
+                            <i class="fas fa-question fa-xs px-1"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control focus text-center" id="sync_value">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-1">Percent</label>
+                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="How much will price increase or decrease with percent">
+                            <i class="fas fa-question fa-xs px-1"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control focus text-center" id="sync_percente">
+                    <span class="position-absolute" style="bottom: .4rem; right: .5rem;">%</span>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-1">Extra</label>
+                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="Fix add to a price">
+                            <i class="fas fa-question fa-xs px-1"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control focus text-center" id="sync_extra">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <label class="mb-1">Tolken</label>
+                    <input type="text" class="form-control focus text-center" id="sync_tolken">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <label class="mb-1">Web</label>
+                    <input type="text" class="form-control focus" id="sync_web">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-1">Exchange rate</label>
+                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will multiply price with the exchange rate and send it to your partner">
+                            <i class="fas fa-question fa-xs px-1"></i>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control focus text-center" id="sync_exchange_rate">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-1">Round price</label>
+                        <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                            <i class="fas fa-question fa-xs px-1"></i>
+                        </div>
+                    </div>
+
+                    <div id="sync_round_price" class="select">
+                        <button class="custom-select focus open" id="sync_round_price_btn"></button>
+                        <i class="fas fa-angle-down"></i>
+                        <ul class="select_ul hidden">
+                            <li class="select_li" data-id="">- - -</li>
+
+                            <li class="select_li" data-id="up">Up</li>
+
+                            <li class="select_li" data-id="middle">Middle</li>
+
+                            <li class="select_li" data-id="down">Down</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label class="mb-1">Price id</label>
+                    <input type="text" class="form-control focus text-center" id="sync_price_id">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label class="mb-1">Option 1 (num)</label>
+                    <input type="text" class="form-control focus text-center" id="sync_option_1">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label class="mb-1">Option 2 (text)</label>
+                    <input type="text" class="form-control focus text-center" id="sync_option_2">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <label class="mb-1">Price type</label>
+                    <input type="text" class="form-control focus text-center" id="sync_price_type">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-12">
+                <div class="form-group">
+                    <label class="mb-1">Name of object in a source</label>
+                    <input type="text" class="form-control focus" id="sync_name_of_object_in_a_source">
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-12 d-flex justify-content-between">
+                <button class="btn btn_red" id="sync_delete_btn" onclick="sync.bl.delete_b2b()">Delete</button>
+                <button class="btn btn_primary" id="sync_save_btn" onclick="sync.bl.save_b2b();">Save</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body font_3 d-flex hidden" id="sync_tab_settings">
+        <div class="row ml-2">
+
+            <div class="col-sm-4 col-md-4 my-auto">
+                 Checkbox label md
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" id="sync_ota_commision">
+                        <div class="check check_md"></div>
+                        <div class="pl-2">Save OTA commision</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="col-sm-4 col-md-4 my-auto">
+                 Checkbox label md
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" id="sync_add_items">
+                        <div class="check check_md"></div>
+                        <div class="pl-2">Save items</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="col-sm-4 col-md-4 my-auto">
+                 Checkbox label md
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" id="sync_share_content">
+                        <div class="check check_md"></div>
+                        <div class="pl-2">Content</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="col-sm-4 col-md-4 my-auto">
+                 Checkbox label md
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" id="sync_active">
+                        <div class="check check_md"></div>
+                        <div class="pl-2">Active</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="col-sm-4 col-md-4 my-auto">
+                 Checkbox label md
+                <label class="checkbox">
+                    <div class="d-flex align-items-center user_select_none">
+                        <input type="checkbox" id="sync_save_payout_price">
+                        <div class="check check_md"></div>
+                        <div class="pl-2">Save payout price</div>
+                    </div>
+                </label>
+            </div>
+
+            <hr />
+
+            <div class="row mt-3">
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">Agency profit</label>
+                        <input type="number" min="0" class="form-control focus text-center" id="sync_settings_agency_profit">
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label class="mb-1">Option 3</label>
+                        <input type="text" class="form-control focus text-center" id="sync_settings_agency_profit">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-6 col-md-12 d-flex justify-content-end">
+
+                <button class="btn btn_primary" id="sync_settings_save_btn" onclick="sync.bl.save_b2b()">Save</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body font_3 hidden" id="sync_tab_cancelation_policy">
+
+    </div>
+
+    <div class="card-body font_3 hidden" id="sync_tab_payment_terms">
+
+    </div>-->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal add status -->
+<section class="modal_add_b2b_connection"></section>
+
+<section>
+    <template id="template_b2b_list">
+
+        <div class="card_portal user_select_none">
+            <div class="d-flex align-items-center justify-content-between line_normal cursor_point" onclick="sync.bl.show_b2b(`${id}`, this);">
+
+                <div class="d-flex align-items-center cursor_point pl-2">
+                    <img src="./assets/images/icons/portals/${icon}" style="max-width:20px; max-height:20px" alt="">
+                    <div class="font-weight-bold pl-1">${name1}</div>
+                    <div class="pl-1">(${object_id})</div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="line_normal">${price_percent} %</div>
+                    <div class="view_dropdown ml-3">
+                        <button onclick="general.dropdown_link(this)"
+                                class="btn btn_hover py-0 px-1 d-flex">
+                            <span class="portal_dropdown" ${active_color}>${active}</span>
+                        </button>
+                        <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                            <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                <div class="font_bold">Tools</div>
+                                <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                            </div>
+                            <hr class="m-0">
+                            <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                                <li class="dropdown_li">
+                                    <a href="#" class="dropdown_a">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon">
+                                                <i class="fas fa-info-circle"></i>
+                                            </div>
+                                            <div class="align-self-center flex_1">Details</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="dropdown_li delete">
+                                    <a href="#" class="dropdown_a">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon"><i class="far fa-trash-alt"></i></div>
+                                            <div class="align-self-center flex_1">Delete</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- hidden tab content -->
+            <div class="card_portal_channel_settings hidden p-3 pb-4">
+                <div class="row font_3">
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <label class="mb-1">Value</label>
+                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="main external ID">
+                                    <i class="fas fa-question fa-xs px-1"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control focus text-center" id="sync_value">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <label class="mb-1">Percent</label>
+                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="How much will price increase or decrease with percent">
+                                    <i class="fas fa-question fa-xs px-1"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control focus text-center pr-4" id="sync_percente">
+                            <span class="position-absolute" style="bottom: .4rem; right: .5rem;">%</span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <label class="mb-1">Extra</label>
+                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="Fix add to a price">
+                                    <i class="fas fa-question fa-xs px-1"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control focus text-center" id="sync_extra">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Tolken</label>
+                            <input type="text" class="form-control focus text-center" id="sync_tolken">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Web</label>
+                            <input type="text" class="form-control focus" id="sync_web">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <label class="mb-1">Exchange rate</label>
+                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will multiply price with the exchange rate and send it to your partner">
+                                    <i class="fas fa-question fa-xs px-1"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control focus text-center" id="sync_exchange_rate">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <label class="mb-1">Round price</label>
+                                <div class="ml-auto" data-toggle="tooltip" data-placement="top" data-original-title="This option will round prices and then send it to your partner">
+                                    <i class="fas fa-question fa-xs px-1"></i>
+                                </div>
+                            </div>
+
+                            <div id="sync_round_price" class="select">
+                                <button class="custom-select focus" id="sync_round_price_btn" data-id="" data-code1="undefined">- - -</button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden">
+                                    <li class="select_li" data-id="">- - -</li>
+
+                                    <li class="select_li" data-id="up">Up</li>
+
+                                    <li class="select_li" data-id="middle">Middle</li>
+
+                                    <li class="select_li" data-id="down">Down</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Price id</label>
+                            <input type="text" class="form-control focus text-center" id="sync_price_id">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Option 1 (num)</label>
+                            <input type="text" class="form-control focus text-center" id="sync_option_1">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Option 2 (text)</label>
+                            <input type="text" class="form-control focus text-center" id="sync_option_2">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Price type</label>
+                            <input type="text" class="form-control focus text-center" id="sync_price_type">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-group">
+                            <label class="mb-1">Name of object in a source</label>
+                            <input type="text" class="form-control focus" id="sync_name_of_object_in_a_source">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-12 d-flex justify-content-between">
+                        <button class="btn btn_red" id="sync_delete_btn" onclick="sync.bl.delete_b2b()">Delete</button>
+                        <button class="btn btn_primary" id="sync_save_btn" onclick="sync.bl.save_b2b();">Save</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <hr class="my-2" />
+    </template>
+
+    <template id="template_payment_term">
+        <hr />
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label class="mb-1">When</label>
+                    </div>
+
+                    <div id="when_${id}" class="select">
+                        <button class="custom-select focus open"></button>
+                        <i class="fas fa-angle-down"></i>
+                        <ul class="select_ul hidden">
+                            <li class="select_li" data-id="">- - -</li>
+
+                            <li class="select_li" data-id="at_booking">At booking</li>
+
+                            <li class="select_li" data-id="after_booking">After booking</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-2">
+                <div class="form-group input_remove_number_arrow">
+                    <label class="mb-1">Days</label>
+                    <input type="number" min="0" class="form-control focus text-center" id="days_${id}">
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-2">
+                <div class="form-group input_remove_number_arrow">
+                    <label class="mb-1">Amount</label>
+                    <input type="number" min="0" class="form-control focus text-center" id="amount_${id}">
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-2 align-items-center pt-2">
+                <button class="btn btn_primary" onclick="sync.bl.save_payment_terms(`${id}`)">Save</button>
+            </div>
+
+            <div class="col-sm-4 col-md-2 align-items-center pt-2">
+                <button class="btn btn_red" onclick="sync.bl.delete_payment_term(`${id}`)">Delete</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="template_cancellations_policy">
+        <hr />
+        <div class="row">
+            <div class="col-sm-4 col-md-2">
+                <div class="form-group input_remove_number_arrow">
+                    <label class="mb-1">From</label>
+                    <input type="number" min="0" class="form-control focus text-center" id="from_${id}">
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-2">
+                <div class="form-group input_remove_number_arrow">
+                    <label class="mb-1">To</label>
+                    <input type="number" min="0" class="form-control focus text-center" id="to_${id}">
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-2">
+                <div class="form-group input_remove_number_arrow">
+                    <label class="mb-1">Percent</label>
+                    <input type="number" min="0" class="form-control focus text-center" id="percent_${id}">
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-2 align-items-center pt-2">
+                <button class="btn btn_primary" onclick="sync.bl.save_cancellations(`${id}`)">Save</button>
+            </div>
+
+            <div class="col-sm-4 col-md-2 align-items-center pt-2">
+                <button class="btn btn_red" onclick="sync.bl.delete_cancellations(`${id}`)">Delete</button>
+            </div>
+        </div>
+    </template>
+
+</section>
+
+<script>
+
+    $(".filter_general").load("/pages/partals/filter_general.html");
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+    $(".modal_add_b2b_connection").load("/pages/components/modal_add_b2b_connection.html");
+
+    var sync = {};
+
+    sync.object_id = '';
+    sync.b2b_id = '';
+
+    sync.b2b_object = '';
+
+    // Load function
+    sync.load = () => {
+
+        // Title
+        document.title = "Sync";
+
+        object_sync_header_object_name.innerHTML = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+
+        // Global ui
+        ui.custom_select('sync_round_price');
+
+        // UI components
+
+        // BL components
+        sync.bl.load_b2b();
+
+        sync_tab_payment_terms.innerHTML = '';
+
+    }
+
+    // UI logic
+    sync.ui = new function () {
+
+        // change active tab settings or details
+        this.change_tab = (id) => {
+
+            sync_tab_settings_active.classList.remove('active');
+            sync_tab_settings.classList.add('hidden');
+
+            sync_tab_details.classList.add('hidden');
+            sync_tab_details_active.classList.remove('active');
+
+            sync_tab_cancelation_policy.classList.add('hidden');
+            sync_tab_cancelation_policy_active.classList.remove('active');
+
+            sync_tab_payment_terms.classList.add('hidden');
+            sync_tab_payment_terms_active.classList.remove('active');
+
+            document.getElementById(id + '_active').classList.add('active');
+            document.getElementById(id).classList.remove('hidden');
+
+        }
+
+    }
+
+    // BL logic
+    sync.bl = new function () {
+
+        // load all b2b connection for object
+        this.load_b2b = async () => {
+
+            sync.object_id = page.get_id();
+
+            var url = '/api/objects_b2b/list/' + sync.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            sync.b2b_object = json_response;
+
+            sync_tbody.innerHTML = '';
+            var number = 1;
+            var link = '<img src="/assets/images/icons/portals/';
+            for (var obj of json_response) {
+
+                var t = template_b2b_list.innerHTML;
+
+                t = t.replace('${active}', obj['active'] == 'Y' ? 'On' : 'Off');
+                t = t.replace('${active_color}', obj['active'] == 'N' ? 'style = "background-color:red;"' : '');
+                t = t.replace('${icon}', obj['picture']);
+                t = t.replace('${name1}', obj['name1']);
+                t = t.replace('${object_id}', obj['object_id']);
+                t = t.replace('${price_percent}', obj['price_percent']);
+                t = t.replace('${id}', obj['id']);
+
+                number++;
+
+                js.html.insertAdjacentHTML('sync_tbody', t);
+            }
+
+        }
+
+        // show data for specific b2b connection on click
+        //this.show_b2b = (id) => {
+            
+        //    var b2b_con;
+
+        //    for (var obj of sync.b2b_object) {
+
+        //        if (obj['id'] == id) {
+        //            b2b_con = obj;
+        //            sync.b2b_id = obj['id'];
+        //        }
+        //    }
+
+        //    if (b2b_con['alias'] == 'HomeTogo' || b2b_con['alias'] == 'HomeAways') {
+        //        sync_tab_payment_terms_active.classList.remove('hidden');
+        //        sync_tab_cancelation_policy_active.classList.remove('hidden');
+        //        sync_tab_line.classList.remove('hidden');
+        //        this.load_payment_terms();
+        //        this.load_cancellations();
+        //    } else {
+        //        sync_tab_payment_terms_active.classList.add('hidden');
+        //        sync_tab_cancelation_policy_active.classList.add('hidden');
+        //        sync_tab_payment_terms.classList.add('hidden');
+        //        sync_tab_cancelation_policy.classList.add('hidden');
+        //        sync_tab_line.classList.add('hidden');
+
+        //    }
+
+        //    var round = !b2b_con['round'] == true ? '' : b2b_con['round'];
+
+        //    document.querySelector(`#sync_round_price > ul > li[data-id='${round}']`).click()
+        //    sync_value.value = b2b_con['value'];
+        //    sync_percente.value = b2b_con['price_percent'];
+        //    sync_extra.value = b2b_con['price_extra'];
+        //    sync_tolken.value = b2b_con['tolken'];
+        //    sync_price_id.value = b2b_con['option1'];
+        //    sync_option_1.value = b2b_con['option1'];
+        //    sync_option_2.value = b2b_con['option2'];
+        //    sync_price_type.value = !b2b_con[''] == true ? b2b_con['price_type'] : '';
+        //    sync_exchange_rate.value = b2b_con['exchange'];
+        //    sync_web.value = b2b_con['web'];
+        //    sync_name_of_object_in_a_source.value = b2b_con['name'];
+        //    sync_share_content.checked = b2b_con['share_content'] == 'Y' ? true : false;
+        //    sync_add_items.checked = b2b_con['add_items'] == 'Y' ? true : false;
+        //    sync_ota_commision.checked = b2b_con['save_commision'] == 'Y' ? true : false;
+        //    sync_active.checked = b2b_con['active'] == 'Y' ? true : false;
+        //    sync_save_payout_price.checked = b2b_con['save_payout_price'] == 'Y' ? true : false;
+
+        //}
+
+        this.show_b2b = (id, clicked_el) => {
+
+            //console.log(clicked_el);
+            //sync.bl.togggle_tab(this);
+
+            let card_tab_content = clicked_el.parentElement.getElementsByClassName("card_portal_channel_settings")[0];
+
+            if (card_tab_content.classList.contains("hidden") == true) {
+                card_tab_content.classList.remove("hidden");
+                console.log("show");
+
+            } else{
+                card_tab_content.classList.add("hidden");
+                console.log("hidden");
+
+            }
+
+            var b2b_con;
+
+            for (var obj of sync.b2b_object) {
+
+                if (obj['id'] == id) {
+                    b2b_con = obj;
+                    sync.b2b_id = obj['id'];
+                }
+            }
+
+            var round = !b2b_con['round'] == true ? '' : b2b_con['round'];
+
+            document.querySelector(`#sync_round_price > ul > li[data-id='${round}']`).click()
+            sync_value.value = b2b_con['value'];
+            sync_percente.value = b2b_con['price_percent'];
+            sync_extra.value = b2b_con['price_extra'];
+            sync_tolken.value = b2b_con['tolken'];
+            sync_price_id.value = b2b_con['option1'];
+            sync_option_1.value = b2b_con['option1'];
+            sync_option_2.value = b2b_con['option2'];
+            sync_price_type.value = !b2b_con[''] == true ? b2b_con['price_type'] : '';
+            sync_exchange_rate.value = b2b_con['exchange'];
+            sync_web.value = b2b_con['web'];
+            sync_name_of_object_in_a_source.value = b2b_con['name'];
+            sync_share_content.checked = b2b_con['share_content'] == 'Y' ? true : false;
+            sync_add_items.checked = b2b_con['add_items'] == 'Y' ? true : false;
+            sync_ota_commision.checked = b2b_con['save_commision'] == 'Y' ? true : false;
+            sync_active.checked = b2b_con['active'] == 'Y' ? true : false;
+            sync_save_payout_price.checked = b2b_con['save_payout_price'] == 'Y' ? true : false;
+
+        }
+
+
+        // clear input fileds
+        this.clear = () => {
+
+            sync_value.value = '';
+            sync_percente.value = '';
+            sync_extra.value = '';
+            sync_tolken.value = '';
+            sync_price_id.value = '';
+            sync_option_1.value = '';
+            sync_option_2.value = '';
+            sync_price_type.value = '';
+            sync_exchange_rate.value = '';
+            sync_web.value = '';
+            sync_name_of_object_in_a_source.value = '';
+            sync_share_content.checked = false;
+            sync_add_items.checked = false;
+            sync_ota_commision.checked = false;
+            sync_active.checked = false;
+            sync_save_payout_price.checked = false;
+            sync.b2b_id = '';
+        }
+
+        // save chnages for one b2b connection
+        this.save_b2b = async () => {
+
+            var obj = {};
+
+            obj.value = sync_value.value;
+            obj.price_percent = sync_percente.value;
+            obj.price_extra = sync_extra.value;
+            obj.tolken = sync_tolken.value;
+            obj.option1 = sync_price_id.value;
+            obj.option_2 = sync_option_1.value;
+            obj.price_type = sync_price_type.value;
+            obj.exchange = sync_exchange_rate.value;
+            obj.web = sync_web.value;
+            obj.name = sync_name_of_object_in_a_source.value;
+            obj.round = sync_round_price_btn.dataset.id;
+            obj.save_commision = sync_ota_commision.checked == true ? 'Y' : 'N';
+            obj.share_content = sync_share_content.checked == true ? 'Y' : 'N';
+            obj.save_payout_price = sync_save_payout_price.checked;
+            obj.active = sync_active.checked == true ? 'Y' : 'N';
+            obj.add_items = sync_add_items.checked == true ? 'Y' : 'N';
+            obj.object_b2b_id = sync.b2b_id;
+
+            console.log(obj);
+            var url = '/api/objects_b2b/save/';
+            await ajax.post_json(url, obj);
+
+        }
+
+        // delete b2b connection
+        this.delete_b2b = async () => {
+
+            var url = '/api/objects_b2b/delete/' + sync.b2b_id;
+            await ajax.get(url);
+
+            this.load_b2b();
+            this.clear();
+        }
+
+        // sync all portals
+        this.sync_all = async () => {
+
+            var url = '/api/objects/sync_all/' + sync.object_id;
+            await ajax.get(url);
+        }
+
+        this.save_payment_terms = async (id) => {
+
+            var terms = {};
+
+            terms.objects_payment_terms_id = id;
+            terms.when = document.querySelector(`#when_${id} > button`).dataset.id;
+
+            terms.how = 'percent';
+            terms.amount = document.getElementById('amount_' + id).value;
+            terms.days = document.getElementById('days_' + id).value;
+
+            var url = '/api/objects_payment_terms/save';
+            await ajax.post_json(url, terms);
+        }
+
+        this.load_payment_terms = async () => {
+
+            var url = '/api/objects_payment_terms/list/' + sync.object_id;
+
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            sync_tab_payment_terms.innerHTML = '';
+
+            for (var i of json_response) {
+
+                var t = template_payment_term.innerHTML;
+
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+
+                js.html.insertAdjacentHTML('sync_tab_payment_terms', t);
+
+                ui.custom_select('when_' + i['id']);
+                document.getElementById('days_' + i['id']).value = i['days'];
+                document.getElementById('amount_' + i['id']).value = i['amount'];
+
+                var when = i['when'];
+                if (when != null) {
+                    document.querySelector(`#when_${i['id']} > ul > li[data-id=${i['when']}]`).click();
+
+                } else {
+                    document.querySelector(`#when_${i['id']} > ul > li[data-id=""]`).click();
+
+                }
+
+            }
+        }
+
+        this.add_payment_terms = async () => {
+
+            var url = '/api/objects_payment_terms/add/' + sync.object_id;
+            await ajax.get(url);
+            this.load_payment_terms();
+        }
+
+        this.delete_payment_term = async (id) => {
+
+            var url = '/api/objects_payment_terms/delete/' + id;
+            await ajax.get(url);
+            this.load_payment_terms();
+        }
+
+        this.load_cancellations = async () => {
+
+            var url = '/api/objects_cancellations/list/' + sync.object_id;
+            var response = await ajax.get(url);
+            var json_resposne = JSON.parse(response);
+
+            sync_tab_cancelation_policy.innerHTML = '';
+
+            for (var i of json_resposne) {
+
+                var t = template_cancellations_policy.innerHTML;
+
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+                t = t.replace('${id}', i['id']);
+
+                js.html.insertAdjacentHTML('sync_tab_cancelation_policy', t);
+
+                document.getElementById('from_' + i['id']).value = i['from'];
+                document.getElementById('to_' + i['id']).value = i['until'];
+                document.getElementById('percent_' + i['id']).value = i['percent'];
+            }
+
+        }
+
+        this.add_cancellations = async () => {
+
+            var url = '/api/objects_cancellations/add/' + sync.object_id;
+            await ajax.get(url);
+            this.load_cancellations();
+        }
+
+        this.save_cancellations = async (id) => {
+
+            var canc = {};
+
+            //canc.cancellation_policy_id = '';
+            canc.objects_cancellations_id = id;
+            canc.from = document.getElementById('from_' + id).value;
+            canc.until = document.getElementById('to_' + id).value;
+            canc.percent = document.getElementById('percent_' + id).value;
+
+            var url = '/api/objects_cancellations/save';
+            await ajax.post_json(url, canc);
+        }
+
+        this.delete_cancellations = async (id) => {
+
+            var url = '/api/objects_cancellations/delete/' + id;
+            await ajax.get(url);
+
+            this.load_cancellations();
+        }
+
+    }
+
+    // On load
+    sync.load();
+
+</script>

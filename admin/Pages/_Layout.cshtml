@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@namespace admin.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+
+@{
+
+    var db_conn = bl.B2B.zaggy.shared.app_db_conn;
+    var db_name = bl.sys.server.db_name();
+    var border = "";
+
+    if (db_name == "zaggy_dev")
+    {
+        border = "border-top: 6px solid red;";
+    }
+    else if (db_name == "zaggy_stg")
+    {
+        border = "border-top: 6px solid orange;";
+    }
+
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <base href="~/" />
+
+    <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/site.css" />
+    <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="manifest" href="assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/vendors/overlayscrollbars/OverlayScrollbars.min.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+    <link href="/assets/vendors/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet">
+    <link href="/assets/css/theme-rtl.min.css" rel="stylesheet" id="style-rtl">
+    <link href="/assets/css/theme.min.css" rel="stylesheet" id="style-default">
+    <link href="/assets/css/user-rtl.min.css" rel="stylesheet" id="user-style-rtl">
+    <link href="/assets/css/user.min.css" rel="stylesheet" id="user-style-default">
+
+    <link href="/assets/css/user.css" rel="stylesheet">
+
+    <link href="/assets/vendors/glightbox/glightbox.min.css" rel="stylesheet" />
+    <link href="/assets/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link href="/assets/vendors/choices/choices.min.css" rel="stylesheet" />
+
+    <!-- javsrcipts -->
+    <script src="/assets/vendors/popper/popper.min.js"></script>
+    <script src="/assets/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="/assets/vendors/anchorjs/anchor.min.js"></script>
+    <script src="/assets/vendors/is/is.min.js"></script>
+    <script src="/assets/vendors/echarts/echarts.min.js"></script>
+    <script src="/assets/vendors/fontawesome/all.min.js"></script>
+    <script src="/assets/vendors/lodash/lodash.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+
+    <script src="/assets/js/theme.js"></script>
+  
+ 
+    <script src="/assets/js/editor_html.js"></script>
+    <script src="/assets/js/calendar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+
+    <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
+
+    <script src="/assets/vendors/glightbox/glightbox.min.js"></script>
+    <script src="/assets/js/flatpickr.js"></script>
+    <script src="/assets/vendors/choices/choices.min.js"></script>
+    <script src="/assets/js/ajax.js"></script>
+    <script src="/assets/js/global.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/nevenpalcec/hiza_js/hiza/core/hiza.core.js"></script>
+    <script>var js = hiza.core;</script>
+
+    <!-- leaflet maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+
+    <!-- page js logic -->
+    <script src="/assets/page/dashboard_crm.js"></script>
+    <script src="/assets/page/region_list.js"></script>
+    <script src="/assets/page/units_map.js"></script>
+    <script src="/assets/page/units_details.js"></script>
+
+    <!-- lrt script -->
+    <script>
+
+        var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+
+        if (isRTL) {
+            var linkDefault = document.getElementById('style-default');
+            var userLinkDefault = document.getElementById('user-style-default');
+            linkDefault.setAttribute('disabled', true);
+            userLinkDefault.setAttribute('disabled', true);
+            document.querySelector('html').setAttribute('dir', 'rtl');
+        } else {
+            var linkRTL = document.getElementById('style-rtl');
+            var userLinkRTL = document.getElementById('user-style-rtl');
+            linkRTL.setAttribute('disabled', true);
+            userLinkRTL.setAttribute('disabled', true);
+        }
+
+    </script>
+
+    <!-- dynamic css -->
+    @*<link rel="stylesheet" href="nj_admin.styles.css" />*@
+
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    
+</head>
+
+<body style="@border">
+
+    @RenderBody()
+    
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <!-- blazor js -->
+    <script src="_framework/blazor.server.js"></script>
+
+</body>
+
+</html>

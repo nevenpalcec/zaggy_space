@@ -1,0 +1,511 @@
+﻿@page "/objects/list"
+
+@inject NavigationManager NavManager
+@using Microsoft.AspNetCore.WebUtilities
+
+@code {
+
+    //System.Data.DataTable objects2;
+    System.Data.DataTable objects;
+    System.Data.DataRow obj;
+
+    bool is_loading = true;
+
+    string search = "";
+    string user_id = "";
+    string sort_by = "objects.created desc";
+    string sort_order = "";
+    string tip = "";
+    string status = "";
+    string global = "";
+    string deleted = "";
+    string reseller_worker_guid = "";
+    string reseller_id = "12";
+   
+    string instant = "";
+
+    string user_id_hash = "";
+    string object_id_hash = "";
+
+    bool flag = false;
+    int max_page = 6;
+    int list_count = 1;
+    int list_count_pages = 1;
+    int page_selected = 1;
+    int offset;
+
+    string tooltip = "objects name, users name, users company name, object id hash ";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Perm.reseller_worker_perm();
+
+        if (Perm.objects_list == false) { NavManager.NavigateTo("403", true); }
+
+        reseller_worker_guid = AesOperation.DecryptString(bl.B2B.zaggy.shared.key, await localStorage.GetItemAsync<string>("reseller_worker_guid"));
+
+        await js.InvokeVoidAsync("addTooltips");
+        await Task.Delay(1);
+        objects_list();
+        m.Description = "ovo je opis";
+        StateHasChanged();
+
+    }
+
+    void OnSortByChanged(string Sort_by)
+    {
+        //await Task.Delay(1);
+        m.Title = Sort_by;
+        page_selected = 1;
+        sort_by = Sort_by;
+        objects_list();
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    private async Task object_list_search()
+    {
+        //offset = 1;
+        page_selected = 1;
+        is_loading = true;
+        await Task.Delay(1);
+
+        objects_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+    }
+
+    void fill_list()
+    {
+        page_selected = 1;
+        objects_list();
+    }
+
+    async Task onPager(int _offset, int _page_selected)
+    {
+        page_selected = _page_selected;
+        //offset = _offset;
+        //if (offset == 0){ offset = 1; }
+
+        is_loading = true;
+        StateHasChanged();
+        await Task.Delay(10);
+        objects_list();
+    }
+
+    /// <summary>
+    /// search objects
+    /// </summary>
+    async void objects_list()
+    {
+        is_loading = true;
+        StateHasChanged();
+
+        var f = new
+        {
+            offset = 50 * (page_selected - 1),
+            tip = tip,
+            status = status,
+            global = global,
+            deleted = deleted,
+            instant = instant,
+            object_id_hash = object_id_hash,
+            user_id_hash = user_id_hash,
+            user_id = user_id,
+            search = search,
+            sort_by = sort_by,
+            reseller_id
+        };
+
+        // get objects
+        var josn_string = bl.sys.json.str(f);
+        objects = bl.B2B.Zagreb.objects.list(josn_string);
+
+        list_count = 100;
+        list_count_pages = (list_count / 50) + 1;
+
+        await Task.Delay(1);
+
+        StateHasChanged();
+        is_loading = false;
+        StateHasChanged();
+       
+    }
+
+    void rent_get(System.Data.DataRow row)
+    {
+        obj = row;
+    }
+
+    private async Task search_keypress(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            is_loading = true;
+            await Task.Delay(1);
+
+            fill_list();
+
+            is_loading = false;
+            await Task.Delay(1);
+        }
+    }
+
+    void rfresh()
+    {
+        var f = new
+        {
+            offset = 1,
+            search = search
+        };
+        user_id = "";
+        objects = bl.B2B.zaggy.objects.list(bl.sys.json.str(f));
+    }
+
+    void set_active(string object_id)
+    {
+        bl.B2B.zaggy.objects.set_active_by_object(object_id, "Y");
+        bl.B2B.zaggy.objects.set_active_by_object(object_id, "Y");
+        bl.objects.sync_content(object_id);
+        objects_list();
+    }
+
+    void order_by(string col)
+    {
+        sort_order = (sort_order == "" ? " desc" : "");
+        sort_by = col + sort_order;
+        objects_list();
+    }
+
+    void set_deactive(string object_id)
+    {
+        bl.B2B.zaggy.objects.set_active_by_object(object_id, "N");
+        bl.B2B.zaggy.objects.set_active_by_object(object_id, "N");
+        bl.objects.sync_content(object_id);
+        objects_list();
+    }
+
+    string r_active(string a)
+    {
+        if (a == "Y")
+        {
+            return "Active";
+        }
+        return "Disabled";
+    }
+
+    string char_check(string a)
+    {
+        if (a == "")
+        {
+            return " - - - ";
+        }
+        return a;
+    }
+
+    async void tip_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        page_selected = 1;
+        await Task.Delay(1);
+
+        tip = e.Value.ToString();
+        objects_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+
+        StateHasChanged();
+    }
+
+    async void status_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        page_selected = 1;
+        await Task.Delay(1);
+        status = e.Value.ToString();
+        objects_list();
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void global_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+
+        await Task.Delay(1);
+        global = e.Value.ToString();
+        objects_list();
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void deleted_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        page_selected = 1;
+        await Task.Delay(1);
+        deleted = e.Value.ToString();
+        objects_list();
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void instant_by_on_change(ChangeEventArgs e)
+    {
+        is_loading = true;
+        page_selected = 1;
+        await Task.Delay(1);
+        instant = e.Value.ToString();
+        objects_list();
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void select_reseller_onchange(ChangeEventArgs e)
+    {
+        is_loading = true;
+        page_selected = 1;
+        await Task.Delay(1);
+        reseller_id = e.Value.ToString();
+
+        // filter users
+        objects_list();
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+}
+
+<PageTitle> @lng.l.Properties </PageTitle>
+
+<!-- heaers-->
+<div class="row mb-1 ">
+
+    <div class="col">
+        <div class="card shadow-none border" style="background-color: #163d73;">
+            <div class="row gx-0 flex-between-center">
+                <div class="col-sm-auto d-flex align-items-center ms-2">
+                    <img class="p-2" src="@Settings.img_avatar_small" alt="" height="90" />
+                    @if (is_loading == true)
+                    {
+                        <div>
+                            <h6 class="fs--1 mb-0" style="color: #fff;"> @bl.lng.l.Accommodation @bl.lng.l.List: - <span style="color: #fff;">  </span>  </h6>
+                            <h4 class="fw-black mb-0" style="color: #fff;">
+                                ZgStay  <span class="fw-medium" style="color: #fff;">
+                                    Loading... <span>
+                                        @* <i class="fas fa-sync-alt fa-spin"></i> *@
+                                        <i class="fas fa-spinner fa-pulse"></i>
+                                    </span>
+
+                                </span>
+                            </h4>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <h6 class="fs--1 mb-0" style="color: #fff;"> @bl.lng.l.Accommodation @bl.lng.l.List: @list_count.ToString("N0") <span style="color: blue">  </span>  </h6>
+                            <h4 class="fw-black mb-0" style="color: #fff;"> ZgStay  <span class="fw-medium" style="color: #fff;"> Lista prostora </span></h4>
+                        </div>
+                    }
+
+                </div>
+                <div class="col-md-auto p-3">
+
+                    <div class="d-flex">
+
+                        <span class="text-dark me-2 align-self-center">@list_count_pages</span>
+                        <span class="text-dark me-2 align-self-center">/</span>
+                        <input class="form-control me-2" placeholder="page" type="number" @bind="page_selected" @onkeyup="search_keypress" @bind:event="oninput" style="width: 100px;" @onchange="object_list_search" min="1" />
+                        @*<input class="form-control me-2" placeholder="Object hash id" type="text" @bind="object_id_hash" @bind:event="oninput" />
+                        <input class="form-control me-2" placeholder="User hash id" type="text" @bind="user_id_hash" @bind:event="oninput" />*@
+
+                       @*  <select class="form-select form-select-sm me-2" type="text" @onchange="select_reseller_onchange">
+                            <option value="">@lng.l.All</option>
+                            <option value="1">zaggy</option>
+                            <option selected value="12">zaggy</option>
+                        </select> *@
+
+                        <input class="form-control me-2" data-toggle="tooltip" data-html="true" data-placement="top" title="@tooltip" placeholder="@lng.l.Search ..." type="search" @bind="search" @onkeyup="search_keypress" @bind:event="oninput" />
+
+                        <button type="button" class="ms-1 btn btn-dark" @onclick="fill_list"> @lng.l.Search </button>
+
+                        @* @if (is_loading == false)
+                        {
+                        <button type="button" class="ms-1 btn btn-dark" @onclick="fill_list"> @lng.l.Search </button>
+                        }
+                        else
+                        {
+                        <button class="btn btn-dark me-1" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">@lng.l.Loading...</span>
+                        </button>
+                        }*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+
+        <div class="row gx-0 flex-between-center">
+
+            <div class="col-md-auto p-2">
+                <div class="d-flex">
+
+                    <label class="col-form-label fs--1 mt-2" for="type">@lng.l.Type: </label>
+                    <select class="form-select form-select-sm m-2 w-25" id="type" type="text" @onchange="tip_by_on_change">
+                        <option selected value="">@lng.l.All</option>
+                        @foreach (System.Data.DataRow r in bl.B2B.zaggy.objects.get_obj_types("1,2,11,18").Rows)
+                        {
+                            if (r["id"].ToString() == tip)
+                            {
+                                <option selected value="@r["id"]">@r["name"]</option>
+                            }
+                            else
+                            {
+                                <option value="@r["id"]">@r["name"]</option>
+                            }
+                        }
+                    </select>
+
+                    <label class="col-form-label fs--1 mt-2 ms-1" for="type">@lng.l.Status: </label>
+                    <select class="form-select form-select-sm m-2 w-25" id="status" type="text" @onchange="status_by_on_change">
+                        <option selected value="">@lng.l.All</option>
+                        @foreach (System.Data.DataRow r in bl.B2B.zaggy.objects.resellers_objects_statuses().Rows)
+                        {
+
+                            if (r["id"].ToString() == status)
+                            {
+                                <option selected value="@r["id"]">@r["name"]</option>
+                            }
+                            else
+                            {
+                                <option value="@r["id"]">@r["name"]</option>
+                            }
+
+                        }
+
+                    </select>
+
+                    <label class="col-form-label fs--1 mt-2 ms-1" for="type">Active: </label>
+                    <select class="form-select form-select-sm m-2 w-25" id="global" @bind-value="global" @bind-value:event="oninput" type="text" @onchange="global_by_on_change">
+                        <option value="" selected>@lng.l.All</option>
+                        <option value="Y">@lng.l.Active </option>
+                        <option value="N">@lng.l.Disabled</option>
+                    </select>
+
+                    <label class="col-form-label fs--1 mt-2 ms-1" for="type">Deleted: </label>
+                    <select class="form-select form-select-sm m-2 w-25" @bind-value="deleted" @bind-value:event="oninput" type="text" @onchange="deleted_by_on_change">
+                        <option value="" selected>@lng.l.All</option>
+                        <option value="N">@lng.l.Active </option>
+                        <option value="Y">@lng.l.Delete</option>
+                    </select>
+
+                    <label class="col-form-label fs--1 mt-2 ms-1" for="type">Instant: </label>
+                    <select class="form-select form-select-sm m-2 w-25" id="instant" @bind-value="instant" @bind-value:event="oninput" type="text" @onchange="instant_by_on_change">
+                        <option value="" selected>@lng.l.All</option>
+                        <option value="Y">@lng.l.Active </option>
+                        <option value="N">@lng.l.Disabled</option>
+                    </select>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- table -->
+@if (is_loading == true)
+{
+    <LoadingLoader></LoadingLoader>
+}
+else
+{
+    @if (objects != null)
+    {
+        <admin.Pages.Objects.Shared.ObjectTableList objects="objects" OnSortByChanged="OnSortByChanged"></admin.Pages.Objects.Shared.ObjectTableList>
+    }
+
+}
+
+<!-- Modals -->
+<div>
+
+    @if (obj != null)
+    {
+        <div class="modal fade" id="error-modal" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-6" role="document">
+                <div class="modal-content position-relative">
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class=" row">
+
+                            <div class="col-3 ps-5 pt-4">
+                                <img class="rounded-circle img-thumbnail shadow-sm" src="@obj["picture_url_amazon"]" width="150" alt="">
+
+                            </div>
+                            <div class="col-7 ps-2 pt-4">
+                                <h4 class="mb-0" id="modalTitle"> @obj["name"] </h4>
+                                <h5 class="mb-1" id="adress"> @obj["adress"], @obj["city_zip"] @obj["city_name"] </h5>
+                            </div>
+
+                        </div>
+                        <div class="rounded-top-lg ps-4 pe-6 bg-light">
+                        </div>
+                        <div class="ps-5 pt-5 pb-0">
+
+                            <h5 id="contact">Info</h5>
+                            <div id="contact_adress" class="mb-1">
+                                <div>
+                                    @obj["name"] (@obj["id"])
+                                    @obj["object_type_name"]
+                                </div>
+
+                                <div class="notification-time mb-0">
+                                    @if (string.IsNullOrWhiteSpace(obj["country_code"].ToString()) == false)
+                                    {
+                                        <img src="/assets/images/icons/flags/@(obj["country_code"]).svg" style="height: 10px; margin-right: 10px;" loading="lazy" />
+                                    }
+
+                                    @obj["unit_city_name"]
+                                </div>
+
+                            </div>
+
+                            <div>
+                                @obj["user_name"]
+                            </div>
+                            <div class="notification-time mb-0">
+                                @obj["user_id"]
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

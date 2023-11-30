@@ -1,0 +1,631 @@
+.view_modal_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    @include hover;
+    overflow-y: auto;
+}
+
+.view_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 99;
+    @include hover;
+
+    .modal_dialog {
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
+        margin: 6rem auto;
+        min-height: calc(100% - 13.5rem);
+        padding: 0 .8rem;
+
+        @media screen and (max-width: 1440px) {
+            margin: 3.5rem auto;
+            min-height: calc(100% - 13.5rem);
+        }
+
+        @media screen and (max-width: 991px) {
+            margin: 1.5rem auto;
+            min-height: calc(100% - 13.5rem);
+        }
+    }
+
+    .modal_content {
+        display: flex;
+        flex-direction: column;
+        pointer-events: auto;
+        width: 100%;
+        border-radius: .45rem;
+        @include drop_shadow_lg;
+
+        .modal_ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: unset;
+            overflow-x: auto;
+
+            .modal_li {
+                padding: .7rem 1.5rem;
+                cursor: pointer;
+                font-weight: 500;
+                font-size: 1.3rem;
+                color: #FFFFFF;
+                opacity: .5;
+                @include hover;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .modal_li.active {
+                position: relative;
+                opacity: 1 !important;
+
+                &:before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 1;
+                    border-left: .6rem solid transparent;
+                    border-right: .6rem solid transparent;
+                    border-bottom: 0.6rem solid #FFFFFF;
+                }
+            }
+        }
+
+        .modal_header {
+            background-color: $color-secondary;
+            display: flex;
+            border-radius: .45rem .45rem 0 0;
+        }
+
+        .modal-body, .modal-footer {
+            background-color: $color-white;
+        }
+
+        .close {
+            margin-left: auto;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: $color-white;
+            @include hover;
+
+            &:hover {
+                color: $color-white;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .modal_icon {
+            padding-right: .5rem;
+
+            img {
+                width: 2.7rem;
+            }
+        }
+
+        .modal_guests {
+            font-weight: 500;
+
+            span {
+                font-size: 1.1rem;
+            }
+        }
+
+        .modal_period {
+            font-weight: 500;
+            cursor: pointer;
+            @include hover;
+            border-radius: .45rem;
+            padding: .2rem .5rem;
+        }
+
+        .modal_dropdown_menu_calendar {
+            overflow: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 2;
+            background-color: $color-white;
+            border-radius: .45rem;
+            @include drop_shadow_lg;
+            @include hover;
+        }
+
+        .modal_label {
+            font-size: 1.3rem;
+        }
+
+        .modal_line_y {
+            margin: .3rem .5rem;
+            border-right: 1px solid rgba(0,0,0,.7);
+        }
+
+        .small_title {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .guest {
+            .guest_p {
+                .flag {
+                    img {
+                        width: 1rem;
+                    }
+                }
+            }
+        }
+
+        .modal_value {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal_value.title {
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .bills_empty {
+            text-align: center;
+
+            .empty_icon {
+                font-size: 3rem;
+            }
+
+            .empty_text {
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+        }
+
+        .modal_credit_card {
+            display: flex;
+            flex-direction: row;
+
+            @media screen and (max-width: 575px) {
+                flex-direction: column;
+                max-width: unset;
+            }
+        }
+
+        .modal_credit_card_item01 {
+            background-color: rgba($color-silver02, .5);
+        }
+
+        .modal_credit_card_item01, .modal_credit_card_item02 {
+            padding: 1rem;
+            flex: 0 0 50%;
+        }
+
+        .modal_credit_card_check {
+            width: 1.2rem;
+            height: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFFFFF;
+            border-radius: 50%;
+            font-size: .7rem;
+            align-self: center;
+            margin-left: .5rem;
+        }
+
+        .modal_credit_card_check.success {
+            background-color: #37B759;
+        }
+
+        .modal_credit_card_check.error {
+            background-color: #DC3545;
+        }
+
+        .modal_credit_card_access {
+            span {
+                background-color: rgba($color-silver02, .5);
+                padding: .3rem .5rem;
+                border-radius: .25rem;
+            }
+        }
+
+        .modal_message_info {
+            font-size: .9rem;
+
+            i {
+                font-size: .4rem;
+                vertical-align: middle;
+            }
+        }
+
+        #modal_status {
+            @media screen and (max-width:767px) {
+                border-top: 1px solid #dee2e6;
+                border-bottom: 1px solid #dee2e6;
+            }
+        }
+    }
+
+    .modal_lg {
+        max-width: 800px;
+    }
+
+    .modal_xl {
+        max-width: 1150px;
+    }
+
+    .modal_check {
+        .checkbox {
+            @include hover;
+            border-radius: .45rem;
+        }
+    }
+
+    .img_object {
+        img {
+            width: 9rem;
+            height: 7rem;
+            object-fit: cover;
+            border-radius: .45rem;
+        }
+    }
+
+    .modal_step_03 {
+        width: 100%;
+
+        .modal_step_03_box {
+            display: flex;
+            justify-content: space-between;
+
+            @media screen and (max-width: 767px) {
+                display: block;
+
+                .modal_step_03_wrapper:first-child {
+                    margin-bottom: .5rem;
+                    width: 100%;
+                }
+
+                .modal_step_03_wrapper:last-child {
+                    width: 100%;
+
+                    .d-flex {
+                        flex: 0 0 50%;
+                    }
+
+                    button {
+                        width: 100%;
+                    }
+                }
+            }
+
+            @media screen and (nax-width: 700px) {
+                .modal_step_03_wrapper:last-child {
+
+                    .d-flex {
+                        flex: 0 0 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal_backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba($color-secondary, .2);
+    @include hover;
+}
+
+.modal_price_perNight {
+    background-color: $color-white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    @include drop_shadow_lg;
+    padding: 1rem;
+    border-radius: .45rem;
+
+    .modal_close {
+        position: absolute;
+        top: -.5rem;
+        right: 0;
+        cursor: pointer;
+        @include hover;
+        opacity: .5;
+        padding: 0 .2rem;
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    span {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        user-select: none;
+    }
+
+    .value {
+        right: .6rem;
+    }
+
+    .night {
+        right: .7rem;
+    }
+
+    .check {
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .form-control:focus {
+        background-color: transparent !important;
+    }
+}
+.modal_total_price {
+    .modal_wrapper_price {
+        flex: 0 0 70%;
+        @media screen and (max-width: 767px) {
+            flex: 0 0 100%;
+        }
+    }
+    .modal_wrapper_total {
+        flex: 0 0 30%;
+        @media screen and (max-width: 767px) {
+            flex: 0 0 100%;
+        }
+    }
+}
+.form-group {
+    position: relative;
+    .value {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: .6rem;
+    }
+}
+
+.modal-body {
+    .chat_box {
+        min-height: 20rem;
+        overflow-y: auto;
+        max-height: 20rem;
+        .receive {
+            .receive_text {
+                background-color: rgba($color-silver, .5);
+                @include drop_shadow_md;
+                padding: .6rem .9rem;
+                margin-bottom: .4rem;
+            }
+
+            .receive_date {
+                padding-top: .2rem;
+            }
+        }
+
+        .send {
+            .send_text {
+                background-color: rgba($color-primary, .2);
+                @include drop_shadow_md;
+                padding: .6rem .9rem;
+                margin-bottom: .4rem;
+            }
+        }
+    }
+
+    .modal_smartdoor {
+        .smartdoor_icon {
+            opacity: 0;
+            @include hover;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        tr:hover {
+            .smartdoor_icon {
+                opacity: .5;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+.modal_pop_up {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    max-width: 350px;
+    width: 100%;
+    padding: 0 1rem;
+    @include hover;
+
+    .modal_wrapper {
+        @include drop_shadow_lg;
+        background-color: $color-white;
+        border-radius: .45rem;
+    }
+
+    .modal-footer, .modal_header {
+        background-color: rgba($color-silver02, .2);
+    }
+
+    .modal_close {
+        cursor: pointer;
+        padding: 0 .3rem;
+        cursor: pointer;
+        @include hover;
+        opacity: .5;
+        display: inline-block;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .modal_arrow {
+        position: absolute;
+        right: .3rem;
+        padding: .2rem .5rem;
+        display: flex;
+        cursor: pointer;
+        @include hover;
+        opacity: .5;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .modal_arrow.up {
+        top: 1.8rem;
+    }
+
+    .modal_arrow.down {
+        bottom: .1rem;
+    }
+
+    .inside_calendar {
+        position: absolute;
+        top: 0;
+        z-index: 99;
+        @include drop_shadow_md;
+        padding: 0 .5rem;
+        background-color: $color-white;
+        border-radius: .45rem;
+    }
+
+    .calendar_label {
+        background-color: unset !important;
+        @include hover;
+
+        &:focus {
+            border: 1px solid $color-primary;
+        }
+    }
+}
+
+.modal_put_rent {
+    background-color: $color-white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 22;
+    @include drop_shadow_lg;
+    padding: 1rem;
+    border-radius: .45rem;
+    width: 100%;
+    max-width: 450px;
+
+    .modal_pop_up {
+        position: absolute;
+        top: 11.8rem;
+        left: 8.5rem;
+        overflow: hidden;
+        @include drop_shadow_lg;
+        background-color: $color-white;
+        width: 17rem;
+        padding: 0;
+    }
+
+    .modal_put_rent_close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        padding: 0 .4rem;
+    }
+
+    .yes_or_no {
+        display: inline-flex;
+
+        span {
+            background-color: $color-white;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid $color-silver02;
+        }
+
+        span:first-child {
+            border-radius: .25rem 0 0 .25rem;
+        }
+
+        span:last-child {
+            border-radius: 0 .25rem .25rem 0;
+        }
+
+        .yes.active {
+            background-color: $color-green;
+            color: $color-white;
+        }
+
+        .no.active {
+            background-color: $color-red;
+            color: $color-white;
+        }
+    }
+}
+
+.modal_definition_price {
+    background-color: $color-white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    @include drop_shadow_lg;
+    padding: 1rem;
+    border-radius: .45rem;
+    width: 100%;
+    max-width: 670px;
+
+    .modal_pop_up {
+        position: absolute;
+        top: 11.8rem;
+        left: 8.5rem;
+        overflow: hidden;
+        @include drop_shadow_lg;
+        background-color: $color-white;
+        width: 17rem;
+        padding: 0;
+    }
+
+    .modal_put_rent_close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        padding: 0 .4rem;
+    }
+
+}

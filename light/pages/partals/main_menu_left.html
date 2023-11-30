@@ -1,0 +1,173 @@
+<div class="view_items left_nav">
+    <div class="view_wrapper d-flex flex-column h-100">
+
+        <!-- user logo -->
+        <div class="logo pt-2">
+            <a href="#home">
+                <!--<img src="/assets/images/icons/syncbeds-icon.png" alt="" id="main_menu_left_user_picture" loading="lazy">-->
+                <img src="/assets/images/icons/portals/syncbeds.svg" alt="" id="main_menu_left_user_picture" loading="lazy">
+            </a>
+        </div>
+
+        <div class="d-flex flex-column justify-content-between">
+            <ul class="navbar-nav nav_sidebar pt-3">
+
+                <!-- Dashboard -->
+                <!--<li class="nav-item" data-toggle="tooltip" title="Dashboard">
+        <a href="#home" class="nav-link"><i class="fas fa-tachometer-alt"></i></a>
+    </li>-->
+                <!-- Calendar -->
+                <li class="nav-item" data-toggle="tooltip" title="Calendar">
+                    <a href="#calendar" class="nav-link"><i class="far fa-calendar-alt"></i></a>
+                </li>
+
+                <!-- Reservations -->
+                <li class="nav-item" data-toggle="tooltip" title="Reservation">
+                    <a href="#rents" class="nav-link"><i class="fas fa-concierge-bell"></i></a>
+                </li>
+
+                <!-- Prices -->
+                <li class="nav-item" data-toggle="tooltip" title="Prices">
+                    <a href="#prices" class="nav-link">
+                        <span class="position-relative">
+                            <i class="far fa-calendar-alt"></i>
+                            <span class="little_icon">
+                                <i class="fas fa-coins"></i>
+                            </span>
+                        </span>
+                    </a>
+                </li>
+
+                <!-- Group Prices -->
+                <li class="nav-item hidden" data-toggle="tooltip" title="Groups prices">
+                    <a href="#hotel_calendar" class="nav-link">
+                        <i class="fas fa-hotel"></i>
+                    </a>
+                </li>
+
+                <!-- List objects -->
+                <li class="nav-item" data-toggle="tooltip" title="Objects">
+                    <a href="#objects" class="nav-link"><i class="fas fa-home"></i></a>
+                </li>
+
+                <!-- Invoices -->
+                <li class="nav-item" data-toggle="tooltip" title="Invoices">
+                    <a href="#bills" class="nav-link"><i class="fas fa-file-invoice"></i></a>
+                </li>
+
+                <!-- Messages -->
+                <li class="nav-item" data-toggle="tooltip" title="Messages">
+                    <a href="#messages" class="nav-link"><i class="far fa-envelope"></i></a>
+                </li>
+
+                <!-- Guests -->
+                <li class="nav-item" data-toggle="tooltip" title="Guests">
+                    <a href="#guests" class="nav-link"><i class="fas fa-users"></i></a>
+                </li>
+
+                <!-- Statistics -->
+                <li class="nav-item" data-toggle="tooltip" title="Statistics">
+                    <a href="#statistics" class="nav-link"><i class="fas fa-chart-bar"></i></a>
+                </li>
+
+                <!-- Reviews -->
+                <li class="nav-item" data-toggle="tooltip" title="Reviews">
+                    <a href="#all_reviews" class="nav-link"><i class="fas fa-star"></i></a>
+                </li>
+
+                <!-- Web site -->
+                <li class="nav-item hidden">
+                    <a href="#website" class="nav-link">
+                        <span class="position-relative">
+                            <i class="fas fa-globe"></i>
+                            <span class="little_icon">
+                                <i class="fas fa-wrench"></i>
+                            </span>
+                        </span>
+                    </a>
+                </li>
+
+                <!-- Smart door -->
+                <li class="nav-item hidden">
+                    <a href="#dashboard" class="nav-link">
+                        <i class="fas fa-columns"></i>
+                    </a>
+                </li>
+
+                <!-- Metricool -->
+                <li class="nav-item hidden">
+                    <a href="#metricool" class="nav-link">
+                        <i class="fas fa-infinity"></i>
+                    </a>
+                </li>
+
+                <!-- Components -->
+                <li id="nav_items_components" class="nav-item hidden">
+                    <a href="#components" class="nav-link text-danger">
+                        <i class="fas fa-tools"></i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <ul class="navbar-nav nav_sidebar mt-auto">
+
+            <!-- Tasks -->
+            <li class="nav-item hidden">
+                <a href="#tasks" class="nav-link"><i class="far fa-clipboard"></i></a>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+
+<script>
+
+    var main_menu_left = {};
+
+    // on load function
+    main_menu_left.load = function () {
+
+        if (routing.is_development()) {
+            nav_items_components.classList.remove('hidden');
+        }
+
+        //main_menu_left_user_picture.src = '/api/users/picture/' + bl.workers.current_user_id();
+        main_menu_left.menu_display();
+
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'hover'
+        })
+
+    }
+
+    main_menu_left.show = function () {
+        document.querySelector(".left_nav").style.display = "block";
+    }
+
+    main_menu_left.hide = function () {
+
+        document.querySelector(".left_nav").style.display = "none";
+    }
+
+    $('.nav-link').click(function () {
+        $('.nav-link').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    main_menu_left.menu_display = function () {
+        let hash = location.hash.slice(1);
+        //console.log(hash);
+        if (hash == "login") {
+            main_menu_left.hide();
+        } else {
+            main_menu_left.show();
+        }
+    }
+
+    // on load
+    main_menu_left.load();
+
+</script>

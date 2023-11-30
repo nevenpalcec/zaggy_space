@@ -1,0 +1,142 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>User settings
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#settings" class="filter_link"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_status" class="filter_link"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Status</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_sources" class="filter_link"><i class="fas fa-code-branch pr-lg-2"></i><span class="d-none d-lg-flex">Sources</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#payments_methods" class="filter_link hidden"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Payment methods</span></a>
+        <div class="filter_line_y hidden"></div>
+        <a href="#evisitor" class="filter_link"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">eVisitor</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoice_text" class="filter_link active"><i class="fas fa-file-invoice pr-lg-2"></i><span class="d-none d-lg-flex">Invoice text</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#email_templates" class="filter_link"><i class="fas fa-envelope pr-lg-2"></i><span class="d-none d-lg-flex">Email templates</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="invoice_text_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content pt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    <div class="row">
+
+                        <!-- Invoice text-->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font_5 font_bold color_primary">Invoice text</label>
+                                <textarea id="textarea_invoice_text" class="form-control" style="height: 250px;"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Invoice footer -->
+                        <div class="col-md-12 mt-3">
+                            <div class="form-group">
+                                <label class="font_5 font_bold color_primary">Invoice footer</label>
+                                <textarea id="textarea_invoice_footer" class="form-control" style="height: 250px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right mt-1">
+                        <button class="btn btn_secondary" onclick="invoice_text.bl.save_invoice_text();"><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>
+                    
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    var invoice_text = {};
+
+    // load function
+    invoice_text.load = () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        ui.display_title("Invoice text");
+
+        invoice_text.ui.load_invoice_text();
+
+    }
+
+    invoice_text.ui = new function () {
+
+        // loading
+        this.load_invoice_text = async function () {
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/users/details/' + user_id;
+            var response = await ajax.get(url);
+
+            var user = JSON.parse(response)[0];
+
+            textarea_invoice_text.value = user['invoice_text'];
+            textarea_invoice_footer.value = user['invoice_footer'];
+
+        }
+
+    }
+
+    invoice_text.bl = new function () {
+
+        //save invoice_text
+        this.save_invoice_text = async () => {
+
+            user_settings = {};
+
+            user_settings.user_id = bl.workers.current_user_id();
+            user_settings.invoice_text = textarea_invoice_text.value;
+            user_settings.invoice_footer = textarea_invoice_footer.value;
+
+            var url = '/api/users/user_settings/';
+
+            await ajax.post_json(url, user_settings);
+            await $(".view_content").animate({ scrollTop: 0 }, "slow").promise();
+
+            routing.reload();
+
+        }
+
+    }
+
+    // Load
+    invoice_text.load();
+
+</script>

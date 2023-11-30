@@ -1,0 +1,22 @@
+﻿@{
+    //var payments = bl.payment_methods.list();
+    var payments = bl.settings_current.registars.payment_methods;
+    string v = (string)(ViewData["payment_method_id"] ?? "").ToString().Trim();
+    string name = (ViewData["name"] ?? "payment_method_id").ToString();
+}
+<div class="ui fluid search selection dropdown" style="width: auto; " id="dropdown_payments_methods">
+    <input type="hidden" name="@name" id="@name" value="@v">
+    <i class="dropdown icon"></i>
+    <input class="search" autocomplete="off" tabindex="0" value="@v">
+    <div class="default text"></div>
+    <div class="menu transition hidden" tabindex="-1">
+        <div class="item" data-value=""> - - - </div>
+        @foreach (System.Data.DataRow r in payments.Rows)
+        {
+            if (string.IsNullOrWhiteSpace(r["name"].ToString()) == false)
+            {
+                <div class="item" data-value="@r["id"]"> @r["name"] </div>
+            }
+        }
+    </div>
+</div>

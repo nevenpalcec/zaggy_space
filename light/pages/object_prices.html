@@ -1,0 +1,623 @@
+﻿<!--  page object prices -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+            </div>
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_prices_header_object_name"></span>
+            </div>
+        </div>
+  
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="objects_prices_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content object_prices pt-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between overflow_x_auto">
+                                <div class="d-flex flex-wrap align-items-center font_3">
+                                    <div class="input-group input_group_sm pr-3 input_remove_number_arrow" style="width: 150px;">
+                                        <div class="input-group-prepend cursor_point" onclick="object_prices.ui.go_before();">
+                                            <span class="input-group-text"><i class="fas fa-angle-left"></i></span>
+                                        </div>
+                                        <input type="number" class="form-control focus text-center" value="" id="object_prices_year">
+                                        <div class="input-group-append cursor_point" onclick="object_prices.ui.go_next();">
+                                            <span class="input-group-text"><i class="fas fa-angle-right"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-flex d-none">
+                                        <div class="text-uppercase"><strong>Min - max</strong>&nbsp;&nbsp; 10 - 300 EUR </div>
+                                        <div class="px-2">|</div>
+                                        <div class="text-uppercase"><strong>Average</strong>&nbsp;&nbsp; 28.99 EUR</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="cursor_point mr-2 py-1 px-2 font_3 d-block d-md-none" data-toggle="tooltip" data-placement="top" data-original-title="Min - max 10 - 300 EUR Average 20.40 EUR"><i class="fas fa-coins"></i></div>
+                                   
+                                    <div class="d-flex align-items-center">
+                                        <div class="font_2 mr-2">Price definition</div>
+                                        <!-- Switch lg -->
+                                        <label class="switch switch_md mr-3 m-0">
+                                            <input type="checkbox" id="object_prices_price_definition_cb" onclick="object_prices.ui.show_price_definition();">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+
+                                    <button class="btn btn_hover" onclick="object_prices.bl.refresh_page();">
+                                        <i class="fas fa-sync"></i>
+                                    </button>
+                                    <div id="object_prices_tools" class="view_dropdown ml-auto hidden">
+                                        <button class="btn btn_hover">
+                                            <div class="d-flex align-items-center">
+                                                <span><i class="fas fa-ellipsis-v"></i></span>
+                                            </div>
+                                        </button>
+                                        <div class="dropdown_menu hidden" style="right: 0; min-width: 15rem; top: 2.3rem;">
+                                            <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                                <div class="font_bold">Tools</div>
+                                                <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                            </div>
+                                            <ul class="dropdown_ul font_3">
+                                                <li class="dropdown_li">
+                                                    <a class="dropdown_a">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="icon"><i class="fas fa-file-import"></i></div>
+                                                            <div class="align-self-center flex_1">Import</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown_li">
+                                                    <a class="dropdown_a">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="icon"><i class="far fa-copy"></i></div>
+                                                            <div class="align-self-center flex_1">Copy min. advance to all obj. in loc.</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown_li">
+                                                    <a class="dropdown_a">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="icon"><i class="fas fa-globe"></i></div>
+                                                            <div class="align-self-center">Web show report</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown_li">
+                                                    <a class="dropdown_a">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="icon"><i class="fas fa-print"></i></div>
+                                                            <div class="align-self-center">Print</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <hr class="my-2">
+                                                <li class="dropdown_li">
+                                                    <a class="dropdown_a">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="icon"><i class="fas fa-eraser"></i></div>
+                                                            <div class="align-self-center">Reset stock</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mb-1">
+
+                            <!-- cell display type buttons -->
+                            <div class="d-flex flex-wrap mb-1">
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_default')">Default</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_price')">Price</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_min_stay')">Min stay</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_check_in_out')">Check in/out</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_price_extra')">Extra</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_price_special')">Special</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_stock')">Stock</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_enable')">Enable</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_advance')">Advance</button>
+                                <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="object_prices.ui.show_cell('.col_td_price_single')">Single</button>
+                                <button class="btn btn_secondary font_1 text-uppercase py-1 px-2 m-1 hidden">Add new reservation</button>
+                                <button class="btn btn_secondary font_1 text-uppercase py-1 px-2 m-1 hidden">Add new discount</button>
+                            </div>
+
+                            <!-- Calendar -->
+                            <div style="display: grid;">
+                                <div class="div_calendar border font_3">
+                                    <div class="pos_left">
+                                        <div class="let_thead font_medium">
+                                            Month
+                                        </div>
+                                        <div class="left_tbody font_medium">
+                                            <div class="left_col">
+                                                1 | Jan
+                                            </div>
+                                            <div class="left_col">
+                                                2 | Feb
+                                            </div>
+                                            <div class="left_col">
+                                                3 | Mar
+                                            </div>
+                                            <div class="left_col">
+                                                4 | Apr
+                                            </div>
+                                            <div class="left_col">
+                                                5 | May
+                                            </div>
+                                            <div class="left_col">
+                                                6 | Jun
+                                            </div>
+                                            <div class="left_col">
+                                                7 | Jul
+                                            </div>
+                                            <div class="left_col">
+                                                8 | Aug
+                                            </div>
+                                            <div class="left_col">
+                                                9 | Sep
+                                            </div>
+                                            <div class="left_col">
+                                                10 | Oct
+                                            </div>
+                                            <div class="left_col">
+                                                11 | Nov
+                                            </div>
+                                            <div class="left_col">
+                                                12 | Dec
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="calendar_wrapper">
+
+                                        <!-- thead -->
+                                        <div class="thead font_medium">
+                                            <div class="thead_day">1</div>
+                                            <div class="thead_day">2</div>
+                                            <div class="thead_day">3</div>
+                                            <div class="thead_day">4</div>
+                                            <div class="thead_day">5</div>
+                                            <div class="thead_day">6</div>
+                                            <div class="thead_day">7</div>
+                                            <div class="thead_day">8</div>
+                                            <div class="thead_day">9</div>
+                                            <div class="thead_day">10</div>
+                                            <div class="thead_day">11</div>
+                                            <div class="thead_day">12</div>
+                                            <div class="thead_day">13</div>
+                                            <div class="thead_day">14</div>
+                                            <div class="thead_day">15</div>
+                                            <div class="thead_day">16</div>
+                                            <div class="thead_day">17</div>
+                                            <div class="thead_day">18</div>
+                                            <div class="thead_day">19</div>
+                                            <div class="thead_day">20</div>
+                                            <div class="thead_day">21</div>
+                                            <div class="thead_day">22</div>
+                                            <div class="thead_day">23</div>
+                                            <div class="thead_day">24</div>
+                                            <div class="thead_day">25</div>
+                                            <div class="thead_day">26</div>
+                                            <div class="thead_day">27</div>
+                                            <div class="thead_day">28</div>
+                                            <div class="thead_day">29</div>
+                                            <div class="thead_day">30</div>
+                                            <div class="thead_day">31</div>
+                                        </div>
+
+                                        <!-- days by mounths -->
+                                        <div class="tbody" id="object_prices_tbody">
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End - Calendar -->
+                            <div class="d-flex flex-wrap text-uppercase font_1 mt-2 footer_calendar">
+                                <div class="px-2 py-1 position-relative m-1 today" style="z-index: 1;">Today</div>
+                                <div class="px-2 py-1 position-relative m-1 weekend" style="z-index: 1;">Weekend</div>
+                                <div class="px-2 py-1 position-relative m-1 overbooking" style="z-index: 1;">Overbooking</div>
+                                <div class="px-2 py-1 position-relative m-1 reservation" style="z-index: 1;">Reservation</div>
+                                <div class="px-2 py-1 position-relative m-1 disable" style="z-index: 1;">Disable</div>
+                                <div class="px-2 py-1 position-relative m-1 no_stock" style="z-index: 1;">No stock</div>
+                                <div class="px-2 py-1 position-relative m-1 min_stay" style="z-index: 1;">Min stay to high</div>
+                                <div class="px-2 py-1 position-relative m-1 same_day" style="z-index: 1;">Same day in / out</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- modals object prices -->
+<section>
+    <div id="object_prices_price_change_modal"></div>
+</section>
+<section>
+    <div id="object_prices_price_definition"></div>
+</section>
+
+<!-- templates -->
+<section>
+
+    <template id="template_cell_day">
+        <div class="bodycol ${holiday} ${disabled} ${no_stock}" data-day="${day}" data-price="${price}" data-stay="${min_stay}" data-enable="${enable}" data-check_in="${check_in}" data-check_out="${check_out}">
+            <div class="col_td col_td_default">
+                <div class="value"> ${price} ${currency_label} </div>
+                <div>${min_stay}<i class="fas fa-moon fa-xs pl-1"></i></div>
+            </div>
+            <div class="col_td col_td_price" style="display: none;">
+                <div class="value"> ${price} ${currency_label} </div>
+            </div>
+            <div class="col_td col_td_min_stay" style="display: none;">
+                <div>${min_stay}<i class="fas fa-moon fa-xs pl-1"></i></div>
+            </div>
+            <div class="col_td col_td_check_in_out" style="display: none;">
+                <div>${check_in}/${check_out}</div>
+            </div>
+            <div class="col_td col_td_price_extra" style="display: none;">
+                <div>${price_extra} ${currency_label}</div>
+                <div>${guests_extra_from}<i class="fas fa-user fa-xs pl-1"></i></div>
+            </div>
+            <div class="col_td col_td_price_special" style="display: none;">
+                <div>${price_special} ${currency_label}</div>
+            </div>
+            <div class="col_td col_td_enable" style="display: none;">
+                <div>${enable_day}</div>
+            </div>
+            <div class="col_td col_td_stock" style="display: none;">
+                <div>${stock_available}</div>
+            </div>
+            <div class="col_td col_td_advance" style="display: none;">
+                <div>${min_advance_res}</div>
+            </div>
+            <div class="col_td col_td_price_single" style="display: none;">
+                <div>${price_single} ${currency_label}</div>
+            </div>
+            <div class="tiny_circles ${check_in_circles} ${check_out_circles}"></div>
+            <div class="col_event ${reservation} ${overbooking}"></div>
+        </div>
+    </template>
+
+    <!--tiny_circles green_left red_right-->
+
+</section>
+
+<script>
+    //const { debug } = require("webpack");
+
+
+    var object_prices = {};
+
+    object_prices.object_id = '';
+    object_prices.item_id = '-1';
+    object_prices.object_name = '';
+    object_prices.year = '';
+    object_prices.show_definition = 'N';
+
+    object_prices.load = () => {
+        
+        object_prices_year.value = new Date().getFullYear();
+        
+        object_prices.year = object_prices_year.value;
+
+
+        // Load
+        $(".filter_general").load("/pages/partals/filter_general.html");
+        $("#object_prices_price_change_modal").load("/pages/components/price_change.html");
+        $("#object_prices_price_definition").load("/pages/components/modal_price_definition.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // clear data before load real data
+        object_prices_tbody.innerHTML = '';
+
+        // Global ui
+        ui.content_loading('objects_prices_content_loading');
+
+        object_prices_header_object_name.innerHTML = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+        // Display days cell
+        object_prices.bl.days_display();
+
+        // Local
+        object_prices.ui.cell_select();
+
+    }
+
+    object_prices.bl = new function () {
+        
+        this.year = object_prices_year.value;
+
+
+        // displaying days in calendar
+        this.days_display = async () => {
+
+            object_prices_tbody.innerHTML = '';
+
+            object_prices.object_id = page.get_id();
+            var date_from = object_prices.year + '-01-01';
+            var date_until = object_prices.year + '-12-31';
+            //prices_period_liste_by_object(string id, string date_from, string date_until, string item_id = "-1")
+            var url = `/api/objects_prices_days/prices_period_liste_by_object/${object_prices.object_id}?date_from=${date_from}&date_until=${date_until}&item_id=${object_prices.item_id}`;
+
+            var response = await ajax.get(url);
+            var json = JSON.parse(response);
+
+            // console.log(json);
+
+            var json_days = 0;
+            
+            for (var i = 0; i <= 11; i++) {
+
+                var days = new Date(this.year, i + 1, 0).getDate();
+
+                var tr_mounth = document.createElement('tr');
+                tr_mounth.classList.add("tr");
+
+                for (var d = 1; d <= days; d++) {
+
+                    if (d <= days) {
+
+                        this.year = object_prices.year;
+                        var day = new Date(this.year, i, d);
+                        var day_of_week = day.getDay();
+                        var t = template_cell_day.innerHTML;
+                        t = t.replace('${enable}', json[json_days]['enable_day']);
+                        t = t.replace('${check_in}', json[json_days]['check_in']);
+                        t = t.replace('${check_in}', json[json_days]['check_in']);
+                        t = t.replace('${check_out}', json[json_days]['check_out']);
+                        t = t.replace('${check_out}', json[json_days]['check_out']);
+                        t = t.replace('${price}', json[json_days]['price']);
+                        t = t.replace('${price}', json[json_days]['price']);
+                        t = t.replace('${price}', json[json_days]['price']);
+                        t = t.replace('${currency_label}', !json[json_days]['currency_label'] == true ? '' : json[json_days]['currency_label']);
+                        t = t.replace('${currency_label}', !json[json_days]['currency_label'] == true ? '' : json[json_days]['currency_label']);
+                        t = t.replace('${min_stay}', json[json_days]['min_stay']);
+                        t = t.replace('${min_stay}', json[json_days]['min_stay']);
+                        t = t.replace('${min_stay}', json[json_days]['min_stay']);
+                        //t = t.replace("${no_stock}", !json[json_days]['enable'] == 'N' ? 'no_stock' : '');
+                        t = t.replace("${disabled}", json[json_days]['enable_day'] == 'N' ? 'disable' : '');
+                        t = t.replace("${holiday}", (day_of_week == 0 || day_of_week == 6) ? 'holiday' : '');
+                        t = t.replace('${check_in_circles}', json[json_days]['check_in'] == 'Y' ? 'green_left' : 'red_left');
+                        t = t.replace('${check_out_circles}', json[json_days]['check_out'] == 'Y' ? 'green_right' : 'red_right');
+                        t = t.replace('${price_extra}', json[json_days]['price_extra']);
+                        t = t.replace('${guests_extra_from}', json[json_days]['guests_extra_from']);
+                        t = t.replace('${currency_label}', !json[json_days]['currency_label'] == true ? '' : json[json_days]['currency_label']);
+                        t = t.replace('${price_special}', json[json_days]['price_special']);
+                        t = t.replace('${currency_label}', !json[json_days]['currency_label'] == true ? '' : json[json_days]['currency_label']);
+                        t = t.replace("${enable_day}", json[json_days]['enable_day'] == 'N' ? 'N' : 'Y');
+                        t = t.replace('${stock_available}', json[json_days]['stock_available']);
+                        t = t.replace('${min_advance_res}', json[json_days]['min_advance_res']);
+                        t = t.replace('${price_single}', json[json_days]['price_single']);
+                        t = t.replace('${currency_label}', json[json_days]['currency_label']);
+
+                        t = t.replace('${day}', js.date.toIso(day));
+
+                        // set is it overbooked
+                        if (json[json_days]['stock_available'] < 0) {
+                            t = t.replace("${overbooking}", 'overbooking');
+                            t = t.replace('${reservation}', '');
+                        }
+
+                        // set is it out of stock
+                        if (json[json_days]['price'] == 0) {
+                            t = t.replace('${no_stock}', 'no_stock');
+                        }
+                        else if (json[json_days]['stock_available'] == 0) {
+                            t = t.replace("${overbooking}", '');
+                            t = t.replace('${reservation}', 'reservation');
+                        }
+
+
+                        tr_mounth.insertAdjacentHTML('beforeend', t);
+                    }
+                    else {
+                        var t = '<div class="bodycol"><div class="col_td"></div></div>';
+                        tr_mounth.insertAdjacentHTML('beforeend', t);
+                    }
+
+                    json_days++;
+
+                }
+
+                object_prices_tbody.insertAdjacentElement('beforeend', tr_mounth);
+
+            }
+
+            ui.content_loading_hide('objects_prices_content_loading');
+            object_prices.ui.cell_select();
+        }
+
+        // refresh page
+        this.refresh_page = () => {
+            this.days_display();
+        }
+
+
+    }
+
+    object_prices.ui = new function () {
+
+        this.show_price_definition = () => {
+            
+            if (object_prices_price_definition_cb.checked) {
+                object_prices.show_definition = 'Y';
+
+            } else {
+                object_prices.show_definition = 'N';
+            }
+        }
+
+        // range of clicking on table
+        this.cell_select = function () {
+
+            var table = $(".div_calendar");
+            var td = $(".bodycol");
+
+            var isMouseDown = false;
+            var startRowIndex = null;
+            var startCellIndex = null;
+
+            function selectTo(cell) {
+
+                var row = cell.parent();
+                var cellIndex = cell.index();
+                var rowIndex = row.index();
+
+                var rowStart, rowEnd, cellStart, cellEnd;
+
+                if (rowIndex < startRowIndex) {
+                    rowStart = rowIndex;
+                    rowEnd = startRowIndex;
+                } else {
+                    rowStart = startRowIndex;
+                    rowEnd = rowIndex;
+                }
+
+                if (cellIndex < startCellIndex) {
+                    cellStart = cellIndex;
+                    cellEnd = startCellIndex;
+                } else {
+                    cellStart = startCellIndex;
+                    cellEnd = cellIndex;
+                }
+
+                for (var i = rowStart; i <= rowEnd; i++) {
+                    var rowCells = table.find(".tr").eq(i).find(td);
+                    for (var j = cellStart; j <= cellEnd; j++) {
+                        rowCells.eq(j).addClass("clicked");
+                    }
+                }
+            }
+
+            table.find(td).mousedown(function (e) {
+                isMouseDown = true;
+                var cell = $(this);
+
+                table.find(".clicked").removeClass("clicked"); // deselect everything
+
+                if (e.shiftKey) {
+                    selectTo(cell);
+                } else {
+                    cell.addClass("clicked");
+                    startCellIndex = cell.index();
+                    startRowIndex = cell.parent().index();
+                }
+
+                return false; // prevent text selection
+            }).mouseover(function () {
+                if (!isMouseDown) return;
+                table.find(".clicked").removeClass("clicked");
+                selectTo($(this));
+            }).bind("selectstart", function () {
+                return false;
+            });
+            $(document).mouseup(function () {
+                if (isMouseDown == true) {
+                    var table = document.querySelectorAll('#object_prices_tbody > .tr > .bodycol')
+                    var selected_days = [];
+                    for (var i of table) {
+                        if (i.classList.contains('clicked')) {
+                            //console.log('clickeeeed');
+                            selected_days.push(i)
+                        }
+                    }
+
+                    // show popup
+                    var page = 'object_prices';
+                    var arr_objects_name = [];
+                    var arr_objects_id = [];
+                    
+                    arr_objects_id.push(object_prices.object_id);
+                    var price = selected_days[0].dataset.price;
+                    var min_stay = selected_days[0].dataset.stay;
+                    var date_from = selected_days[0].dataset.day;
+                    var date_until = selected_days[selected_days.length - 1].dataset.day;
+                    var enable = selected_days[0].dataset.enable;
+                    var check_in = selected_days[0].dataset.check_in;
+                    var check_out = selected_days[0].dataset.check_out;
+                    var obj_list = JSON.parse(localStorage.getItem('objects'));
+                    for (var obj of obj_list) {
+                        if (obj['id'] == object_prices.object_id) {
+                            object_prices.object_name = obj['name'];
+                        }
+                    }
+                    arr_objects_name.push(object_prices.object_name);
+
+                    if (object_prices.show_definition == 'N') {
+
+                        price_change.ui.open(page, date_from, date_until, price, min_stay, enable, check_in, check_out, arr_objects_name, arr_objects_id);
+
+                    } else {
+                        price_definition.ui.open(date_from);
+                    }
+
+                }
+
+                isMouseDown = false;
+            });
+        }
+
+        // display right cell
+        this.show_cell = (cell_type) => {
+
+
+            $('.col_td_default').hide();
+            $('.col_td_price').hide();
+            $('.col_td_min_stay').hide();
+            $('.col_td_check_in_out').hide();
+            $('.col_td_price_extra').hide();
+            $('.col_td_price_special').hide();
+            $('.col_td_enable').hide();
+            $('.col_td_stock').hide();
+            $('.col_td_advance').hide();
+            $('.col_td_price_single').hide();
+
+            $(cell_type).show();
+        }
+
+        this.go_next = () => {
+            object_prices.year = parseInt(object_prices_year.value) + 1;
+            object_prices_year.value = object_prices.year;
+            object_prices.bl.days_display();
+        }
+
+        this.go_before = () => {
+            object_prices.year = parseInt(object_prices_year.value) - 1;
+            object_prices_year.value = object_prices.year;
+            object_prices.bl.days_display();
+        }
+
+    }
+
+    object_prices.load();
+
+</script>

@@ -1,0 +1,495 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+            </div>
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-none d-md-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_pictures_header_object_name"></span>
+                <span class="d-md-none d-block view_header_mobile_label"><i class="fas fa-home pr-2"></i>Apartment with balcony</span>
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+        <!--</div>-->
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+
+        <div id="objects_pictures_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content pictures pt-3">
+            <div class="row">
+                <div class="custom_col_01">
+
+                    <!-- Main picture -->
+                    <div class="card position-relative">
+
+                        <div id="objects_pictures_main_content_loading" class="view_loading" style="display: none;">
+                            <img src="/assets/images/icons/loading.svg" />
+                        </div>
+
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold"><i class="far fa-image pr-2"></i>Hero image</div>
+                            <div></div>
+                        </div>
+                        <div class="card-body_main_pic">
+                            <div class="drop_shadow_inside">
+                                <div data-toggle="tooltip" data-placement="top" data-original-title="Delete" onclick="object_pictures.bl.main_picture_del();"><i class="far fa-trash-alt"></i></div>
+                            </div>
+                            <img id="object_pictures_main_picture" style="height: 15rem;" src="./assets/images/pictures/no-image.png" alt="">
+                        </div>
+                    </div>
+
+                    <!-- Upload pictures -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="font-weight-bold"><i class="fas fa-cloud-upload-alt pr-2"></i>Upload images</div>
+                            <div class="font_2" data-toggle="tooltip" data-placement="top" data-original-title="Optimize your images for better website and guest portal perfomance!"><i class="fas fa-question"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Upload main picture -->
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <div class="mb-3 font_3 font_medium"><i class="far fa-image pr-2"></i>Main image</div>
+
+                                    <div class="box__upload_image " id="dropzone_main_picture" style="width:150px; height:180px;">
+                                        <div id="progress_value" class="pt-2 px-3">
+                                            0 %
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Upload pictures -->
+                                    <div class="mb-3 font_3 font_medium"><i class="far fa-images pr-2"></i>Images</div>
+
+                                    <div class="box__upload_image " id="dropzone_div" style="width:150px; height:180px;">
+                                        <div id="progress_value" class="pt-2 px-3">
+                                            0 %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="font_2 pt-3 red" >
+                                <div><i class="fas fa-exclamation pr-2"></i>Size should not exceed 1MB.</div>
+                                <div><i class="fas fa-exclamation pr-2"></i>Resolution should not be lesser than 1920 x 1080px.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image optimization -->
+                    <div class="card" style="display:none;">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="font-weight-bold"><i class="fas fa-file-archive pr-2"></i>Image optimization</div>
+                            <div class="font_2" data-toggle="tooltip" data-placement="top" data-original-title="Resize and optimize your images!"><i class="fas fa-question"></i></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6 mb-3 mb-md-0">
+                                    <div class="border-bottom mb-2 font_3 font_medium"><i class="fas fa-globe pr-2"></i><span data-toggle="tooltip" data-placement="top" data-original-title="Online optimization tool">Online</span></div>
+                                    <a href="https://www.birme.net/" class="link_optimization">
+                                        <img src="./assets/images/pictures/Brime_screenshot.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="border-bottom mb-2 font_3 font_medium"><i class="fas fa-microchip pr-2"></i><span data-toggle="tooltip" data-placement="top" data-original-title="Desktop optimization tool">Program</span></div>
+                                    <a href="" class="link_optimization">
+                                        <img src="./assets/images/pictures/FastStone_screenshot.jpg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="custom_col_02">
+
+                    <!-- Pictures -->
+                    <div class="card position-relative">
+
+                        <div id="objects_pictures_sort_content_loading" class="view_loading" style="display: none;">
+                            <img src="/assets/images/icons/loading.svg" />
+                        </div>
+
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="font-weight-bold"><i class="far fa-images pr-2"></i>Images</div>
+                            <div class="font_3" id="object_pictures_number_of_pictures">20 Images uploaded</div>
+
+                            <!--<button class="btn btn_hover p-1" onclick="object_pictures.bl.object_load();">
+                                <i class="fas fa-sync"></i>
+                            </button>-->
+                            <div class="card-header_icon" onclick="object_pictures.bl.object_load();"><i class="fas fa-sync-alt"></i></div>
+                        </div>
+                        <div class="card-body font_2">
+                            <div id="object_pictures_items" class="card-body_upload_images_list">
+
+
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-wrap">
+                                    <button id="btn_remove_all" class="btn btn_red m-1" onclick="object_pictures.bl.delete_all_picture();"><i class="far fa-trash-alt pr-2"></i>Remove all</button>
+                                    <button id="btn_gallery" class="btn btn_secondary m-1 hidden"><i class="far fa-images pr-2"></i>View Gallery</button>
+                                    <button id="btn_import" class="btn btn_secondary m-1 hidden"><i class="fas fa-cloud-download-alt pr-2"></i>Import from web</button>
+                                    <button class="btn btn_secondary m-1" onclick="object_pictures.bl.save_picture_sort();"><i class="fas fa-sort-amount-down pr-2"></i>Save image sort</button>
+                                </div>
+                                <button class="btn btn_secondary m-1 hidden"><i class="fas fa-save pr-2"></i>Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<selection>
+
+    <template id="template_picture_item">
+        <div class="upload_images_item" data-id="${picture_id}">
+            <div class="upload_images_wrapper">
+                <div class="upload_images_item_img">
+                    <img id="object_pictures_url" src="${picture_url}" alt="">
+                    <div class="drop_shadow_inside">
+                        <div data-toggle="tooltip" data-placement="top" data-original-title="Set as main picture" onclick="object_pictures.bl.set_image_as_main(`${id}`);"><i class="far fa-image"></i></div>
+                        <div data-toggle="tooltip" data-placement="top" data-original-title="Zoom" onclick="object_pictures.bl.open_picture(`${picture_url}`)"><i class="fas fa-search-plus"></i></div>
+                        <div data-toggle="tooltip" data-placement="top" data-original-title="Delete" onclick="object_pictures.bl.delete_picture(`${id}`)"><i class="far fa-trash-alt"></i></div>
+                    </div>
+                </div>
+                <div class="upload_images_item_body">
+                    <div class="upload_images_name pb-2">${picture_name}</div>
+                    <div class="d-flex justify-content-between flex-wrap">
+                        <div>${picture_width}x${picture_height}&nbsp;px</div>
+                        <div>${picture_mb}&nbsp;MB</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </template>
+
+</selection>
+
+<script>
+
+    var object_pictures = {};
+
+    object_pictures.object_id = '';
+    object_pictures.obj = {};
+
+    // Pictures load function
+    object_pictures.load = async () => {
+
+        await ui.content_loading('objects_pictures_content_loading');
+       
+        // Global ui
+        ui.display_title("Pictures");
+        ui.content_loading('objects_pictures_content_loading');
+
+        // Load
+        $(".filter_general").load("/pages/partals/filter_general.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        jQuery('#object_pictures_items').sortable({ 'delay': '100' });
+
+        // display data
+        await object_pictures.bl.object_load();
+        await object_pictures.bl.upload_image();
+        await object_pictures.bl.upload_main_image();
+        await object_pictures.bl.object_display();
+
+        await ui.content_loading_hide('objects_pictures_content_loading');
+
+    }
+
+    object_pictures.bl = new function () {
+
+        // object load details
+        this.object_load = async () => {
+
+            await ui.content_loading('objects_pictures_content_loading');
+
+            var hash = location.hash;
+            var object_id = hash.split('?')[1];
+            object_pictures_items.innerHTML = '';
+            object_pictures_main_picture.src = '';
+
+            object_pictures.obj = await bl.objects.object_load(object_id);
+
+            await object_pictures.bl.object_display();
+
+            await ui.content_loading_hide('objects_pictures_content_loading');
+
+        }
+
+        // display data
+        this.object_display = async () => {
+
+            var o = object_pictures.obj;
+
+            object_pictures_header_object_name.innerHTML = o['general'][0]['name'];
+
+            object_pictures.object_id = page.get_id();
+
+            var number_of_pictures = 0;
+
+            object_pictures_items.innerHTML = '';
+
+            for (var p of o['pictures']) {
+
+                var random = Math.random();
+
+                var t = template_picture_item.innerHTML;
+
+                t = t.replaceAll('${id}', p['id']);
+                t = t.replaceAll('${picture_url}', p['url'] + '?id=' + random);
+                t = t.replaceAll('${picture_name}', p['name']);
+                t = t.replaceAll('${picture_width}', p['width']);
+                t = t.replaceAll('${picture_height}', p['height']);
+                t = t.replaceAll('${picture_id}', p['id']);
+                t = t.replaceAll('${picture_mb}', Number(p['MB']).toFixed(2));
+                number_of_pictures++;
+                js.html.insertAdjacentHTML('object_pictures_items', t);
+
+            }
+
+
+            object_pictures_main_picture.src = (o['general'][0]['picture_url_amazon'] || "/assets/images/pictures/no-image.png") + '?id=' + random;
+
+            object_pictures_number_of_pictures.innerHTML = number_of_pictures + ' images uploaded';
+
+            ui.content_loading_hide('objects_pictures_content_loading');
+
+            ui.content_loading_hide('objects_pictures_sort_content_loading');
+
+        }
+
+        this.delete_all_picture = async () => {
+
+
+            var object_id = page.get_id();
+
+            var url = '/api/objects_realestates_pictures/delete_all_picture/' + object_id;
+            await ajax.get(url);
+
+            object_pictures_main_picture.src = "";
+
+            object_pictures.bl.object_load();
+
+        }
+
+        this.delete_picture = async (id) => {
+
+            ui.content_loading('objects_pictures_sort_content_loading');
+
+            var url = '/api/objects_realestates_pictures/delete_picture/' + id;
+            await ajax.get(url);
+            object_pictures.bl.object_load();
+
+            ui.content_loading_hide('objects_pictures_sort_content_loading');
+            ui.content_loading_hide('objects_pictures_main_content_loading');
+
+        }
+
+        this.open_picture = (picture_url) => {
+            var newTab = window.open(picture_url, "_blank");
+            newTab.focus();
+        }
+
+        this.upload_image = () => {
+
+
+            var user_id = bl.workers.current_user_id();
+            var object_id = page.get_id();
+
+            var dz_files_upload = 0;
+            var dz = new Dropzone("#dropzone_div", { url: `/api/objects/picture_upload/${object_id}?user_id=${user_id}`, parallelUploads: 1 });
+
+            dz.on("addedfile", function (file) {
+                /* Maybe display some more file information on your page */
+
+                dz_files_upload = 1;
+            });
+
+            dz.on("uploadprogress", function (file, progress, bytesSent) {
+                /* Maybe display some more file information on your page */
+            });
+
+
+            dz.on("success", function (file, response) {
+                /* Maybe display some more file information on your page */
+                dz_files_upload += 1;
+
+                progress_value.innerHTML = dz_files_upload + ' files';
+
+                if (response == "ok") {
+                }
+                else {
+                }
+
+            });
+
+            dz.on("complete", function (file) {
+                /* Maybe display some more file information on your page */
+                /*dz_files_upload = 0;*/
+                dz.removeFile(file);
+
+            });
+
+            dz.on("sending", function (file, xhr, formData) {
+                /* Maybe display some more file information on your page */
+                formData.append("filesize", file.size);
+            });
+
+
+            dz.on("successmultiple", function () {
+                /* Maybe display some more file information on your page */
+            });
+
+            dz.on("completemultiple", function () {
+                /* Maybe display some more file information on your page */
+
+            });
+            dz.on("queuecomplete", function () {
+                /* Maybe display some more file information on your page */
+                object_pictures.bl.object_load();
+                dz_files_upload = 0;
+                progress_value.innerHTML = dz_files_upload + ' files';
+            });
+
+
+        }
+
+        this.upload_main_image = () => {
+
+            var user_id = bl.workers.current_user_id();
+            var object_id = page.get_id();
+
+            var dz_files_upload = 0;
+            var dz_main = new Dropzone("#dropzone_main_picture", { url: `/api/objects/main_picture_upload/${object_id}?user_id=${user_id}`, parallelUploads: 1, uploadMultiple: false });
+
+            dz_main.on("addedfile", function (file) {
+                /* Maybe display some more file information on your page */
+
+                dz_files_upload = 1;
+            });
+
+            dz_main.on("uploadprogress", function (file, progress, bytesSent) {
+                /* Maybe display some more file information on your page */
+            });
+
+
+            dz_main.on("success", function (file, response) {
+                /* Maybe display some more file information on your page */
+                dz_files_upload += 1;
+
+                progress_value.innerHTML = dz_files_upload + ' files';
+
+                if (response == "ok") {
+                }
+                else {
+                }
+
+            });
+
+            dz_main.on("complete", function (file) {
+                /* Maybe display some more file information on your page */
+                /*dz_files_upload = 0;*/
+                dz_main.removeFile(file);
+
+
+            });
+
+            dz_main.on("sending", function (file, xhr, formData) {
+                /* Maybe display some more file information on your page */
+                formData.append("filesize", file.size);
+            });
+
+
+            dz_main.on("successmultiple", function () {
+                /* Maybe display some more file information on your page */
+            });
+
+            dz_main.on("completemultiple", function () {
+                /* Maybe display some more file information on your page */
+
+            });
+            dz_main.on("queuecomplete", function () {
+                /* Maybe display some more file information on your page */
+                object_pictures.bl.object_load();
+                dz_files_upload = 0;
+                progress_value.innerHTML = dz_files_upload + ' files';
+            });
+        }
+
+        this.main_picture_del = async () => {
+
+            var url = '/api/objects/main_picture_del/' + object_pictures.object_id;
+
+            await ajax.get(url);
+
+            object_pictures_main_picture.src = "";
+
+            // Refresh cache
+            bl.objects.list_load();
+
+        }
+
+        this.set_image_as_main = async (id) => {
+
+            await ui.content_loading("objects_pictures_content_loading");
+
+            let url = '/api/objects_realestates_pictures/set_as_main/' + id + '?user_id=' + bl.workers.current_user_id();
+            await ajax.get_json(url);
+
+            await location.reload();
+            await ui.content_loading_hide("objects_pictures_content_loading");
+        }
+
+
+        this.save_picture_sort = async () => {
+
+            ui.content_loading('objects_pictures_sort_content_loading');
+
+            var arr = [];
+            var pictures = document.querySelectorAll('.upload_images_item');
+
+            for (var i of pictures) {
+
+                var pic = {};
+                pic.id = i.dataset.id;
+
+                arr.push(pic);
+            }
+
+            var url = '/api/objects_realestates_pictures/save_picture_sort/?user_id=' + bl.workers.current_user_id();
+            await ajax.post_json(url, arr);
+
+            ui.content_loading_hide("objects_pictures_sort_content_loading");
+        }
+
+    }
+
+    // Load
+    object_pictures.load();
+
+</script>

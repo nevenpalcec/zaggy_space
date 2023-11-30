@@ -1,0 +1,16 @@
+﻿@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var list_front_page = bl.objects_relstate_pictures.list_front_page(user_id);
+    var list_gallery = bl.objects_relstate_pictures.list_front_page(user_id);
+    var objects = bl.objects.objects_list(user_id);
+
+    ViewBag.Title = users_text["title"].ToString() + " | " + bl.lng.l.Book_Now;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "objects_list" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+

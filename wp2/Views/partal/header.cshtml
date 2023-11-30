@@ -1,0 +1,41 @@
+﻿@{
+    var be = (System.Data.DataRow)Session["booking_engine"];
+    var page = (string)ViewData["page"];
+    var title = be["moto_header"].ToString();
+    var moto = be["moto_header_small"].ToString();
+    var header_display_title = be["header_display_title"].ToString();
+    var remove_header_footer = be["remove_header_footer"].ToString();
+}
+
+
+@if (remove_header_footer == "N")
+{
+    <div class="banner">
+        <div class="container-wrapper">
+
+            <div class="logo" style="display: @(header_display_title == "N" ? "none" : "initial")">
+                <a href="/">
+                    <div class="d-flex justify-content-center">
+                        <div class="banner-icon">
+                            @*<img src="https://api.zaggy.net/users/picture/@bl.settings_current.user_id" style="height: 50px;" />*@
+                        </div>
+                        <div class="banner-item" style="margin-left: 15px;">
+                            <img src="https://api.zaggy.net/users/picture/@bl.settings_current.user_id"
+                                 class="img-fluid" alt="" style="object-fit: cover; height: 70px; max-height: 70px;">
+                            @if (string.IsNullOrWhiteSpace(title) == false)
+                            {
+                                <h1 class="banner-title">@title</h1>
+                            }
+                            @if (string.IsNullOrWhiteSpace(moto) == false)
+                            {
+                                <h2 style="font-size: inherit; margin-top: -10px; text-transform: uppercase; font-weight: 400;">@moto</h2>
+                            }
+                        </div>
+                    </div>
+                </a>
+            </div>
+             
+            @Html.Partial("/Views/partal/navbar.cshtml", new ViewDataDictionary { { "page", page } })
+        </div>
+    </div>
+}

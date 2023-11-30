@@ -1,0 +1,264 @@
+﻿<!-- Modal add status -->
+<div id="modal_add_rents_status" class="view_modal  hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-list-ul pr-2"></i>Add rents status</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Name</label>
+                            <input type="text" class="form-control focus" id="modal_add_rents_status_name" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Color</label>
+                            <input type="color" class="form-control focus" id="modal_add_rents_status_color" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div>
+                    <button class="btn btn_silver" data-dismiss="modal" id="modal_add_rents_status_cancel_btn">Cancel</button>
+                    <button class="btn btn_red hidden" id="modal_add_rents_status_delete_btn" onclick="modal_add_rents_status.bl.delete_status();">Delete</button>
+                </div>
+                <button class="btn btn_primary hidden" id="modal_add_rents_status_save_btn" onclick="modal_add_rents_status.bl.update_status();">Save</button>
+                <button class="btn btn_primary" onclick="modal_add_rents_status.bl.save_status();" id="modal_add_rents_status_add_btn"><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var modal_add_rents_status = {};
+
+    modal_add_rents_status.status_id = '';
+
+    // Load function
+    modal_add_rents_status.load = () => {
+
+        // Global components
+    
+        // BL components
+        modal_add_rents_status.bl.close_modal("modal_add_rents_status");
+
+
+    };
+
+    // UI logic
+    modal_add_rents_status.ui = new function () {
+
+    };
+
+    // BL logic
+    modal_add_rents_status.bl = new function () {
+
+        // Close modal
+        this.close_modal = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+                modal_add_rents_status_add_btn.classList.remove('hidden');
+                modal_add_rents_status_save_btn.classList.add('hidden');
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            modal_add_rents_status_delete_btn.classList.add('hidden');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        this.dropdown = function (id) {
+
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            let dropdown_btn = dropdown_id.getElementsByTagName("button")[0];
+            let dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            let dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            let modal_icon = document.getElementsByClassName("modal_icon")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                dropdown_ul.children[i].onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                    if (dropdown_ul.classList.contains("dropdown_icon")) {
+                        modal_icon.children[0].src = e.target.getElementsByClassName("icon_img")[0].children[0].src;
+                    }
+                }
+            }
+
+            dropdown_close.onclick = function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            }
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+
+                element.onclick = function (e) {
+
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    if (id == 'modal_new_rent_select_countries') {
+
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+                    } else {
+                        document.querySelector('#' + id).dataset.name = e.currentTarget.innerText;
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+
+                    }
+
+                    dropdown_menu.classList.add("hidden");
+                    //button.classList.remove("open");
+                }
+            }
+        }
+
+        this.save_status = async () => {
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/rents_status/add/' + user_id;
+
+            var response = await ajax.get(url);
+            var status_id = response.slice(1, -1);
+
+            var ren_stat = {};
+
+            ren_stat.name = modal_add_rents_status_name.value;
+            ren_stat.color = modal_add_rents_status_color.value;
+            ren_stat.id = status_id;
+
+            var url = '/api/rents_status/save';
+            var response = await ajax.post_json(url, ren_stat)
+
+            // Refresh local storage
+            bl.rents_status.load();
+
+            this.clear_modal();
+        }
+
+        this.clear_modal = () => {
+
+            modal_add_rents_status_cancel_btn.click();
+            modal_add_rents_status_name.value = '';
+            modal_add_rents_status_color.value = '';
+            rents_status.bl.load_status();
+        }
+
+        this.edit_status = async (status_id) => {
+
+            modal_add_rents_status_add_btn.classList.add('hidden');
+            modal_add_rents_status_save_btn.classList.remove('hidden');
+
+            modal_add_rents_status.status_id = status_id;
+
+            this.show_modal('modal_add_rents_status');
+            modal_add_rents_status_delete_btn.classList.remove('hidden');
+
+            var url = '/api/rents_status/get/' + status_id;
+            var response = await ajax.get(url);
+            var status = JSON.parse(response);
+
+            modal_add_rents_status_name.value = status[0]['name'];
+            modal_add_rents_status_color.value = status[0]['color'];
+
+        }
+
+        this.update_status = async () => {
+
+            var stat = {};
+
+            stat.name = modal_add_rents_status_name.value;
+            stat.color = modal_add_rents_status_color.value;
+            stat.id = modal_add_rents_status.status_id;
+
+            var url = '/api/rents_status/save';
+            await ajax.post_json(url, stat);
+
+            // Refresh local storage
+            bl.rents_status.load();
+
+            this.clear_modal();
+        }
+
+
+
+        this.delete_status = async () => {
+
+            var url = '/api/rents_status/delete/' + modal_add_rents_status.status_id;
+            await ajax.get(url);
+
+            // Refresh local storage
+            bl.rents_status.load();
+
+            this.clear_modal();
+        }
+
+    };
+
+    // On load
+    modal_add_rents_status.load();
+
+</script>

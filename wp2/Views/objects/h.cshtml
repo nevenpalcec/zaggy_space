@@ -1,0 +1,309 @@
+﻿
+@{
+    ViewBag.Title = "h";
+    Layout = "~/Views/_Layout.cshtml";
+
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "objects_list" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+
+<div class="container">
+
+    <!-- List of cards room -->
+    <div class="hotel_object_list_of_cards">
+
+        <!-- Card -->
+        <div class="border hotel_object_card mb-3">
+
+            <div class="p-3 d-md-flex">
+                <div class="hotel_object_card_img mr-0 mr-md-3 mb-2 mb-md-0 cursor_pointer"
+                     data-bs-toggle="modal" data-bs-target="#modal_hotel_object_details">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2071&amp;q=80"
+                         class="w-100 h-100 object_cover">
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="heading_title justify-content-between w-100 d-flex pb-0">
+                            <div class="font_semiBold text-uppercase pt-1">
+                                SMART Standard
+                                Double room
+                            </div>
+                            <div class="mb-1">
+                                <div class="cursor_pointer border border_secondary bg_secondary line_normal px-2 py-1 text_sm text-center user-select-none text-white"
+                                     data-toggle="modal" data-target="#modal_hotel_object_details">
+                                    More
+                                    details
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap hotel_object_card_features pt-2">
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-bath text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">
+                                Private bathroom
+                            </div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-bed text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">
+                                2x
+                                twin beds
+                            </div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-smoking-ban text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">
+                                Not
+                                smoking
+                            </div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-wifi text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">
+                                Wi-fi
+                            </div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="fas fa-tv text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">
+                                Satelit TV
+                            </div>
+                        </div>
+                        <div class="border m-1 p-2 text-center">
+                            <i class="far fa-snowflake text_3xl"></i>
+                            <div class="font_semiBold text-uppercase text_xs line_normal pt-1">
+                                Air
+                                conditioner
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex m-0 border-top">
+                <div class="flex-grow-1">
+                    <div class="d-flex">
+
+                        <div class="row m-0 w-100">
+                            <div class="col-lg-6 d-flex px-0">
+
+                                <!-- Persons -->
+                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                    <div class="border-end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                    </div>
+                                </div>
+
+                                <!-- Advantage -->
+                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                    <div class="px-3 border-end h-100 d-flex flex-column justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                            <div><strong>Breakfast</strong> included</div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                            <div>
+                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                23:59
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                            <div><strong>No payment</strong> - pay in the object</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6 d-flex px-0">
+
+                                <!-- Price -->
+                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                    <div class="px-3 border-end h-100 text-right d-flex flex-column justify-content-center">
+                                        <div class="text_3xl text_color font_semiBold">HRK 494</div>
+                                        <div class="green text_sm line_height_normal">
+                                            All taxes included
+                                        </div>
+                                        <div class="text_sm">for a night for 2 guests</div>
+                                    </div>
+                                </div>
+
+                                <!-- Select room -->
+                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                    <div class="border-end py-2 px-3 h-100">
+                                        <div class="">Select rooms:</div>
+                                        <div class="dropdown position-relative">
+                                            <span class="position-absolute position_y_center left_0 ml-2" style="z-index: 99;">
+                                                <i class="fas fa-cube" style="position: unset !important; top: unset !important; left: unset !important;"></i>
+                                            </span>
+                                            <button class="btn text-center dropdown-toggle border w-100 rounded-0" type="button"
+                                                    id="hotel_object_card_dropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                0
+                                            </button>
+                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                aria-labelledby="hotel_object_card_dropdown">
+                                                <a data-id="1" class="dropdown-item">0</a>
+                                                <a data-id="1" class="dropdown-item">1</a>
+                                                <a data-id="2" class="dropdown-item">2</a>
+                                                <a data-id="3" class="dropdown-item">3</a>
+                                                <a data-id="4" class="dropdown-item">4</a>
+                                                <a data-id="5" class="dropdown-item">5+</a>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="border-top d-flex">
+
+                        <div class="row m-0 w-100">
+                            <div class="col-lg-6 d-flex px-0">
+
+                                <!-- Persons -->
+                                <div class="py-2 hotel_object_card_wrapper_persons">
+                                    <div class="border-end h-100 d-flex flex-wrap justify-content-center align-items-center">
+                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                        <span class="mb-1"><i class="fas fa-user fa-sm"></i></span>
+                                    </div>
+                                </div>
+
+                                <!-- Advantage -->
+                                <div class="py-2 flex-grow-1 hotel_object_card_wrapper_advantage">
+                                    <div class="px-3 border-end h-100 d-flex flex-column justify-content-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-coffee fa-sm"></i></div>
+                                            <div><strong>Breakfast</strong> included</div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                            <div>
+                                                <strong>Free cancellation</strong> until 8. january 2022 at
+                                                23:59
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="pr-2"><i class="fas fa-check fa-sm"></i></div>
+                                            <div><strong>No payment</strong> - pay in the object</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6 d-flex px-0">
+
+                                <!-- Price -->
+                                <div class="py-2 hotel_object_card_wrapper_price flex-grow-1">
+                                    <div class="px-3 border-end h-100 text-right d-flex flex-column justify-content-center">
+                                        <div class="text_3xl text_color font_semiBold">HRK 494</div>
+                                        <div class="green text_sm line_height_normal">
+                                            All taxes included
+                                        </div>
+                                        <div class="text_sm">for a night for 2 guests</div>
+                                    </div>
+                                </div>
+
+                                <!-- Select room -->
+                                <div class="py-2 hotel_object_card_wrapper_select_room">
+                                    <div class="border-end py-2 px-3 h-100">
+                                        <div class="">Select rooms:</div>
+                                        <div class="dropdown position-relative">
+                                            <span class="position-absolute position_y_center left_0 ml-2" style="z-index: 99;">
+                                                <i class="fas fa-cube" style="position: unset !important; top: unset !important; left: unset !important;"></i>
+                                            </span>
+                                            <button class="btn text-center dropdown-toggle border w-100 rounded-0" type="button"
+                                                    id="hotel_object_card_dropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    onclick="objects_in_hotel.bl.dropdown_select_rooms(this)">
+                                                0
+                                            </button>
+                                            <ul class="dropdown-menu w-100 rounded-0" style="min-width: unset;"
+                                                aria-labelledby="hotel_object_card_dropdown">
+                                                <a data-id="1" class="dropdown-item">0</a>
+                                                <a data-id="1" class="dropdown-item">1</a>
+                                                <a data-id="2" class="dropdown-item">2</a>
+                                                <a data-id="3" class="dropdown-item">3</a>
+                                                <a data-id="4" class="dropdown-item">4</a>
+                                                <a data-id="5" class="dropdown-item">5+</a>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="border-left p-3 position-sticky top-0">
+                    <div class="text_3xl text_color font_semiBold mb-2 text-center">HRK 494</div>
+                    <a href="#payment" class="btn bg_secondary text-white px-4 rounded-0">Book now</a>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    var objects_in_hotel = {};
+
+    // load function
+    objects_in_hotel.load = () => {
+
+        // Global
+
+
+        // UI components
+
+        // BL components
+
+    };
+
+    // BL logic
+    objects_in_hotel.bl = new function () {
+
+        // Dropdown select rooms
+        this.dropdown_select_rooms = function (e) {
+
+            let dropdown_btn = e;
+            let dropdown_li = e.parentElement.getElementsByClassName("dropdown-menu")[0].querySelectorAll(".dropdown-item");
+
+            dropdown_li.forEach(element => {
+                element.onclick = function (e) {
+                    dropdown_btn.textContent = e.target.innerText;
+                    dropdown_btn.setAttribute("data-id", e.target.getAttribute('data-id'));
+                }
+            });
+
+        }
+
+    };
+
+    // On load
+    objects_in_hotel.load();
+
+</script>

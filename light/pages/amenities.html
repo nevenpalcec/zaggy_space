@@ -1,0 +1,357 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-none d-md-block"><i class="fas fa-home pr-2"></i></span>
+                <!--<span class="d-none d-md-block"> <i class="fas fa-users pr-2"></i></span>-->
+                <span class="d-none d-md-block" id="object_amenities_header_object_name"></span>
+            </div>
+        </div>
+ 
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <div class="row pt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold"><i class="fas fa-arrows-alt-h pr-2"></i>Available</div>
+                        <div class="view_search d-flex align-items-end ml-md-5">
+                            <div class="position-relative h-100">
+                                <input type="text" class="form-control" placeholder="Search amenities" id="amenitites_search_list_available" onkeyup="amenities.bl.search_available();">
+                                <span class="search_icon py-0 d-flex align-items-center"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body font_3">
+                        <!-- Table -->
+                        <div class="view_table">
+                            <div class="table_wrapper">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col" style="min-width: 15rem;">Name</th>
+                                            <th scope="col" style="min-width: 8rem;">B2B</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="amenities_list_available_tbody">
+                                        
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold"><i class="fas fa-arrows-alt-h pr-2"></i>Amenities</div>
+                        <div class="view_search d-flex align-items-end ml-md-5">
+                            <div class="position-relative h-100">
+                                <input type="text" class="form-control" placeholder="Search amenities" id="amenitites_search_list_taken" onkeyup="amenities.bl.search_taken();">
+                                <span class="search_icon py-0 d-flex align-items-center"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body font_3">
+                        <!-- Table -->
+                        <div class="view_table">
+                            <div class="table_wrapper">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">#</th>
+                                            <th scope="col" style="min-width: 15rem;">Name</th>
+                                            <th scope="col" style="min-width: 8rem;">B2B</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="amenities_list_tbody">
+                                        
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Modal add review -->
+<section class="modal_add_amenities"></section>
+
+<section>
+    <template id="template_amenities_list">
+        <tr onclick="amenities.bl.remove(`${amenities_id}`, this)" style="cursor: pointer;">
+            <td align="left" class="td_item03"><i class="fas fa-arrow-left red"></i></td>
+            <th align="left" scope="row">${number}</th>
+            <td class="td_item01">${name}</td>
+            <td class="td_item02">${b2b}</td>
+        </tr>
+    </template>
+
+    <template id="template_amenities_list_available">
+        <tr onclick="amenities.bl.add_amenities(`${amenity_id}`, this)" style="cursor: pointer;">
+            <th align="left" scope="row">${number}</th>
+            <td class="td_item01">${name}</td>
+            <td class="td_item02">${b2b}</td>
+            <td class="td_item02"><i class="fas fa-arrow-right green"></i></td>
+        </tr>
+    </template>
+</section>
+
+<script>
+
+    $(".filter_general").load("/pages/partals/filter_general.html");
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+    $(".modal_add_amenities").load("/pages/components/modal_add_amenities.html");
+
+    var amenities = {};
+
+    amenities.object_id = '';
+    amenities.id = '';
+
+    amenities.list_available;
+    amenities.list_taken;
+
+    // Load function
+    amenities.load = () => {
+
+        // Title
+        document.title = "Amenities";
+
+        object_amenities_header_object_name.innerHTML = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+
+        // UI components
+
+        // BL components
+        amenities.bl.load_amentites();
+        amenities.bl.load_available_amenities();
+
+    }
+
+    // UI logic
+    amenities.ui = new function () {
+
+    }
+
+    // BL logic
+    amenities.bl = new function () {
+
+        this.load_amentites = async () => {
+
+            amenities.object_id = page.get_id();
+
+            var url = '/api/objects_amenites/list/' + amenities.object_id;
+
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            amenities.list_taken = json_response;
+
+            amenities_list_tbody.innerHTML = '';
+            var number = 1;
+            var link = '<img src="/assets/images/icons/portals/';
+            for (var a of json_response) {
+
+                var t = template_amenities_list.innerHTML;
+                var img = '';
+                t = t.replace('${name}', !a['name'] == true ? '-' : a['name']);
+                t = t.replace('${number}', number);
+                t = t.replace('${amenities_id}', a['id']);
+
+                if (a['b2b_list_pic'] != null) {
+                    var arr = [];
+                    arr = a['b2b_list_pic'].split(',');
+                    for (var i = 0; i < arr.length; i++) {
+
+                        img += link + arr[i].replace('.png', '.svg') + `" width="20" height="20"> `;
+                    }
+                }
+
+                t = t.replace('${b2b}', img);
+
+                number++;
+
+                js.html.insertAdjacentHTML('amenities_list_tbody', t);
+            }
+
+        }
+
+        this.load_available_amenities = async () => {
+
+            var url = '/api/objects_amenites/list_available/' + amenities.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            amenities.list_available = json_response;
+
+            var number = 1;
+            amenities_list_available_tbody.innerHTML = '';
+            
+            for (var b of json_response) {
+
+                t = template_amenities_list_available.innerHTML;
+                t = t.replace('${number}', number);
+                t = t.replace('${name}', b['name']);
+                t = t.replace('${amenity_id}', b['id']);
+
+                var link = '<img src="/assets/images/icons/portals/';
+                var img = '';
+
+                if (b['b2b_list_name'] != null) {
+                    var arr = [];
+                    arr = b['b2b_list_name'].split(',');
+                    for (var i = 0; i < arr.length; i++) {
+
+                        img += link + arr[i].replace('.png', '.svg') + `" width="20" height="20"> `;
+                    }
+                }
+
+                t = t.replace('${b2b}', img);
+
+                js.html.insertAdjacentHTML('amenities_list_available_tbody', t)
+                number++;
+            }
+
+        }
+
+        this.remove = async (id, row) => {
+
+            var url = '/api/objects_amenites/delete_amenities/' + id;
+            await ajax.get(url);
+
+            row.remove();
+            this.load_available_amenities();
+            //this.load_amentites();
+        }
+
+        this.add_amenities = async (id, row) => {
+
+            var url = `/api/objects_amenites/add/${amenities.object_id}?amenity_id=${id}`;
+            await ajax.get(url);
+
+            row.remove();
+            this.load_amentites();
+            //this.load_available_amenities();
+        }
+
+        // search for available amenities
+        this.search_available = () => {
+            
+            var input = (amenitites_search_list_available.value).toUpperCase();
+            var arr = [];
+            for (var la of amenities.list_available) {
+                if (la['name'].toUpperCase().includes(input)) {
+                    arr.push(la);
+                }
+            }
+
+            var number = 1;
+            amenities_list_available_tbody.innerHTML = '';
+
+            for (var b of arr) {
+
+                t = template_amenities_list_available.innerHTML;
+                t = t.replace('${number}', number);
+                t = t.replace('${name}', b['name']);
+                t = t.replace('${amenity_id}', b['id']);
+
+                var link = '<img src="/assets/images/icons/portals/';
+                var img = '';
+
+                if (b['b2b_list_name'] != null) {
+                    var arr = [];
+                    arr = b['b2b_list_name'].split(',');
+                    for (var i = 0; i < arr.length; i++) {
+
+                        img += link + arr[i].replace('.png', '.svg') + `" width="20" height="20"> `;
+                    }
+                }
+
+                t = t.replace('${b2b}', img);
+
+                js.html.insertAdjacentHTML('amenities_list_available_tbody', t)
+                number++;
+            }
+
+        }
+
+        this.search_taken = () => {
+
+            var input = (amenitites_search_list_taken.value).toUpperCase();
+            var arr = [];
+            for (var la of amenities.list_taken) {
+                if (la['name'].toUpperCase().includes(input)) {
+                    arr.push(la);
+                }
+            }
+
+            amenities_list_tbody.innerHTML = '';
+            var number = 1;
+            var link = '<img src="/assets/images/icons/portals/';
+            for (var a of arr) {
+
+                var t = template_amenities_list.innerHTML;
+                var img = '';
+                t = t.replace('${name}', !a['name'] == true ? '-' : a['name']);
+                t = t.replace('${number}', number);
+                t = t.replace('${amenities_id}', a['id']);
+
+                if (a['b2b_list_pic'] != null) {
+                    var arr = [];
+                    arr = a['b2b_list_pic'].split(',');
+                    for (var i = 0; i < arr.length; i++) {
+
+                        img += link + arr[i].replace('.png', '.svg') + `" width="20" height="20"> `;
+                    }
+                }
+
+                t = t.replace('${b2b}', img);
+
+                number++;
+
+                js.html.insertAdjacentHTML('amenities_list_tbody', t);
+            }
+
+        }
+
+    }
+
+    // On load
+    amenities.load();
+
+</script>

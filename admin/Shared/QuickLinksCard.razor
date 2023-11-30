@@ -1,0 +1,62 @@
+﻿@code {
+
+    [Parameter] public string user_id_hash { get; set; }
+    [Parameter] public string worker_guid_login { get; set; }
+    [Parameter] public string worker_guid_temp { get; set; }
+    [Parameter] public string property_id_hash { get; set; } = "";
+    [Parameter] public string reseller_id { get; set; } = "";
+
+    string reseller_worker_guid = "";
+    string worker_guid = "";
+    string user_id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        reseller_worker_guid = await localStorage.GetItemAsync<string>("reseller_worker_guid");
+        user_id = bl.B2B.zaggy.users.get_user_id_by_id_hash(user_id_hash);
+        worker_guid = bl.workers.guid_def_worker(user_id);
+    }
+
+}
+
+<div class="card mb-3">
+
+    <div class="card-header border-bottom bg-dark">
+        <h6 class="mb-0 fs-0 text-white"> <i class="fas fa-link"></i> &nbsp; @lng.l.Quick_Links</h6>
+    </div>
+
+    <div class="card-body">
+
+        <div class="terms-sidebar nav flex-column fs--1">
+
+            <div class="nav-item"><a class="nav-link bg-light text-black px-0 py-1 btn btn-falcon-success me-1 mb-3" href="/user/details/@user_id_hash">@lng.l.User_Account</a></div>
+
+
+            @if ((Perm.property_login == "Y" && reseller_id == bl.B2B.zaggy.shared.reseller_id) || Perm.super_admin == "Y")
+            {
+                <div class="nav-item">
+                    <a class="nav-link bg-light text-black px-0 py-1 btn btn-falcon-success me-1 mb-1" target="_blank" href="@bl.B2B.zaggy.shared.url_property/?guid_temp=@worker_guid_temp&reseller_worker_token=@AesOperation.DecryptString(bl.B2B.zaggy.shared.key, @reseller_worker_guid)">
+                        Property Manager
+                    </a>
+                </div>
+            }
+
+            @if(Perm.super_admin == "Y")
+            {
+                <div class="nav-item"><a class="nav-link bg-light text-black px-0 py-1 btn btn-falcon-success me-1 mb-1" target="_blank" href="@Perm.url_app_zaggy/users/login?id=@worker_guid"> zaggy App </a></div>
+            }
+
+            <hr />
+
+            <!-- analitcs -->
+            <div class="nav-item">
+                <a type="button" class="nav-link bg-light text-black px-0 py-1 btn btn-falcon-success me-1 mb-1" href="/user/analytics/@user_id_hash">
+                    <i class="fas fa-chart-line"></i> &nbsp; @lng.l.Analytic @lng.l.User
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

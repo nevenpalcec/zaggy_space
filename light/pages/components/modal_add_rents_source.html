@@ -1,0 +1,716 @@
+﻿<!-- Modal add review -->
+<div id="modal_add_rents_source" class="view_modal hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-list-ul pr-2"></i>Add rents source</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+
+                <div class="row pt-2">
+
+                    <!-- Channel name -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Name</label>
+                            <input type="text" class="form-control focus" id="modal_add_rents_source_name" value="">
+                        </div>
+                    </div>
+
+                    <!-- OTA Channel source -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">OTA Channel source</label>
+                            <div id="modal_add_rents_source_ota" class="select">
+                                <button class="custom-select focus" id="modal_add_rents_source_ota_channel_source" data-id="" data-code1="undefined">-</button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden" id="modal_add_rents_source_ota_ul">
+                                    <li class="select_li active selected" data-id="null"> - - - </li>
+                                    <li class="select_li" data-id="206"><img src="/assets/images/icons/portals/airbnb.svg" style="height:25px"> &nbsp; AirBNB</li>
+                                    <li class="select_li" data-id="200"><img src="/assets/images/icons/portals/booking.svg" style="height:25px"> &nbsp; Booking.com</li>
+                                    <li class="select_li" data-id="205"><img src="/assets/images/icons/portals/expedia.svg" style="height:25px"> &nbsp; Expedia</li>
+                                    <li class="select_li" data-id="304"><img src="/assets/images/icons/portals/homeaway.svg" style="height:25px"> &nbsp; HomeAway</li>
+                                    <li class="select_li" data-id="202"><img src="/assets/images/icons/portals/atraveo.svg" style="height:25px"> &nbsp; Atraveo</li>
+                                    <li class="select_li" data-id="175"><img src="/assets/images/icons/portals/traum.svg" style="height:25px"> &nbsp; Traum</li>
+                                    <li class="select_li" data-id="307"><img src="/assets/images/icons/portals/hometogo.svg" style="height:25px"> &nbsp; HometoGo</li>
+                                    <li class="select_li" data-id="333"><img src="/assets/images/icons/portals/agoda.svg" style="height:25px"> &nbsp; Agoda</li>
+                                    <li class="select_li" data-id="311"><img src="/assets/images/icons/portals/google.svg" style="height:25px"> &nbsp; Google</li>
+                                    <li class="select_li" data-id="381"><img src="/assets/images/icons/portals/revngo.svg" style="height:25px"> &nbsp; RevNGo </li>
+                                    <li class="select_li" data-id="346"><img src="/assets/images/icons/portals/ferienhausmiete.svg" style="height:25px"> &nbsp; Ferienhausmiete </li>
+                                    <li class="select_li" data-id="347"><img src="/assets/images/icons/portals/b2book.svg" style="height:25px"> &nbsp; B2Book </li>
+                                    <li class="select_li" data-id="302"><img src="/assets/images/icons/portals/airbnb.svg" style="height:25px"> &nbsp; AirBNB (O)</li>
+                                    <li class="select_li" data-id="332"><img src="/assets/images/icons/portals/airbnb.svg" style="height:25px"> &nbsp; AirBNB (CH)</li>
+                                    <li class="select_li" data-id="201"> <img src="/assets/images/icons/portals/kroatide.svg" style="height:25px"> &nbsp; Kroati.de </li>
+                                    <li class="select_li" data-id="296"> <img src="/assets/images/icons/portals/casamundo.svg" style="height:25px"> &nbsp; Casamundo </li>
+                                    <li class="select_li" data-id="330"> <img src="/assets/images/icons/portals/channex.svg" style="height:25px"> &nbsp; Channex </li>
+                                    <li class="select_li" data-id="339"> <img src="/assets/images/icons/portals/holidu.svg" style="height:25px"> &nbsp; Holidu </li>
+                                    <li class="select_li" data-id="297"><img src="/assets/images/icons/portals/website.svg" style="height:25px"> &nbsp; Web page</li>
+                                    <li class="select_li" data-id="371"><img src="/assets/images/icons/portals/zaggy.svg" style="height:25px"> &nbsp; StayPicker Villas</li>
+                                    <li class="select_li" data-id="209"><img src="/assets/images/icons/portals/zaggy.svg" style="height:25px"> &nbsp; zaggy </li>
+                                    <li class="select_li" data-id="341"><img src="/assets/images/icons/portals/rona.svg" style="height:25px"> &nbsp; Rona booking </li>
+                                    <li class="select_li" data-id="353"><img src="/assets/images/icons/portals/olivertravels.svg" style="height:25px"> &nbsp; Oliver Travels </li>
+                                    <li class="select_li" data-id="367"><img src="/assets/images/icons/portals/spn.svg" style="height:25px"> &nbsp; Swiss Premium Negoce SA </li>
+                                    <li class="select_li" data-id="187"> <img src="/assets/images/icons/portals/edomizil.svg" style="height:25px"> &nbsp; E-domizil</li>
+                                    <li class="select_li" data-id="43"> <img src="/assets/images/icons/portals/rentalsunited.svg" style="height:25px"> &nbsp; Rentals United</li>
+                                    <li class="select_li" data-id="301"> <img src="/assets/images/icons/portals/octorate.svg" style="height:25px"> &nbsp; Octorate  </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Email</label>
+                            <input type="text" class="form-control" id="modal_add_rents_source_user_email" value="">
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Password</label>
+                            <input type="text" class="form-control" id="modal_add_rents_source_user_password" value="">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row pt-2">
+
+                    <!-- Note -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Note</label>
+                            <input type="text" class="form-control" id="modal_add_rents_source_user_note" value="">
+                        </div>
+                    </div>
+
+                    <!-- Color -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Color</label>
+                            <input type="color" class="form-control colorpicker-basic" id="modal_add_rents_source_color" value="">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row pt-2">
+                    <!-- Status -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div id="modal_add_rents_source_status_dropdown" class="view_dropdown dropdown" data-id="">
+                                <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                    <div class="d-flex align-items-center w-100">
+                                        <span class="mr-3 font_8 d-flex py-2">
+                                            <i class="fas fa-layer-group"></i>
+                                        </span>
+                                        <div class="dropdown_label mr-1">
+                                            <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                Status
+                                            </div>
+                                            <div class="font_3 dropdown_name text-left" data-id="">-</div>
+                                        </div>
+                                        <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown_menu w-100 hidden">
+                                    <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                        <div class="font_bold">Status</div>
+                                        <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                    </div>
+                                    <hr class="m-0">
+                                    <ul class="dropdown_ul ul_icon_white font_3"
+                                        style="max-height: 15rem; overflow-y: auto;" id="modal_add_rents_source_status">
+                                        <li class="dropdown_li" data-status="1">
+                                            <div class="d-flex align-items-center">
+                                                <div class="icon" style="background-color: #DDDDDD;"></div>
+                                                <div class="name align-self-center" data-id="">Owner</div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div id="modal_add_rents_source_paid" class="view_dropdown dropdown" data-id="">
+                                <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                    <div class="d-flex align-items-center w-100">
+                                        <span class="mr-3 font_8 d-flex py-2">
+                                            <i class="fas fa-hand-holding-usd"></i>
+                                        </span>
+                                        <div class="dropdown_label mr-1">
+                                            <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                Payment
+                                            </div>
+                                            <div class="font_3 dropdown_name text-left" id="modal_add_rents_sources_payment_name">-</div>
+                                        </div>
+                                        <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown_menu w-100 hidden">
+                                    <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                        <div class="font_bold">Payment</div>
+                                        <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                    </div>
+                                    <hr class="m-0">
+                                    <ul class="dropdown_ul font_3" style="max-height: 15rem; overflow-y: auto;" id="modal_add_rents_payment_method_type">
+                                        <li class="dropdown_li" data-id="1" data-name="Mix" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">Mix</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="6" data-name="Cek" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">Cek</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="1410" data-name="null" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">null</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="1212" data-name="PayPal" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">PayPal</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="2" data-name="Cash" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">Cash</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="3" data-name="Card" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">Card</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="1128" data-name="WsPay" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">WsPay</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="1153" data-name="Stripe" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">Stripe</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="4" data-name="IBAN" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">IBAN</div>
+                                            </div>
+                                        </li>
+
+                                        <li class="dropdown_li" data-id="12" data-name="PayPal" onclick="select_drop">
+                                            <div class="d-flex align-items-center">
+                                                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                                                <div class="name align-self-center">PayPal</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Icons -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div id="modal_add_rents_source_icons" class="view_dropdown dropdown w-100 h-auto" data-id="">
+                                <button class="btn btn_hover px-2 py-1 w-100">
+                                    <div class="d-flex align-items-center w-100">
+                                        <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-book"></i></span>
+                                        <div class="dropdown_label mr-1">
+                                            <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                Icons
+                                            </div>
+                                            <div class="font_3 dropdown_name white text-left" data-id="">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="name align-self-center">-</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown_menu w-100 hidden">
+                                    <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                        <div class="font_bold">Status</div>
+                                        <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                    </div>
+                                    <hr class="m-0">
+                                    <ul class="dropdown_ul dropdown_icon ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;" id="modal_add_rent_source_icon">
+                                        <li class="item active selected" data-value=""> - - - </li>
+
+                                        <li class="item mb-2" data-id="airbnb"> <img style="height:35px" src="/assets/images/icons/portals/airbnb.svg" style="width: 20px;"> &nbsp; AirBNB </li>
+                                        <li class="item mb-2" data-id="expedia"> <img style="height:35px" src="/assets/images/icons/portals/expedia.svg" style="width: 20px;"> &nbsp; Expedia </li>
+                                        <li class="item mb-2" data-id="booking"> <img style="height:35px" src="/assets/images/icons/portals/booking.svg" style="width: 20px;"> &nbsp; Booking </li>
+                                        <li class="item mb-2" data-id="atraveo"> <img style="height:35px" src="/assets/images/icons/portals/atraveo.svg" style="width: 20px;"> &nbsp; TUI / Atraveo </li>
+                                        <li class="item mb-2" data-id="homeaway"> <img style="height:35px" src="/assets/images/icons/portals/homeaway.svg" style="width: 20px;"> &nbsp; HomeAway </li>
+                                        <li class="item mb-2" data-id="traum"> <img style="height:35px" src="/assets/images/icons/portals/traum.svg" style="width: 20px;"> &nbsp; Traum </li>
+                                        <li class="item mb-2" data-id="tripadvisor"> <img style="height:35px" src="/assets/images/icons/portals/tripadvisor.svg" style="width: 20px;"> &nbsp; TripAdvisor </li>
+                                        <li class="item mb-2" data-id="kroatide"> <img style="height:35px" src="/assets/images/icons/portals/kroatide.svg" style="width: 20px;"> &nbsp; Kroati </li>
+                                        <li class="item mb-2" data-id="zaggy"> <img style="height:35px" src="/assets/images/icons/portals/zaggy.svg" style="width: 20px;"> &nbsp; zaggy </li>
+                                        <li class="item mb-2" data-id="website"> <img style="height:35px" src="/assets/images/icons/portals/website.svg" style="width: 20px;"> &nbsp; Website </li>
+                                        <li class="item mb-2" data-id="siteminder"> <img style="height:35px" src="/assets/images/icons/portals/siteminder.svg" style="width: 20px;"> &nbsp; SiteMinder </li>
+                                        <li class="item mb-2" data-id="pricelab"> <img style="height:35px" src="/assets/images/icons/portals/pricelab.svg" style="width: 20px;"> &nbsp; PriceLab </li>
+                                        <li class="item mb-2" data-id="9flats"> <img style="height:35px" src="/assets/images/icons/portals/9flats.svg" style="width: 20px;"> &nbsp; 9Flats </li>
+                                        <li class="item mb-2" data-id="agoda"> <img style="height:35px" src="/assets/images/icons/portals/agoda.svg" style="width: 20px;"> &nbsp; Agoda </li>
+                                        <li class="item mb-2" data-id="google"> <img style="height:35px" src="/assets/images/icons/portals/google.svg" style="width: 20px;"> &nbsp; Google </li>
+                                        <li class="item mb-2" data-id="casamundo"> <img style="height:35px" src="/assets/images/icons/portals/casamundo.svg" style="width: 20px;"> &nbsp; Casamudno </li>
+                                        <li class="item mb-2" data-id="clickstay"> <img style="height:35px" src="/assets/images/icons/portals/clickstay.svg" style="width: 20px;"> &nbsp; ClickStay </li>
+                                        <li class="item mb-2" data-id="ctrip"> <img style="height:35px" src="/assets/images/icons/portals/ctrip.svg" style="width: 20px;"> &nbsp; CTrip </li>
+                                        <li class="item mb-2" data-id="edomizil"> <img style="height:35px" src="/assets/images/icons/portals/edomizil.svg" style="width: 20px;"> &nbsp; E-Domizil </li>
+                                        <li class="item mb-2" data-id="hometogo"> <img style="height:35px" src="/assets/images/icons/portals/hometogo.svg" style="width: 20px;"> &nbsp; HomeToGo </li>
+                                        <li class="item mb-2" data-id="ferienhausmiete"> <img style="height:35px" src="/assets/images/icons/portals/ferienhausmiete.svg" style="width: 20px;"> &nbsp; Ferienhausmiete </li>
+                                        <li class="item mb-2" data-id="revngo"> <img style="height:35px" src="/assets/images/icons/portals/revngo.svg" style="width: 20px;"> &nbsp; RevNGo </li>
+                                        <li class="item mb-2" data-id="holidu"> <img style="height:35px" src="/assets/images/icons/portals/holidu.svg" style="width: 20px;"> &nbsp; Holidu </li>
+                                        <li class="item mb-2" data-id="hostelworld"> <img style="height:35px" src="/assets/images/icons/portals/hostelworld.svg" style="width: 20px;"> &nbsp; HostelWorld </li>
+                                        <li class="item mb-2" data-id="hotels"> <img style="height:35px" src="/assets/images/icons/portals/hotels.svg" style="width: 20px;"> &nbsp; Hotels </li>
+                                        <li class="item mb-2" data-id="hotelsde"> <img style="height:35px" src="/assets/images/icons/portals/hotelsde.svg" style="width: 20px;"> &nbsp; Hotels.de </li>
+                                        <li class="item mb-2" data-id="housetrip"> <img style="height:35px" src="/assets/images/icons/portals/housetrip.svg" style="width: 20px;"> &nbsp; HouseTrip </li>
+                                        <li class="item mb-2" data-id="hrs"> <img style="height:35px" src="/assets/images/icons/portals/hrs.svg" style="width: 20px;"> &nbsp; HRS </li>
+                                        <li class="item mb-2" data-id="ical"> <img style="height:35px" src="/assets/images/icons/portals/ical.svg" style="width: 20px;"> &nbsp; iCal </li>
+                                        <li class="item mb-2" data-id="luxuryretreats"> <img style="height:35px" src="/assets/images/icons/portals/luxuryretreats.svg" style="width: 20px;"> &nbsp; Luxary Retrets </li>
+                                        <li class="item mb-2" data-id="manual-mail"> <img style="height:35px" src="/assets/images/icons/portals/manual-mail.svg" style="width: 20px;"> &nbsp; Mail </li>
+                                        <li class="item mb-2" data-id="manual-phone"> <img style="height:35px" src="/assets/images/icons/portals/manual-phone.svg" style="width: 20px;"> &nbsp; Phone </li>
+                                        <li class="item mb-2" data-id="manual-walkin"> <img style="height:35px" src="/assets/images/icons/portals/manual-walkin.svg" style="width: 20px;"> &nbsp; Walk in </li>
+                                        <li class="item mb-2" data-id="zaggy"> <img style="height:35px" src="/assets/images/icons/portals/zaggy.svg" style="width: 20px;"> &nbsp; zaggy </li>
+                                        <li class="item mb-2" data-id="ostrovok"> <img style="height:35px" src="/assets/images/icons/portals/ostrovok.svg" style="width: 20px;"> &nbsp; Ostrovok </li>
+                                        <li class="item mb-2" data-id="olivertravels"> <img style="height:35px" src="/assets/images/icons/portals/olivertravels.svg" style="width: 20px;"> &nbsp; Oliver travels </li>
+                                        <li class="item mb-2" data-id="b2book"> <img style="height:35px" src="/assets/images/icons/portals/b2book.svg" style="width: 20px;"> &nbsp; B2Book </li>
+                                        <li class="item mb-2" data-id="owner"> <img style="height:35px" src="/assets/images/icons/portals/owner.svg" style="width: 20px;"> &nbsp; Owner </li>
+                                        <li class="item mb-2" data-id="partners"> <img style="height:35px" src="/assets/images/icons/portals/partners.svg" style="width: 20px;"> &nbsp; Partners </li>
+                                        <li class="item mb-2" data-id="qualityvillas"> <img style="height:35px" src="/assets/images/icons/portals/qualityvillas.svg" style="width: 20px;"> &nbsp; Qualiti villas </li>
+                                        <li class="item mb-2" data-id="trivago"> <img style="height:35px" src="/assets/images/icons/portals/trivago.svg" style="width: 20px;"> &nbsp; Trivago </li>
+                                        <li class="item mb-2" data-id="wimdu"> <img style="height:35px" src="/assets/images/icons/portals/wimdu.svg" style="width: 20px;"> &nbsp; Wimdu </li>
+                                        <li class="item mb-2" data-id="rentalsunited"> <img style="height:35px" src="/assets/images/icons/portals/rentalsunited.svg" style="width: 20px;"> &nbsp; Rentals United </li>
+                                        <li class="item mb-2" data-id="sabre"> <img style="height:35px" src="/assets/images/icons/portals/sabre.svg" style="width: 20px;"> &nbsp; Sabre </li>
+                                        <li class="item mb-2" data-id="crowonder"> <img style="height:35px" src="/assets/images/icons/portals/crowonder.svg" style="width: 20px;"> &nbsp; CroWonder </li>
+                                        <li class="item mb-2" data-id="vipholidaybooker"> <img style="height:35px" src="/assets/images/icons/portals/vipholidaybooker.svg" style="width: 20px;"> &nbsp; VipHolidayBooker </li>
+                                        <li class="item mb-2" data-id="rovinjadvisor"> <img style="height:35px" src="/assets/images/icons/portals/rovinjadvisor.svg" style="width: 20px;"> &nbsp; RovinjAdvisor </li>
+                                        <li class="item mb-2" data-id="rovinjadvisor-web"> <img style="height:35px" src="/assets/images/icons/portals/rovinjadvisor-web.svg" style="width: 20px;"> &nbsp; RovinjAdvisor Web </li>
+                                        <li class="item mb-2" data-id="web"> <img style="height:35px" src="/assets/images/icons/portals/web.svg" style="width: 20px;"> &nbsp; Web </li>
+                                        <li class="item mb-2" data-id="dutrip"> <img style="height:35px" src="/assets/images/icons/portals/dutrip.svg" style="width: 20px;"> &nbsp; DuTrip </li>
+                                        <li class="item mb-2" data-id="rona"> <img style="height:35px" src="/assets/images/icons/portals/rona.svg" style="width: 20px;"> &nbsp; Rona </li>
+                                        <li class="item mb-2" data-id="spn"> <img style="height:35px" src="/assets/images/icons/portals/spn.svg" style="width: 20px;"> &nbsp; Swiss Premium Negoce SA </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div>
+                    <button class="btn btn_silver mr-2" data-dismiss="modal" id="modal_add_reviews_cancel_btn">Cancel</button>
+                    <button class="btn btn_red hidden" id="modal_add_rents_source_delete_btn" onclick="modal_add_rents_source.bl.delete_source();">Delete</button>
+                </div>
+                <button class="btn btn_primary" id="modal_add_rents_source_add_button" onclick="modal_add_rents_source.bl.add_source();"><i class="fas fa-plus pr-2"></i>Add</button>
+                <button class="btn btn_primary hidden" id="modal_add_rents_source_save_button" onclick="modal_add_rents_source.bl.save_source();"><i class="fas fa-plus pr-2"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <!--template for payment methods list-->
+    <template id="source_payment_methods_li">
+
+        <li class="dropdown_li" data-id="${payment_method_id}" data-name="${name}" onclick="select_drop">
+            <div class="d-flex align-items-center">
+                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                <div class="name align-self-center">${name}</div>
+            </div>
+        </li>
+    </template>
+
+    <!--template for rent status list-->
+    <template id="source_rent_status_li">
+
+        <li class="dropdown_li" id="modal_rent_details_status_id" data-id="${rent_status_id}" data-name="${name}">
+            <div class="d-flex align-items-center">
+                <div class="icon" style="background-color: ${color};"></div>
+                <div class="name align-self-center">${name}</div>
+            </div>
+        </li>
+
+    </template>
+</section>
+
+<script>
+
+    var modal_add_rents_source = {};
+
+    modal_add_rents_source.source_id = '';
+
+    // Load function
+    modal_add_rents_source.load = () => {
+
+        modal_add_rents_source.bl.load_payment_methods();
+        modal_add_rents_source.bl.load_rent_status();
+
+        // BL components
+        modal_add_rents_source.bl.close_modal("modal_add_rents_source");
+
+        ui.custom_select("modal_add_rents_source_ota");
+        ui.dropdown_list("modal_add_rents_source_paid");
+
+        modal_add_rents_source.bl.dropdown("modal_add_rents_source_status_dropdown");
+        modal_add_rents_source.bl.dropdown("modal_add_rents_source_paid");
+        modal_add_rents_source.bl.dropdown("modal_add_rents_source_icons");
+
+    };
+
+    // UI logic
+    modal_add_rents_source.ui = new function () {
+
+    };
+
+    // BL logic
+    modal_add_rents_source.bl = new function () {
+
+        
+
+        // Close modal
+        this.close_modal = function (id) {
+
+            modal_add_rents_source.bl.hide_modal();
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+
+                modal_add_rents_source_delete_btn.classList.add('hidden');
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            this.clear_modal();
+
+            modal_add_rents_source_add_button.classList.remove('hidden');
+            modal_add_rents_source_save_button.classList.add('hidden');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+        };
+
+        this.hide_modal = () => {
+
+            document.getElementById('modal_add_rents_source').classList.add('hidden');
+
+        }
+
+        this.dropdown = function (id) {
+
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            let dropdown_btn = dropdown_id.getElementsByTagName("button")[0];
+            let dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            let dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            let modal_icon = document.getElementsByClassName("modal_icon")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                dropdown_ul.children[i].onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                    if (dropdown_ul.classList.contains("dropdown_icon")) {
+                        modal_icon.children[0].src = e.target.getElementsByClassName("icon_img")[0].children[0].src;
+                    }
+                }
+            }
+
+            dropdown_close.onclick = function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            }
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+
+                element.onclick = function (e) {
+
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    if (id == 'modal_new_rent_select_countries') {
+
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+                    } else {
+                        document.querySelector('#' + id).dataset.name = e.currentTarget.innerText;
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+
+                    }
+
+                    dropdown_menu.classList.add("hidden");
+                    //button.classList.remove("open");
+                }
+            }
+        }
+
+        // add new reviews
+        this.add_source = async () => {
+
+            var user_id = bl.workers.current_user_id();
+
+            var url = `/api/rents_sources/add/${user_id}`;
+            var source_id_json = await ajax.get(url);
+            var source_id = source_id_json.slice(1, -1);
+            modal_add_rents_source.source_id = source_id;
+
+            var url = '/api/rents_sources/save/';
+
+            var s = {};
+
+            s.id = source_id;
+            s.name = modal_add_rents_source_name.value;
+            s.rent_status_id = modal_add_rents_source_status_dropdown.dataset.id;
+            s.b2b_id = modal_add_rents_source_ota_channel_source.dataset.id;
+            s.payment_method_id = modal_add_rents_source_paid.dataset.id;
+            s.color = modal_add_rents_source_color.value;
+            s.email = modal_add_rents_source_user_email.value;
+            s.password = modal_add_rents_source_user_password.value;
+            s.note = modal_add_rents_source_user_note.value;
+
+            let res = await ajax.post_json(url, s);
+
+            sources.bl.load_status();
+
+            this.close_modal('modal_add_rents_source');
+            this.clear_modal();
+        }
+
+        this.save_source = async () => {
+
+            var url = '/api/rents_sources/save/';
+
+            var s = {};
+
+            s.id = modal_add_rents_source.source_id;
+            s.name = modal_add_rents_source_name.value;
+            s.b2b_id = modal_add_rents_source_ota_channel_source.dataset.id;
+            s.rent_status_id = modal_add_rents_source_status_dropdown.dataset.id;
+            s.payment_method_id = modal_add_rents_source_paid.dataset.id;
+            s.icon = modal_add_rents_source_icons.dataset.id;
+            s.color = modal_add_rents_source_color.value;
+            s.email = modal_add_rents_source_user_email.value;
+            s.password = modal_add_rents_source_user_password.value;
+            s.note = modal_add_rents_source_user_note.value;
+
+            let res = await ajax.post_json(url, s);
+
+            sources.bl.load_status();
+
+            this.close_modal('modal_add_rents_source');
+
+            this.clear_modal();
+
+            modal_add_rents_source_add_button.classList.remove('hidden');
+            modal_add_rents_source_save_button.classList.add('hidden');
+
+        }
+
+        // clear all inputs in modal
+        this.clear_modal = () => {
+
+            modal_add_rents_source_name.value = '';
+            modal_add_rents_source_color.value = '';
+            modal_add_rents_source_user_email.value = '';
+            modal_add_rents_source_user_password.value = '';
+            modal_add_rents_source_user_note.value = '';
+            modal_add_rents_sources_payment_name.innerHTML = '-';
+            modal_add_rents_source_paid.dataset.name = '';
+            modal_add_rents_source_paid.dataset.id = '';
+
+        }
+
+        //load data when editing
+        this.edit_source = async (source_id) => {
+
+            this.show_modal('modal_add_rents_source');
+
+            modal_add_rents_source_delete_btn.classList.remove('hidden');
+            modal_add_rents_source_add_button.classList.add('hidden');
+            modal_add_rents_source_save_button.classList.remove('hidden');
+
+            modal_add_rents_source.source_id = source_id;
+
+            var url = '/api/rents_sources/get/' + source_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            console.log("RES",json_response);
+
+            modal_add_rents_source_name.value = json_response[0]['name'];
+            modal_add_rents_source_color.value = json_response[0]['color'];
+            modal_add_rents_source_user_email.value = json_response[0]['email'];
+            modal_add_rents_source_user_password.value = json_response[0]['password'];
+            modal_add_rents_source_user_note.value = json_response[0]['note'];
+            
+            document.querySelector(`#modal_add_rents_payment_method_type > li[data-id="${json_response[0]['payment_method_id']}"]`).click();
+            document.querySelector(`#modal_add_rents_source_status > li[data-id="${json_response[0]['rent_status_id']}"]`).click();
+
+            let check = false;
+            for (li of modal_add_rents_source_ota_ul.children) {
+                if (li.dataset.id == json_response[0]['b2b_id'].toString()) {
+                    li.click();
+                    check = true;
+                }
+            }
+            if (!check) {
+                modal_add_rents_source_ota_ul.children[0].click();
+            }
+
+            check = false;
+            for (li of modal_add_rent_source_icon.children) {
+                if (li.dataset.id == json_response[0]['icon'].toString()) {
+                    li.click();
+                    check = true;
+                }
+            }
+            if (!check) {
+                modal_add_rent_source_icon.children[0].click();
+            }
+
+            modal_add_rent_source_icon
+
+        }
+
+        // load payment methods
+        this.load_payment_methods = function () {
+
+            var payment_methods = bl.payment_methods.list();
+
+            modal_add_rents_payment_method_type.innerHTML = '';
+
+            for (var pm of payment_methods) {
+
+                var t = source_payment_methods_li.innerHTML;
+                t = t.replace('${payment_method_id}', pm['id']);
+                t = t.replace('${name}', pm['name']);
+                t = t.replace('${name}', pm['name']);
+
+                js.html.insertAdjacentHTML('modal_add_rents_payment_method_type', t);
+            }
+
+        }
+
+        // load rent status
+        this.load_rent_status = function () {
+
+            var status = bl.rents_status.list();
+            modal_add_rents_source_status.innerHTML = '';
+
+            for (var s of status) {
+                var t = source_rent_status_li.innerHTML;
+                t = t.replace('${rent_status_id}', s['id']);
+                t = t.replace('${color}', s['color']);
+                t = t.replace('${name}', s['name']);
+                t = t.replace('${name}', s['name']);
+                js.html.insertAdjacentHTML('modal_add_rents_source_status', t);
+            }
+        }
+
+        // delete source from database
+        this.delete_source = async () => {
+
+            var url = '/api/rents_sources/del/' + modal_add_rents_source.source_id;
+            var response = await ajax.get(url);
+
+            this.close_modal('modal_add_rents_source');
+            sources.bl.load_status();
+
+            modal_add_rents_source_add_button.classList.remove('hidden');
+            modal_add_rents_source_save_button.classList.add('hidden');
+        }
+
+    };
+
+    // On load
+    modal_add_rents_source.load();
+
+</script>

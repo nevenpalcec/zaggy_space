@@ -1,0 +1,96 @@
+﻿@{
+    // Get URLs sent with ViewData
+
+    //var curr_url = Context.Request.RawUrl;
+    var curr_url = Context.Request.Url.AbsoluteUri;
+
+    //var url_facebook = "https://www.google.com";
+
+    var booking_engine_db = (System.Data.DataRow)Session["booking_engine"];
+    var settings = bl.sys.json.obj(booking_engine_db["settings"].ToString());
+    var share_buttons_show = (string)(settings["share_buttons_show"] ?? "N");
+
+}
+
+@if (share_buttons_show == "Y")
+{
+
+    <!-- Facebook -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0" nonce="iZ3pGVXH"></script>
+    <div class="fb-share-button d-inline-block" data-href="@curr_url" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@( curr_url )" class="fb-xfbml-parse-ignore">Share</a></div>
+
+    <!-- Twitter -->
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));</script>
+    <a class="twitter-share-button"
+       href="https://twitter.com/intent/tweet?text=@( HttpUtility.UrlEncode(curr_url) )"
+       data-size="large">
+        @*<i class="fab fa-twitter"></i>*@
+        Tweet
+    </a>
+
+    <!-- LinkedIn share -->
+    <style>
+        .linkedin-share-button {
+            display: inline-block;
+            height: 28px;
+            width: 75px;
+            background: #2867B2;
+            border-radius: 4px;
+            padding: 1px 10px 1px 9px;
+            position: relative;
+        }
+
+            .linkedin-share-button a, .linkedin-share-button a:link, .linkedin-share-button a {
+                color: white !important;
+                font-weight: 500;
+                top: 4px;
+                position: absolute;
+            }
+    </style>
+    <div class="linkedin-share-button">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=@( HttpUtility.UrlEncode(curr_url) )" target="_blank"><i class="fab fa-linkedin"></i> @bl.lng.l.Share</a>
+    </div>
+
+    <!-- E-mail -->
+    <style>
+        .email-share-button {
+            display: inline-block;
+            height: 28px;
+            width: 75px;
+            background: darkgray;
+            border-radius: 4px;
+            padding: 1px 10px 1px 9px;
+            position: relative;
+        }
+
+            .email-share-button a, .email-share-button a:link, .email-share-button a {
+                color: white !important;
+                font-weight: 500;
+                top: 4px;
+                position: absolute;
+            }
+    </style>
+    <div class="email-share-button">
+        <a href="mailto:address@mail.com?body=@( HttpUtility.UrlEncode(("Dear Name Surname,\n\nwe recommend you to check out this link: " + curr_url + "\n\nBest regards,\nName Surname\nContact: +123456789").Replace(" ", "___")).Replace("___", "%20") )" target="_blank"><i class="fas fa-envelope"></i> @bl.lng.l.Send</a>
+    </div>
+
+}
+
+

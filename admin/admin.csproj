@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;CS0414;CS0649</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;CS0414;CS0649</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\assets\vendors\tinymce\tinymce.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>4</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>215d64d2-031c-33c7-96e3-61794cd1ee61</Guid>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\Error.cshtml.cs" />
+    <Content Include="wwwroot\assets\images\icons\.thumb\icon-blue.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\.thumb\syncbeds-icon.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\.thumb\syncbeds-logo-l.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\.thumb\syncbeds-logo.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\9flats.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\agoda.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\airbnb.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\atraveo.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\b2book.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\booking.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\channelmanager.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\crowonder.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\ctrip.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\edomizil.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\expedia.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\ferienhausmiete.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\holidu-touch-icon-ipad-retina.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\holidu.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\homeaway.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\hometogo-logo-zaggy.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\hometogo.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\hostelworld.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\hotels.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\hotelsde.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\housetrip.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\hrs.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\ical.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\kroatide.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\zaggy.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\onlyapartments.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\ostrovok.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\rona.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\sabre.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\siteminder.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\traum.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\tripadivosr.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\trivago.png.jpg" />
+    <Content Include="wwwroot\assets\images\icons\portals\.thumb\wimdu.png.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\css\bootstrap\bootstrap.min.css.map" />
+    <None Include="wwwroot\assets\css\open-iconic\FONT-LICENSE" />
+    <None Include="wwwroot\assets\css\open-iconic\font\fonts\open-iconic.svg" />
+    <None Include="wwwroot\assets\css\open-iconic\ICON-LICENSE" />
+    <None Include="wwwroot\assets\css\open-iconic\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+    <PackageReference Include="Blazored.SessionStorage" Version="2.2.0" />
+    <PackageReference Include="Blazored.Toast" Version="3.2.2" />
+    <PackageReference Include="ClosedXML" Version="0.96.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.16.0" />
+    <PackageReference Include="IbanNet" Version="5.11.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.4" />
+    <PackageReference Include="MySql.Data" Version="8.0.32.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\lng\lng.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\assets\vendors\tinymce\tinymce.d.ts" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" wwwroot_4assets_4css_4theme-rtl_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

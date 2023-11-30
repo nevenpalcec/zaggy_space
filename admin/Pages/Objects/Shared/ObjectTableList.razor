@@ -1,0 +1,349 @@
+﻿
+
+@code {
+
+    [Parameter] public System.Data.DataTable objects { get; set; }
+    [Parameter] public EventCallback<string> OnSortByChanged { get; set; }
+
+    string search = "";
+    string user_id = "";
+
+    string sort_by = "";
+    bool is_loading = false;
+    string tip = "";
+    string status = "";
+    string global = "Y";
+    string reseller_worker_guid = "";
+    string sort_order = "";
+  
+    string instant = "";
+
+    string user_id_hash = "";
+    string object_id_hash = "";
+
+    double zoom = 1.0;
+
+    protected async Task objects_list_go()
+    {
+        await OnSortByChanged.InvokeAsync(sort_by);
+    }
+
+    string r_active(string a)
+    {
+        if (a == "Y")
+        {
+            return "Active";
+        }
+        return "Disabled";
+    }
+
+    string char_check(string a)
+    {
+        if (a == "")
+        {
+            return " - - - ";
+        }
+        return a;
+    }
+
+    async void order_by(string col)
+    {
+        sort_order = (sort_order == "" ? " desc" : "");
+        sort_by = col + sort_order;
+
+        //objects_list();
+        await objects_list_go();
+    }
+
+    async void zoom_in()
+    {
+        await Task.Delay(1);
+        zoom = zoom + 0.1;
+    }
+
+
+    async void zoom_out()
+    {
+        await Task.Delay(1);
+        zoom = zoom - 0.1;
+    }
+}
+@*<div class="m-2">
+    <input alt="zoom in" type="button" class="btn btn-outline-primary btn-sm" value="+" @onclick="zoom_in" /> |
+    <input alt="zoom out" class="btn btn-outline-primary btn-sm" type="button" value="-" @onclick="zoom_out" />
+</div>*@
+
+<div class="table-responsive scrollbar mt-1" >
+
+    @if (objects != null)
+    {
+        <table class="table table-striped table-hover ">
+            <thead class="bg-white" style="border-bottom-width: 2px">
+                <tr class="align-middle">
+                    <th>
+
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap" @onclick="@(e => order_by("name"))">
+                        @lng.l.Properties &#8693;
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap" @onclick="@(e => order_by("type"))">
+                        @lng.l.Type &#8693;
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap" @onclick="@(e => order_by("users.name"))">
+                        @lng.l.User &#8693;
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap" @onclick="@(e => order_by("contract_signed"))">
+                        @lng.l.Categorization &#8693;
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap" @onclick="@(e => order_by("changed"))">
+                        @lng.l.Last &#8693;
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap" @onclick="@(e => order_by("active"))">
+                        @lng.l.Condition &#8693;
+                    </th>
+                    <th scope="col" role="button" class="link-info text-nowrap">
+                        Web
+                    </th>
+                    <th scope="col" class="text-end">
+
+                    </th>
+                    <th scope="col" class="text-end">
+                        <span class="text-500">@lng.l.Actions</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbody_rents">
+
+
+                @foreach (System.Data.DataRow r in objects.Rows)
+                {
+                    <tr style="border-left: 1px solid @(r["active"].ToString() == "Y" ? "white" : "red"); @(r["active"].ToString() == "Y" ? "" : "filter: grayscale(1);border-left: 0px solid red;"); ">
+
+                        <td class="align-middle">
+                            <a class="text-decoration-none text-dark fw-medium" href="/objects/details/@r["id_hash"]">
+                                <img class="rounded-circle" src="/assets/images/zagreb_logo_small.png" style="height: 30px;">
+                            </a>
+                        </td>
+
+                        @*Property name, property id*@
+                        <td class="text-dark">
+                            <div class="d-flex justify-content-between @(r["active"].ToString() != "Y" ? "" : "")  ">
+
+                                <div>
+                                    <div class="d-inline-block text-truncate" style="max-width:300px;" title="@r["name"]">
+                                        <a class="text-decoration-none text-truncate text-dark fw-medium" href="/objects/details/@r["id_hash"]">
+                                           @r["name"]
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="link-secondary fs--1">
+                                            @r["id_hash"].ToString()
+                                        </span>
+
+                                        <span class="link-secondary fs--1">
+                                            | @r["id"].ToString()
+                                        </span>
+
+                                        @if (r["resellers_status_name"].ToString().is_null() == false)
+                                        {
+                                            <span class="link-secondary fs--1" style="color: @r["resellers_status_color"].ToString()">
+                                                | @r["resellers_status_name"].ToString()
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <div class="me-2 h-100 align-baseline">
+
+                                        @if (r["price_exist"].ToString() == "0")
+                                        {
+                                            <div>
+                                                <i class="fas fa-euro-sign" style="color: #932338" title="missing price"></i>
+                                            </div>
+                                        }
+
+                                        @if (r["units_active"].ToString() == "N" || r["units_deleted"].ToString() == "Y")
+                                        {
+                                            <div>
+                                                <a href="/unit/details/@r["unit_id_hash"]">
+                                                    <i class="fas fa-map-marker-alt" style="color: #932338" title="locaton deleted or not active"></i>
+                                                </a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                <a href="/unit/details/@r["unit_id_hash"]">
+                                                    <i class="fas fa-map-marker-alt" style="color: black;"></i>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="h-100 align-baseline">
+
+                                        @if (r["active"].ToString() == "N")
+                                        {
+                                            <div>
+                                                <i class="fas fa-ban" style="color: #932338" title="not active"></i>
+                                            </div>
+                                        }
+
+                                        @if (r["deleted"].ToString() == "Y")
+                                        {
+                                            <div>
+                                                <i class="far fa-trash-alt" style="color: #932338" title="deleted"></i>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        @*Property type*@
+                        <td class="text-dark text-nowrap">
+                            <div class="d-flex">
+                                <a class="text-decoration-none text-dark" href="/objects/details/@r["id_hash"]">
+                                    @r["object_type_name"]
+                                    <div class="link-secondary fs--1 m-0">
+                                        @if (string.IsNullOrWhiteSpace(r["country_code"].ToString()) == false)
+                                        {
+                                            <img src="/assets/images/icons/flags/@(r["country_code"]).svg" style="height: 10px; margin-right: 10px;" loading="lazy" />
+                                        }
+                                        <span style="@(r["units_deleted"].ToString()=="Y" || r["units_active"].ToString()=="N"? "color:red;" : "")">
+                                            @r["unit_city_name"]
+                                        </span>
+
+                                    </div>
+                                </a>
+                            </div>
+                        </td>
+
+                        @*User account, User ID*@
+                        <td class="text-nowrap">
+                            <a class="text-decoration-none text-dark" href="/user/details/@r["users_id_hash"]">
+                                <div class="d-inline-block text-truncate" style="max-width:150px;" title="@r["user_name"]">
+                                    <i class="far fa-user"></i>&nbsp;
+                                    @char_check(r["user_name"].ToString())
+
+                                    <div class="link-secondary fs--1 m-0">
+                                        @r["users_id_hash"]
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+
+                        @*Categorisation document*@
+                        <td>
+
+                            <div class="text-secondary fs--1 m-0">
+                                @if (string.IsNullOrEmpty(r["categorization_link"].ToString()) == false)
+                                {
+                                    <span class="badge badge-soft-success"> Categorization </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-danger"> Categorization </span>
+                                }
+                            </div>
+
+                            <div class="text-secondary fs--1 m-0">
+                                @if (r["contract_signed"].ToString() == "Y")
+                                {
+                                    <span class="badge badge-soft-success"> Contract </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-soft-danger"> Contract </span>
+                                }
+                            </div>
+
+                        </td>
+
+                        @*Property created time*@
+                        <td>
+                            <div class="flex-column">
+                                <div class="fs--1 m-0" style="line-height:1.5rem">
+                                    @System.DateTime.Parse(r["changed"].ToString() ?? "").ToString("dd.MM.yyyy")
+                                </div>
+                                <div class="link-secondary fs--1 m-0">
+                                    @System.DateTime.Parse(r["changed"].ToString() ?? "").ToString("HH:mm") h
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="text-dark text-nowrap">
+                            <div class="flex-column">
+                                @* <div class="link-secondary fs--1 m-0">
+                        <span>Status:</span>
+                        <span class="link-dark fw-bold" style="color: @(r["resellers_name"].ToString() == "Aktivno" ? "" : "red") !important;"> @r["resellers_name"].ToString()</span>
+                        </div>*@
+                                <div class="link-secondary fs--1 m-0">
+                                    <div>
+                                        User:
+                                        &nbsp;
+
+                                        <span class="link-dark fw-bold" style="color: @(r["user_active"].ToString() == "Y" ? "" : "red") !important;"> @r_active(r["user_active"].ToString())</span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="link-secondary fs--1 m-0">
+                                    <div>
+                                        Property:
+                                        &nbsp;
+                                        <span class="link-dark fw-bold" style="color: @(r["active"].ToString() == "Y" ? "" : "red") !important;"> @r_active(r["active"].ToString()) </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="text-dark text-nowrap">
+                             -
+                        </td>
+
+                        <td class="text-dark text-nowrap text-center">
+                            @if (r["instant"].ToString() == "Y")
+                            {
+                                <div class="flex-column">
+                                    <i class="fas fa-bolt text-warning" title="instant booking"></i>
+                                </div>
+                            }
+                        </td>
+
+                        @*zaggy Active / Disabled and zaggy Active / Disabled*@
+                        <td class="align-middle white-space-nowrap py-2 text-end">
+                            @if (r["deleted"].ToString() != "Y")
+                            {
+                                <div class="dropdown font-sans-serif position-static">
+                                    <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
+                                        <div class="bg-white py-2">
+
+                                            @if (r["user_reseller_id"].ToString() == "12")
+                                            {
+                                                <a class="dropdown-item" href="@url_property/?guid_temp=@r["worker_guid_login_temp"]&reseller_worker_token=@reseller_worker_guid" target="_blank">@lng.l.Property</a>
+                                            }
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+   
+</div>

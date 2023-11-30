@@ -1,0 +1,110 @@
+﻿<div id="div_filter_general" class="view_filter bg-white d-flex align-items-center px-3 overflow_x_auto"></div>
+
+<section>
+
+    <template id="template_filter_geneal">
+
+        <!-- Location -->
+        <a href="#location_list" class="btn btn_hover px-2 py-1">
+            <div class="d-flex align-items-center">
+                <span class="font_7"><i class="fas fa-map-marker-alt"></i></span>
+            </div>
+        </a>
+        <!--<a id="object_general_filter_location_btn" class="filter_link d-lg-none d-block mobile"><i class="fas fa-map-marker-alt"></i></a>-->
+        <div class="filter_line_y"></div>
+
+        <!-- Objects -->
+        <a href="#objects" class="btn btn_hover px-2 py-1">
+            <div class="d-flex align-items-center">
+                <span class="font_7"><i class="fas fa-cube"></i></span>
+            </div>
+        </a>
+        <div class="filter_line_y"></div>
+
+        <!-- General -->
+        <a href="#object_general?${object_id}" class="filter_link object_general"><i class="fas fa-cog pr-lg-2"></i><span class="d-none d-lg-flex">General</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Real estate -->
+        <a href="#object_real_estate?${object_id}" class="filter_link object_real_estate"><i class="far fa-file-alt pr-lg-2"></i><span class="d-none d-lg-flex">Real estate</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Rooms -->
+        <a href="#object_rooms?${object_id}" class="filter_link object_rooms"><i class="fas fa-bed pr-lg-2"></i><span class="d-none d-lg-flex">Rooms</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Amenites -->
+        <a href="#amenities?${object_id}" class="filter_link amenities"><i class="fa fa-cube pr-lg-2"></i> <span class="d-none d-lg-flex">Amenities</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Images -->
+        <a href="#object_pictures?${object_id}" class="filter_link object_pictures"><i class="far fa-images pr-lg-2"></i><span class="d-none d-lg-flex">Images</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Distances -->
+        <a href="#distances?${object_id}" class="filter_link distances"><i class="fas fa-map-signs pr-lg-2"></i><span class="d-none d-lg-flex">Distances</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Prices -->
+        <a href="#object_prices?${object_id}" class="filter_link object_prices"><i class="fas fa-coins pr-lg-2"></i><span class="d-none d-lg-flex">Prices</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Calendars -->
+        <a href="#object_calendars?${object_id}" class="filter_link object_calendars px-1">
+            <span class="position-relative filter_calendars mr-lg-2">
+                <i class="far fa-calendar-alt"></i>
+                <i class="far fa-calendar-alt"></i>
+                <i class="far fa-calendar-alt"></i>
+            </span>
+            <span class="d-none d-lg-flex">Calendars</span>
+        </a>
+        <div class="filter_line_y"></div>
+
+        <!-- Cancellation policy -->
+        <a href="#cancellation_policy?${object_id}" class="filter_link cancellation_policy"><i class="fas fa-handshake pr-2"></i><span class="d-none d-lg-flex">Cancellation policy</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Reviews -->
+        <a href="#reviews?${object_id}" class="filter_link reviews"><i class="fas fa-comments pr-lg-2"></i><span class="d-none d-lg-flex">Reviews</span></a>
+
+
+        <!-- Sync -->
+        <!--<a href="#sync?${object_id}" class="filter_link sync"><i class="fas fa-sync pr-lg-2"></i> <span class="d-none d-lg-flex">Channel settings</span></a>
+        <div class="filter_line_y"></div>-->
+
+    </template>
+
+</section>
+
+<script>
+
+    var filter_general = {};
+
+    filter_general.load = () => {
+
+        filter_general.bl.active_filter_general();
+
+    }
+
+    // Logic
+    filter_general.bl = new function () {
+
+        this.active_filter_general = function () {
+
+            var object_id = window.location.href.split('?')[1];
+
+            var t = template_filter_geneal.innerHTML;
+            t = t.replaceAll('${object_id}', object_id);
+
+            js.html.insertAdjacentHTML('div_filter_general', t);
+
+            let page = '.' + location.hash.slice(1).split('?')[0];
+            document.querySelector(page).classList.add('active');
+
+        }
+
+    }
+
+    filter_general.load();
+
+</script>

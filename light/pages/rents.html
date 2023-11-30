@@ -1,0 +1,1041 @@
+<!-- pages -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase d-none d-md-flex">
+                <i class="fas fa-list-ul pr-2"></i>Reservation
+            </div>
+
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Rents filters -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Tip -->
+        <div id="rents_filter_tip" class="view_dropdown filter_tip d-xl-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1 d-xl-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="far fa-object-ungroup"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold text-left">Type</div>
+                        <div class="font_3 text-left"> Active </div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height" id="rents_type_list">
+                    <li class="dropdown_li" data-tip="1" onclick="rents.bl.filter_by_type();">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon"><i class="far fa-thumbs-up"></i></span>
+                                <span class="align-self-center"> Active </span>
+                            </span>
+                            <input type="checkbox" id="rents_checkbox_active">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="2" onclick="rents.bl.filter_by_type();">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon"><i class="far fa-trash-alt"></i></span>
+                                <span class="align-self-center"> Canceled </span>
+                            </span>
+                            <input type="checkbox" id="rents_checkbox_canceled">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="3" onclick="rents.bl.filter_by_type();">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center">
+                                <span class="icon"><i class="far fa-trash-alt"></i></span>
+                                <span class="align-self-center"> Incoming </span>
+                            </span>
+                            <input type="checkbox" id="rents_checkbox_incoming">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                </ul>
+                <hr class="m-0">
+                <div class="dropdown_footer d-flex hidden">
+                    <div class="dropdown_btn all w-100 text-center font_3 hidden">All</div>
+                    <div class="dropdown_btn remove w-100 text-red text-center font_3 hidden">Remove</div>
+                </div>
+            </div>
+        </div>
+        <a id="rents_filter_tip_btn" class="filter_link d-xl-none d-block mobile"><i class="far fa-object-ungroup"></i></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Calendar -->
+        <div class="d-flex">
+            <button class="btn btn_hover" onclick="rents.ui.go_before();"><i class="fas fa-angle-left"></i></button>
+            <div id="rents_filter_calendar" class="view_dropdown filter_calendar d-lg-block d-none">
+                <button class="btn btn_hover  px-2 py-1 d-lg-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1">
+                            <div class="font_1 text-uppercase font_bold text-left">Calendar</div>
+                            <div id="calendar_filter_date_from" class="font_3 font_light text-left">-</div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div id="rents_form_calendar" class="dropdown_menu calendar hidden">
+                    <div id="rents_filter_dropdown_calendar" class="filter_dropdown_calendar">
+                    </div>
+                    <hr class="m-0">
+                    <div class="dropdown_footer d-flex">
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;"><i class="fas fa-angle-left"></i></div>
+                        <div class="dropdown_btn flex_1 text-center font_3">Today</div>
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <a id="rents_filter_calendar_btn" class="filter_link d-lg-none d-block mobile"><i class="far fa-calendar-alt"></i></a>
+            <button class="btn btn_hover" onclick="rents.ui.go_next();"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Input - number of day -->
+        <div class="input_remove_number_arrow">
+            <input type="number" class="form-control focus text-center" style="max-width: 3.5rem; min-width: 3.5rem;" id="rents_filter_days" onchange="rents.ui.change_numbers_of_rents();">
+        </div>
+
+        <!-- Object filter -->
+        <div id="rent_details_object_dropdown" class="ml-2 view_dropdown dropdown h-auto" style="min-width: 170px">
+            <button class="btn btn_hover px-2 py-1 w-100">
+                <div class="d-flex align-items-center w-100">
+                    <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-cube"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold text-left pb-1">
+                            Object
+                        </div>
+                        <div class="font_3 dropdown_name white text-left">-</div>
+                    </div>
+                    <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </button>
+            <div class="dropdown_menu w-auto hidden">
+                <ul id="rent_objects_list" class="dropdown_ul dropdown_icon ul_icon_white font_3" data-name="" style="max-height: 15rem; overflow-y: auto;">                    
+                </ul>
+            </div>
+        </div>
+
+        <!-- Search name -->
+        <div id="filter_search_name" class="view_search d-flex align-items-center ml-md-2">
+            <div class="position-relative py-1 px-2 h-100">
+                <input type="text" class="form-control" style="min-width: 9rem;" placeholder="Search for rent" id="rents_search">
+                <span class="search_icon"><i class="fas fa-search"></i></span>
+            </div>
+        </div>
+
+        <!-- Refresh page -->
+        <div class="pl-2 ml-auto">
+            <button class="btn btn_hover" onclick="rents.load()">
+                <i class="fas fa-sync"></i>
+            </button>
+        </div>
+
+        <!-- Export in excel -->
+        <div class="pl-2">
+            <a href="rents/excel/"> <span class="btn btn_green"> <i class="fas fa-file-excel pr-2"></i>Export</span></a>
+        </div>
+
+        <!-- Button "Add new" -->
+        <div class="pl-2">
+            <button class="btn bg_primary text-white space_nowrap" onclick="modal_add_new_rent.ui.show();"><i class="fas fa-plus pr-2"></i>Add New</button>
+        </div>
+
+        <!-- Tools -->
+        <div id="rents_filter_tools" class="view_dropdown toggle ml-auto hidden">
+            <button class="btn btn_hover">
+                <div class="d-flex align-items-center">
+                    <span class="font_6"><i class="fas fa-cog"></i></span>
+                    <span class="font_1 ml-2"><i class="fas fa-chevron-down"></i></span>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Tools</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fab fa-connectdevelop"></i></div>
+                                <div class="align-self-center">Rent list</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-user"></i></div>
+                                <div class="align-self-center">Owner</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Housekeeping</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Hotel housekeeping</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-csv"></i></div>
+                                <div class="align-self-center">Export CSV/XLS</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-word"></i></div>
+                                <div class="align-self-center">Word</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                                <div class="align-self-center">Payment</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-users"></i></div>
+                                <div class="align-self-center">Payment</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+        <!-- Page -->
+        <div class="view_content bg-white position-relative pt-1" id="rents_div_page">
+
+            <!-- Loading -->
+            <div id="rents_content_loading" class="view_loading" style="display: none;">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <!-- Table -->
+            <div class="view_table rents">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" class="guests" style="padding-left: 4rem;">Guests</th>
+                            <th scope="col" class="period">Period</th>
+                            <th scope="col" class="object">Object</th>
+                            <th scope="col" class="object">Status</th>
+                            <th scope="col" class="price">Price</th>
+                            <th scope="col" class="notice">Notice</th>
+                            <th class="icons"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="rents_tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+<!-- templates -->
+<section>
+
+    <!-- rents row -->
+    <template id="template_rents_tr">
+
+        <tr class="" name="rent_row" data-type="${reservation_type}" onclick="modal_details_rent.ui.show_details('${rent_id}');">
+
+            <th scope="row">${number_of_reservation}</th>
+            <td class="td_item01">
+                <div class="d-flex align-items-center">
+                    <div class="td_icon" data-toggle="modal" data-target="#exampleModal">
+                        <img src="/assets/images/icons/portals/${rent_source_icon}.svg" alt="" loading="lazy">
+                    </div>
+                    <div class="td_wrapper">
+                        <div class="td_guest">
+                            <strong class="d-flex">
+                                <span class="${hidden_flags}"><img src="/assets/images/icons/flags/${code2}.svg" alt="" loading="lazy"></span>
+                                <span> ${contact_name} </span>
+                            </strong>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <div class="item"><span>${adults}</span><i class="fas fa-user"></i></div>
+                            <div class="line"></div>
+                            <div class="item"><span>${children}</span><i class="fas fa-child"></i></div>
+                            <div class="line"></div>
+                            <div class="item"><span>${pets}</span><i class="fas fa-paw"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="td_item02 period">
+                <div><strong> ${period} </strong></div>
+                <span> ${period_nights} </span>
+            </td>
+            <td class="td_item03 object">
+                <div>
+                    <strong> ${object_name} </strong>
+                </div>
+                <div>
+                    ${object_address}
+                </div>
+            </td>
+            <td class="td_item03 object">
+                <div>
+                    <span class="status-circle">
+                        <span style="background-color:${reservation_color}"></span>
+                        <strong>${status_name}</strong>
+                    </span>
+                </div>
+                <div>
+                    <span class="status-circle">
+                        <span style="background-color: lightgray;"></span>
+                        ${payment_method_name}
+                    </span>
+                </div>
+            </td>
+            <td class="td_item04 value">
+                <div><strong> ${price} </strong></div>
+                <div> ${in_advance} </div>
+            </td>
+            <td class="td_item05 notice">
+                <span class="notice_icon"><i class="far fa-comment"></i></span>
+                <span class="notice_text">
+                    ${note_short}
+                </span>
+            </td>
+            <td class="td_item06 icons">
+                <div class="d-flex pb-1">
+                    <a data-toggle="tooltip" data-placement="top" data-original-title="${sync}"><i class="${type_of_sync}"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" data-original-title="${deposit}"><i class="fas fa-comment-dollar"></i></a>
+                </div>
+                <div class="d-flex">
+                    <a data-toggle="tooltip" data-placement="top" data-original-title="${note}"><i class="${note_exist}"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" data-original-title="${arrivals}"><i class="fas fa-${sign}-alt"></i></a>
+                </div>
+            </td>
+        </tr>
+    </template>
+
+    <!-- surce li -->
+    <template id="template_rent_source">
+        <li class="dropdown_li" data-id="${id}">
+            <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <span class="icon icon_img">
+                        <img src="/assets/images/icons/portals/${icon}.svg" alt="">
+                    </span>
+                    <span class="align-self-center"> ${name} </span>
+                </span>
+                <input type="checkbox" value="${id}" checked onchange="rents.ui.filter_source();">
+                <span class="check check_md"></span>
+            </label>
+        </li>
+    </template>
+
+    <!-- filter objects li-->
+    <template id="template_rents_filter_object">
+        <li class="dropdown_li" data-id="${id}">
+            <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <span class="align-self-center"> ${name} </span>
+                </span>
+                <input type="checkbox" value="${id}" checked onchange="rents.ui.filter_objects();">
+                <span class="check check_md"></span>
+            </label>
+        </li>
+    </template>
+
+    <!-- filter statuses -->
+    <template id="template_rents_filter_statuses">
+        <li class="dropdown_li" data-status="1">
+            <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center">
+                    <span class="icon" style="background-color: ${color};"></span>
+                    <span class="align-self-center"> ${name} </span>
+                </span>
+                <input type="checkbox" checked value="${id}" onchange="rents.ui.filter_status();">
+                <span class="check check_md"></span>
+            </label>
+        </li>
+    </template>
+
+    <!--template for list of objects-->
+    <template id="template_object_filter_list_li">
+        <li class="dropdown_li" data-id="${id}">${name}</li>
+    </template>
+
+</section>
+
+<!-- scripts -->
+<script>
+
+    var rents = {};
+
+    rents.source_id = '';
+    rents.objects = '';
+    rents.status_id = '';
+
+    active_rents_table = [];
+
+    var object_dropdown = document.getElementById('rent_details_object_dropdown');
+    var object_dropdown_ul = object_dropdown.getElementsByClassName("dropdown_ul")[0];
+
+    rents.load = async () => {
+
+        try {
+
+            rents_filter_days.value = bl.varables.get('rents_days');
+
+        } catch (error) {
+
+            console.log(error);
+        }
+
+        // Global
+        ui.display_title("Reservation");
+        ui.filter_mobile_btn("rents_filter_tip_btn", "rents_filter_tip");
+        ui.filter_mobile_btn("rents_filter_calendar_btn", "rents_filter_calendar");
+
+        await $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html").promise();
+        await $(".mobile_button").load("/pages/partals/mobile_navigation.html").promise();
+
+        // Local
+        await rents.ui.double_calendar();
+        await rents.ui.search_key_up();
+        await rents.ui.filter_dropdown("rents_filter_calendar");
+        await rents.ui.load_object_list();
+
+        ui.dropdown_list("rent_details_object_dropdown");
+
+        //display rents
+        rents.bl.rents_display();
+
+    }
+
+    // bl logic
+    rents.bl = new function () {
+
+        this.rents_display = async () => {
+
+            await ui.content_loading("rents_content_loading");
+
+            // load rents
+            await bl.rents.list();
+
+            // draw rents
+            await rents.bl.rents_list();
+
+            await ui.content_loading_hide('rents_content_loading');
+        }
+
+        this.filter_by_type = async () => {
+
+            let types = rents_type_list.querySelectorAll("input[type='checkbox']");
+
+            let all = document.querySelectorAll('[name="rent_row"]');
+            let canceled = document.querySelectorAll('[data-type="canceled"]');
+            let active = document.querySelectorAll('[data-type="active"]');
+            let incoming = document.querySelectorAll('[data-type="incoming"]');
+            let previous = document.querySelectorAll('[data-type="previous"]');
+
+            if (types[0].checked && types[1].checked && types[2].checked || !types[0].checked && !types[1].checked && !types[2].checked) {
+                for (var e of all) {
+                    e.classList.remove("hidden");
+                }
+                return;
+            } else {
+                for (var e of all) {
+                    e.classList.add("hidden");
+                }
+            }
+
+            if (types[0].checked) {
+                //show active
+                for (var e of active) {
+                    e.classList.remove("hidden");
+                }
+            }
+            if (types[1].checked) {
+                //show canceled
+                for (var e of canceled) {
+                    e.classList.remove("hidden");
+                }
+            }
+            if (types[2].checked) {
+                //show incoming
+                for (var e of incoming) {
+                    e.classList.remove("hidden");
+                }
+            }
+            //always show previous if there are any
+            for (var e of previous) {
+                e.classList.remove("hidden");
+            }
+
+        }
+
+        this.rents_list = async () => {
+
+            rents_tbody.innerHTML = '';
+
+            var rents = bl.rents_local.get();
+            rents = rents['table'];
+
+            let objects = JSON.parse(localStorage.getItem('objects'));
+            let days_limit = bl.varables.get('rents_days');
+
+            var today_date = new Date();
+            var number_of_reservation = 1;
+
+            rents = bl.rents.table;
+
+            var active_rents = [];
+
+            //get only active rents
+            rents.forEach(rent => {
+
+                if (rent.active === "Y") {
+                    active_rents.push(rent);
+                }
+            })
+
+            active_rents_table = active_rents;
+
+            for (var r of active_rents) {
+
+                var until_date_temp = new Date(r['until_date']);
+                var from_date_temp = new Date(r['from_date']);
+
+                let object_address = null;
+
+                for (let i = 0; i < objects.length; i++) {
+                    if (objects[i].id == r['object_id']) {
+                        object_address = objects[i].adress;
+                    }
+                }
+
+                if (r['days'] <= days_limit) {
+
+                    var t = template_rents_tr.innerHTML;
+
+                    var date_from = r['from_date'];
+                    var date_until = r['until_date'];
+
+                    var date_from_short = js.date.get_day(date_from) + '.' + js.date.get_mounth(date_from);
+                    var date_until_short = js.date.get_day(date_until) + '.' + js.date.get_mounth(date_until);
+                    var date_from_year = js.date.get_year(date_from);
+
+                    t = t.replace('${rent_source_icon}', !r['rent_source_icon'] == true ? 'syncbeds' : r['rent_source_icon']);
+                    t = t.replace('${object_name}', r['object_name']);
+                    t = t.replace('${object_address}', object_address);
+                    t = t.replace('${contact_name}', js.text.check_if_empty(r['contact_name']));
+                    t = t.replace('${code2}', !r['code2'] == true ? 'no-image' : r['code2']);
+                    t = t.replace('${hidden_flags}', !r['code2'] == true ? 'hidden' : '');
+                    t = t.replace('${status_name}', js.text.check_if_empty(r['status_name']));
+                    t = t.replace('${period}', date_from_short + ' - ' + date_until_short);
+                    t = t.replace('${period_nights}', r['days'] + ' nights,  ' + date_from_year + '.');
+                    t = t.replace('${price}', r['price'] == null ? '' : r['price'].toFixed([2]) + ' ' + r['label']);
+                    t = t.replace('${in_advance}', r['in_advance'] == 0 ? '' : r['in_advance'] + ' ' + r['label']);
+                    t = t.replace('${note_short}', js.text.check_if_empty(r['note_short']));
+                    t = t.replace('${rent_id}', js.text.check_if_empty(r['id']));
+                    t = t.replace('${adults}', r['adults']);
+                    t = t.replace('${children}', r['children']);
+                    t = t.replace('${pets}', r['pets']);
+                    t = t.replace('${number_of_reservation}', number_of_reservation);
+                    t = t.replace('${payment_method_name}', !r['payment_method_name'] ? '-' : r['payment_method_name']);
+
+                    //set status color
+                    t = t.replace('${reservation_color}', r['color']);
+
+                    // set up row number
+                    number_of_reservation++;
+
+                    // set up icons on right side of row
+                    if (r['note'] != null && r['note'] != '') {
+                        t = t.replace('${note_exist}', 'far fa-sticky-note');
+                        t = t.replace('${note}', r['note']);
+                    } else {
+                        t = t.replace('${note}', '');
+                        t = t.replace('${note_exist}', '');
+                    }
+
+                    t = t.replace('${deposit}', r['deposit'] == true ? '' : r['deposit']); // depozit
+
+                    if (r['foreign_id']) {
+                        t = t.replace('${sync}', r['created'].split('T')[0]);
+                        t = t.replace('${type_of_sync}', 'fas fa-cloud-download-alt');
+                    } else {
+
+                        t = t.replace('${sync}', 'Manual: ' + r['created'].split('T')[0]);
+                        t = t.replace('${type_of_sync}', 'far fa-hand-paper');
+                    }
+
+                    var current_date = new Date();
+                    current_date = js.date.toIsoFormat(current_date);
+
+                    if (r['from_date'] == current_date) {
+                        t = t.replace('${arrivals}', 'Arrival');
+                        t = t.replace('${sign}', 'sign-in');
+                    } else if (r['until_date'] == current_date) {
+                        t = t.replace('${arrivals}', 'Departures'); // depozit
+                        t = t.replace('${sign}', 'sign-out'); // depozit
+                    } else {
+                        t = t.replace('${arrivals}', '');
+                    }
+
+                    js.html.insertAdjacentHTML('rents_tbody', t);
+
+                }
+
+            }
+
+        }      
+
+    }
+
+    // ui logic
+    rents.ui = new function () {
+
+        this.search_key_up = async function () {
+
+            // Get the input box
+            let input = document.getElementById('rents_search');
+
+            // Init a timeout variable to be used below
+            let timeout = null;
+
+            // Listen for keystroke events
+            input.addEventListener('keyup', function (e) {
+                // Clear the timeout if it has already been set.
+                // This will prevent the previous task from executing
+                // if it has been less than <MILLISECONDS>
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 1000ms (1 second)
+                timeout = setTimeout(async function () {
+                    await bl.rents.list();
+
+                    //rents.load();
+
+                    // draw rents
+                    await rents.bl.rents_list();
+
+                }, 500);
+            });
+        }
+
+        // Filter dropdown
+        this.filter_dropdown = async function (id) {
+
+            var id = document.getElementById(id);
+            var btn = id.getElementsByClassName("btn")[0];
+            var dropdown = id.lastElementChild;
+            var close = id.lastElementChild.children[0].lastElementChild;
+
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+
+            //close.addEventListener("click", function () {
+            //    dropdownToggle();
+            //});
+
+            document.addEventListener("mouseup", function (e) {
+                if (id.outerHTML.includes(e.target.outerHTML) == false) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+
+            if (id.classList.contains("toggle")) {
+                var dropdown_li = id.querySelectorAll(".dropdown_li");
+                for (let i = 0; i < dropdown_li.length; i++) {
+                    dropdown_li[i].addEventListener("click", function () {
+                        dropdown.classList.add("hidden");
+                        btn.classList.remove("open");
+                    })
+                }
+            }
+
+        }
+
+        // Filter - double calendar
+        this.double_calendar = async function () {
+
+            $("#rents_filter_dropdown_calendar").datepicker({
+                firstDay: 1,
+                //minDate: 0,
+                numberOfMonths: 1,
+                altFormat: "yy-mm-dd",
+                onSelect: function (dateText, inst) {
+
+                    $("#rents_form_calendar").addClass("hidden");
+                    document.querySelector(".filter_calendar > button").classList.remove("open");
+
+                    var date_iso = js.date.toIso(new Date(dateText));
+                    calendar_filter_date_from.innerHTML = date_iso;
+
+                    // save new date
+                    bl.varables.set('rents_date_from', date_iso);
+
+                    // load calendar
+                    rents.bl.rents_display();
+
+                }
+            });
+
+            $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('rents_date_from')));
+            calendar_filter_date_from.innerHTML = bl.varables.get('rents_date_from');
+
+        }
+
+        // Filter uncheck all
+        this.filter_unCheck_all = function (id) {
+
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("remove")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = false;
+                }
+
+                rents.ui.filter_objects();
+                rents.ui.filter_source();
+                rents.ui.filter_status();
+
+            });
+
+        }
+
+        // Filter check all
+        this.filter_check_all = function (id) {
+
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("all")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+
+            check_btn.addEventListener("click", function () {
+
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = true;
+                }
+
+                bl.rents.list();
+
+                rents.ui.filter_objects();
+                rents.ui.filter_source();
+                rents.ui.filter_status();
+
+            });
+
+        }
+
+        // loading object
+        this.load_object_list = async () => {
+
+            var object_list = bl.objects.list_get();
+            rent_objects_list.innerHTML = '';
+
+            js.html.insertAdjacentHTML('rent_objects_list', '<li class="dropdown_li" data-id=""> All </li>');
+
+            for (var ol of object_list) {
+                var t = template_object_filter_list_li.innerHTML;
+                t = t.replace('${id}', ol['id']);
+                t = t.replace('${name}', ol['name']);
+                js.html.insertAdjacentHTML('rent_objects_list', t);
+
+            }
+        }
+
+        // Add rent sources
+        this.rents_soruces = function () {
+
+            rents_ul_soruces.innerHTML = '';
+
+            var sources = bl.rents_sources.list();
+
+            for (var s of sources) {
+
+                var t = template_rent_source.innerHTML;
+
+                t = t.replace('${name}', js.text.check_if_empty(s['name']));
+                t = t.replace('${icon}', s['icon']);
+                t = t.replace('${id}', s['id']);
+                t = t.replace('${id}', s['id']);
+
+                rents_ul_soruces.insertAdjacentHTML('beforeend', t);
+
+            }
+
+        }
+
+        // Search select reservation
+        this.search_select = function (id) {
+
+            var dropdown_id = document.getElementById(id);
+            var dropdown_btn = dropdown_id.getElementsByClassName("btn")[0];
+            var dropdown_menu = dropdown_id.getElementsByClassName("search_dropdown_menu")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_menu.children.length; i++) {
+                dropdown_menu.children[i].onclick = function (e) {
+                    dropdown_btn.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            };
+
+            document.addEventListener("mouseup", function (e) {
+                if (e.target.classList.contains("btn") == false) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+        }
+
+        // objects
+        this.rents_filter_objects = function () {
+
+            rents_filter_objects.innerHTML = '';
+            var objs = bl.objects.list_get();
+
+            for (var o of objs) {
+
+                var t = template_rents_filter_object.innerHTML;
+
+                t = t.replace('${name}', o['name']);
+                t = t.replace('${id}', o['id']);
+                t = t.replace('${id}', o['id']);
+
+                rents_filter_objects.insertAdjacentHTML('beforeend', t);
+
+            }
+
+        }
+
+        // Toggle dropdown
+        this.toggle_dropdown = async (id) => {
+            debugger;
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_btn = dropdown_id.getElementsByClassName("btn")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+
+                if (dropdown_btn.classList.contains("open")) {
+                    dropdown_btn.classList.remove("open");
+                    dropdown_menu.classList.add("hidden");
+                } else {
+                    dropdown_btn.classList.add("open");
+                    dropdown_menu.classList.remove("hidden");
+                }
+
+            });
+
+            document.addEventListener('mouseup', function (e) {
+                if (dropdown_id.outerHTML.includes(e.target.outerHTML) == false) {
+                    dropdown_btn.classList.remove("open");
+                    dropdown_menu.classList.add("hidden");
+                }
+            });
+
+        };
+
+        // statuses
+        this.rents_filter_statuses = function () {
+
+            rents_filter_statuses.innerHTML = '';
+
+            var statuses = bl.rents_status.list();
+
+            for (var s of statuses) {
+
+                var t = template_rents_filter_statuses.innerHTML;
+                t = t.replace('${name}', js.text.check_if_empty(s['name']));
+                t = t.replace('${id}', s['id']);
+                t = t.replace('${color}', s['color']);
+                rents_filter_statuses.insertAdjacentHTML('beforeend', t);
+
+            }
+
+        }
+
+        // go next with calendar
+        this.go_next = () => {
+
+            let days = rents_filter_days.value;
+
+            var date_from = js.date.toIso(calendar_filter_date_from.innerText);
+
+            var date_from_new = js.date.add_day(date_from, parseInt(days));
+
+            bl.varables.set('rents_date_from', date_from_new);
+
+            calendar_filter_date_from.innerText = date_from_new;
+
+            $('#double_calendar').datepicker('setDate', new Date(date_from_new));
+
+            //display rents
+            rents.bl.rents_display();
+
+        }
+
+        // go before with calendar
+        this.go_before = () => {
+
+            let days = -1 * rents_filter_days.value;
+            var date_from = js.date.toIso(calendar_filter_date_from.innerText);
+
+            var date_from_new = js.date.add_day(date_from, parseInt(days));
+
+            bl.varables.set('rents_date_from', date_from_new);
+
+            calendar_filter_date_from.innerText = date_from_new;
+
+            $('#double_calendar').datepicker('setDate', new Date(date_from_new));
+
+            //display rents
+            rents.bl.rents_display();
+
+        }
+
+        //filter by source
+        this.filter_source = () => {
+
+            var list = document.querySelectorAll('#rents_ul_soruces > li > label > input');
+
+            var sources_ids = '';
+
+            for (var i of list) {
+                console.log(i);
+                if (i.checked) {
+                    sources_ids += i.value + ', ';
+                }
+            }
+
+            sources_ids = sources_ids.trim();
+            sources_ids = sources_ids.slice(0, -1);
+
+            //debugger;
+            //console.log(sources_id);
+
+            bl.rents.rent_sources = sources_ids;
+            bl.rents.list();
+
+        }
+
+        this.filter_objects = () => {
+
+            var list = document.querySelectorAll('#rents_filter_objects > li > label > input')
+            var object_id = '';
+            for (var i of list) {
+                if (i.checked) {
+                    object_id += i.value + ', ';
+                }
+            }
+            object_id = object_id.trim();
+            object_id = object_id.slice(0, -1);
+
+            rents.objects = object_id;
+            bl.rents.list();
+
+        }
+
+        this.filter_status = () => {
+
+            var list = document.querySelectorAll('#rents_filter_statuses > li > label > input')
+            var status_id = '';
+            for (var i of list) {
+                if (i.checked) {
+                    status_id += i.value + ', ';
+                }
+            }
+            status_id = status_id.trim();
+            status_id = status_id.slice(0, -1);
+
+            rents.status_id = status_id;
+            bl.rents.list();
+
+        }
+
+        this.change_numbers_of_rents = async () => {
+
+            bl.varables.set('rents_days', parseInt(rents_filter_days.value));
+
+            //display rents
+            rents.bl.rents_display();
+        }
+
+    }
+
+    object_dropdown_ul.addEventListener("click", function () {
+
+        rents.bl.rents_display();
+    });    
+
+    // on load
+    rents.load();
+
+</script>

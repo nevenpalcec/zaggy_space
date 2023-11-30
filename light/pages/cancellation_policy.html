@@ -1,0 +1,566 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+            </div>
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_real_estate_header_object_name"></span>
+                <span class="d-md-none d-block view_header_mobile_label">Apartment with balcony</span>
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shortcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Content -->
+        <div class="content object_calendars pt-3">
+            <div class="row">
+                <div class="col-lg-4 col-xl-5">
+
+                    <!-- Details -->
+                    <div class="card">
+
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold mt-2">
+                                <i class="fas fa-handshake pr-2"></i>Cancellation policy (How we refund money)
+                            </div>
+                            <div class="ml-auto" style="margin-bottom: 0px;">
+                                <button class="btn btn_secondary" onclick="cancellation_policy.bl.add_cancellation_policy();"> Add new </button>
+                                <button class="btn btn_secondary" onclick="cancellation_policy.bl.copy_to_all();"> Copy to all </button>
+                            </div>
+                            <div class="card-header_arrow"></div>
+                        </div>
+
+                        <div class="card-body font_3" id="panel_cancellation_policy">
+                            <div class="row">
+
+                                <div class="view_content bg-white position-relative pt-0">
+
+                                    <!-- Loading -->
+                                    <div id="objects_cancellation_policy_content_loading" class="view_loading" style="display: none;">
+                                        <img src="/assets/images/icons/loading.svg" />
+                                    </div>
+
+                                    <!-- Table -->
+                                    <table class="table" id="table_cancellation_policy_list">
+                                        <thead>
+                                            <tr class="sticky bg_light_silver" style="height: auto !important">
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">From</span></th>
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">Until</span></th>
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">Refund percent</span></th>
+                                                <th scope="col" class="border-0"><span class="text-capitalize"></span></th>
+                                                <th scope="col" class="text-right border-0"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cancellation_policy_tbody">
+                                        </tbody>
+                                    </table>
+
+                                    <br />
+                                    <br />
+                                    <label class="text-info text-bold">
+                                        The referance day is the day of arrival
+                                    </label>
+                                    <div style="padding-top: 15px;">
+                                        <span style="padding-right: 10px;">
+                                            <a href="https://hometogo.com" target="_blank">
+                                                <img src="/assets/images/icons/portals/hometogo.svg" style="height: 35px;" title="Cancellation policy applies to HomeToGo." />
+                                            </a>
+                                        </span>
+                                        <span style="padding-right: 10px;">
+                                            <a href="https://rentalsunited.com/" target="_blank">
+                                                <img src="/assets/images/icons/portals/rentalsunited.png" style="height: 35px;" title="Cancellation policy applies to Rentals United." />
+                                            </a>
+                                        </span>
+                                        <span style="padding-right: 10px;">
+                                            <a href="https://vrbo.com/" target="_blank">
+                                                <img src="/assets/images/icons/portals/vrbo.svg" style="height: 35px;" title="Custom cancellation applies to Vrbo." />
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-xl-7">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold mt-2">
+                                <i class="far fa-credit-card"></i> Payment terms (How we get payments)
+                            </div>
+                            <div class="ml-auto" style="margin-bottom: 0px;">
+                                <button class="btn btn_secondary" onclick="payment_terms.bl.add_payment_term()"> Add new </button>
+                                <button class="btn btn_secondary" onclick="payment_terms.bl.copy_to_all();"> Copy to all </button>
+                            </div>
+                            <div class="card-header_arrow"></div>
+                        </div>
+
+                        <div class="card-body font_3">
+                            <div class="row">
+                                <div class="view_content bg-white position-relative pt-0">
+
+                                    <!-- Loading -->
+                                    <div id="objects_payment_terms_content_loading" class="view_loading" style="display: none;">
+                                        <img src="/assets/images/icons/loading.svg" />
+                                    </div>
+
+                                    <!-- Table -->
+                                    <table class="table" id="table_payment_terms_list">
+                                        <thead>
+                                            <tr class="sticky bg_light_silver" style="height: auto !important">
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">When</span></th>
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">How</span></th>
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">Days</span></th>
+                                                <th scope="col" class="text-center border-0"><span class="text-capitalize">Amount</span></th>
+                                                <th scope="col" class="text-right border-0"></th>
+                                                <th scope="col" class="text-right border-0"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="payment_terms_tbody">
+                                        </tbody>
+                                    </table>
+
+                                    <div style="padding-top: 15px;">
+                                        <span style="padding-right: 10px;">
+                                            <a href="https://hometogo.com" target="_blank">
+                                                <img src="/assets/images/icons/portals/hometogo.svg" style="height: 35px;" title="Payment terms apply to HomeToGo." />
+                                            </a>
+                                        </span>
+                                        <span style="padding-right: 10px;">
+                                            <a href="https://vrbo.com/" target="_blank">
+                                                <img src="/assets/images/icons/portals/vrbo.svg" style="height: 35px;" title="Payment terms apply to Vrbo." />
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- zaggy and zaggy cancellation policy -->
+                <div class="col-lg-4 col-xl-5">
+                    <div class="card">
+
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold mt-2">
+                                <i class="fas fa-handshake pr-2"></i> Free cancellation settings (What is time of free cancellation)
+
+                            </div>
+                            <div class="ml-auto" style="margin-bottom: 0px;">
+                                <button class="btn btn_secondary" onclick="cancellation_policy.bl.nju_copy_to_all();"> Copy to all </button>
+                            </div>
+                            <div class="card-header_arrow"></div>
+                        </div>
+
+                        <div class="card-body font_3">
+                            <div class="row">
+
+                                <div class="view_content bg-white position-relative pt-0">
+
+                                    <!-- Loading -->
+                                    <div id="objects_nju_cancellation_settings_content_loading" class="view_loading" style="display: none;">
+                                        <img src="/assets/images/icons/loading.svg" />
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label> Days before arrival </label>
+                                            <input class="form-control" id="days_before_arrival_input" type="number" min="0" value="" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label> Charge percent (%) </label>
+                                            <input class="form-control" id="charge_percent_input" type="number" min="9.5" max="100" value="" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label> Charge no show percent (%) </label>
+                                            <input class="form-control" id="charge_no_show_input" type="number" min="9.5" max="100" value="" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label> Is Free cancel? </label>
+                                            <select class="form-control text-center w-auto" id="free_cancel_input">
+                                                <option value="Y">Y</option>
+                                                <option value="N">N</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label> Advance percent (%) </label>
+                                            <input class="form-control" id="advance_percent_input" type="number" min="9.5" max="100" value="" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label> Days after reservation </label>
+                                            <input class="form-control" id="advance_days_input" type="number" min="0" value="" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn_secondary mt-5" onclick="cancellation_policy.bl.nju_save();"> Save </button>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <br />
+                                    <label>
+                                        Percentages must be greater than or equal to <strong> 9.5 </strong> and days must be positive values
+                                    </label>
+                                    <label>
+                                        <strong> Charge no show percent </strong>  must be greather then Charge percent. If not, zaggy will automaticly change this!
+                                    </label>
+                                    <div style="padding-top: 15px;">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-lg-8 col-xl-7">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- templates -->
+    <div>
+
+        <!--template for cancellation policy table-->
+        <template id="template_cancellation_policies_tr">
+            <tr>
+                <td><input class="form-control text-center" id="cancellation_policy_from_${id}" type="text" name="from" value="${from}" /></td>
+                <td><input class="form-control text-center" id="cancellation_policy_until_${id}" type="text" name="until" value="${until}" /></td>
+                <td><input class="form-control text-center" id="cancellation_policy_percent_${id}" type="text" name="percent" value="${percent}"></td>
+                <td>
+                    <button onclick="cancellation_policy.bl.save(${id})" class="btn btn_secondary"><i class="far fa-check-circle"></i> </button>
+                </td>
+                <td>
+                    <button onclick="cancellation_policy.bl.delete(${id})" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        </template>
+
+        <!--template for payment terms table-->
+        <template id="template_payment_terms_tr">
+            <tr>
+                <td>
+                    <select class="form-control text-center w-auto" id="payment_terms_when_${id}" name="when">
+                        <option value="at_booking">At booking</option>
+                        <option value="at_checkin">At check-in</option>
+                        <option value="at_checkout">At check-out</option>
+                        <option value="before_checkin">Before check-in</option>
+                        <option value="after_booking">After booking</option>
+                        <option value="after_checkin">After check-in</option>
+                        <option value="after_checkout">After check-out</option>
+                    </select>
+                </td>
+                <!--<td><input class="form-control text-center" id="payment_terms_how_${id}" type="text" name="until" value="${how}" /></td>-->
+                <td>
+                    <select class="form-control text-center w-auto" id="payment_terms_how_${id}" name="how">
+                        <option value="percent">Percent (%)</option>
+                        <option value="flat">Flat</option>
+                    </select>
+                </td>
+                <td><input class="form-control text-center" id="payment_terms_days_${id}" type="text" name="days" value="${days}"></td>
+                <td><input class="form-control text-center" id="payment_terms_amount_${id}" type="text" name="amount" value="${amount}"></td>
+                <td>
+                    <button onclick="payment_terms.bl.save(${id})" class="btn btn_secondary"><i class="far fa-check-circle"></i> </button>
+                </td>
+                <td>
+                    <button onclick="payment_terms.bl.delete(${id})" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        </template>
+
+    </div>
+
+</div>
+
+<div class="modal_cancellation_policies"></div>
+
+<script>
+
+    let cancellation_policy = {};
+    let payment_terms = {};
+
+    let object = bl.objects.object_get();
+    let object_id = object['general'][0]['id'];
+
+    cancellation_policy.load = () => {
+        $(".filter_general").load("/pages/partals/filter_general.html");
+        $(".modal_cancellation_policies").load("/pages/components/modal_cancellation_policies.html");
+        $(".modal_components").load("/pages/components/pop_up_success.html");
+        $("#header_navbar_right_shortcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        object_real_estate_header_object_name.innerHTML = object['general'][0]['name'];
+
+        cancellation_policy.bl.display_data();
+        cancellation_policy.bl.nju_load();
+        payment_terms.bl.display_data();
+    }
+
+    cancellation_policy.bl = new function () {
+
+        this.display_data = async () => {
+
+            var url = '/api/objects/objects_cancellations_list/' + object_id;
+            var response = await ajax.get(url);
+            var data = JSON.parse(response);
+
+            cancellation_policy_tbody.innerHTML = '';
+            for (var o of data) {
+
+                var tr = template_cancellation_policies_tr.innerHTML;
+
+                tr = tr.replaceAll('${from}', o['from']);
+                tr = tr.replaceAll('${until}', o['until']);
+                tr = tr.replaceAll('${percent}', o['percent']);
+                tr = tr.replaceAll('${id}', o['id']);
+
+                await js.html.insertAdjacentHTML('cancellation_policy_tbody', tr);
+            }
+        }
+
+        this.add_cancellation_policy = async () => {
+
+            ui.content_loading('objects_cancellation_policy_content_loading');
+
+            let url = '/api/objects/objects_cancellations_add/' + object_id;
+            let response = await ajax.get(url);
+
+            await cancellation_policy.bl.display_data();
+
+            ui.content_loading_hide('objects_cancellation_policy_content_loading');
+
+        }
+
+        this.copy_to_all = async () => {
+
+            ui.content_loading('objects_cancellation_policy_content_loading');
+
+            let url = '/api/objects/objects_cancellations_copy_to_all/' + object_id;
+            let response = await ajax.get(url);
+
+            ui.content_loading_hide('objects_cancellation_policy_content_loading');
+
+        }
+
+        this.delete = async (id) => {
+
+            ui.content_loading('objects_cancellation_policy_content_loading');
+
+            let url = `/api/objects/objects_cancellations_del/${id}`;
+            let response = await ajax.get(url);
+
+            await cancellation_policy.bl.display_data();
+
+            ui.content_loading_hide('objects_cancellation_policy_content_loading');
+        }
+
+        this.save = async (id) => {
+
+            ui.content_loading('objects_cancellation_policy_content_loading');
+
+            let from = document.getElementById(`cancellation_policy_from_${id}`).value;
+            let until = document.getElementById(`cancellation_policy_until_${id}`).value;
+            let percent = document.getElementById(`cancellation_policy_percent_${id}`).value;
+
+            let url = `/api/objects/objects_cancellations_save/?id=${id}&from=${from}&until=${until}&percent=${percent}`;
+            let response = await ajax.get(url);
+
+            ui.content_loading_hide('objects_cancellation_policy_content_loading');
+        }
+
+        this.nju_save = async () => {
+
+            ui.content_loading('objects_nju_cancellation_settings_content_loading');
+
+            let url = '/api/objects/objects_cancellations_nju_save';
+
+            let days_before_arrival = days_before_arrival_input.value;
+            let charge_percent = charge_percent_input.value;
+            let charge_no_show = charge_no_show_input.value;
+            let free_cancel = free_cancel_input.value;
+            let advance_percent = advance_percent_input.value;
+            let advance_days = advance_days_input.value;
+
+            if (advance_days.trim() == '' || advance_percent.trim() == '' || parseInt(advance_days) < 0 || parseInt(days_before_arrival) < 0
+                || parseFloat(charge_percent) < 9.5 || parseFloat(charge_no_show) < 9.5 || parseFloat(advance_percent) < 9.5)
+            {
+                await cancellation_policy.bl.nju_load();
+            }
+
+            var json = {
+                days_before_arrival,
+                charge_percent,
+                charge_no_show,
+                free_cancel,
+                object_id,
+                advance_percent,
+                advance_days
+            }
+
+            await ajax.post_json(url, json);
+
+            ui.content_loading_hide('objects_nju_cancellation_settings_content_loading');
+            await cancellation_policy.bl.nju_load();
+        }
+
+        this.nju_load = async () => {
+
+            ui.content_loading('objects_nju_cancellation_settings_content_loading');
+
+            let url = `/api/objects/objects_cancellations_nju_list/${object_id}`;
+            let response = await ajax.get(url);
+            let data = JSON.parse(response);
+
+            days_before_arrival_input.value = data[0]["days_before_arrival"];
+            charge_percent_input.value = data[0]["charge_percent"];
+            charge_no_show_input.value = data[0]["charge_no_show"];
+            free_cancel_input.value = data[0]["free_cancel"];
+            advance_percent_input.value = data[0]["advance_percent"];
+            advance_days_input.value = data[0]["advance_days"];
+
+            ui.content_loading_hide('objects_nju_cancellation_settings_content_loading');
+        }
+
+        this.nju_copy_to_all = async () => {
+
+            ui.content_loading('objects_nju_cancellation_settings_content_loading');
+
+            let url = `/api/objects/objects_cancellations_nju_copy_to_all/${object_id}`;
+            await ajax.get(url);
+
+            ui.content_loading_hide('objects_nju_cancellation_settings_content_loading');
+        }
+
+    }
+
+    payment_terms.bl = new function () {
+
+        this.display_data = async () => {
+
+            ui.content_loading('objects_payment_terms_content_loading');
+
+            var url = `/api/objects/objects_payment_terms_list/${object_id}`;
+            var response = await ajax.get(url);
+            var data = JSON.parse(response);
+
+            payment_terms_tbody.innerHTML = '';
+            for (var o of data) {
+
+                var tr = template_payment_terms_tr.innerHTML;
+                var id = o['id'];
+
+                tr = tr.replaceAll('${id}', id);
+                tr = tr.replaceAll('${how}', o['how']);
+                tr = tr.replaceAll('${days}', o['days']);
+                tr = tr.replaceAll('${amount}', o['amount']);
+
+                await js.html.insertAdjacentHTML('payment_terms_tbody', tr);
+
+                var select_element_when = document.getElementById(`payment_terms_when_${id}`);
+                var options_when = select_element_when.options;
+
+                for (let i = 0; i < options_when.length; i++) {
+                    if (options_when[i].value === o['when']) {
+                        options_when[i].setAttribute('selected', 'selected');
+                    }
+                }
+
+                var select_element_how = document.getElementById(`payment_terms_how_${id}`);
+                var options_how = select_element_how.options;
+
+                for (let i = 0; i < options_how.length; i++) {
+                    if (options_how[i].value === o['how']) {
+                        options_how[i].setAttribute('selected', 'selected');
+                    }
+                }
+
+            }
+
+            ui.content_loading_hide('objects_payment_terms_content_loading');
+        }
+
+        this.add_payment_term = async () => {
+
+            ui.content_loading('objects_payment_terms_content_loading');
+
+            let url = `/api/objects/objects_payment_terms_add/${object_id}`;
+            let response = await ajax.get(url);
+
+            await payment_terms.bl.display_data();
+
+            ui.content_loading_hide('objects_payment_terms_content_loading');
+
+        }
+
+        this.copy_to_all = async () => {
+
+            ui.content_loading('objects_payment_terms_content_loading');
+
+            let url = `/api/objects/objects_payment_terms_copy_to_all/${object_id}`;
+            let response = await ajax.get(url);
+
+            ui.content_loading_hide('objects_payment_terms_content_loading');
+
+        }
+
+        this.delete = async (id) => {
+
+            ui.content_loading('objects_payment_terms_content_loading');
+
+            let url = `/api/objects/objects_payment_terms_del/${id}`;
+            let response = await ajax.get(url);
+
+            await payment_terms.bl.display_data();
+
+            ui.content_loading_hide('objects_payment_terms_content_loading');
+        }
+
+        this.save = async (id) => {
+
+            ui.content_loading('objects_payment_terms_content_loading');
+
+            let when = document.getElementById(`payment_terms_when_${id}`).value;
+            let how = document.getElementById(`payment_terms_how_${id}`).value;
+            let amount = document.getElementById(`payment_terms_amount_${id}`).value;
+            let days = document.getElementById(`payment_terms_days_${id}`).value;
+
+            let url = `/api/objects/objects_payment_terms_save/?id=${id}&when=${when}&how=${how}&days=${days}&amount=${amount}`;
+            let response = await ajax.get(url);
+
+            ui.content_loading_hide('objects_payment_terms_content_loading');
+        }
+    }
+
+
+    cancellation_policy.load();
+
+</script>

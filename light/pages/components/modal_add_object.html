@@ -1,0 +1,389 @@
+﻿<!-- Modal add new room -->
+<div id="modal_add_object" class="view_modal hidden visuallyhidden ">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold" id="modal_add_beds_title"><i class="fas fa-plus pr-2"></i>Add new object</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                            <label class="mb-1">Location</label>
+                            <div id="modal_add_object_select_filter_location" class="select">
+                                <button class="custom-select focus" id="modal_add_object_select_filter_location_btn"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <div class="select_ul_filter_wrapper hidden">
+                                    <div class="select_search m-2">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </div>
+                                    <ul class="select_filter_ul mt-2" id="modal_add_object_select_filter_location_ul">
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                    <!-- object type-->
+                    <div class="col-12">
+                            <label class="mb-1">Object type</label>
+                            <div id="modal_add_object_select_filter_type" class="select">
+                                <button class="custom-select focus" id="modal_add_object_select_filter_type_btn"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <div class="select_ul_filter_wrapper hidden">
+                                    <div class="select_search m-2">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </div>
+                                    <ul class="select_filter_ul mt-2" id="modal_add_object_select_filter_type_ul">
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                                
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn_silver" data-dismiss="modal">Cancel</button>
+                <div>
+                    <button class="btn btn_primary" id="modal_add_object_add_btn" onclick="modal_add_object.bl.add_object();"><i class="fas fa-plus pr-2"></i>Add</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <template id="template_location_list">
+        <li class="select_filter_li">
+            <span data-id="${id}" data-name="${name}">
+                <span>${name}</span>
+            </span>
+        </li>
+    </template>
+
+    <template id="template_type_list">
+
+        <li class="select_filter_li">
+            <span data-id="${id}" data-name="${name}">
+                <span>${name}</span>
+            </span>
+        </li>
+    </template>
+</section>
+<script>
+
+    var modal_add_object = {};
+
+    modal_add_object.room_id = '';
+
+    // Load function
+    modal_add_object.load = () => {
+
+        // Global components
+
+        // BL components
+        modal_add_object.bl.close_modal("modal_add_object");
+        modal_add_object.bl.load_locations();
+        modal_add_object.bl.load_object_type();
+
+    };
+
+    // UI logic
+    modal_add_object.ui = new function () {
+
+        this.filter_search_list = function (id) {
+            
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".select_filter_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+
+        // Custom select
+        this.select_filter_custom = function (id) {
+            
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul_wrapper = select_id.getElementsByClassName("select_ul_filter_wrapper")[0];
+            let ul = select_id.getElementsByClassName("select_filter_ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul_wrapper.classList.remove("hidden");
+                    let ulOffset = $(ul_wrapper).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul_wrapper).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul_wrapper).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul_wrapper.classList.add("reverse");
+                    } else {
+                        ul_wrapper.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul_wrapper.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(btn).has(e.target).length === 0) {
+                    if (!$(ul_wrapper).is(e.target) && $(ul_wrapper).has(e.target).length === 0) {
+                        ul_wrapper.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    console.log(e.currentTarget);
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul_wrapper.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+    };
+
+    // BL logic
+    modal_add_object.bl = new function () {
+
+        this.dropdown = function (id) {
+
+            let dropdown_id = document.getElementById(id);
+            let dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            let dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            let dropdown_btn = dropdown_id.getElementsByTagName("button")[0];
+            let dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            let dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            let modal_icon = document.getElementsByClassName("modal_icon")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                dropdown_ul.children[i].onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                    if (dropdown_ul.classList.contains("dropdown_icon")) {
+                        modal_icon.children[0].src = e.target.getElementsByClassName("icon_img")[0].children[0].src;
+                    }
+                }
+            }
+
+            dropdown_close.onclick = function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            }
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+
+                element.onclick = function (e) {
+
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    if (id == 'modal_new_rent_select_countries') {
+
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+                    } else {
+                        document.querySelector('#' + id).dataset.name = e.currentTarget.innerText;
+                        document.querySelector('#' + id).dataset.id = e.currentTarget.dataset.id;
+
+                    }
+
+                    dropdown_menu.classList.add("hidden");
+                    //button.classList.remove("open");
+                }
+            }
+        }
+
+        // CLose modal
+        this.close_modal = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        this.open_modal = (room_id) => {
+
+            this.show_modal('modal_add_beds');
+            modal_add_beds.room_id = room_id;
+        }
+
+        // save changes
+        this.add_bed = async () => {
+
+            var url = '/api/objects_rooms_beds/add/' + modal_add_beds.room_id;
+            var bed_id = await ajax.get(url);
+            bed_id = bed_id.slice(1, -1)
+
+            var b = {};
+            b.dimenzion_x = modal_add_beds_dimension_x.value;
+            b.dimenzion_y = modal_add_beds_dimension_y.value;
+            b.bed_id = bed_id;
+            b.bed_type_id = modal_add_bed_type_btn.dataset.id;
+
+            var url = '/api/objects_rooms_beds/save';
+            var response = await ajax.post_json(url, b);
+
+            this.close_modal('modal_add_beds');
+            this.clear_data();
+
+        }
+
+        this.clear_data = () => {
+            modal_add_beds_dimension_x.value = '';
+            modal_add_beds_dimension_y.value = '';
+        }
+
+        // load location list to dropdown menu
+        this.load_locations = async () => {
+            
+            var user_id = bl.workers.current_user_id();
+
+            var url = '/api/units_location/get/' + user_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            modal_add_object_select_filter_location_ul.innerHTML = '';
+
+            for (var b of json_response) {
+                t = template_location_list.innerHTML;
+
+                t = t.replace('${name}', b['name']);
+                t = t.replace('${name}', b['name']);
+                t = t.replace('${id}', b['id']);
+
+                js.html.insertAdjacentHTML('modal_add_object_select_filter_location_ul', t)
+            }
+
+
+            modal_add_object.ui.filter_search_list("modal_add_object_select_filter_location");
+            modal_add_object.ui.select_filter_custom("modal_add_object_select_filter_location");
+
+            //ui.custom_select("modal_add_object_select_location");
+        }
+
+        // add new object to database
+        this.add_object = async () => {
+            
+            if (modal_add_object_select_filter_location_btn.innerHTML == '' || modal_add_object_select_filter_type_btn.innerHTML == '') {
+                alert('Location and object type is mandatory');
+            } else {
+
+                var unit_id = document.querySelector('#modal_add_object_select_filter_location_btn > span').dataset.id;
+                var user_id = bl.workers.current_user_id();
+                var object_type_id = document.querySelector('#modal_add_object_select_filter_type_btn > span').dataset.id;
+
+                var url = `/api/objects/add/${user_id}?unit_id=${unit_id}&object_type_id=${object_type_id}`;
+                var object_id = await ajax.get(url);
+                object_id = object_id.slice(1, -1);
+                location.href = '#object_general?' + object_id;
+                bl.objects.list_load();
+                this.close_modal('modal_add_object')
+
+                var url = '/api/objects_prices/add/' + object_id;
+                var response = await ajax.get(url);
+            }
+        
+        }
+
+        // loading object type into dropdown menu
+        this.load_object_type = async () => {
+
+            var url = '/api/objects_types/get_type';
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            try {
+
+                modal_add_object_select_filter_type_ul.innerHTML = '';
+
+                for (var b of json_response) {
+                    t = template_type_list.innerHTML;
+
+                    t = t.replace('${name}', b['name']);
+                    t = t.replace('${name}', b['name']);
+                    t = t.replace('${id}', b['id']);
+
+                    js.html.insertAdjacentHTML('modal_add_object_select_filter_type_ul', t)
+                }
+
+                modal_add_object.ui.filter_search_list("modal_add_object_select_filter_type");
+                modal_add_object.ui.select_filter_custom("modal_add_object_select_filter_type");
+
+            } catch (error) {
+
+                console.log(error);
+            }
+        }
+    };
+
+    // On load
+    modal_add_object.load();
+
+</script>

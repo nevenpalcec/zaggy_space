@@ -1,0 +1,101 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>Settings
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#settings" class="filter_link"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#subscription" class="filter_link"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Subscription</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoices" class="filter_link active"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Invoices</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+        <!-- Loading -->
+        <div class="view_loading" style="display: none;">
+            <div class="icon-loader">
+                <div class="icon-wrapper">
+                    <div class="icon icon01">
+                    </div>
+                    <div class="icon icon02">
+                    </div>
+                    <div class="icon icon03">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="view_table">
+            <div class="table_wrapper">
+                <table class="table bills">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Subscription</th>
+                            <th scope="col" class="hidden">Type</th>
+                            <th scope="col">Period</th>
+                            <th scope="col">Total</th>
+                            <th class="text-right"><i class="fas fa-ellipsis-v"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="">46581</th>
+                            <td class="td_item01">
+                                <div>12.01.2021</div>
+                            </td>
+                            <td class="td_item02">
+                                <div>Basic</div>
+                            </td>
+                            <td class="td_item03 hidden">
+                                <div></div>
+                            </td>
+                            <td class="td_item04">
+                                <div>Sij 01 - Velj 01</div>
+                            </td>
+                            <td class="td_item05">
+                                <div><strong>60 HRK</strong></div>
+                            </td>
+                            <td class="td_item08 icons edit_trash text-right font_5">
+                                <span class="edit"><i class="fas fa-search"></i></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    var invoices = {};
+
+    invoices.load = () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+    }
+
+    invoices.load();
+
+</script>

@@ -1,0 +1,153 @@
+.light_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+    .light_dropdown .light_dropdown-btn {
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        border-radius: 0.25rem;
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        font-size: 1rem;
+        min-width: 10rem;
+        text-align: start;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .light_dropdown .light_dropdown-menu {
+        border-radius: 0.25rem;
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        position: absolute;
+        z-index: 100;
+        padding: 0.5rem 0;
+        margin: 0;
+        font-size: 1rem;
+        min-width: 10rem;
+        list-style-type: none;
+        max-height: 12rem;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+        .light_dropdown .light_dropdown-menu .light_dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.25rem 1rem;
+            clear: both;
+            color: #000;
+            text-align: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+            .light_dropdown .light_dropdown-menu .light_dropdown-item:hover {
+                background-color: rgba(0, 0, 0, 0.15);
+            }
+
+        .light_dropdown .light_dropdown-menu.hidden {
+            display: none;
+        }
+
+    .light_dropdown .light_dropdown-toggle {
+        position: relative;
+        padding-right: 1.5rem;
+    }
+
+        .light_dropdown .light_dropdown-toggle:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            z-index: 2;
+            transform: translateY(-50%);
+            display: inline-block;
+            margin-right: 0.7rem;
+            vertical-align: 0.255rem;
+            border-top: 0.3rem solid;
+            border-right: 0.3rem solid transparent;
+            border-bottom: 0;
+            border-left: 0.3rem solid transparent;
+        }
+
+    .light_dropdown .hidden {
+        display: none !important;
+    }
+
+    .light_dropdown.icon .light_dropdown-btn {
+        display: flex;
+        align-items: center;
+    }
+
+    .light_dropdown.icon .light_dropdown-box, .light_dropdown.icon .light_dropdown-item {
+        display: flex;
+    }
+
+    .light_dropdown.icon .light_dropdown-icon {
+        padding-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        pointer-events: none;
+    }
+
+        .light_dropdown.icon .light_dropdown-icon img {
+            height: 0.7rem;
+            width: auto;
+        }
+
+    .light_dropdown.icon .light_dropdown-label {
+        pointer-events: none;
+    }
+
+    .light_dropdown.search {
+        width: 100%;
+    }
+
+        .light_dropdown.search .light_dropdown-btn {
+            position: relative;
+            height: 38px;
+            width: 100%;
+        }
+
+        .light_dropdown.search .light_dropdown-input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 0.375rem 0.75rem;
+            border: unset;
+            opacity: 0;
+        }
+
+            .light_dropdown.search .light_dropdown-input:focus {
+                outline: unset;
+            }
+
+        .light_dropdown.search .light_dropdown-box {
+            display: flex;
+        }
+
+        .light_dropdown.search .no_result {
+            padding: 0.375rem 0.75rem;
+            cursor: default;
+        }
+
+        .light_dropdown.search .focus {
+            opacity: 1;
+        }
+
+        .light_dropdown.search .opacity_50 {
+            opacity: 0.5 !important;
+        }
+
+        .light_dropdown.search .opacity_100 {
+            opacity: 1 !important;
+        }
+
+/*# sourceMappingURL=hiza-dropdown.css.map */

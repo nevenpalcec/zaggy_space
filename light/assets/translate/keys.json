@@ -1,0 +1,47 @@
+﻿{
+  "definitiron": {
+    "ver": 1.0,
+    "app": "Light zaggy",
+    "last_change": "2022-02-05"
+  },
+  "languages": ["en", "de", "hr", "it", "es"],
+  "translations": [
+    {
+      "key": "test",
+      "en": "adasd",
+      "hr": "asdasd",
+      "de": "adasdada"
+    },
+    {
+      "key": "Arrivals",
+      "en": "Arrivals",
+      "hr": "Dolasci",
+      "de": "Ankunft"
+    },
+    {
+      "key": "Departures",
+      "en": "Departures",
+      "hr": "Odlasci",
+      "de": "Ankunft"
+    },
+    {
+      "key": "Today",
+      "en": "Today",
+      "hr": "Danas",
+      "de": "Ankunft"
+    },
+    {
+      "key": "Tomorrow",
+      "en": "Tomorrow",
+      "hr": "Sutra",
+      "de": "Ankunft"
+    },
+    {
+      "key": "1.nights.$n.nights",
+      "en": "1 night | $n nights",
+      "hr": "1 noć | $n noći",
+      "de": "1 night | $n nights"
+    }
+  ]
+
+}

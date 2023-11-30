@@ -1,0 +1,280 @@
+﻿<style>
+    .text_border {
+        border: 2px solid lightgrey;
+        border-radius: 0.25rem;
+        padding: 1.2rem !important
+    }
+
+    .bg_success {
+        background-color: #66BB6A;
+        color: #fff;
+        border-radius: 0.25rem;
+        padding: 5px 12px;
+    }
+
+    .bg_danger {
+        background-color: #EF5350;
+        color: #fff;
+        border-radius: 0.25rem;
+        padding: 5px 12px;
+    }
+
+    .bg_primary {
+        background-color: #2196F3;
+        color: #fff;
+        border-radius: 0.25rem;
+        padding: 5px 12px;
+    }
+
+
+</style>
+
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-file-alt pr-2"></i>User invoices
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#balance" class="filter_link"><i class="fas fa-coins pr-lg-2"></i><span class="d-none d-lg-flex">Balance</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#user_invoices" class="filter_link active"><i class="fas fa-file-alt pr-lg-2"></i><span class="d-none d-lg-flex">Invoices</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#user_contract" class="filter_link"><i class="fas fa-file-signature pr-lg-2"></i><span class="d-none d-lg-flex">User contract</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#contract_items" class="filter_link"><i class="fas fa-list pr-lg-2"></i><span class="d-none d-lg-flex">Contract items</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="user_invoices_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content pt-3">
+            <div class="row" id="balance_invoice_list">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--templates-->
+<div>
+    <!-- Temlate for invoices -->
+    <template id="template_invoice_tr">
+        <div class="col-md-4 mb-4">
+            <div class="text_border" id="div_invoce_${id}">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6 class="font_bold">
+                                ${note_short}
+                            </h6>
+                            <div>
+                                Issued: ${date_invoice}
+                            </div>
+                        </div>
+
+                        <!-- righ side -->
+                        <div class="col-sm-6">
+                            <h6 class="font_bold text-right"> ${price} EUR </h6>
+                            <div class="text-right">
+                                <a href="${erp_id_link}" target="_blank" class="btn btn-light py-1" style="border-color: lightgray; font-size: 13px;">
+                                    PDF INVOICE
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- bottom -->
+                        <div class="col-sm-12">
+
+                            <!-- note -->
+                            <p>${note}</p>
+
+                            <!-- pay & type -->
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="mr-3">
+                                    <a onclick="user_invoices.bl.list_additional_files(${id});" class="btn py-1" style="border-color: lightgray;">
+                                        <span class="label label-flat border-default text-info">Monthly Commission</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <!-- pay button -->
+                                    <div style=" display: ${pay_invoice};">
+                                        <a href="/users/user_invoce_charge/${id}" style="display: block">
+                                            <label class="label bg_primary" style="cursor: pointer;"> Pay invoice &nbsp; <i class="fas fa-handshake"></i>  </label>
+                                        </a>
+                                    </div>
+                                    <div style="display: ${payment_pending};">
+                                        <label class="label bg_danger"> Payment Pending &nbsp; <i class="fas fa-pen-fancy"></i> </label>
+                                    </div>
+
+                                    <div style="display: ${paid}; ">
+                                        <label class="label bg_success"> Paid - Thank you &nbsp; <i class="far fa-heart"></i> </label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- addtional files -->
+                            <div id="additional_files_${id}"> </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--Template for additional files-->
+    <template id="file_template">
+        <div class="text_border">
+            <a href="${file_url}" target="_blank" style="color: black; text-decoration: none;">
+                <div style="display: flex;">
+                    <div class="pr-3 d-flex align-items-center">
+                        <i class="far fa-file-alt" style="font-size: xx-large; color: darkred;"></i>
+                    </div>
+                    <div>
+                        <div class="font_bold">
+                            ${subject}
+                        </div>
+                        <div>
+                            <span class="text-muted">Note: ${note}</span>
+                            <span class="text-muted">${created}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </template>
+</div>
+
+<script>
+
+    var user_invoices = {};
+
+    user_invoices.user_id = bl.workers.current_user_id();
+
+    // settings load function
+    user_invoices.load = () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        ui.display_title("Invoices");
+
+        user_invoices.bl.list_invoices();
+
+    }
+
+    user_invoices.ui = new function () {
+
+    }
+
+    user_invoices.bl = new function () {
+
+        this.list_invoices = async () => {
+
+            balance_invoice_list.innerHTML = '';
+
+            var url = '/api/users/zaggy_invoices_list';
+            var invoices = await ajax.get_json(url);
+
+            var b2b_id = '380'; // Revolut
+            var url_card = `/api/users_zaggy_cards/get?user_id=${user_invoices.user_id}&b2b_id=${b2b_id}`;
+            var res_card = await ajax.get_json(url_card);
+            var card_exist = !res_card[0]['card_bin'] ? 'N' : 'Y';
+
+            for (var i of invoices) {
+
+                var tr = template_invoice_tr.innerHTML;
+
+                tr = tr.replaceAll('${id}', i['id']);
+                tr = tr.replaceAll('${note_short}', i['note_short']);
+                tr = tr.replaceAll('${date_invoice}', js.date.toHR(i['date_invoice']));
+                tr = tr.replaceAll('${price}', Number(Number(i['price']).toFixed(2)).toLocaleString('HR'));
+                tr = tr.replaceAll('${erp_id_link}', i['erp_id_link']);
+                tr = tr.replaceAll('${note}', i['note'] == null ? '' : i['note']);
+
+                if (i['payed'] == 'Y') {
+
+                    // Paid - Thank you
+                    tr = tr.replaceAll('${pay_invoice}', 'none');
+                    tr = tr.replaceAll('${payment_pending}', 'none');
+                    tr = tr.replaceAll('${paid}', 'block');
+                }
+                else {
+                    if (card_exist) {
+
+                        // Pay invoice
+                        tr = tr.replaceAll('${pay_invoice}', 'block');
+                        tr = tr.replaceAll('${payment_pending}', 'none');
+                        tr = tr.replaceAll('${paid}', 'none');
+                    }
+                    else {
+
+                        // Payment pending
+                        tr = tr.replaceAll('${pay_invoice}', 'none');
+                        tr = tr.replaceAll('${payment_pending}', 'block');
+                        tr = tr.replaceAll('${paid}', 'none');
+                    }
+                }
+
+                await js.html.insertAdjacentHTML('balance_invoice_list', tr);
+               
+            }
+
+        }
+
+        this.list_additional_files = async (invoice_id) => {
+
+            var url = '/api/users/zaggy_invoices_files_list?invoice_id=' + invoice_id;
+            var response = await ajax.post_json(url);
+
+            var additional_files_list = '';
+
+            for (var r of response) {
+
+                var tr = file_template.innerHTML;
+
+                tr = tr.replaceAll('${file_url}', r['file_url']);
+                tr = tr.replaceAll('${subject}', r['subject']);
+                tr = tr.replaceAll('${note}', r['note'] == null ? '-' : r['note']);
+                tr = tr.replaceAll('${created}', js.date.toHR(r['created']));
+
+                additional_files_list += tr;
+            }
+
+            $('#additional_files_' + invoice_id).html(additional_files_list);
+
+        }
+
+    }
+
+    // Load
+    user_invoices.load();
+
+</script>

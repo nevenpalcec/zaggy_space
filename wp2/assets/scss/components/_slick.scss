@@ -1,0 +1,28 @@
+.slick-slider {
+    position: relative;
+    .slick-prev, .slick-next {
+        cursor: pointer;
+        border: 1px solid white;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 50%;
+        position: absolute;
+        padding-top: 2px;
+        top: -3.5rem;
+        font-size: .8rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .slick-prev {
+        right: 2.5rem;
+    }
+    .slick-next {
+        right: 0;
+    }
+    .slick-slide {
+        &:active, &:focus {
+            outline-color: transparent !important;
+        }
+    }
+}

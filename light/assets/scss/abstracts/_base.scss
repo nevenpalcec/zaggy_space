@@ -1,0 +1,32 @@
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-black02: #1C1C1C;
+$color-silver: #dedfe1;
+$color-silver02: #ced4da;
+$color-silver03: #AAAAAA;
+$color-red: #e63946;
+$color-primary: #457b9d; 
+$color-secondary: #1d3557;
+$color-green: #38a3a5;
+$color-yellow: #ffd166;
+$color-light-silver: #f7f7f7;
+$color-info: #65ACF0;
+$color-success: #28a745;
+$color-warning: #EF8D32;
+$color-alert: #DB3056;
+
+$table-line-silver: #dee2e6;
+
+html, body {
+    overflow-x: hidden;
+    @media screen and (max-width: 360px) {
+        font-size: 90%;
+    }
+    @media screen and (max-height: 575px) {
+        font-size: 90%;
+    }
+}
+
+::selection {
+    background-color: rgba($color-secondary, .2);
+}

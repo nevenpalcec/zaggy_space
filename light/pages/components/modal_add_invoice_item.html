@@ -1,0 +1,384 @@
+ <!-- Modal add new invoice item -->
+<div id="modal_new_invoice_item" class="view_modal hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content position-relative">
+
+            <!--loading -->
+            <div id="modal_new_item_content_loading" class="view_loading hidden">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <!-- Header -->
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                    <i class="fas fa-file-invoice pr-2"></i>Add new invoice item
+                </div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body pb-0">
+
+                <div class="row form-group">
+
+                    <!--Dropdown for item name-->
+                    <div class="col-md-12 mb-2">
+                        <label class="mb-1">Item name</label>
+
+                        <div id="invoice_item_dropdown" class="view_dropdown dropdown dropdown_sm w-100" data-id="" data-name="">
+                            <button class="btn btn_hover pl-2 pr-2 py-1 w-100 border" style="height: 38px;">
+                                <div class="d-flex align-items-center w-100 ">
+                                    <div class="dropdown_label mr-1">
+                                        <div id="invoice_item" class="font_4 dropdown_name white ml-2"></div>
+                                    </div>
+                                    <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown_menu w-100 hidden">
+                                <div class="dropdown_search px-3 py-2">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <hr class="m-0">
+                                <ul id="invoice_items_list" class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                    <!--list invoice items-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Price -->
+                    <div class="col-md-4 mb-2">
+                        <div class="d-flex justify-content-between mb-1">
+                            <div>Price</div>
+                            <label class="checkbox py-0">
+                                <div class="d-flex align-items-center user_select_none">
+                                    <input type="checkbox" checked="" id="modal_new_item_checkbox_bruto" onchange="modal_new_item.ui.invoice_calculate_price();">
+                                    <div class="check check_md"></div>
+                                    <div class="pl-2">Gross</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <input type="text" id="modal_new_item_price" class="form-control text-center pr-5" onchange="modal_new_item.ui.invoice_calculate_price();">
+                            <span class="value font_2 opacity_50">EUR</span>
+                        </div>
+                    </div>
+
+                    <!--VAT-->
+                    <div class="col-md-4 mb-2">
+                        <label class="mb-1">VAT</label>
+                        <div class="form-group mb-0">
+                            <input type="text" id="modal_new_item_vat" class="form-control text-center pr-5" onchange="modal_new_item.ui.invoice_calculate_price();">
+                            <span class="value font_2 opacity_50">%</span>
+                        </div>
+                    </div>
+
+                    <!--VAT EXTRA-->
+                    <div class="col-md-4 mb-2">
+                        <label class="mb-1">VAT Extra</label>
+                        <div class="form-group mb-0">
+                            <input type="text" id="modal_new_item_vat_extra" class="form-control text-center pr-5" onchange="modal_new_item.ui.invoice_calculate_price();" disabled>
+                            <span class="value font_2 opacity_50">%</span>
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="col-md-4 mb-2">
+                        <label class="mb-1">Quantity</label>
+                        <input type="text" id="modal_new_item_quantity" class="form-control text-center" value="1" onchange="modal_new_item.ui.invoice_calculate_price();">
+                    </div>
+
+                    <!--Discount -->
+                    <div class="col-md-4 mb-2">
+                        <label class="mb-1">Discount</label>
+                        <div class="form-group mb-0">
+                            <input type="text" id="modal_new_item_discount" class="form-control text-center pr-5" value="0" onchange="modal_new_item.ui.invoice_calculate_price();" disabled>
+                            <span class="value font_2 opacity_50">%</span>
+                        </div>
+                    </div>
+                </div>
+              
+
+                <!--Net price and Total price-->
+                <div class="d-flex justify-content-end pb-3">
+                    <div class="col-md-3 text-right p-2" style="border-right: 2px solid #457b9d33; background-color: #2c7cae12; ">
+                        <div class="font-weight-bold font_2">NET PRICE</div>
+                        <span id="invoice_item_net_price" class="font_5">0</span><span class="font_3"> EUR</span>
+                    </div>
+                    <div class="col-md-3 text-right p-2" style="background-color: #2c7cae12; ">
+                        <div class="font-weight-bold font_2">TOTAL AMOUNT</div>
+                        <span id="invoice_item_total_price" class="font_5">0</span><span class="font_3"> EUR</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer d-flex justify-content-between">
+                <button class="btn btn_silver m-1" data-dismiss="modal">Cancel</button>
+                <button class="btn btn_primary" onclick="modal_new_item.bl.add_new_item(); "><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- templates -->
+<div>
+
+    <!--template for list invoice items-->
+    <template id="invoice_item_li">
+        <li class="dropdown_li" data-id="${id}" data-code="${code}" data-total="${total_value}" data-vat="${vat}" data-vatextra="${vat_extra}" onclick="select_drop">
+            <div class="d-flex align-items-center">
+                <span>${name}</span>
+            </div>
+        </li>
+    </template>
+
+</div>
+
+<!-- scripts -->
+<script>
+
+    var modal_new_item = {};
+
+    modal_new_item.load = async () => {
+
+        modal_new_item.ui.close_on_esc();
+        modal_new_item.ui.modal_close('modal_new_invoice_item');
+
+        modal_new_item.ui.set_item_values();
+
+        // Invoice items dropdown
+        await modal_new_item.bl.load_items_list();
+        ui.dropdown_list("invoice_item_dropdown");
+        modal_new_item.ui.filter_search_list("invoice_item_dropdown");
+
+    }
+
+    modal_new_item.ui = new function () {
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            ui.content_loading('modal_new_item_content_loading');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+            modal_new_item_quantity.value = '1';
+            modal_new_item_discount.value = '0';
+            modal_new_item_vat_extra.value = '0';
+
+            ui.content_loading('modal_new_item_content_loading');
+
+        }
+
+        // Close modal on escape
+        this.close_on_esc = () => {
+
+            $(document).keydown(function (e) {
+                // ESCAPE key pressed
+                if (e.keyCode == 27) {
+                    modal_new_item.ui.hide_modal();
+                }
+            });
+        }
+
+        // Modal - close details
+        this.modal_close = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    modal_new_item.ui.hide_modal();
+                }
+            }
+
+            document.addEventListener("mousedown", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        modal_new_item.ui.hide_modal();
+                    }
+                }
+            });
+
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        modal_new_item.ui.hide_modal();
+                    }
+                }
+            };
+
+            // closing modal on esc key
+            addEventListener('keyup', (event) => {
+                if (event.key === 'Escape') {
+                    modal_new_item.ui.hide_modal();
+                }
+            })
+        }
+
+        this.hide_modal = () => {
+
+            modal_new_invoice_item.classList.add('visuallyhidden');
+            modal_new_invoice_item.addEventListener('transitionend', function (e) {
+                modal_new_invoice_item.classList.add('hidden');
+            }, {
+                capture: false,
+                once: true,
+                passive: false
+            });
+
+            // Clear modal
+            modal_new_item.ui.clear_modal();
+        }
+
+        this.clear_modal = () => {
+
+            invoice_item_dropdown.dataset.id = '';
+            invoice_item_dropdown.dataset.name = '';
+            document.getElementById("invoice_item").innerText = ''
+
+            modal_new_item_checkbox_bruto.checked = true;
+
+            modal_new_item_price.value = '';
+            modal_new_item_vat.value = '';
+            modal_new_item_vat_extra.value = '0';
+            modal_new_item_quantity.value = '1';
+            modal_new_item_discount.value = '0';
+
+            invoice_item_net_price.innerHTML = '0';
+            invoice_item_total_price.innerHTML = '0';
+
+        }
+
+        this.filter_search_list = function (id) {
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".dropdown_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].children[0].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+
+        // Set Price, VAT and VAT EXTRA depending on selected value from dropdown
+        this.set_item_values = () => {
+
+            invoice_items_list.addEventListener("click", function (e) {
+
+                modal_new_item_price.value = e.target.dataset.total;
+                modal_new_item_vat.value = e.target.dataset.vat;
+                modal_new_item_vat_extra.value = e.target.dataset.vatextra;
+
+                modal_new_item.ui.invoice_calculate_price()
+
+            });
+
+        }
+
+        this.invoice_calculate_price = () => {
+
+            if (modal_new_item_checkbox_bruto.checked == false) {
+
+                var price_sum_neto = (modal_new_item_price.value * modal_new_item_quantity.value * (1 - modal_new_item_discount.value / 100)).toFixed(2);
+                var price_sum = (price_sum_neto * (1 + (Number(modal_new_item_vat.value) + Number(modal_new_item_vat_extra.value)) / 100)).toFixed(2);
+            }
+            else {
+                var price_sum = (modal_new_item_price.value * modal_new_item_quantity.value * (1 - modal_new_item_discount.value / 100)).toFixed(2);
+                var price_sum_neto = (price_sum / (1 + (Number(modal_new_item_vat.value) + Number(modal_new_item_vat_extra.value)) / 100)).toFixed(2);
+            }
+
+            invoice_item_net_price.innerHTML = price_sum_neto;
+            invoice_item_total_price.innerHTML = price_sum;
+
+        }
+
+    }
+
+    modal_new_item.bl = new function () {
+
+        //load invoice items list
+        this.load_items_list = async function () {
+
+            var items_list = await bl.item.get();
+            invoice_items_list.innerHTML = '';
+
+            for (var il of items_list) {
+
+                var t = invoice_item_li.innerHTML;
+                t = t.replaceAll('${id}', il['id']);
+                t = t.replaceAll('${code}', il['code']);
+                t = t.replaceAll('${name}', il['name']);
+                t = t.replaceAll('${total_value}', il['price']);
+                t = t.replaceAll('${vat}', il['vat']);
+                t = t.replaceAll('${vat_extra}', il['vat_extra']);
+                invoice_items_list.insertAdjacentHTML('beforeend', t);
+
+            }
+        }
+
+        // Add new invoice item
+        this.add_new_item = async () => {
+
+            ui.content_loading('modal_new_item_content_loading');
+
+            let item = {}
+
+            item.user_id = bl.workers.current_user_id();
+            item.invoice_id = page.get_id();
+
+            item.item_id = invoice_item_dropdown.dataset.id;
+            item.item_name = invoice_item_dropdown.dataset.name;
+
+            if (modal_new_item_checkbox_bruto.checked) {
+                item.price = Number(modal_new_item_price.value) / (1 + Number(modal_new_item_vat.value) / 100);
+            }
+            else {
+                item.price = modal_new_item_price.value;
+            }
+            
+            item.vat = modal_new_item_vat.value;
+            item.vat_extra = modal_new_item_vat_extra.value;
+            item.quantity = modal_new_item_quantity.value;
+            item.discount = modal_new_item_discount.value;
+
+            await ajax.post_json('api/invoices/invoice_item_save', item);
+
+            modal_new_item.ui.hide_modal();
+
+            // Clear modal
+            modal_new_item.ui.clear_modal();
+
+            // Refresh local storage
+            bl.invoices.list_by_user();
+
+            // Reload items list
+            bills_edit.bl.load_bill();
+
+            ui.content_loading_hide('modal_new_item_content_loading');
+
+        }
+    }
+
+    modal_new_item.load();
+
+</script>

@@ -1,0 +1,45 @@
+.finder {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $bg-secondary;
+    padding: 1.5rem;
+/*    margin-top: -50px;
+    margin-bottom: 50px;*/
+    z-index: 1;
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        bottom: -3px;
+        left: 0;
+        height: .3rem;
+        background-color: $bg-tertiary;
+    }
+    .finder-item {
+        flex: 0 0 20%;
+        padding: 0 .3rem;
+        @media screen and (max-width: 991px) {
+            flex: 0 0 50%;
+            padding: .3rem;
+        }
+        @media screen and (max-width: 575px) {
+            flex: 0 0 100%;
+        }
+    }
+    .finder-item.calendar {
+        position: relative;
+        i {
+            position: absolute;
+            top: .7rem;
+            right: 1rem;
+            @media screen and (max-width: 991px) {
+                top: 1rem;
+            }
+        }
+    }
+    .finder-btn {
+        flex: 1;
+        white-space: nowrap;
+    }
+}

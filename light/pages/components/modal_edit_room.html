@@ -1,0 +1,177 @@
+﻿<!-- Modal edit room -->
+<div id="modal_edit_room" class="view_modal">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                    <i class="fab fa-connectdevelop pr-2"></i>Edit room
+                </div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Name</label>
+                            <input type="text" class="form-control focus" id="modal_edit_room_name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Select type bed</label>
+                            <div id="modal_edit_room_select_type_bed" class="select">
+                                <button class="custom-select focus"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden">
+                                    <li class="select_li" data-id="1">Example 01</li>
+                                    <li class="select_li" data-id="2">Example 02</li>
+                                    <li class="select_li" data-id="3">Example 03</li>
+                                    <li class="select_li" data-id="4">Example 04</li>
+                                    <li class="select_li" data-id="5">Example 05</li>
+                                    <li class="select_li" data-id="6">Example 06</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Dimension X</label>
+                            <input type="text" class="form-control focus" id="modal_edit_room_dimension_X" value="0">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Dimension Y</label>
+                            <input type="text" class="form-control focus" id="modal_edit_room_dimension_>" value="0">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="custom_collapse" id="modal_edit_room_collapse_description">
+                                <label class="mb-1 d-flex justify-content-between border-bottom p-1 cursor_point collapse_label">
+                                    <div>Description</div>
+                                    <div class="p-1 d-flex arrow"><i class="fas fa-angle-down"></i></div>
+                                </label>
+                                <div class="pt-2 custom_collapse_inside">
+                                    <textarea name="description" id="modal_edit_room_description" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn_silver" data-dismiss="modal">Cancel</button>
+                <button class="btn btn_primary" data-dismiss="modal"><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var modal_edit_room = {};
+
+    // Load function
+    modal_edit_room.load = () => {
+
+        // Global components
+        ui.select_custom("modal_edit_room_select_type_bed");
+
+        // BL components
+        modal_edit_room.bl.close_modal("modal_edit_room");
+
+        modal_edit_room.bl.custom_collapse("modal_edit_room_collapse_description");
+
+        $('#accordion_custom').collapse({
+            toggle: true
+        })
+    };
+
+    // UI logic
+    modal_edit_room.ui = new function () {
+
+    };
+
+    // BL logic
+    modal_edit_room.bl = new function () {
+
+        // CLose modal
+        this.close_modal = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        // Collapse
+        this.custom_collapse = function (id) {
+
+            let collapse_id = document.getElementById("modal_edit_room_collapse_description");
+            let label_btn = collapse_id.getElementsByClassName("collapse_label")[0];
+            let arrow = collapse_id.getElementsByClassName("arrow")[0];
+            let collapse_inside = collapse_id.getElementsByClassName("custom_collapse_inside")[0];
+
+            label_btn.addEventListener("click", function() {
+
+                if(label_btn.classList.contains("open")) {
+
+                    label_btn.classList.remove("open");
+                    $(collapse_inside).toggleClass("show");
+                    arrow.classList.remove("rotate_180");
+
+                } else {
+
+                    label_btn.classList.add("open");
+                    $(collapse_inside).toggleClass("show");
+                    arrow.classList.add("rotate_180");
+
+                };
+
+            });
+        };
+
+    };
+
+    // On load
+    modal_edit_room.load();
+
+</script>

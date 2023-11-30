@@ -1,0 +1,21 @@
+﻿@code {
+    [Parameter] public System.Data.DataRow r { get; set; }
+ 
+    string r_active(string a)
+    {
+        if (a == "Y")
+        {
+            return "Active";
+        }
+        return "Disabled";
+    }
+
+}
+
+
+  @if (r["deleted"].ToString() != "Y")
+{
+    <div class="flex-column">
+         
+    </div>
+}

@@ -1,0 +1,49 @@
+﻿<div id="div_filter_groups" class="view_filter bg-white d-flex align-items-center px-3"></div>
+
+<section>
+
+    <template id="template_filter_groups">
+
+        <!-- Hotel calendar -->
+        <a href="#hotel_calendar" class="filter_link hotel_calendar"><i class="fas fa-cubes pr-lg-2"></i><span class="d-none d-lg-flex">Hotel calendar</span></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Groups prices -->
+        <a  href="#groups_calendar" class="filter_link groups_calendar"><i class="fas fa-hand-holding-usd pr-lg-2"></i><span class="d-none d-lg-flex">Group prices</span></a>
+        <div class="filter_line_y"></div>
+
+    </template>
+
+</section>
+
+<script>
+
+    var filter_groups = {};
+
+    filter_groups.load = () => {
+
+        filter_groups.bl.active_filter_groups();
+
+    }
+
+    // Logic
+    filter_groups.bl = new function () {
+
+        this.active_filter_groups = function () {
+
+            var object_id = window.location.href.split('?')[1];
+
+            var t = template_filter_groups.innerHTML;
+
+            js.html.insertAdjacentHTML('div_filter_groups', t);
+
+            let page = '.' + location.hash.slice(1).split('?')[0];
+            document.querySelector(page).classList.add('active');
+
+        }
+
+    }
+
+    filter_groups.load();
+
+</script>

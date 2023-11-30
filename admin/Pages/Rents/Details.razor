@@ -1,0 +1,1589 @@
+﻿@page "/reservations/{rent_id_hash}"
+
+<!-- code -->
+@code {
+
+    [Parameter] public string rent_id_hash { get; set; }
+
+    System.Data.DataTable payments, messages, emails, logs, rent_timeline_log, cancellation_policy_dt, payments_return;
+    System.Data.DataRow cancellation_policy_row, rent, user, overbooking;
+
+    System.Data.DataTable rents_sources = bl.rents_sources.list(Settings.user_id);
+    System.Data.DataTable rents_statuses = bl.rents_status.list(Settings.user_id);
+
+    string id = "";
+    string sort_by = "created";
+
+    string reseller_id = "";
+    string rent_soruce_id = "";
+    string rent_status_id = "";
+
+    string rent_id = "", user_id = "", reseller_worker_id = "";
+    string edit_from = "", edit_to = "", note = "";
+    string _email_from = "", _email_to = "", _email_html = "", _email_subject = "";
+    string overbooking_guest_price = "0", overbooking_user_price = "0";
+    string note_user = "", note_reseller = "";
+    string cancel_reservation_reason = "", cancel_reservation_cost = "0";
+    string rent_price = "0";
+
+    string date_reported = DateTime.Now.ToLongDateString();
+
+    bool money_guest_returned = true, reseller_confirmed = true, overbooking_is = false, return_commission_guest = false, return_commission_owner = false, cancel_reservation_reason_bool = false;
+
+    object object_component_json = null;
+
+    //protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        await Perm.reseller_worker_perm();
+        await js.InvokeVoidAsync("ui.flatpicker", "#to");
+        await js.InvokeVoidAsync("ui.flatpicker", "#from");
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(rent_id_hash))
+        {
+            await Task.Delay(1);
+
+            rent_id = bl.rents.get_rent_id_by_id_hash(rent_id_hash);
+
+            rents_list();
+
+            var reseller_worker_id_crypt = await localStorage.GetItemAsync<string>("reseller_worker_id");
+            reseller_worker_id = AesOperation.DecryptString(bl.B2B.zaggy.shared.key, reseller_worker_id_crypt);
+        }
+    }
+
+    string obj_status(string a)
+    {
+        return a == "Y" ? "Active" : "Disabled";
+    }
+
+    async void set_rcgf()
+    {
+        return_commission_owner = true;
+        return_commission_guest = false;
+        await Task.Delay(100);
+        StateHasChanged();
+    }
+
+    async void set_rcof()
+    {
+        return_commission_guest = true;
+        return_commission_owner = false;
+        await Task.Delay(100);
+        StateHasChanged();
+    }
+
+    async void show_mail(System.Data.DataRow row)
+    {
+
+        await Task.Delay(1);
+
+        _email_html = row["body"].ToString();
+        _email_subject = row["subject"].ToString();
+
+        _email_from = row["email_from"].ToString();
+        _email_to = row["email_to"].ToString();
+
+        StateHasChanged();
+    }
+
+    void overbooking_save()
+    {
+        bl.B2B.zaggy.rents.overbooking(
+            rent_id,
+            rent["worker_id"].ToString(),
+            rent["user_id"].ToString(),
+            reseller_worker_id,
+            note_user,
+            note_reseller,
+            money_guest_returned.ToString(),
+            reseller_confirmed.ToString(),
+            overbooking_guest_price,
+            overbooking_user_price,
+            date_reported,
+            bl.B2B.zaggy.shared.reseller_id);
+
+        rents_list();
+    }
+
+    void cancel_reservation_reason_onkeyup(KeyboardEventArgs e)
+    {
+        if (cancel_reservation_reason.Length > 2)
+        {
+            cancel_reservation_reason_bool = true;
+        }
+        else
+        {
+            cancel_reservation_reason_bool = false;
+        }
+    }
+
+    void rents_list()
+    {
+
+        // load rent details
+        rent = bl.B2B.Zagreb.rents.get(rent_id).Rows[0];
+
+        // set user_id
+        user_id = rent["user_id"].ToString();
+
+        // get user
+        user = bl.users.get(user_id).Rows[0];
+
+        // get reseller id
+        reseller_id = user["reseller_id"].ToString();
+
+        // load emils list
+        emails = bl.rents_emails_log.list(rent_id);
+
+        // load evdts logs
+        logs = bl.B2B.zaggy.rents.list_logs(rent_id);
+
+        // load evdts logs
+        rent_timeline_log = bl.B2B.zaggy.rents.rents_timeline_log(rent_id);
+
+        // set rent source id 
+        rent_soruce_id = rent["rent_source_id"].ToString();
+        rent_status_id = rent["rent_status_id"].ToString();
+
+        rent_price = rent["price"].ToString();
+
+        // laod extra details
+        edit_from = System.DateTime.Parse(rent["from_date"].ToString()).ToString("yyyy-MM-dd");
+        edit_to = System.DateTime.Parse(rent["until_date"].ToString()).ToString("yyyy-MM-dd");
+
+        // note 
+        note = rent["note"].ToString();
+
+        // get overbooking cost
+        var overbooking_percent_cost = decimal.Parse(bl.users_resellers.get_overbooknig_percent_cost(user_id, bl.B2B.zaggy.shared.reseller_id));
+
+        // over booking prices
+        var price = decimal.Parse(rent["price"].ToString());
+        overbooking_guest_price = rent["in_advance"].ToString();
+        overbooking_user_price = (price * (overbooking_percent_cost / 100)).ToString();
+
+        // check if this reservation is overbooking
+        if (rent["resellers_overbooking_id"].ToString() != "")
+        {
+            overbooking = bl.resellers_overbooking.get(rent_id).Rows[0];
+        }
+
+        cancellation_policy_dt = bl.B2B.zaggy.rents.rents_cancellations_free_rent(rent_id);
+        if (cancellation_policy_dt.Rows.Count > 0)
+        {
+            cancellation_policy_row = cancellation_policy_dt.Rows[0];
+        }
+
+        // get other details
+        payments = bl.B2B.zaggy.Invoces.get(rent_id);
+        messages = bl.messages.msg(rent_id, true);
+        payments_return = bl.B2B.zaggy.payments_return.get_by_rent(rent_id);
+
+    }
+
+    string rent_status(string a)
+    {
+        return a == "Y" ? "Active" : "Disabled";
+    }
+
+    void save_reservation()
+    {
+        // save rents dates
+
+        if (System.DateTime.Parse(edit_from) < System.DateTime.Parse(edit_to))
+        {
+            bl.B2B.zaggy.rents.save_reservation(edit_from, edit_to, rent_id, reseller_worker_id);
+        }
+
+        // refres screen
+        rents_list();
+    }
+
+    void save_reservation_note()
+    {
+        bl.B2B.zaggy.rents.save_reservation_note(note, rent_id);
+        rents_list();
+    }
+
+    void cancel_reservation_save()
+    {
+        if (cancel_reservation_reason.ToString() != "")
+        {
+
+            decimal number;
+            if (Decimal.TryParse(cancel_reservation_cost, out number))
+            {
+
+                if (return_commission_guest == true || return_commission_owner == true)
+                {
+                    bl.rents.del_by_reseller(rent_id, reseller_worker_id, cancel_reservation_reason, cancel_reservation_cost, return_commission_guest, return_commission_owner);
+                }
+
+            }
+
+            else
+            {
+                // cost its not a number
+                return;
+            }
+        }
+
+        //refresh list
+        rents_list();
+    }
+
+    void reservation_delete()
+    {
+
+        //refresh list
+        rents_list();
+
+    }
+
+    void return_money_to_the_guest()
+    {
+        // refund the money
+        bl.rents_cancellations_free.refund_rent(rent_id, "reseller");
+
+        // reload
+        rents_list();
+    }
+
+    void save_rent_source_id()
+    {
+        bl.rents.save_rent_soruce_id(rent_id, rent_soruce_id);
+        toastService.ShowSuccess("Regija je spremljena", "Regija");
+        rents_list();
+    }
+
+    void save_rent_status_id()
+    {
+        bl.B2B.Zagreb.rents.save_rent_status_id(rent_id, rent_status_id);
+        toastService.ShowSuccess("Status je spremljen", "Status");
+        rents_list();
+    }
+
+    void save_rent_price()
+    {
+        bl.rents.save_rent_price(rent_id, rent_price);
+        toastService.ShowSuccess("Cijena spremljena", "Cijena");
+        rents_list();
+    }
+
+}
+
+<PageTitle> @lng.l.Reservation </PageTitle>
+
+<!-- content -->
+@if (rent != null)
+{
+
+    <!-- header -->
+    <div class="card mb-3 text-white @(rent["active"].ToString() == "N" ? "bg-danger" : "bg-dark")">
+
+        <div class="card-body position-relative">
+
+            <div class="d-flex flex-wrap gap-2 align-content-center justify-content-between">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="avatar avatar-3xl me-2">
+                        <img class="rounded-circle" src="@Settings.img_avatar_small" alt="property image">
+                    </div>
+
+                    <div class="flex-1 ms-2">
+                        <h4 class="text-white mb-0">@rent["contact_name"]</h4>
+                        <img src="/assets/images/icons/flags/@(rent["country_code"]).svg" style="height: 15px; margin-right: 10px;" loading="lazy" />
+                        <span class="mb-0">ID: @rent["id_hash"] &nbsp; (@rent_id)</span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-auto text-right">
+                    <h4 class="fw-black mb-0 text-white"> @bl.lng.l.Reservation  <span class="fw-medium text-white"> @bl.lng.l.Details </span></h4>
+                    <div>
+                        <span class="me-2"> @lng.l.Created at: </span>
+                        <span>  @System.DateTime.Parse(rent["created"].ToString()).ToString("dd.MM.yyyy") @@ @System.DateTime.Parse(rent["created"].ToString()).ToString("HH:mm") h </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- rent details -->
+    <div class="row g-0 mb-3">
+
+        <!-- left side -->
+        <div class="col-lg-6 pe-lg-2">
+
+            <!-- details -->
+            <div class="card mb-3">
+
+                <div class="card-header bg-dark">
+                    <h5 class="mb-0 text-white" id="account">
+                        <i class="fab fa-connectdevelop"></i> &nbsp; @lng.l.Reservation &nbsp; | &nbsp; 
+                    </h5>
+                </div>
+
+                <div class="card-body pb-0">
+
+                    <div class="row">
+
+                        <div class="table-responsive scrollbar">
+
+                            <table class="table mb-0">
+
+                                <tbody>
+
+                                    <!-- overbooking check-->
+                                    <tr class="@(rent["over_booking"].ToString().is_null() == false ? "bg-soft-danger text-danger" : "")">
+
+                                        <td> Overbooking: </td>
+                                        <td class="fw-bold text-dark">
+
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    @if (rent["over_booking"].ToString().is_null() == false)
+                                                    {
+                                                        <span>
+                                                            Overbooking na zahtjevu: @rent["over_booking"]
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span> Nema overbookinga &nbsp; <i class="far fa-smile"></i> </span>
+                                                    }
+                                                </div>
+
+                                                <!-- ok icon -->
+                                                <div>
+
+                                                    @if (rent["over_booking"].ToString().is_null() == false)
+                                                    {
+                                                        <span><i class="fas fa-exclamation-circle text-danger"></i></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span><i class="fas fa-thumbs-up" style="color: forestgreen;"></i></span>
+                                                    }
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <!-- price -->
+                                    <tr>
+                                        <td>@lng.l.Price:</td>
+                                        <td class="fw-bold text-dark">
+                                            <div class="row">
+                                                <div class="col-auto" style="display: inline-flex; justify-content: start;">
+                                                    <span style="width: 100px;">
+                                                        <input type="number" class="form-control" @bind="rent_price">
+                                                    </span>
+                                                    <span style="margin-left: 10px; margin-top: 5px;">
+                                                        @rent["currency_label"]
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-auto">
+
+                                                    <button class="btn btn-outline-primary " type="button" @onclick="@save_rent_price">
+                                                        @lng.l.Save
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- četvrt -->
+                                    <tr>
+                                        <td> Četvrt: </td>
+                                        <td class="fw-bold text-dark">
+
+                                            <div class="row">
+                                                <div class="col-auto">
+
+                                                    <select class="form-select" aria-label="Default select example" @bind="rent_soruce_id">
+                                                        @foreach (System.Data.DataRow r in rents_sources.Rows)
+                                                        {
+
+                                                            if (r["id"].ToString() == rent["rent_source_id"].ToString())
+                                                            {
+                                                                <option selected value="@r["id"]">@r["name"]</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@r["id"]">@r["name"]</option>
+                                                            }
+                                                        }
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <button class="btn btn-outline-primary " type="button" @onclick="@save_rent_source_id">
+                                                        @lng.l.Save
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+
+                                    <!-- status -->
+                                    <tr>
+                                        <td> Status: </td>
+                                        <td class="fw-bold text-dark">
+
+                                            <div class="row">
+                                                <div class="col-auto">
+
+                                                    <select class="form-select" aria-label="Default select example" @bind="rent_status_id">
+                                                        @foreach (System.Data.DataRow r in rents_statuses.Rows)
+                                                        {
+
+                                                            if (r["id"].ToString() == rent["rent_status_id"].ToString())
+                                                            {
+                                                                <option selected value="@r["id"]">@r["name"]</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@r["id"]">@r["name"]</option>
+                                                            }
+                                                        }
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-auto">
+
+                                                    <button class="btn btn-outline-primary " type="button" @onclick="@save_rent_status_id">
+                                                        @lng.l.Save
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+
+                                    <!-- Pin za vrata -->
+                                    <tr style="background-color: #FBFFD9;">
+
+                                        <td> PIN za vrata: </td>
+                                        <td class="fw-bold text-dark">
+
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    @rent["id"]
+                                                </div>
+
+                                                <!-- ok icon -->
+                                                <div>
+
+                                                    <i class="fas fa-door-open text-success"></i>  &nbsp; <i class="fas fa-check text-success"></i>
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr style="background-color: #f4fff4;">
+                                        <td>ID:</td>
+                                        <td class="fw-bold text-dark">@rent["id_hash"]</td>
+                                    </tr>
+
+                                     <tr style="background-color: #f4fff4;">
+                                        <td>@lng.l.Period:</td>
+                                        <td class="fw-bold text-dark">
+                                            @System.DateTime.Parse(rent["from_datetime"].ToString() ?? "").ToString("dd.MM.yy @ HH:mm")h -  @System.DateTime.Parse(rent["until_datetime"].ToString() ?? "").ToString("dd.MM.yy @ HH:mm")h
+                                        </td>
+                                    </tr>
+
+                                    <!-- period -->
+                                    <tr style="background-color: #f4fff4;">
+                                        <td>@lng.l.Nights:</td>
+                                        <td class="fw-bold text-dark">
+                                            @rent["days"] @bl.lng.l.nights | @rent["hours"] @bl.lng.l.Hours
+                                        </td>
+                                    </tr>
+
+                                    <tr style="background-color: #f4fff4;">
+                                        <td>@lng.l.Guests:</td>
+                                        <td class="fw-bold text-dark">@rent["rent_adults"] @bl.lng.l.People </td>
+                                    </tr>
+ 
+                                    <!-- source name -->
+                                    <tr style="background-color: #f2fcff;">
+                                        <td>@lng.l.Source:</td>
+                                        <td class="fw-bold text-dark">@rent["rents_sources_name"] </td>
+                                    </tr>
+
+                                    <!-- object name -->
+                                    <tr style="background-color: #f2fcff;">
+                                        <td>@lng.l.Property:</td>
+                                        <td class="fw-bold text-dark">
+
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    @rent["object_name"]
+                                                </div>
+
+                                                <!-- ok icon -->
+                                                <div>
+
+                                                    <i class="fas fa-home"></i>
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+                                    <!-- country code -->
+                                    <tr style="background-color: #80808012;">
+                                        <td>@lng.l.Country:</td>
+                                        <td class="fw-bold text-dark">@rent["country_code"] | @rent["country"] </td>
+                                    </tr>
+
+                                    <!-- contact name -->
+                                    <tr style="background-color: #80808012;">
+                                        <td>@lng.l.Contact_name:</td>
+                                        <td class="fw-bold text-dark">
+                                            
+                                             <div class="d-flex justify-content-between">
+                                                <div>
+                                                    @rent["contact_name"]
+                                                </div>
+
+                                                <!-- ok icon -->
+                                                <div>
+
+                                                    <i class="fas fa-user"></i>
+
+                                                </div>
+                                            </div>
+
+                                             </td>
+                                    </tr>
+
+                                    <!-- email -->
+                                    <tr style="background-color: #80808012;">
+                                        <td>Email:</td>
+                                        <td><a class="fw-bold text-dark text-decoration-none" href="mailto:@rent["contact_email"]">@rent["contact_email"]</a></td>
+                                    </tr>
+
+                                    <tr style="background-color: #80808012;">
+                                        <td>@lng.l.Phone:</td>
+                                        <td><a class="fw-bold text-dark text-decoration-none" href="tel:@rent["contact_tel"]">@rent["contact_tel"]</a></td>
+                                    </tr>
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- button actions -->
+                <div class="card-footer m-0 d-flex justify-content-between">
+
+                    @if (Perm.agent == "Y" || Perm.admin == "Y")
+                    {
+
+                        <div>
+                            @if (rent["active"].ToString() == "Y")
+                            {
+                                <button class="btn btn-outline-danger me-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#cancel-modal"> <i class="fas fa-ban"></i> &nbsp; Izbriši zahtjev </button>
+                            }
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <!-- info modals -->
+            <div class="mb-3">
+
+                @if (rent["no_show"].ToString() == "Y")
+                {
+                    <div class="alert alert-warning text-danger mb-3 pb-3" role="alert">
+                        <h4 class="alert-heading fw-semi-bold">@lng.l.No_Show_reported !</h4>
+                        <p class="m-0">@lng.l.Owner: &nbsp;  <span class="fw-bold">@rent["user_name"]</span> | @bl.lng.l.Guest:  <span class="fw-bold">@rent["contact_name"]</span>  </p>
+                        <hr>
+                        <div class="d-flex">
+
+                            <div class="flex-1">
+
+                                <div>
+                                    <strong> <i class="far fa-user"></i> &nbsp;Note user </strong>
+                                </div>
+
+                                <div>
+                                    @rent["no_show_note_user"]
+                                </div>
+
+                            </div>
+
+                            <div class="flex-1">
+
+                                <div>
+                                    <strong> <i class="fas fa-user"></i> &nbsp; Note resller </strong>
+                                </div>
+
+                                <div>
+                                    @rent["no_show_note_reseller"]
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+                @if (rent["resellers_overbooking_id"].ToString() != "")
+                {
+                    <div class="alert alert-warning text-danger mb-3 pb-3" role="alert">
+
+                        <h4 class="alert-heading fw-semi-bold">Overbooking reported!</h4>
+
+                        <hr>
+
+                        @* <p class="m-0">
+                @lng.l.Contact_the_owner <span class="fw-bold">@rent["user_name"]</span>
+                @lng.l.and_the_guest <span class="fw-bold">@rent["contact_name"]</span>
+                @lng.l.to_find_out_more .
+                </p>*@
+
+                        <p>
+                            <div class="fw-bold"> Note user </div>
+                            <div> @overbooking["note_user"] </div>
+                        </p>
+
+                        <p>
+                            <div class="fw-bold"> Note zaggy </div>
+                            <div> @overbooking["note_reseller"] </div>
+                        </p>
+
+                        <p>
+                            <div class="d-flex">
+                                <div class="flex-1">
+                                    <span class="fw-bold"> Guest price: </span> &nbsp; @decimal.Parse(@overbooking["guest_price"].ToString()).ToString("N2") €
+                                </div>
+                                <div class="flex-1">
+                                    <span class="fw-bold"> User price: </span> &nbsp; @decimal.Parse(@overbooking["user_price"].ToString()).ToString("N2") €
+                                </div>
+                            </div>
+                        </p>
+
+                    </div>
+                }
+
+                @if (rent["active"].ToString() == "N")
+                {
+                    <div class="alert alert-danger text-danger mb-3 pb-3" role="alert">
+                        <h4 class="alert-heading fw-semi-bold">@lng.l.Reservation_cancelled_ </h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="m-0">@lng.l.Reason:</p>
+                                <p class="m-0 fw-bold">@rent["note_cancel"]</p>
+                            </div>
+                            <div class="col-md-6">
+                                @if (rent["delete_date"].ToString().is_null() == false)
+                                {
+                                    <p class="m-0">@lng.l.Date</p>
+                                    <p class="m-0 fw-bold">@rent["delete_date"].ToString().db_datetime() h</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        <!-- middle -->
+        <div class="col-lg-3 pe-lg-2">
+
+            <admin.Pages.users.Shared.UserCard active="@rent["active"].ToString()" id_hash="@rent["user_id_hash"].ToString()" name="@rent["user_name"].ToString()"></admin.Pages.users.Shared.UserCard>
+
+            @if (emails.Rows.Count != 0)
+            {
+                <div class="card mb-3">
+                    <div class="card-header bg-dark">
+                        <h5 class="mb-0 text-white"> <i class="fas fa-envelope"></i> &nbsp; @lng.l.Sent</h5>
+                    </div>
+                    <div class="card-body my-0 py-0">
+
+                        @foreach (System.Data.DataRow r in emails.Rows)
+                        {
+                            <div data-bs-target="#email-modal" data-bs-toggle="modal" type="button" @onclick="() => show_mail(r)" class="border-0 rounded-0 shadow-none border-top notification">
+                                <div class="notification-avatar">
+                                    <div class="avatar avatar-l me-3">
+                                        <div class="avatar-emoji rounded-circle "><span role="img" aria-label="Emoji">📧</span></div>
+                                    </div>
+                                </div>
+                                <div class="notification-body">
+                                    <h6 class="mb-1 fs--1">@r["subject"]</h6>
+                                    <span class="mb-3 fs--1 text-secondary">@System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yyyy - HH:mm")</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <!-- right side -->
+        <div class="col-lg-3 ps-lg-2">
+
+            @if (rent["resellers_overbooking_id"].ToString() != "")
+            {
+                <div class="card mb-3 bg-dark mb-2" style="border: 5px solid red;">
+                    <div class="card-header">
+                        <h6 class="mb-2 fs-0 text-danger fw-bold "> Overbooking </h6>
+                        <hr>
+                        <p class="mb-1 fs--1 text-white">
+                            <div class="fw-bold"> Note user</div>
+                            <div class="fw-lighter"> @overbooking["note_user"] </div>
+                        </p>
+                        <hr>
+                        <p class="mb-1 fs--1 text-white">
+                            <div class="fw-bold"> Note reseller </div>
+                            <div class="fw-lighter"> @overbooking["note_reseller"] </div>
+                        </p>
+                        <hr>
+                        <p class="mb-1 fs--1 text-white">
+                            <div class="fw-bold"> Note item </div>
+                            <div class="fw-lighter"> @overbooking["item_note"] </div>
+                        </p>
+                        <hr>
+                        <p class="mb-1 fs--1 text-white">
+                            <div class="d-flex justify-content-between">
+                                <div> <span class="fw-bold"> Guest price:</span> &nbsp; <span> @overbooking["guest_price"] EUR </span> </div>
+                                <div> <span class="fw-bold"> User price:</span> &nbsp; <span> @overbooking["user_price"] EUR </span> </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            }
+
+            <!-- user contract -->
+            <admin.Pages.Users.Shared.UserCard reseller_id="@user["reseller_id"].ToString()" active="@user["active"].ToString()" id_hash="@user["id_hash"].ToString()" name="@user["primary_contant_name"].ToString()"></admin.Pages.Users.Shared.UserCard>
+
+            <!-- property component -->
+            <admin.Pages.Objects.Shared.ObjectCard name="@rent["object_name"].ToString()"
+                                                   id="@rent["object_id"].ToString()"
+                                                   id_hash="@rent["object_id_hash"].ToString()"
+                                                   country="@rent["unit_country"].ToString()"
+                                                   country_code="@rent["unit_country_code"].ToString()"
+                                                   picture_url="@rent["object_picture_url"].ToString()"
+                                                   address="@rent["unit_address"].ToString()"
+                                                   city="@rent["unit_city_name"].ToString()"
+                                                   latitude="@rent["unit_latitude"].ToString()"
+                                                   longitude="@rent["unit_longitude"].ToString()">
+            </admin.Pages.Objects.Shared.ObjectCard>
+
+            <!-- quci links -->
+            <QuickLinksCard worker_guid_temp="@user["guid_temp_worker"].ToString()" reseller_id="@user["reseller_id"].ToString()" user_id_hash="@rent["user_id_hash"].ToString()" worker_guid_login="@rent["object_id_hash"].ToString()"></QuickLinksCard>
+
+            <!-- cancelation policy -->
+            @if (cancellation_policy_dt.Rows.Count > 0)
+            {
+                <div class="card mb-3 ">
+
+                    <div class="card-header border-bottom bg-dark">
+                        <div class="font_6 font_bold pb-1 text-white d-flex justify-content-between">
+                            <div>
+                                <span> <i class="fas fa-comment-dollar"></i> &nbsp; @bl.lng.l.Cancelation_policy </span>
+                            </div>
+                            <div>
+                                <i class="far fa-handshake"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- no show, charge -->
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"><svg class="svg-inline--fa fa-circle fa-w-16 fs--1 me-3 text-primary text-dark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg><!-- <span class="fas fa-circle fs--1 me-3 text-primary"></span> Font Awesome fontawesome.com -->No Show charge</h6>
+                            </a><a class="fs--1 fw-bold text-600 mb-0">  @cancellation_policy_row["charge_no_show"] % <span class="text-400">/</span> @cancellation_policy_row["charge_percentage_no_show"] </a>
+                        </div>
+
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"><svg class="svg-inline--fa fa-circle fa-w-16 fs--1 me-3 text-danger" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg><!-- <span class="fas fa-circle fs--1 me-3 text-primary"></span> Font Awesome fontawesome.com -->Free Cancellation</h6>
+                            </a><a class="fs--1 fw-bold text-600 mb-0"> @cancellation_policy_row["free_cancel"] </a>
+                        </div>
+
+                        @if (cancellation_policy_row["free_cancel"].ToString() == "Y")
+                        {
+                            <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                                <a>
+                                    <h6 class="mb-0"><svg class="svg-inline--fa fa-circle fa-w-16 fs--1 me-3 text-primary" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg><!-- <span class="fas fa-circle fs--1 me-3 text-primary"></span> Font Awesome fontawesome.com -->Days before Arrival</h6>
+                                </a><a class="fs--1 fw-bold text-600 mb-0"> @cancellation_policy_row["rents_cancellations_free_days_before_arrival"] </a>
+                            </div>
+
+                            <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                                <a>
+                                    <h6 class="mb-0"><svg class="svg-inline--fa fa-circle fa-w-16 fs--1 me-3 border-dark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg><!-- <span class="fas fa-circle fs--1 me-3 text-primary"></span> Font Awesome fontawesome.com -->Cancellation charge</h6>
+                                </a>
+                                <a class="fs--1 fw-bold text-600 mb-0"> @cancellation_policy_row["charge_percent"] % <span class="text-400">/</span>  @cancellation_policy_row["charge_percentage"]  </a>
+                            </div>
+                        }
+                        else
+
+                        {
+                            <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                                <a>
+                                    <h6 class="mb-0"><svg class="svg-inline--fa fa-circle fa-w-16 fs--1 me-3 border-dark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg><!-- <span class="fas fa-circle fs--1 me-3 text-primary"></span> Font Awesome fontawesome.com -->Cancellation charge</h6>
+                                </a>
+                                <a class="fs--1 fw-bold text-600 mb-0"> @cancellation_policy_row["charge_percent"] % <span class="text-400">/</span>  @cancellation_policy_row["charge_percentage"]  </a>
+                            </div>
+                        }
+
+                        <hr>
+
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"><span class="fas fa-circle fs--1 me-3 text-primary"></span> Adance percent (%) </h6>
+                            </a><a class="fs--1 fw-bold text-600 mb-0"> @cancellation_policy_row["advance_percent"] % </a>
+                        </div>
+
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"> <span class="fas fa-circle fs--1 me-3 text-primary"></span> How many days </h6>
+                            </a><a class="fs--1 fw-bold text-600 mb-0"> @cancellation_policy_row["advance_days"] days </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- internal note -->
+            <div class="card">
+
+                <div class="card-header border-bottom bg-dark">
+                    <h6 class="mb-0 fs-0 text-white"> <i class="fas fa-sticky-note"></i> &nbsp; @lng.l.Reservation_note </h6>
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control" rows="7" placeholder="Type here" @bind="note" @bind:event="oninput"></textarea>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-dark me-1 mt-2 mb-1" type="button" @onclick="save_reservation_note"> @lng.l.Save </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- message & logs -->
+    <div class="row g-0 mb-3">
+
+        <!-- message -->
+        <div class="col-lg-6 pe-lg-2">
+
+            @if (messages.Rows.Count != 0)
+            {
+                <div class="card mb-3" style="height: 666px;">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"> <i class="fas fa-comments"></i> &nbsp; @lng.l.Messages</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="chat-content-scroll-area scrollbar" style="height: 579px !important;">
+
+                                @foreach (System.Data.DataRow r in messages.Rows)
+                                {
+                                    if (r["creator"].ToString() == "user")
+                                    {
+                                        <div class="d-flex p-2">
+                                            <div class="avatar avatar-l me-2">
+                                                <img class="rounded-circle" src="https://api.zaggy.net/workers/picture/ @r["worker_id"]" alt="" />
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="w-100">
+                                                    <div class="hover-actions-trigger d-flex align-items-center">
+                                                        <div class="chat-message bg-200 text-1000 p-2 rounded-2 fs--1">@r["message"] </div>
+                                                    </div>
+                                                    <div class="text-400 fs--2 mt-1">
+                                                        <span>@System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yyyy")</span>
+                                                        <p class="m-0">@System.DateTime.Parse(r["created"].ToString() ?? "").ToString("HH:mm")</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex p-2">
+                                            <div class="flex-1 d-flex justify-content-end">
+
+                                                <div class="w-100">
+                                                    <div class="hover-actions-trigger d-flex flex-end-center">
+                                                        <div class="bg-primary text-white p-2 rounded-2 chat-message light">
+                                                            <p class="mb-0 fs--1">@r["message"] </p>
+                                                        </div>
+                                                        <div class="avatar avatar-l m-3 me-2">
+                                                            <img class="rounded-circle" src="/assets/img/no_user.jpg" alt="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-400 fs--2 text-end mt-1">
+                                                        <span>@System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yyyy")</span>
+                                                        <p class="m-0">@System.DateTime.Parse(r["created"].ToString() ?? "").ToString("HH:mm")</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <!-- event log -->
+        <div class="col-lg-6 pe-lg-2">
+
+
+            <!-- event log -->
+            <div class="card mb-3">
+
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"> <i class="far fa-comment-dots"></i> &nbsp; @lng.l.Event_log</h5>
+                </div>
+
+                <div class="card-body p-2">
+
+                    <div class="row m-0">
+                        <div class="table-responsive scrollbar vh-md-25">
+                            <table class="table fs--1 overflow-hidden">
+                                <thead class="text-900 opacity-50" style="border-bottom-width: 2px">
+                                    <tr class="fw-bold text-dark text-capitalize" role="row" style="background-color: #fcfcfc;">
+                                        <th></th>
+                                        <th scope="col">@lng.l.Action</th>
+                                        <th scope="col">@lng.l.By</th>
+                                        <th class="text-center" scope="col">@lng.l.Current_status</th>
+                                        <th class="text-end" scope="col">@lng.l.Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list">
+                                    @foreach (System.Data.DataRow r in logs.Rows)
+                                    {
+                                        <tr style="@(r["type"].ToString() == "del" ? "color: red;" : "")">
+
+                                            <td> <div style="font-weight:bold; color:green">✓</div> </td>
+
+                                            <td>
+                                                @if (r["type"].ToString() == "cr")
+                                                {
+                                                    <span class="badge badge-soft-success">@lng.l.Created</span>
+                                                }
+                                                else if (r["type"].ToString() == "upd")
+                                                {
+                                                    <span class="badge badge-soft-warning">@lng.l.Updated</span>
+                                                }
+                                                else if (r["type"].ToString() == "del")
+                                                {
+                                                    <span class="badge badge-soft-danger">@lng.l.Canceled</span>
+                                                }
+                                            </td>
+
+                                            <td class="text-capitalize text-nowrap">
+                                                @(string.IsNullOrWhiteSpace(r["reseller_worker_name"].ToString()) == true ? r["change_by"] : r["reseller_worker_name"])
+                                            </td>
+
+                                            <td class="text-center">
+                                                @if (r["active"].ToString() == "Y")
+                                                {
+                                                    <span class="label label-success">@lng.l.Active</span>
+                                                }
+                                                else if (r["active"].ToString() == "N")
+                                                {
+                                                    <span class="label label-danger">@lng.l.Canceled</span>
+                                                }
+                                            </td>
+
+                                            <td class="text-end">
+                                                <span>@Convert.ToDateTime(r["created"]).ToString("dd.MM.yyyy @ HH:mm")h</span>
+                                            </td>
+
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="text-center d-none" id="pages-table-fallback">
+                        <p class="fw-bold fs-1 mt-3">@lng.l.Page_not_found</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- time log -->
+            <div class="card mb-3">
+
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"> <i class="fas fa-comment-dots"></i> &nbsp; Time log </h5>
+                </div>
+
+
+                <div class="card-body p-2">
+
+                    <table class="table fs--1 overflow-hidden">
+                        <thead class="text-900 opacity-50" style="border-bottom-width: 2px">
+                            <tr class="fw-bold text-dark text-capitalize" role="row" style="background-color: #fcfcfc;">
+
+                                <th></th>
+                                <th scope="col"> @bl.lng.l.Subject</th>
+                                <th scope="col">App</th>
+                                <th scope="col">@lng.l.Note</th>
+                                <th scope="col">@lng.l.By</th>
+                                <th class="text-end" scope="col">@lng.l.Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @foreach (System.Data.DataRow r in rent_timeline_log.Rows)
+                            {
+                                <tr class="@(r["subject"].ToString() == "reservation cancelled" ? "text-danger" : "")">
+                                    <td> <div style="font-weight:bold; color:green">✓</div> </td>
+
+                                    <td>
+
+                                        @if (r["subject"].ToString() == "Rent add")
+                                        {
+                                            <span class="badge badge-soft-success"> @r["subject"] </span>
+                                        }
+                                        else if (r["subject"].ToString() == "reservation cancelled")
+                                        {
+                                            <span class="badge badge-soft-danger"> @r["subject"] </span>
+                                        }
+                                        else if (r["subject"].ToString() == "overbooking refound to the guest")
+                                        {
+                                            <span class="badge badge-soft-success"> @r["subject"] </span>
+                                        }
+                                        else if (r["subject"].ToString() == "cacel rent")
+                                        {
+                                            <span class="badge badge-soft-success"> @r["subject"] </span>
+                                        }
+                                        else if (r["subject"].ToString() == "overbooking")
+                                        {
+                                            <span class="badge badge-soft-warning"> @r["subject"] </span>
+                                        }
+                                        else
+                                        {
+                                            @r["subject"]
+                                        }
+
+                                    </td>
+
+                                    <td>
+                                        @r["app"]
+                                    </td>
+
+                                    <td>
+                                        @r["note"]
+                                    </td>
+
+                                    <td class="text-capitalize text-nowrap fw-bold">
+                                        @(string.IsNullOrWhiteSpace(r["reseller_worker_name"].ToString()) == true ? r["change_by"] : r["reseller_worker_name"])
+                                    </td>
+
+                                    <td class="text-end">
+                                        <span>@Convert.ToDateTime(r["created"]).ToString("dd.MM.yyyy @ HH:mm")h</span>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- payments -->
+            @if (payments.Rows.Count != 0)
+            {
+                <div class="card mb-3">
+
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"> <i class="fas fa-comments-dollar"></i> &nbsp; @lng.l.Payments_receive</h5>
+                    </div>
+
+                    <div class="card-body p-2">
+
+                        <div class="row m-0">
+
+                            <div class="table-responsive scrollbar vh-md-25">
+
+                                <table class="table fs--1 overflow-hidden">
+
+                                    <thead class="text-900 opacity-50" style="border-bottom-width: 2px">
+                                        <tr class="fw-bold text-dark text-upercase">
+                                            <th></th>
+                                            <th scope="col">@lng.l.Event</th>
+                                            <th scope="col">@lng.l.By</th>
+                                            <th scope="col">@lng.l.Type</th>
+                                            <th scope="col">@lng.l.Price</th>
+                                            @*<th scope="col">@lng.l.Price_local_</th>*@
+                                            <th class="text-end">@lng.l.Time</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="list">
+
+                                        @foreach (System.Data.DataRow r in payments.Rows)
+                                        {
+                                            <tr class="btn-reveal-trigger" style="@(Convert.ToDecimal(r["price"].ToString()) < 0 ? "color: red;" : "")">
+                                                <td>
+                                                    @if (r["paid"].ToString() == "Y")
+                                                    {
+                                                        <div style="font-weight:bold; color:green">✓</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="font-weight:bold; color:red">x</div>
+                                                    }
+                                                </td>
+                                                <td class="text-nowrap text-capitalize">
+                                                    @if (r["paid"].ToString() == "Y")
+                                                    {
+                                                        <span class="badge badge-soft-success">@r["subject"]</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-soft-danger">@r["subject"]</span>
+                                                    }
+                                                </td>
+                                                <td class="text-nowrap text-capitalize"><span>@r["create_by"]</span></td>
+                                                <td class="text-capitalize">@r["payment_type"]</td>
+                                                <td class="text-nowrap fw-bold">@string.Format("{0:#.00}", Convert.ToDecimal(r["price"].ToString()) ) @r["currency_label"]</td>
+                                                @*<td class="text-nowrap">@string.Format("{0:#.00}", Convert.ToDecimal(r["price_total"].ToString()) ) @r["currency_code"]</td>*@
+                                                <td class="text-end"> <span>@Convert.ToDateTime(r["created"]).ToString("dd.MM.yyyy @ HH:mm")h</span></td>
+                                                <td>
+                                                    @if (r["paid"].ToString() == "N")
+                                                    {
+                                                        <div>
+                                                            <a @onclick="return_money_to_the_guest">
+                                                                <i class="fas fa-hand-holding-usd" style="color: red;"></i>
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+            <!-- payments retrun -->
+            @if (payments_return.Rows.Count != 0)
+            {
+                <div class="card mb-3">
+
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"> <i class="fad fa-comments-dollar"></i> &nbsp; @lng.l.Payments_return <span class="fw-light">( retun manualy by invoce )</span> </h5>
+                    </div>
+
+                    <div class="card-body p-2">
+
+                        <div class="row m-0">
+                            <div class="table-responsive scrollbar vh-md-25">
+                                <table class="table fs--1 overflow-hidden">
+
+                                    <thead class="text-900 opacity-50" style="border-bottom-width: 2px">
+                                        <tr class="fw-bold text-dark text-upercase">
+                                            <th></th>
+                                            <th scope="col">@lng.l.Event</th>
+                                            <th scope="col">@lng.l.Type</th>
+                                            <th scope="col">@lng.l.By</th>
+                                            <th scope="col">To Whom</th>
+                                            <th scope="col">@lng.l.Price</th>
+                                            <th class="text-end">@lng.l.Time</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="list">
+
+                                        @foreach (System.Data.DataRow r in payments_return.Rows)
+                                        {
+                                            <tr class="btn-reveal-trigger" style="@(Convert.ToDecimal(r["price"].ToString()) < 0 ? "color: red;" : "")">
+                                                <td>
+                                                    <div style="font-weight:bold; color:green">✓</div>
+                                                </td>
+                                                <td class="text-nowrap text-capitalize">
+                                                    <span class="badge badge-soft-success">@r["subject"]</span>
+                                                </td>
+                                                <td class="text-center">
+
+                                                    @if (r["type"].ToString() == "charge")
+                                                    {
+                                                        <span class="badge badge-soft-success">@r["type"]</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-soft-danger">@r["type"]</span>
+                                                    }
+
+                                                </td>
+                                                <td class="text-nowrap text-capitalize"><span>@r["reseller_worker_name"]</span></td>
+                                                <td class="text-capitalize">@r["to_whom"]</td>
+                                                <td class="text-nowrap fw-bold">@string.Format("{0:#.00}", Convert.ToDecimal(r["price"].ToString()) ) @r["currency_label"]</td>
+                                                <td class="text-end"> <span>@Convert.ToDateTime(r["created"]).ToString("dd.MM.yyyy @ HH:mm")h</span></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+    <!-- modals -->
+    <section>
+
+        <!-- modal datails object -->
+        <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                <div class="modal-content position-relative">
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="@lng.l.Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1 text-dark">@lng.l.Edit_reservation</h4>
+                        </div>
+                        <div class="p-4 pt-0">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="col-form-label fs--1" for="to">@lng.l.Check_in</label>
+                                    <input class="form-control" id="to" @bind="edit_from" @bind:event="oninput" type="text" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label fs--1" for="from">@lng.l.Check_out</label>
+                                    <input class="form-control" id="from" @bind="edit_to" @bind:event="oninput" type="text" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">@lng.l.Close</button>
+                        <button class="btn btn-dark" type="button" data-bs-dismiss="modal" @onclick="save_reservation"> @lng.l.Save </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal cancel rent -->
+        <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                <div class="modal-content position-relative">
+
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1 text-dark">Cancel Reservation</h4>
+                        </div>
+                        <div class="p-4 pt-0">
+
+                            <form>
+
+                                <!-- Note for cancelation -->
+                                <div class="mb-3">
+                                    <label title="Please provide a reason for the cancellation" class="col-form-label fs--1" for="address">Reason</label>
+                                    <textarea class="form-control" id="cancel_reservation_reason" @onkeyup="cancel_reservation_reason_onkeyup" placeholder="Enter decription" @bind="cancel_reservation_reason" @bind:event="oninput" type="text"></textarea>
+                                </div>
+
+                                <!-- extra cost -->
+                                <div class="mb-4">
+                                    <label title="How much will guest have to pay" class="col-form-label fs--1" for="address" value="0">Cost</label>
+                                    <div class="input-group mb-3">
+                                        <input class="form-control" type="text" id="cancel_reservation_cost" @bind="cancel_reservation_cost" @bind:event="oninput" disabled />
+                                        <span class="input-group-text" id="basic-addon2">EUR</span>
+                                    </div>
+                                    <label class="form-check-label" for="return-commission">
+                                        <span class="d-block fs--1 fw-normal"> Extra cost will be charged to the <strong> owner </strong> for extra expenses </span>
+                                    </label>
+                                </div>
+
+                                <!-- do we retrun money -->
+                                <div class="form-check">
+                                    <input class="form-check-input mt-1" id="return_commission_guest" name="rent" type="checkbox" @onchange="set_rcof" @bind="return_commission_guest" @bind:event="oninput" />
+                                    <label class="form-check-label" for="return_commission_guest">
+                                        <span class="fs-1 text-black"> <i class="far fa-credit-card"></i> &nbsp; Free Cancellation</span>
+                                        <span class="d-block fs--1 fw-normal">Return commission to the <strong> guest </strong>  </span>
+                                        <span class="d-block fs--1 fw-normal"> Commision will be returned by Corvus automaticly &nbsp; <i class="far fa-credit-card"></i> </span>
+                                    </label>
+                                </div>
+
+                                <!-- late cancelation -->
+                                <div class="form-check">
+                                    <input class="form-check-input mt-1" id="return_commission_owner" name="rent" type="checkbox" @onchange="set_rcgf" @bind="return_commission_owner" @bind:event="oninput" />
+                                    <label class="form-check-label" for="return_commission_owner">
+                                        <span class="fs-1 text-black"> <i class="far fa-file-alt"></i> &nbsp; Late Cancellation</span>
+                                        <span class="d-block fs--1 fw-normal">Return commission to the <strong> owner </strong>  </span>
+                                        <span class="d-block fs--1 fw-normal"> Commision will be returned by montly invoice &nbsp; <i class="far fa-file-alt"></i> </span>
+                                    </label>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal"> Close </button>
+                        @if (cancel_reservation_reason_bool == false)
+                        {
+                            <button class="btn btn-dark" type="button" disabled data-bs-dismiss="modal" @onclick="cancel_reservation_save"> Confirm </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-dark" type="button" data-bs-dismiss="modal" @onclick="cancel_reservation_save"> Confirm </button>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- modal overbooking zaggy -->
+        <div class="modal fade" id="overbooking-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                <div class="modal-content position-relative">
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1 text-dark"> <img src="" style="height: 20px;"> &nbsp; Overbooking Reservation</h4>
+                        </div>
+                        <div class="p-4 pt-0">
+                            <form>
+
+                                <div class="mb-2">
+                                    <label title="Please enter date" class="col-form-label fs--1" for="date_reported">Date reported</label>
+                                    <input class="form-control" disabled id="date_reported" placeholder="Enter date" @bind="date_reported" @bind:event="oninput" type="text" />
+                                </div>
+
+                                <div class="mb-2">
+                                    <label title="Please enter note" class="col-form-label fs--1" for="note_user">Note user</label>
+                                    <textarea class="form-control" id="note_user" placeholder="Enter decription" @bind="note_user" @bind:event="oninput" type="text"></textarea>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label title="Please enter note" class="col-form-label fs--1" for="note_reseller">Note reseller</label>
+                                    <textarea class="form-control" id="note_reseller" placeholder="Enter decription" @bind="note_reseller" @bind:event="oninput" type="text"></textarea>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label title="Please enter price" class="col-form-label fs--1" for="guest_price">Guest price</label>
+                                    <input class="form-control" disabled id="guest_price" placeholder="Enter price" @bind="overbooking_guest_price" @bind:event="oninput" type="text" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label title="Please enter price" class="col-form-label fs--1" for="user_price">User price</label>
+                                    <input class="form-control" disabled id="user_price" placeholder="Enter price" @bind="overbooking_user_price" @bind:event="oninput" type="text" />
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input mt-1" id="money_guest_returned_id_div" @bind="money_guest_returned" @bind:event="oninput" type="checkbox" value="" />
+                                    <label class="form-check-label" for="money_guest_returned_id_div"> <span class="fs-0 text-black">Money guest returned</span> <span class="d-block fs--1 fw-normal"> ( via custom invoice) </span> </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input mt-1" id="reseller_confirmed_id_div" @bind="reseller_confirmed" @bind:event="oninput" type="checkbox" value="" />
+                                    <label class="form-check-label" for="reseller_confirmed_id_div"> <span class="fs-0 text-black">Reseller confirmed</span> <span class="d-block fs--1 fw-normal"> </span> </label>
+                                </div>
+
+                                <div class="mb-4">
+                                    <span class="d-block fs--1 fw-normal">
+                                        After marking reservation as overbooking,
+                                        reservation will still be active and it will block days for new reservations
+                                    </span>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal"> Close </button>
+                        <button class="btn btn-dark" type="button" data-bs-dismiss="modal" @onclick="overbooking_save"> Confirm | zaggy </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal overbooking zaggy -->
+        <div class="modal fade" id="overbooking-modal-zaggy" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                <div class="modal-content position-relative">
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="rounded-top-lg py-3 ps-4 pe-6">
+                            <h4 class="mb-1 text-dark">
+                                <img src="/assets/images/icons/portals/zaggy.svg" style="height: 20px;"> &nbsp; Overbooking Reservation
+                            </h4>
+                        </div>
+                        <div class="p-4 pt-0">
+                            <form>
+
+                                <div class="mb-2">
+                                    <label title="Please enter date" class="col-form-label fs--1" for="date_reported">Date reported</label>
+                                    <input class="form-control" disabled id="date_reported" placeholder="Enter date" @bind="date_reported" @bind:event="oninput" type="text"></input>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label title="Please enter note" class="col-form-label fs--1" for="note_user">Note user</label>
+                                    <textarea class="form-control" id="note_user" placeholder="Enter decription" @bind="note_user" @bind:event="oninput" type="text"></textarea>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label title="Please enter note" class="col-form-label fs--1" for="note_reseller">Note reseller</label>
+                                    <textarea class="form-control" id="note_reseller" placeholder="Enter decription" @bind="note_reseller" @bind:event="oninput" type="text"></textarea>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label title="Please enter price" class="col-form-label fs--1" for="guest_price">Guest price</label>
+                                    <input class="form-control" disabled id="guest_price" placeholder="Enter price" @bind="overbooking_guest_price" @bind:event="oninput" type="text"></input>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label title="Please enter price" class="col-form-label fs--1" for="user_price">User price</label>
+                                    <input class="form-control" disabled id="user_price" placeholder="Enter price" @bind="overbooking_user_price" @bind:event="oninput" type="text"></input>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input mt-1" id="money_guest_returned_id_div" @bind="money_guest_returned" @bind:event="oninput" type="checkbox" value="" />
+                                    <label class="form-check-label" for="money_guest_returned_id_div"> <span class="fs-0 text-black">Money guest returned</span> <span class="d-block fs--1 fw-normal"> ( via Corvus &nbsp; <i class="far fa-credit-card"></i> ) </span> </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input mt-1" id="reseller_confirmed_id_div" @bind="reseller_confirmed" @bind:event="oninput" type="checkbox" value="" />
+                                    <label class="form-check-label" for="reseller_confirmed_id_div"> <span class="fs-0 text-black">Reseller confirmed</span> <span class="d-block fs--1 fw-normal"> </span> </label>
+                                </div>
+
+                                <div class="mb-4">
+                                    <span class="d-block fs--1 fw-normal">
+                                        After marking reservation as overbooking,
+                                        reservation will still be active and it will block days for new reservations
+                                    </span>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal"> Close </button>
+                        <button class="btn btn-dark" type="button" data-bs-dismiss="modal" @onclick="overbooking_save"> Confirm | zaggy </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- email modal -->
+        <div class="modal fade" id="email-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content position-relative">
+                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="@lng.l.Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="p-4 pt-5">
+                            Subject: <b>@_email_subject</b>
+                        </div>
+
+                        <div class="ps-4 pt-0">
+                            From: <b>@_email_from</b>
+                        </div>
+
+                        <div class="ps-4 pt-0">
+                            To: <b>@_email_to</b>
+                        </div>
+
+                        <div class="p-4 pt-2">
+                            <iframe class="w-100" style=" height:500px " srcdoc="@_email_html"></iframe>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">@lng.l.Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+}

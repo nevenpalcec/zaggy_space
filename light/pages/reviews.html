@@ -1,0 +1,162 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-none d-md-block"><i class="fas fa-home pr-2"></i></span>
+                <!--<span class="d-none d-md-block"> <i class="fas fa-users pr-2"></i></span>-->
+                <span class="d-none d-md-block" id="object_reviews_header_object_name"></span>
+            </div>
+        </div>
+ 
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+ 
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content pt-3">
+
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Header -->
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="font-weight-bold space_nowrap" id="objects_rooms_number"><i class="fas fa-comments pr-lg-2"></i>Reviews</div>
+                    <button class="btn bg_primary text-white font_medium py-1" onclick="modal_add_review.bl.show_modal('modal_add_review');"><i class="fas fa-plus pr-2"></i>Add</button>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body font_3">
+
+                    <!-- Table -->
+                    <div class="view_table">
+                        <div class="table_wrapper">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" style="min-width: 15rem;">Name</th>
+                                        <th scope="col" style="min-width: 8rem;">Date</th>
+                                        <th scope="col" style="min-width: 6rem;">Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reviews_list_tbody">
+                                    
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal add review -->
+<section class="modal_add_review"></section>
+
+<section>
+    <template id="reviews_list">
+        <tr onclick="modal_add_review.bl.edit_reviews(`${review_id}`)">
+            <th scope="row">${number}</th>
+            <td class="td_item01">${name}</td>
+            <td class="td_item02">${date}</td>
+            <td class="td_item03">${rating}</td>
+        </tr>
+    </template>
+</section>
+
+<script>
+
+    $(".modal_add_review").load("/pages/components/modal_add_reviews.html");
+    $(".filter_general").load("/pages/partals/filter_general.html");
+
+    var reviews = {};
+
+    reviews.object_id = '';
+    reviews.id = '';
+
+    // Load function
+    reviews.load = () => {
+
+        // Title
+        document.title = "Reviews";
+
+        object_reviews_header_object_name.innerText = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+        // clear demo data
+        reviews_list_tbody.innerHTML = ''; 
+
+        // UI components
+
+        // BL components
+        reviews.bl.load_reviews();
+
+    }
+
+    // UI logic
+    reviews.ui = new function () {
+
+    }
+
+    // BL logic
+    reviews.bl = new function () {
+
+        this.load_reviews = async () => {
+
+            reviews.object_id = page.get_id();
+
+            var url = '/api/reviews/list_by_object/' + reviews.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            reviews_list_tbody.innerHTML = '';
+            var number = 1;
+
+            for (var r of json_response) {
+
+                var t = reviews_list.innerHTML;
+
+                t = t.replace('${name}', !r['contact_name'] == true ? '-' : r['contact_name']);
+                t = t.replace('${date}', !r['date'] == true? '' : r['date'].split('T')[0]);
+                t = t.replace('${rating}', r['rating'].toFixed(2));
+                t = t.replace('${number}', number);
+                t = t.replace('${review_id}', r['id']);
+
+                number++;
+
+                js.html.insertAdjacentHTML('reviews_list_tbody', t);
+            }
+
+        }
+
+    }
+
+    // On load
+    reviews.load();
+
+</script>

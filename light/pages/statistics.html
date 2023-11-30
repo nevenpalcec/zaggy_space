@@ -1,0 +1,651 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+            </div>
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase"><i class="fas fa-chart-bar pr-2"></i>Statistics</div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Location -->
+        <div id="statistics_filter_location" class="view_dropdown dropdown d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1">
+                <div class="d-flex align-items-center">
+                    <span class="font_7"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-location="1">Zagreb</li>
+                    <li class="dropdown_li" data-location="2">Zagreb zapad</li>
+                    <li class="dropdown_li" data-location="3">Zagreb dugački</li>
+                </ul>
+            </div>
+        </div>
+        <a id="statistics_filter_location_btn" class="filter_link d-md-none d-block mobile hidden"><i class="fas fa-map-marker-alt"></i></a>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Objects -->
+        <div id="statistics_filter_object" class="view_dropdown dropdown d-md-block d-none">
+            <button class="btn btn_hover px-2 py-1" id="statistics_button_object_filter">
+                <div class="d-flex align-items-center">
+                    <span class="font_7"><i class="fas fa-cube"></i></span>
+                    <i class="fas fa-angle-down ml-2"></i>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" id="statistics_object_filter">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height" id="statistic_apartment_list">
+                    <li class="dropdown_li" data-object="1">Apartment with balcony</li>
+                    <li class="dropdown_li" data-object="2">Apartment 01</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="statistics_current_selected_object">
+            <input id="statistics_current_selected_object_name" disabled />
+        </div>
+
+        <a id="statistics_filter_object_btn" class="filter_link d-md-none d-block mobile"><i class="fas fa-cube"></i></a>
+        <div class="filter_line_y"></div>
+
+        <!-- Date -->
+        <div id="statistics_filter_year" class="input-group" style="width: 140px;">
+            <div class="input-group-prepend cursor_point" onclick="statistics.bl.handle_year_change('-');">
+                <span class="input-group-text left"><i class="fas fa-angle-left"></i></span>
+            </div>
+            <span class="form-control text-center year" id="statistics_year"></span>
+            <div class="input-group-append cursor_point" onclick="statistics.bl.handle_year_change('+');">
+                <span class="input-group-text right"><i class="fas fa-angle-right"></i></span>
+            </div>
+        </div>
+
+        <!--Show All-->
+        <!--<div class="ml-3">-->
+            <!--<button class="btn bg_primary text-white" onclick="">Show For All Objects</button>-->
+        <!--</div>-->
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="statistics_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content pt-3">
+            <div class="d-flex flex-wrap pb-3 border-bottom">
+                <div>
+                    <div class="font_4 font_medium">Total income</div>
+                    <div class="font_7 font_medium" id="statistic_total_income"> €</div>
+                </div>
+         
+                <div class="border-left mx-4"></div>
+                <div>
+                    <div class="font_4 font_medium">Rents</div>
+                    <div class="font_7 font_medium" id="statistic_rents">296</div>
+                </div>
+             
+                <div class="border-left mx-4"></div>
+                <div>
+                    <div class="font_4 font_medium">Total days</div>
+                    <div class="font_7 font_medium" id="statistic_total_days">3045</div>
+                </div>
+                <div class="border-left mx-4"></div>
+                <div>
+                    <div class="font_4 font_medium">Total guests</div>
+                    <div class="font_7 font_medium" id="statistic_total_guests">111</div>
+                </div>
+            </div>
+            <div class="font_6 font_medium mt-3">Income by months</div>
+            <div class="w-75">
+                <canvas id="chart_income" class="w-100 mt-4" style="height: 26rem;"></canvas>
+            </div>
+            <div class="font_6 font_medium mt-5">Occupancy by months</div>
+            <div class="w-75">
+                <canvas id="chart_occupancy_by_months" class="w-100 mt-4" style="height: 26rem;"></canvas>
+            </div>
+            <div class="row m-0">
+                <div class="col-md-6">
+                    <div class="font_6 font_medium mt-5">Reservations by countries</div>
+                    <canvas id="chart_rents_by_countries" class="w-100 mt-4" style="height: 26rem;"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <div class="font_6 font_medium mt-5">Reservations by portals</div>
+                    <canvas id="chart_portals" class="w-100 mt-4" style="height: 20rem;"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div>
+    <template id="template_apartment_list">
+        
+        <li class="dropdown_li" data-id="${id}" data-unit="${unit_id}" data-name="${name}" onclick="statistics.ui.load_charts(${id}, ${unit_id}, `${name}`)">${name}</li>
+    </template>
+</div>
+
+<script>
+
+    var statistics = {};
+
+    //Occupancy chart
+    var occupancy_chart;
+
+    //income chart
+    var chart_income;
+
+    //countries
+    var countries_chart;
+
+    //portal_reservations
+    var reservations_portals_chart;
+
+    //year state
+
+    statistics.year = moment().format("YYYY").toString();
+
+    statistics.object_id = '';
+    statistics.unit_id = '';
+    statistics.object_name = '';
+
+    // Onload function
+    statistics.load = async function () {
+
+        document.getElementById('statistics_year').innerHTML = statistics.year;
+
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        statistics.bl.apartment_list();
+
+        statistics.object_id = JSON.parse(localStorage.getItem('objects'))[0]['id'];
+        statistics.unit_id = JSON.parse(localStorage.getItem('objects'))[0]['unit_id'];
+        statistics.object_name = JSON.parse(localStorage.getItem('objects'))[0]['name'];
+
+
+        //load charts
+        await statistics.ui.load_charts(statistics.object_id, statistics.unit_id, statistics.object_name);
+
+        // Global ui
+        ui.display_title("Statistics");
+        ui.dropdown_text("statistics_filter_object");
+        ui.dropdown_text("statistics_filter_location");
+        ui.content_loading("statistics_content_loading");
+
+
+        // Add resize event
+        statistics.ui.load_charts_on_resize();
+
+        // Local
+        //statistics.ui.chart_occupancy("chart_occupancy_by_months");
+        //statistics.ui.top_by_countries("chart_rents_by_countries");
+        //statistics.ui.pie_by_portals("chart_portals");
+        //statistics.ui.filter_year("statistics_filter_year");
+        //statistics.ui.chart_income('chart_income');
+
+        ui.content_loading_hide("statistics_content_loading");
+    }
+
+    // ui components
+    statistics.ui = new function () {
+
+        // Income Chart
+        this.chart_income = function (id, data) {
+            if (chart_income) {
+                chart_income.destroy();
+            }
+
+            let ctx_income = document.getElementById(id).getContext('2d');
+            //ctx_income.clearRect(0, 0, ctx_income.width, ctx_income.height);
+            chart_income = new Chart(ctx_income, {
+                // The type of chart we want to create
+                type: 'bar',
+
+                // The data for our dataset
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Prihod',
+                        backgroundColor: 'rgb(69, 123, 157)',
+                        borderColor: 'rgb(69, 123, 157)',
+                        //data: [100, 10, 5, 2, 800, 600, 400, 400, 100, 60, 30, 0]
+                        data: data
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (t, d) {
+                                var xLabel = d.datasets[t.datasetIndex].label;
+                                var yLabel = t.yLabel >= 1000 ? '€' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '€' + t.yLabel;
+                                return xLabel + ': ' + yLabel;
+                            }
+                        }
+                    },
+                    //events: [],
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign in the ticks
+                                callback: function (value, index, values) {
+                                    return '€' + value;
+                                },
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        // Occupancy Chart
+        this.chart_occupancy = function (id, data) {
+            if (occupancy_chart) {
+                occupancy_chart.destroy();
+            }
+            let ctx_occupancy = document.getElementById(id).getContext('2d');
+            occupancy_chart = new Chart(ctx_occupancy, {
+                // The type of chart we want to create
+                type: 'line',
+                y: {
+                    min: 0,
+                    max: 1
+                },
+                // The data for our dataset
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Occupancy',
+                        backgroundColor: 'rgb(255,255,255,0)',
+                        borderColor: 'rgb(69, 123, 157)',
+                        //data: [5, 10, 5, 2, 60, 100, 60, 40, 20, 10, 3, 0]
+                        data: data
+
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (t, d) {
+                                var xLabel = d.datasets[t.datasetIndex].label;
+                                var yLabel = t.yLabel >= 100 ? t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%' : t.yLabel + '%';
+                                return xLabel + ': ' + yLabel;
+                            }
+                        }
+                    },
+                    //events: [],
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign in the ticks
+                                callback: function (value, index, values) {
+                                    return value + '%';
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        // Top by countries
+        this.top_by_countries = function (id, country, num_rents) {
+            //debugger;
+            if (countries_chart) {
+                countries_chart.destroy();
+            }
+
+            let ctx_countries = document.getElementById(id).getContext('2d');
+            countries_chart = new Chart(ctx_countries, {
+                // The type of chart we want to create
+                type: 'horizontalBar',
+
+                // The data for our dataset
+                data: {
+                    //labels: ['Germany', 'Russia', 'Austria', 'Hungary', 'SAD', 'Other'],
+                    labels: country,
+                    datasets: [{
+                        label: 'Country',
+                        backgroundColor: 'rgb(69, 123, 157)',
+                        borderColor: 'rgb(69, 123, 157)',
+                        //data: [50, 35, 26, 15, 10, 7]
+                        data: num_rents
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+
+                    }
+                }
+            });
+
+        }
+
+        // Pie by portals
+        this.pie_by_portals = function (id, source_name, num_rents) {
+            if (reservations_portals_chart) {
+                reservations_portals_chart.destroy();
+            }
+
+            let ctx_portals = document.getElementById(id).getContext('2d');
+
+            reservations_portals_chart = new Chart(ctx_portals, {
+                // The type of chart we want to create
+                type: 'doughnut',
+
+                // The data for our dataset
+                data: {
+                    labels: source_name,
+                    datasets: [{
+                        label: 'Country',
+                        backgroundColor: [
+                            '#23387E',
+                            '#F7575C',
+                            '#00335C',
+                            '#3161F6',
+                            '#D1444D',
+                            '#919191'
+                        ],
+                        borderColor: 'rgba(255,255,255,0)',
+                        //data: [50, 35, 26, 15, 10, 7]
+                        data: num_rents
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    responsive: true,
+                   
+                    legend: {
+                        position: 'right'
+                    },
+                    plugins: {
+                        labels: {
+                            render: 'percentage',
+                            precision: 2,
+                            fontColor: '#fff',
+                            fontSize: 16
+                        }
+                    }
+                }
+            });
+        }
+
+        // Filter year
+        this.filter_year = function (id) {
+            let year_id = document.getElementById(id);
+            let left = year_id.getElementsByClassName("left")[0];
+            let right = year_id.getElementsByClassName("right")[0];
+            let year = year_id.getElementsByClassName("year")[0];
+            let counter = year.innerText;
+            left.addEventListener("click", function () {
+                counter--;
+                year.innerText = counter;
+            });
+            right.addEventListener("click", function () {
+                counter++;
+                year.innerText = counter;
+            });
+        }
+
+        // Load charts for one apartment
+        this.load_charts = async function (object_id, unit_id, object_name) {
+
+            //debugger;
+            if (typeof object_id != 'undefined' || object_id != null) {
+                statistics.object_id = object_id;
+            }
+
+            if (typeof unit_id != 'undefined' || unit_id != null) {
+                statistics.unit_id = unit_id;
+            }
+
+            if (typeof object_name != 'undefined' || object_name != null) {
+                statistics.object_name = object_name;
+            }
+
+            //set current object
+            document.getElementById("statistics_current_selected_object_name").value = statistics.object_name;
+
+            statistics_object_filter.classList.add('hidden');
+            statistics_button_object_filter.classList.remove("open");
+
+            //get user_id
+            var user_id = bl.workers.current_user_id();
+
+            //year = parseInt(document.getElementById('statistics_year').innerHTML);
+            //load rent statistic
+            const statistics_data = await bl.rents.statistics(statistics.year, user_id, statistics.object_id, statistics.unit_id);
+
+            statistics.ui.rents_statistics(statistics_data);
+
+
+            //year = year.toString();
+
+            /* load countries statistic*/
+            const countries_data = await bl.rents.statistics_countries(statistics.year, user_id, statistics.object_id);
+
+            statistics.ui.countries_statistics(countries_data);
+
+
+            //load statistic for channels
+            const source_data = await bl.rents.statistics_by_channels(statistics.year, user_id, statistics.object_id, statistics.unit_id);
+
+            statistics.ui.sources_statistics(source_data);
+
+            //Hide loading
+            ui.content_loading_hide('statistics_content_loading');
+
+        }
+
+        //ocupancy percentage and total income
+        this.rents_statistics = async function (data) {
+
+            var income = 0;
+            var guests = 0;
+            var days = 0;
+            var rents = 0;
+
+            for (var i = 1; i < 13; i++) {
+                income += parseFloat(data['Table' + i][0]['income_price']);
+                guests += parseInt(data['Table' + i][0]['total_guests']);
+                days += parseInt(data['Table' + i][0]['average_days']);
+                rents += parseInt(data['Table' + i][0]['arrivals']);
+            }
+
+            document.getElementById('statistic_rents').innerHTML = rents;
+            document.getElementById('statistic_total_income').innerHTML = income.toFixed([2]);
+            document.getElementById('statistic_total_guests').innerHTML = guests;
+            document.getElementById('statistic_total_days').innerHTML = days;
+
+            /*statistics.ui.total_guests(data);*/
+
+            //calculate occupancy
+            var occupancy_array = [];
+
+            var total_income_array = [];
+
+            //How many day is month
+            var arr_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            //all months
+            var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+            //OCCUPANCY
+            //map throught months
+            var month = 0;
+            months.forEach(mj => {
+                occupancy_array.push((parseInt(data['Table' + mj][0]['days']) / arr_days[month]) * 100)
+                month++;
+            });
+
+            //occupancy chart
+            statistics.ui.chart_occupancy('chart_occupancy_by_months', occupancy_array);
+
+
+            //INCOME
+            months.forEach(mj => {
+                total_income_array.push(parseInt(data['Table' + mj][0]['income_price']));
+            })
+
+            //income chart
+            statistics.ui.chart_income('chart_income', total_income_array);
+
+        }
+
+        //countries
+        this.countries_statistics = async function (data) {
+            var country = [];
+            var num_rents = [];
+
+            for (var c of data) {
+                country.push(c['country']);
+                num_rents.push(c['rents']);
+            }
+
+            statistics.ui.top_by_countries('chart_rents_by_countries', country, num_rents);
+        }
+
+        //sources of rents
+        this.sources_statistics = async function (data) {
+            var source_name = [];
+            var num_rents = [];
+            for (var c of data) {
+                if (c['name'] == '-' || c['name'] == null) {
+                    source_name.push('No name');
+                    num_rents.push(c['rents_count']);
+                } else {
+                    source_name.push(c['name']);
+                    num_rents.push(c['rents_count']);
+                }
+
+            }
+
+            statistics.ui.pie_by_portals('chart_portals', source_name, num_rents);
+        }
+
+        // On window resize
+        this.load_charts_on_resize = function () {
+
+            //let timeout = null;
+
+            //window.removeEventListener("resize", resizing);
+            //window.addEventListener("resize", resizing);
+
+            //function resizing() {
+
+            //    clearTimeout(timeout);
+
+            //    timeout = setTimeout(function () {
+
+            //        statistics.ui.load_charts(statistics.object_id, statistics.unit_id, statistics.object_name);
+            //    }, 1000);
+            //}
+        }
+    }
+
+    // bl components
+    statistics.bl = new function () {
+
+        // List of apartments
+        this.apartment_list = function () {
+
+            var apartment_lista = JSON.parse(localStorage.getItem('objects'));
+            statistic_apartment_list.innerHTML = '';
+
+            for (var al of apartment_lista) {
+
+                var t = template_apartment_list.innerHTML;
+
+                t = t.replaceAll('${id}', al['id']);
+                t = t.replaceAll('${unit_id}', al['unit_id']);
+                t = t.replaceAll('${name}', al['name']);
+
+                js.html.insertAdjacentHTML('statistic_apartment_list', t);
+            }
+
+            let el_arr = document.querySelectorAll("#statistic_apartment_list > li");
+
+            // setting onclick on every apartment
+            for (let i = 0; i < el_arr.length; ++i) {
+                el_arr[i].addEventListener = function () {
+
+                    let object_id = el_arr[i].dataset.id;
+                    let unit_id = el_arr[i].dataset.unit;
+                    let object_name = el_arr[i].dataset.object_name;
+
+                    statistics.ui.load_charts(object_id, unit_id, object_name);
+                }
+            }
+
+            console.log(el_arr);
+        }
+
+        this.handle_year_change = async function (param) {
+            let year = moment(statistics.year, "YYYY");
+
+            //add one year
+            if (param === '+') {
+                year.add(1, 'year');
+                let new_year = year.format("YYYY");
+                statistics.year = new_year;
+
+                //show new year
+                document.getElementById('statistics_year').innerHTML = statistics.year;
+
+                //load new graphs
+                await statistics.ui.load_charts();
+            }
+            //substract one year
+            else if (param === '-') {
+                year.add(-1, 'year');
+                let new_year = year.format("YYYY");
+                statistics.year = new_year;
+                
+                //show new year
+                document.getElementById('statistics_year').innerHTML = statistics.year;
+
+                //load new graphs
+                await statistics.ui.load_charts();
+            }
+        }
+    }
+
+    // On load
+    statistics.load();
+
+</script>

@@ -1,0 +1,98 @@
+.navbar-nav.nav_sidebar {
+    @media screen and (max-height: 700px) {
+        margin-top: 0 !important;
+    }
+    .nav-link {
+        color: $color-white;
+        font-size: 1.4rem;
+        text-align: center;
+        padding-top: .6rem;
+        padding-bottom: .6rem;
+        @include hover;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        &:hover {
+            background-color: rgba(255,255,255,.1);
+        }
+        @media screen and (max-height: 700px) {
+            font-size: 1.1rem;
+        }
+        .little_icon {
+            filter: drop-shadow(0 0 1px $color-black);
+            position: absolute;
+            bottom: -.3rem;
+            right: -.3rem;
+            font-size: .8rem;
+        }
+    }
+    .nav-link:first-child {
+        border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .nav-link.active {
+        position: relative;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 100%);
+            z-index: -1;
+        }
+    }
+    .nav_sidebar_label {
+        font-size: 1rem;
+        padding-left: 1rem;    
+        text-transform: uppercase;
+        @media screen and (min-width: 768px) {
+            display: none;
+        }
+        @media screen and (max-height: 600px) {
+            display: unset;
+        }
+    }
+}
+.view_menu_nav_mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .backdrop_filter {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(3px);
+        background-color: rgba(0,0,0,.7);
+        z-index: -1;
+    }
+
+    .logo {
+        img {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+
+    .navbar-nav.nav_sidebar {
+        margin: 0 2rem;
+
+        @media screen and (max-height: 600px) {
+            overflow-y: auto;
+            height: 75vh;
+        }
+
+        .little_icon {
+            right: 0;
+        }
+
+        .nav-item {
+            .nav-link {
+                text-align: left;
+            }
+        }
+    }
+}

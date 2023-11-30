@@ -1,0 +1,13 @@
+.items-text {
+    line-height: normal;
+}
+.items-bg-img {
+    position: relative;
+    img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+}

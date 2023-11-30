@@ -1,0 +1,52 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = (System.Data.DataRow)Session["booking_engine"];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var list_front_page = bl.objects_relstate_pictures.list_front_page(user_id);
+    var list_curosel = bl.booking_enigne_pictures.list(user_id, "curosel");
+    var list_gallery = bl.objects_relstate_pictures.list_front_page(user_id);
+    var list_gallery_be = bl.booking_enigne_pictures.list(user_id, "gallery");
+
+    ViewBag.Title = "";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "home" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- carousel -->
+@Html.Partial("/Views/partal/carousel.cshtml", new ViewDataDictionary { { "users_text", users_text }, { "list_front_page", list_front_page }, { "list_curosel", list_curosel } })
+
+<!-- Finder & Content -->
+<div class="container-wrapper">
+
+    <!-- Finder -->
+    <div class="finder_component04" style="margin-top: -50px; margin-bottom: 50px;">
+        @Html.Partial("/Views/objects/partal/property_finder.cshtml")
+    </div>
+
+    <!-- blogs -->
+    @Html.Partial("/Views/blogs/partal/blog_last_3_row.cshtml")
+
+</div>
+
+<!-- Testimonials -->
+@Html.Partial("/Views/reviews/partal/reviews_row_last_6.cshtml")
+
+<!-- Events -->
+<section class="section-events pt-0">
+    @Html.Partial("/Views/users/partal/about_us_description.cshtml", new ViewDataDictionary { { "users_text", users_text } })
+</section>
+
+<!-- Photo Gallery -->
+@Html.Partial("/Views/partal/gallery.cshtml", new ViewDataDictionary { { "list_gallery", list_gallery }, { "list_gallery_be", list_gallery_be } })
+
+<!-- Location -->
+@Html.Partial("/Views/partal/location.cshtml")
+
+<!-- contact us -->
+<div style="margin-bottom: 25px;">
+    @Html.Partial("/Views/partal/contact_us.cshtml")
+</div>

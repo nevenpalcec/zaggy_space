@@ -1,0 +1,1355 @@
+﻿@page "/objects/details/{object_id_hash?}"
+
+@code {
+
+    System.Data.DataTable properties, properti, status, reviews, rents, pictures, prices, logs, objects_cancellations_free;
+    System.Data.DataRow status_row, obj, user;
+
+    [Parameter] public string object_id_hash { get; set; }
+
+    bool is_loading = true;
+
+    string search;
+    string sort_by = "objects.created desc";
+    string sort_order = "";
+    string id = "";
+    string object_id = "";
+    string error_msg = "";
+    string user_id = "";
+    string reseller_id = "";
+
+    string date_from;
+    string date_until;
+
+    //za edit
+    string edit_name = "";
+    string edit_zip = "";
+    string edit_city = "";
+    string edit_address = "";
+    string resellers_objects_statuses_selected = "";
+    string instant_booking_selected = "Y";
+    string object_active = "Y";
+    string object_deleted = "";
+
+    string edit_country_id = "";
+    string edit_obj_types_sel = "";
+    string edit_resellers_objects_statuses_sel = "";
+    string note_support = "";
+    string random_number = new Random().Next().ToString();
+
+    string now_month = System.DateTime.Now.ToString("yyyy") + "-" + System.DateTime.Now.ToString("MM") + "-01";
+    string month = "";
+    string reseller_worker_id = "";
+    string reseller_worker_type_id = "";
+    string per_object_del = "N";
+    string countries = "-1";
+    string unit_country_id = "-1";
+    string b2b = "384, 385";
+    string perm_super_admin = "";
+
+    //private Shared.ObjectStatus ObjectStatus;
+    private admin.Pages.Objects.Shared.ObjectStatus ObjectStatus;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        is_loading = true;
+        await Task.Delay(1);
+        this.StateHasChanged();
+
+        await Perm.reseller_worker_perm();
+        if (Perm.objects_list == false) { NavManager.NavigateTo("/objects/list"); }
+
+        per_object_del = await Perm.permisions_object_del();
+        countries = Perm.countries;
+        b2b = Perm.b2b;
+
+        date_from = now_month;
+        date_until = System.DateTime.Now.AddMonths(8).ToString("dd.MM.yyyy");
+
+        reseller_worker_id = AesOperation.DecryptString(bl.B2B.zaggy.shared.key, await localStorage.GetItemAsync<string>("reseller_worker_id"));
+        reseller_worker_type_id = AesOperation.DecryptString(bl.B2B.zaggy.shared.key, await localStorage.GetItemAsync<string>("reseller_worker_type_id"));
+
+
+        if (!string.IsNullOrEmpty(object_id_hash))
+        {
+            on_load();
+        }
+
+        is_loading = false;
+        this.StateHasChanged();
+
+    }
+
+    async Task on_load_prices()
+    {
+        prices = bl.objects_prices_days.list(object_id, date_from, date_until);
+        await Task.Delay(1);
+    }
+
+    void on_load()
+    {
+        object_id = bl.B2B.zaggy.objects.get_object_id_by_id_hash(object_id_hash);
+
+        perm_super_admin = Perm.super_admin;
+
+        objects_list();
+    }
+
+    async void sync_property()
+    {
+        is_loading = true;
+        StateHasChanged();
+        await Task.Delay(1);
+
+        bl.objects.sync_content(object_id);
+
+        toastService.ShowSuccess(bl.lng.l.Sync, lng.l.Congratulations);
+
+        is_loading = false;
+        StateHasChanged();
+    }
+
+    async void sync_property_obj()
+    {
+        is_loading = true;
+        StateHasChanged();
+        await Task.Delay(1);
+
+        try
+        {
+            error_msg = "";
+
+            // sync property
+            bl.objects.sync(object_id);
+
+            toastService.ShowSuccess("Sync", "Congratulations!");
+        }
+        catch (InvalidCastException e)
+        {
+            //show error
+            error_msg = e.ToString();
+            toastService.ShowError("Error", "!");
+        }
+
+        is_loading = false;
+        StateHasChanged();
+
+    }
+
+    async Task picture_delete(string picture_id)
+    {
+
+        is_loading = true;
+        StateHasChanged();
+        await Task.Delay(1);
+
+        bl.objects_relstate_pictures.del(picture_id);
+
+        objects_list();
+
+        is_loading = false;
+        StateHasChanged();
+        await Task.Delay(1);
+    }
+
+    void save_form()
+    {
+        bl.B2B.zaggy.objects.update_obj(edit_name, edit_address, edit_obj_types_sel, edit_city, edit_zip, edit_country_id, edit_resellers_objects_statuses_sel, object_id, obj["unit_id"].ToString());
+        objects_list();
+        toastService.ShowSuccess("Saved", "Congratulations!");
+    }
+
+    void obj_types_change(ChangeEventArgs e)
+    {
+
+        edit_obj_types_sel = e.Value.ToString();
+    }
+
+    void resellers_objects_statuses_change(ChangeEventArgs e)
+    {
+        edit_resellers_objects_statuses_sel = e.Value.ToString();
+    }
+
+    void edit_country_change(ChangeEventArgs e)
+    {
+        edit_country_id = e.Value.ToString();
+    }
+
+    async void get_object()
+    {
+        properti = bl.B2B.zaggy.objects.get(object_id);
+        pictures = bl.objects_relstate_pictures.list(object_id);
+        await on_load_prices();
+    }
+
+    void picture_main_del()
+    {
+        bl.objects.picture_main_del(object_id);
+        objects_list();
+    }
+
+    void objects_list()
+    {
+        get_object();
+
+        obj = properti.Rows[0];
+
+        object_active = obj["active"].ToString();
+        object_deleted = obj["deleted"].ToString();
+        user_id = obj["user_id"].ToString();
+        reseller_id = obj["user_reseller_id"].ToString();
+
+        // get user
+        user = bl.users.get(user_id).Rows[0];
+
+        instant_booking_selected = obj["instant"].ToString();
+        resellers_objects_statuses_selected = obj["resellers_objects_statuses_id"].ToString();
+        properties = bl.B2B.zaggy.objects.list_by_user(obj["user_id"].ToString());
+
+        note_support = obj["note_support"].ToString();
+
+        edit_name = obj["name"].ToString();
+        edit_address = obj["unit_adress"].ToString();
+
+        edit_city = obj["unit_city_name"].ToString();
+        edit_zip = obj["city_zip"].ToString();
+        unit_country_id = obj["country_id"].ToString();
+
+
+        edit_country_id = obj["country_id"].ToString();
+        edit_obj_types_sel = obj["object_type_id"].ToString();
+        edit_resellers_objects_statuses_sel = obj["reseller_object_status_id"].ToString() == "" ? "1" : obj["reseller_object_status_id"].ToString();
+
+        var s = new
+        {
+            offset = 0,
+            user_id = obj["user_id"],
+            object_id,
+            search = search
+        };
+
+        status = bl.B2B.zaggy.objects.status(bl.sys.json.str(s));
+
+        if (status.Rows.Count > 0)
+        {
+            status_row = status.Rows[0];
+        }
+
+        var rv = new
+        {
+            offset = 0,
+            object_id = object_id
+        };
+
+
+        if (b2b.Contains("385") && unit_country_id == "203")
+        {
+            b2b = "384, 385";
+        }
+
+        var r = new
+        {
+            offset = 0,
+            limit = 12,
+            search,
+            active = "",
+            sort_by = "rents.id desc",
+            object_id = object_id,
+            b2b
+        };
+
+        rents = bl.B2B.zaggy.rents.list(bl.sys.json.to_string(r));
+
+        logs = bl.log_b2b.list(object_id);
+
+        objects_cancellations_free = bl.objects_cancellations_free.get(object_id);
+
+    }
+
+    async Task note_support_save(string user_id)
+    {
+        await Task.Run(() => bl.B2B.zaggy.objects.save_note_support(note_support, user_id));
+        toastService.ShowSuccess("Saved", "Note saved");
+    }
+
+    async Task object_delete()
+    {
+        bool confirmed = await js.InvokeAsync<bool>("confirm", "Are you sure you want to delete property? There is no coming back after this!!");
+        if (confirmed)
+        {
+
+            is_loading = true;
+            this.StateHasChanged();
+
+            // delete
+            bl.B2B.zaggy.objects.del_virtaul(object_id, null, reseller_worker_id, Settings.app_id, true);
+
+            // refresh
+            objects_list();
+
+            is_loading = false;
+            this.StateHasChanged();
+
+        }
+    }
+
+    async Task set_deleted()
+    {
+        await Task.Delay(1);
+        is_loading = true;
+        StateHasChanged();
+
+        //instant_booking_selected
+        if (object_deleted == "Y")
+        {
+            //bl.objects.deleted(object_id);
+            bl.B2B.zaggy.objects.del_virtaul(object_id, null, reseller_worker_id, Settings.app_id, false);
+            //set N set delete date null
+        }
+        else
+        {
+            bl.objects.undeleted(object_id);
+            //set Y set delete date now
+        }
+
+        // sync object
+        bl.objects.sync_content(object_id);
+
+        toastService.ShowSuccess("Save", "deleted status saved");
+
+        // load object
+        objects_list();
+
+        is_loading = false;
+
+    }
+
+    async Task set_gdpr_del()
+    {
+        await Task.Delay(1);
+        is_loading = true;
+        StateHasChanged();
+
+        //instant_booking_selected
+        bl.B2B.zaggy.objects.gdpr_del_set(object_id, "-4100", true);
+
+        toastService.ShowSuccess("Save", "deleted status saved");
+
+        // load object
+        objects_list();
+
+        is_loading = false;
+
+    }
+
+    string obj_status(string a)
+    {
+        if (a == "Y")
+        {
+            return "Active";
+        }
+        return "Disabled";
+    }
+
+    string user_status(string a)
+    {
+        if (a == "Y")
+        {
+            return "Active";
+        }
+        return "Disabled";
+    }
+
+    void set_resellers_objects_statuses_id(string object_id)
+    {
+        bl.B2B.zaggy.objects.set_reseller_object_status(object_id, resellers_objects_statuses_selected);
+        //list();
+    }
+
+    async Task set_instant_booking()
+    {
+        await Task.Delay(1);
+        is_loading = true;
+        StateHasChanged();
+
+        //instant_booking_selected
+        bl.B2B.zaggy.objects.set_instant_status(object_id_hash, instant_booking_selected, reseller_worker_id, Settings.app_id);
+
+        is_loading = false;
+
+        toastService.ShowSuccess("Save", "Instant booking saved");
+
+    }
+
+    async Task set_object_active()
+    {
+        await Task.Delay(1);
+        is_loading = true;
+        StateHasChanged();
+
+        //instant_booking_selected
+        if (object_active == "Y")
+        {
+            bl.objects.activate(object_id);
+        }
+        else
+        {
+            //bl.objects.deactivate(object_id);
+
+            bl.objects.deactivate_with_connection_off(object_id);
+        }
+
+        bl.objects.sync_content(object_id);
+
+        toastService.ShowSuccess("Save", "Status saved");
+
+        // reaload status child component
+        ObjectStatus.get_status();
+
+        objects_list();
+        await Task.Delay(10);
+
+        StateHasChanged();
+        is_loading = false;
+
+    }
+}
+
+<!-- header -->
+@if (is_loading == true)
+{
+    <div class="card mb-3">
+        <div class="card-header bg-dark rounded">
+            <div class="row justify-content-between">
+                <h5 class="col-auto text-white"> Loading... </h5>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- details -->
+@if (obj != null)
+{
+
+    <!-- title -->
+    <PageTitle> @obj["name"] </PageTitle>
+
+    <div class="card mb-3 text-white @(object_active == "Y" ? "bg-dark" : "bg-danger")">
+        <div class="card-body position-relative">
+            <div class="d-flex flex-wrap gap-2 align-content-center justify-content-between">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="avatar avatar-3xl me-2">
+                        <img class="rounded-circle" src="/assets/images/zagreb_logo_small.png" />
+                    </div>
+
+                    <div class="avatar avatar-3xl me-2">
+                        <img class="rounded-circle" src="@obj["picture_url_amazon"]" />
+                    </div>
+
+                    <div class="flex-1 ms-2">
+                        <h4 class="text-white mb-0">@obj["name"]</h4>
+                        <span class="mb-0">@obj["id_hash"] | @obj["id"] | @obj["object_type_name"] </span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-auto text-right">
+                    <h4 class="fw-black mb-0 text-white"> @bl.lng.l.Location  <span class="fw-medium text-white"> Details </span></h4>
+                    <div>
+                        <span class="me-2"> Created at: </span>
+                        <span> @System.DateTime.Parse(obj["created"].ToString()).ToString("dd.MM.yyyy") @@ @System.DateTime.Parse(obj["created"].ToString()).ToString("HH:mm") h </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- object details -->
+    <div class="row g-0 mb-4">
+
+        <!-- proeprty details -->
+        <div class="col-lg-6 pe-lg-2">
+
+            <!-- main details -->
+            <div class="card mb-3">
+
+                <div class="card-header bg-dark">
+                    <h5 class="mb-0 text-white text-uppercase"> <i class="fas fa-house-user"></i> &nbsp; @lng.l.Properties</h5>
+                </div>
+
+                @if (is_loading == false)
+                {
+                    <div class="card-body pb-0">
+
+                        <div class="row">
+                            <div class="table-responsive scrollbar">
+                                <table class="table mb-0">
+                                    <tbody>
+
+                                        <tr>
+                                            <td>@lng.l.Name:</td>
+                                            <td class="fw-bold text-dark">@obj["name"]</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>ID: </td>
+                                            <td class="fw-bold text-dark">@obj["id_hash"]</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>@lng.l.Type:</td>
+                                            <td class="fw-bold text-dark">@obj["object_type_name"]</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>@lng.l.Address:</td>
+                                            <td class="fw-bold text-dark d-flex">
+
+                                                <div class="me-5">
+                                                    <span style="@(obj["units_deleted"].ToString()=="Y" || obj["units_active"].ToString()=="N"? "color:red;" : "")">
+                                                        @obj["adress"]
+                                                    </span>
+                                                </div>
+
+                                                <div class="">
+                                                    @if (Perm.edit_units == true)
+                                                    {
+                                                        <a href="/unit/details/@obj["unit_id_hash"]" class="btn btn-outline-primary">
+                                                            @lng.l.Location
+                                                        </a>
+                                                    }
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>@lng.l.City:</td>
+                                            <td class="fw-bold text-dark">
+                                                <span style="@(obj["units_deleted"].ToString()=="Y" || obj["units_active"].ToString()=="N"? "color:red;" : "")">
+                                                    @obj["city_zip"] @obj["city_name"], @obj["country"]
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>@lng.l.Status:</td>
+                                            <td class="fw-bold text-dark">
+
+                                                <div class="row">
+                                                    <div class="col-auto">
+
+                                                        <select class="form-select" aria-label="Default select example" @bind="resellers_objects_statuses_selected">
+                                                            @foreach (System.Data.DataRow r in bl.B2B.zaggy.objects.resellers_objects_statuses().Rows)
+                                                            {
+
+                                                                if (r["id"].ToString() == @obj["resellers_objects_statuses_id"].ToString())
+                                                                {
+                                                                    <option selected value="@r["id"]">@r["name"]</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@r["id"]">@r["name"]</option>
+                                                                }
+                                                            }
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        @*<span class="link-dark text-capitalize">@user_row["users_types_name"]</span>*@
+                                                        @if ((Perm.edit_objects == true && reseller_id == bl.B2B.zaggy.shared.reseller_id) || perm_super_admin == "Y")
+                                                        {
+                                                            <button class="btn btn-outline-primary " type="button" @onclick="@(e => set_resellers_objects_statuses_id(obj["id_hash"].ToString()))">
+                                                                @lng.l.Save
+                                                            </button>
+                                                        }
+
+                                                    </div>
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+
+                                            <td>Instant booking:</td>
+
+                                            <td class="fw-bold text-dark">
+
+                                                <div class="row">
+                                                    <div class="col-auto">
+
+                                                        <select class="form-select" id="instant" @bind="instant_booking_selected">
+                                                            <option value="Y">Y</option>
+                                                            <option value="N">N</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        @if ((Perm.edit_objects == true && reseller_id == bl.B2B.zaggy.shared.reseller_id) || perm_super_admin == "Y")
+                                                        {
+                                                            <button class="btn btn-outline-primary " type="button" @onclick="@(e => set_instant_booking())">
+                                                                @lng.l.Save
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                        <!-- set active -->
+                                        <tr>
+                                            <td> @lng.l.Property @lng.l.Active:</td>
+                                            <td class="fw-bold text-dark">
+
+                                                <div class="row">
+                                                    <div class="col-auto">
+
+                                                        <select class="form-select" id="instant" @bind="object_active">
+                                                            <option value="Y">Y</option>
+                                                            <option value="N">N</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        @if ((Perm.edit_objects == true && reseller_id == bl.B2B.zaggy.shared.reseller_id) || perm_super_admin == "Y")
+                                                        {
+                                                            <button class="btn btn-outline-primary " type="button" @onclick="@(async (e) => await set_object_active())">
+                                                                @lng.l.Save
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> Deleted:</td>
+                                            <td class="fw-bold text-dark">
+
+
+                                                <div class="row">
+
+                                                    <div class="col-auto">
+
+                                                        <select class="form-select" id="instant" @bind="object_deleted">
+                                                            <option value="Y">Y</option>
+                                                            <option value="N">N</option>
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        @if ((per_object_del == "Y" && reseller_id == bl.B2B.zaggy.shared.reseller_id) || perm_super_admin == "Y")
+                                                        {
+                                                            <button class="btn btn-outline-primary " type="button" @onclick="@(async (e) => await set_deleted())">
+                                                                @lng.l.Save
+                                                            </button>
+                                                        }
+
+                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        @if (obj["deleted_date"].ToString().is_null() == false)
+                                                        {
+                                                            <span>
+                                                                Deleted at: @System.DateTime.Parse(obj["deleted_date"].ToString()).ToString("dd.MM.yyyy @ HH:mm") h
+                                                            </span>
+                                                        }
+                                                    </div>
+
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                <!-- action buttons -->
+                <div class="card-footer m-0 d-flex justify-content-between">
+
+                    @if (is_loading == false)
+                    {
+
+                        if (obj["deleted"].ToString() != "Y")
+                        {
+
+                            <div class="d-flex justify-content-between">
+
+                                <div class="d-flex">
+
+                                    <div>
+                                        
+                                    </div>
+
+                                    <div>
+                                         
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- delete property for real -->
+                            <div class="">
+
+                                @if (per_object_del == "Y")
+                                {
+                                    @* <button class="btn btn-outline-danger  me-1 mb-1" type="button" @onclick="@set_gdpr_del">
+                    <i class="fas fa-trash-alt"></i> &nbsp; @lng.l.Delete GDPR
+                    </button>*@
+
+                                    if ((per_object_del == "Y" && reseller_id == bl.B2B.zaggy.shared.reseller_id) || perm_super_admin == "Y")
+                                    {
+                                        <button class="btn btn-outline-danger  me-1 mb-1" type="button" @onclick="@object_delete">
+                                            <i class="fas fa-trash-alt"></i> &nbsp; @lng.l.Delete
+                                        </button>
+                                    }
+
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <button class="btn btn-outline-danger  me-1 mb-1" data-bs-toggle="modal" type="button">
+                                Property is deleted
+                            </button>
+                        }
+
+                    }
+                    else
+                    {
+                        <button class="btn btn-dark me-1 mt-2 mb-1 w-100" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="visually-hidden">@lng.l.Loading...</span>
+                        </button>
+                    }
+
+                </div>
+
+            </div>
+
+            <!-- recent rents -->
+            <div class="card mb-3">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">  <i class="fab fa-connectdevelop"></i> &nbsp; @lng.l.Recent_Reservations </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <admin.Pages.Rents.Shared.TableSmall rents="@rents"></admin.Pages.Rents.Shared.TableSmall>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- recent reviews-->
+            <admin.Pages.Objects.Shared.ReviewsCard reviews="reviews"></admin.Pages.Objects.Shared.ReviewsCard>
+
+        </div>
+
+        <!-- Oner & status -->
+        <div class="col-lg-3">
+
+            <!-- connection status -->
+            <admin.Pages.Objects.Shared.ObjectStatus object_id="@object_id" @ref="ObjectStatus"></admin.Pages.Objects.Shared.ObjectStatus>
+
+            <!-- propert status -->
+            <div class="card mb-3">
+
+                <div class="card-header bg-dark">
+                    <h5 class="mb-0 text-white d-flex justify-content-between">
+
+                        <span>
+                            <i class="fas fa-laptop-house"></i> &nbsp; @lng.l.Stats
+                        </span>
+
+                        <span>
+                            @if (obj["country_code"].ToString().is_null() == false)
+                            {
+                                <img src="/assets/images/icons/flags/@(obj["country_code"].ToString()).svg" style="height: 10px; margin-right: 10px; height: 15px;" loading="lazy">
+                            }
+                        </span>
+
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="fs--1 mt-3">
+
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <span class="dot bg-dark"></span>
+                                <span class="fw-semi-bold"> ID: </span>
+                            </div>
+                            <span class="text-dark">@obj["id_hash"]</span>
+                        </div>
+
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <span class="dot bg-dark"></span>
+                                <span class="fw-semi-bold">@lng.l.Name</span>
+                            </div>
+                            <span class="text-dark">@obj["name"]</span>
+                        </div>
+
+                        <a href="/unit/details/@obj["unit_id_hash"]" class="text-dark text-muted">
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-dark"></span>
+                                    <span class="fw-semi-bold">@lng.l.Location</span>
+                                </div>
+                                <span class="text-dark">@obj["unit_adress"]</span>
+                            </div>
+                        </a>
+
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <span class="dot bg-dark"></span>
+                                <span class="fw-semi-bold">@lng.l.Country</span>
+                            </div>
+                            <span class="text-dark">@obj["country"]</span>
+                        </div>
+
+                        <div class="d-flex flex-between-center mb-1">
+                            <div class="d-flex align-items-center">
+                                <span class="dot bg-dark"></span>
+                                <span class="fw-semi-bold">@lng.l.Property_type</span>
+                            </div>
+                            <span class="text-dark">@obj["object_type_name"]</span>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+
+                        @if (status_row != null)
+                        {
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-primary"></span>
+                                    <span class="fw-semi-bold">@lng.l.Max__Guests</span>
+                                </div>
+                                <span>@status_row["can_sleep_max"]</span>
+                            </div>
+
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-primary"></span>
+                                    <span class="fw-semi-bold">@lng.l.Opt__Guests</span>
+                                </div>
+                                <span>@status_row["can_sleep_optimal"]</span>
+                            </div>
+
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-primary"></span>
+                                    <span class="fw-semi-bold">@lng.l.Bedrooms</span>
+                                </div>
+                                <span>@status_row["bedroom_count"]</span>
+                            </div>
+
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-primary"></span>
+                                    <span class="fw-semi-bold">@lng.l.Bathrooms</span>
+                                </div>
+                                <span>@status_row["bathroom_count"]</span>
+                            </div>
+
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-primary"></span>
+                                    <span class="fw-semi-bold">@lng.l.Description</span>
+                                </div>
+                                <span> @obj["description"]</span>
+                            </div>
+
+                            <div class="d-flex flex-between-center mb-1">
+                                <div class="d-flex align-items-center">
+                                    <span class="dot bg-primary"></span>
+                                    <span class="fw-semi-bold">@lng.l.Amenities</span>
+                                </div>
+                                <span> @status_row["amenities_count"]</span>
+                            </div>
+                        }
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- right side -->
+        <div class="col-lg-3 ps-lg-2">
+
+            <!-- user contract -->
+            <admin.Pages.Users.Shared.UserCard reseller_id="@user["reseller_id"].ToString()" active="@user["active"].ToString()" id_hash="@user["id_hash"].ToString()" name="@user["primary_contant_name"].ToString()"></admin.Pages.Users.Shared.UserCard>
+
+            <!-- categoriy document -->
+            @if (string.IsNullOrEmpty(@bl.B2B.zaggy.objects.get_pdf_link(obj["unit_id"].ToString())) == false)
+            {
+                <div class="card mb-3 bg-dark">
+                    <a class="text-decoration-none" href="@bl.B2B.zaggy.objects.get_pdf_link(obj["unit_id"].ToString())" target="_blank">
+                        <div class="card-header d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-2 fs-0 text-white fw-bold">@lng.l.Categorization_Document</h6>
+                                <p class="mb-0 fs--1 text-white">
+                                    @lng.l.Click_To_View
+                                </p>
+                            </div>
+                            <div>
+                                <i class="fas fa-file-contract" style="padding: 5px; color: white; font-size: 40px;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="card mb-3 bg-danger">
+                    <div class="text-decoration-none">
+                        <div class="card-header">
+                            <h6 class="mb-2 fs-0 text-white fw-bold">@lng.l.Categorization_Document</h6>
+                            <p class="mb-0 fs--1 text-white">
+                                @lng.l.Document_Missing_
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- contract -->
+            <div class="card mb-3 bg-dark">
+                @if (@obj["contract_id"].ToString() != "")
+                {
+                    <a class="text-decoration-none" href="/contracts/unit/details/@obj["contract_id"]" target="_blank">
+                        <div class="card-header d-flex justify-content-between">
+
+                            <div>
+                                <h6 class="mb-2 fs-0 text-white fw-bold">@bl.lng.l.Contract</h6>
+                                <p class="mb-0 fs--1 text-white">
+                                    @lng.l.Click_To_View
+                                </p>
+                            </div>
+
+                            <div>
+                                <i class="fas fa-file-contract" style="padding: 5px; color: white; font-size: 40px;"></i>
+                            </div>
+
+                        </div>
+                    </a>
+                }
+
+            </div>
+
+            <!-- rss feed -->
+            <admin.Pages.Objects.Shared.ObjectRssFeed object_id="@object_id"></admin.Pages.Objects.Shared.ObjectRssFeed>
+
+            <!-- quick links -->
+            <QuickLinksCard worker_guid_temp="@obj["worker_guid_temp"].ToString()" reseller_id="@reseller_id" property_id_hash="@object_id_hash" user_id_hash="@obj["users_id_hash"].ToString()" worker_guid_login="@obj["worker_guid"].ToString()"></QuickLinksCard>
+
+            <!-- sync metjods -->
+            <div class="card mb-3">
+
+                <div class="card-header bg-dark">
+                    <h5 class="mb-0 text-white">
+                        <i class="fas fa-sync-alt"></i> &nbsp; Sync functions
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="terms-sidebar nav flex-column fs--1">
+
+                        <div class="nav-item">
+
+                            @if (is_loading == false)
+                            {
+                                <div class="d-flex justify-content-between">
+                                    <button @onclick="sync_property" class="btn btn-dark me-1 mt-2 mb-1" type="button"> @lng.l.Sync @lng.l.Content </button>
+                                    <button @onclick="sync_property_obj" class="btn btn-dark me-1 mt-2 mb-1" type="button"> @lng.l.Sync @lng.l.Price </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <button class="btn btn-dark me-1 mt-2 mb-1 w-100" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">@lng.l.Loading...</span>
+                                </button>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- cancelation policy -->
+            @if (objects_cancellations_free.Rows.Count > 0)
+            {
+                <div class="card mb-3 ">
+
+                    <div class="card-header border-bottom bg-dark">
+                        <div class="font_6 font_bold pb-1 text-white d-flex justify-content-between">
+                            <div>
+                                <span> <i class="fas fa-comment-dollar"></i> &nbsp; @bl.lng.l.Cancelation_policy </span>
+                            </div>
+                            <div>
+                                <i class="far fa-handshake"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- no show, charge -->
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"> <span class="fas fa-circle fs--1 me-3 text-primary"></span> Is free cancel enabled? </h6>
+                            </a><a class="fs--1 fw-bold text-600 mb-0"> @objects_cancellations_free.Rows[0]["free_cancel"] </a>
+                        </div>
+
+                        @if (objects_cancellations_free.Rows[0]["free_cancel"].ToString() != "X")
+                        {
+                            <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                                <a>
+                                    <h6 class="mb-0"> <span class="fas fa-circle fs--1 me-3 text-primary"></span> Charge no show % </h6>
+                                </a>
+                                <a class="fs--1 fw-bold text-600 mb-0"> @objects_cancellations_free.Rows[0]["charge_no_show"] % <span class="text-400">/</span> </a>
+                            </div>
+                        }
+
+                        @if (@objects_cancellations_free.Rows[0]["free_cancel"].ToString() == "Y")
+                        {
+                            <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                                <a>
+                                    <h6 class="mb-0"> <span class="fas fa-circle fs--1 me-3 text-primary"></span> Days before arrivals </h6>
+                                </a><a class="fs--1 fw-bold text-600 mb-0"> @objects_cancellations_free.Rows[0]["days_before_arrival"] </a>
+                            </div>
+
+
+                            <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                                <a>
+                                    <h6 class="mb-0"><span class="fas fa-circle fs--1 me-3 text-primary"></span> Charge percent  % </h6>
+                                </a><a class="fs--1 fw-bold text-600 mb-0">  @objects_cancellations_free.Rows[0]["charge_percent"] % </a>
+                            </div>
+                        }
+
+                        <hr>
+
+                        <!-- advance percent -->
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"> <span class="fas fa-circle fs--1 me-3 text-info-600"></span> Advance percent %</h6>
+                            </a>
+                            <a class="fs--1 fw-bold text-600 mb-0"> @objects_cancellations_free.Rows[0]["advance_percent"] % </a>
+                        </div>
+
+                        <!-- advance days -->
+                        <div class="d-flex flex-between-center rounded-3 bg-light p-3 mb-2">
+                            <a>
+                                <h6 class="mb-0"> <span class="fas fa-circle fs--1 me-3 text-info-600"></span> Advance days </h6>
+                            </a>
+                            <a class="fs--1 fw-bold text-600 mb-0"> @objects_cancellations_free.Rows[0]["advance_days"] days </a>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            }
+
+            <!-- notes -->
+            <div class="card">
+
+                <div class="card-header border-bottom bg-dark">
+                    <h6 class="mb-0 fs-0 text-white"> <i class="fas fa-sticky-note"></i> &nbsp; @lng.l.Property_note</h6>
+                </div>
+                <div class="card-body">
+
+                    <textarea class="form-control" rows="7" placeholder="Type here" @bind-value="note_support" @bind-value:event="oninput"></textarea>
+                    <div class="d-flex justify-content-end">
+                        @if (Perm.edit_objects == true)
+                        {
+                            <button @onclick="@(async() => await note_support_save(@obj["user_id"].ToString()))" class="btn btn-dark me-1 mt-2 mb-1" type="button"> @lng.l.Save </button>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- tabs -->
+    <div class="row g-0">
+
+        <nav>
+            <div class="nav nav-tabs mb-2" id="nav-tab" role="tablist">
+
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Photos</button>
+
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Prices</button>
+
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Rents</button>
+
+                <button class="nav-link" id="nav-logs-tab" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-logs" aria-selected="false">Logs</button>
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <!-- picures -->
+            <div class="card mb-3 bg-light tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"> <i class="fas fa-images"></i> &nbsp; @bl.lng.l.Photos: &nbsp; @pictures.Rows.Count @bl.lng.l.Pictures </h5>
+                </div>
+
+                <div class="card-body overflow-hidden">
+
+                    <div class="row g-0">
+
+                        @if (pictures != null && is_loading == false)
+                        {
+                            <!-- main picture -->
+                            <div class="col-3 p-1 border border-twitter">
+
+                                <div class="glightbox hoverbox rounded-3 text-center" data-gallery="gallery1" data-glightbox="data-glightbox" style="background-color: dimgray;">
+
+                                    @if (obj["picture_url_amazon"].ToString().is_null() == true)
+                                    {
+                                        <img class="img-fluid rounded" src="/assets/images/pictures/no-rent-image.jpg" loading="lazy" style="height: 300px;" />
+                                    }
+                                    else
+                                    {
+
+                                        <img class="img-fluid rounded" src="@obj["picture_url_amazon"]?id=@random_number" alt="@obj["name"]" loading="lazy" style="height: 300px;" />
+
+                                        <!-- picture buttons -->
+                                        @if (reseller_id == bl.B2B.zaggy.shared.reseller_id)
+                                        {
+                                            <div class="light hoverbox-content bg-dark p-5 flex-center">
+                                                <div>
+                                                    <p class="lead text-white"> Picture funtions </p>
+                                                    <div class="d-flex align-content-between">
+                                                        <a href="@obj["picture_url_amazon"]" target="_blank" class="btn btn-falcon-primary me-1 mb-1">Full screen</a>
+                                                        <button @onclick="picture_main_del" class="btn btn-falcon-danger me-1 mb-1">Del main pic.</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+
+                                </div>
+
+                            </div>
+
+                            @foreach (System.Data.DataRow r in pictures.Rows)
+                            {
+                                <div class="col-3 p-1">
+
+                                    <div class="glightbox hoverbox rounded-3 text-center" data-gallery="gallery1" data-glightbox="data-glightbox" style="background-color: dimgray;">
+
+                                        <img class="img-fluid rounded" src="@r["link_amazon"]" alt="@r["name"]" loading="lazy" style="height: 300px;" />
+
+                                        @if (reseller_id == bl.B2B.zaggy.shared.reseller_id)
+                                        {
+                                            <div class="light hoverbox-content bg-dark p-5 flex-center">
+                                                <div>
+                                                    <p class="lead text-white"> Picture funtions </p>
+                                                    <div class="d-flex align-content-between">
+                                                        <a href="@r["link_amazon"]" target="_blank" class="btn btn-falcon-primary me-1 mb-1">Full screen</a>
+                                                        <button class="btn btn-falcon-danger me-1 mb-1" @onclick="@(async () => await picture_delete(@r["id"].ToString()))">Delete picture</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                </div>
+                            }
+
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- prices-->
+            <div class="card mb-3 tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"> <i class="fas fa-dollar-sign"></i> &nbsp; Prices &nbsp; @DateTime.Parse(date_from).ToString("dd.MM.yyyy") - @date_until </h5>
+
+                </div>
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <admin.Pages.Objects.Shared.ObjectPricesCard prices="prices"></admin.Pages.Objects.Shared.ObjectPricesCard>
+                    </div>
+                </div>
+                <div class="card-footer ms-4 mb-4">
+                </div>
+            </div>
+
+            <!-- rents -->
+            <div class="card mb-3 tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"> <i class="fas fa-bed"></i> &nbsp; @bl.lng.l.Rents </h5>
+                </div>
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <admin.Pages.Rents.Shared.Table rents="rents"></admin.Pages.Rents.Shared.Table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- b2b logs -->
+            <div class="card mb-3 tab-pane fade" id="nav-4" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"> <i class="fas fa-user"></i> &nbsp; Logs </h5>
+                </div>
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <admin.Pages.Objects.Shared.ObjectTableLogs logs="logs"></admin.Pages.Objects.Shared.ObjectTableLogs>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- modal datails object -->
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+
+            <div class="modal-content position-relative">
+
+                <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="@lng.l.Close"></button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <div class="rounded-top-lg py-3 ps-4 pe-6">
+                        <h4 class="mb-1 text-dark">@lng.l.Edit_Property </h4>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <form>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="recipient-name">@lng.l.Name</label>
+                                <input class="form-control" id="name" @bind="edit_name" @bind:event="oninput" type="text" disabled readonly />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="type">@lng.l.Type</label>
+                                <select class="form-select" id="type" type="text" @onchange="obj_types_change" disabled readonly>
+                                    @foreach (System.Data.DataRow r in bl.B2B.zaggy.objects.get_obj_types().Rows)
+                                    {
+                                        if (r["id"].ToString() == edit_obj_types_sel)
+                                        {
+                                            <option selected value="@r["id"]">@r["name"]</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@r["id"]">@r["name"]</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="address">@lng.l.Address</label>
+                                <input class="form-control" id="address" @bind="edit_address" @bind:event="oninput" type="text" disabled readonly />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="zip">@lng.l.ZIP</label>
+                                <input class="form-control" id="zip" @bind="edit_zip" @bind:event="oninput" type="text" disabled readonly />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="city">@lng.l.City</label>
+                                <input class="form-control" id="city" @bind="edit_city" @bind:event="oninput" type="text" disabled readonly />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="country">@lng.l.Country</label>
+                                <select class="form-select" id="country" type="text" @onchange="edit_country_change" disabled readonly>
+
+                                    <Contires selC="@edit_country_id.ToString()"></Contires>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="col-form-label fs--1" for="type">@lng.l.Status</label>
+                                <select class="form-select" id="type" type="text" @onchange="resellers_objects_statuses_change" disabled readonly>
+                                    @foreach (System.Data.DataRow r in bl.B2B.zaggy.objects.resellers_objects_statuses().Rows)
+                                    {
+                                        if (r["id"].ToString() == edit_resellers_objects_statuses_sel)
+                                        {
+                                            <option selected value="@r["id"]">@r["name"]</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@r["id"]">@r["name"]</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="notification-body" disabled readonly>
+                                @lng.l.Note:
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">@lng.l.Close</button>
+                    <button class="btn btn-dark" data-bs-dismiss="modal" type="button" @onclick="save_form">@lng.l.Save </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+<!-- loading -->
+@if (is_loading == true)
+{
+    <LoadingLoader></LoadingLoader>
+}

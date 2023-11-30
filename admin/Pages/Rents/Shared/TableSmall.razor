@@ -1,0 +1,58 @@
+﻿@code {
+    [Parameter] public System.Data.DataTable rents { get; set; }
+}
+
+<div class="table-responsive scrollbar">
+
+    <table class="table table-hover pt-3">
+
+        <thead style="border-bottom-width: 2px">
+            <tr>
+
+                <th scope="col">@lng.l.Reservation</th>
+                <th scope="col">@lng.l.Guest</th>
+                <th class="text-end" scope="col">@lng.l.Dates</th>
+                <th class="text-end" scope="col">@lng.l.Price</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (System.Data.DataRow r in rents.Rows)
+            {
+                <tr role="button">
+                    <td>
+                        <a class="text-decoration-none link-dark" href="/reservations/@r["id_hash"]" style="color: @(r["active"].ToString() == "Y" ? "black" : "red");">@r["id_hash"]</a>
+                        <div class="text-secondary fs--1">
+                            Object ID: @r["object_id_hash"].ToString()
+                        </div>
+                        @if (r["resellers_overbooking_id"].ToString() != "")
+                        {
+                            <div class="badge bg-warning">
+                                Overbooking
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        <a class="text-decoration-none link-dark" href="/reservations/@r["id_hash"]" style="color: @(r["active"].ToString() == "Y" ? "black" : "red");">@r["contact_name"]</a>
+                        <div class="text-secondary fs--1 text-truncate">
+                            @r["object_name"].ToString()
+                        </div>
+                    </td>
+                    <td class="text-end" style="color: @(r["active"].ToString() == "Y" ? "black" : "red");">
+                        @System.DateTime.Parse(r["from_date"].ToString() ?? "").ToString("dd.MM.yy") -  @System.DateTime.Parse(r["until_date"].ToString() ?? "").ToString("dd.MM.yy")
+                        <div class="text-secondary fs--1">
+                            Created: @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yy HH:mm") | @r["days"].ToString()d
+                        </div>
+                    </td>
+                    <td class="text-dark text-end">
+
+                        <span class="fw-bold text-dark">@r["rent_source_provision"] @r["currency_label"]</span>
+                        <p class="link-secondary fs--1 mb-0">@r["price"] @r["currency_label"]</p>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

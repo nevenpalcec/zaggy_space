@@ -1,0 +1,349 @@
+ <!-- Modal add new rent item -->
+<div id="modal_new_rent_item" class="view_modal mt-4 hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content position-relative">
+
+            <!-- Header -->
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                    <i class="fas fa-file-invoice pr-2"></i>Add new item
+                </div>
+                <button class="close" id="add_new_item_close_btn" data-dismiss='modal'><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body pb-0">
+
+                <div class="row form-group">
+
+                    <!--Dropdown for item name-->
+                    <div class="col-md-12 mb-2">
+                        <label class="mb-1">Item name</label>
+
+                        <div id="rent_item_dropdown" class="view_dropdown dropdown dropdown_sm w-100" data-id="" data-name="">
+                            <button class="btn btn_hover pl-2 pr-2 py-1 w-100 border" style="height: 38px;">
+                                <div class="d-flex align-items-center w-100 ">
+                                    <div class="dropdown_label mr-1">
+                                        <div id="rent_item" class="font_4 dropdown_name white ml-2"></div>
+                                    </div>
+                                    <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown_menu w-100 hidden">
+                                <div class="dropdown_search px-3 py-2">
+                                    <input id="item_search_field" type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <hr class="m-0">
+                                <ul id="rent_items_list" class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                    <!--list items-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Price -->
+                    <div class="col-md-12 mb-2">
+                        <div class="d-flex justify-content-between mb-1">
+                            <div>Price</div>
+                            <label class="checkbox py-0">
+                                <div class="d-flex align-items-center user_select_none">
+                                    <input type="checkbox" checked="" id="checkbox_bruto" onchange="modal_new_item_rent.ui.calculate_price();">
+                                    <div class="check check_md"></div>
+                                    <div class="pl-2">Gross</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-group mb-0 input_remove_number_arrow">
+                            <input type="number" id="item_price" class="form-control text-center" value="0" onchange="modal_new_item_rent.ui.calculate_price();">
+                            <span class="value font_2 opacity_50">EUR</span>
+                        </div>
+                    </div>
+
+                    <!-- Quantity / Amount -->
+                    <div class="col-md-6 mb-2 input_remove_number_arrow">
+                        <label class="mb-1">Amount</label>
+                        <input type="number" id="item_quantity" class="form-control text-center" value="1" onchange="modal_new_item_rent.ui.calculate_price();">
+                    </div>
+
+                    <!--VAT / Tax -->
+                    <div class="col-md-6 mb-2 input_remove_number_arrow">
+                        <label class="mb-1">Tax</label>
+                        <div class="form-group mb-0">
+                            <input type="number" id="item_vat" class="form-control text-center" value="0" onchange="modal_new_item_rent.ui.calculate_price();">
+                            <span class="value font_2 opacity_50">%</span>
+                        </div>
+                    </div>
+                </div>
+         
+
+                <!--Net price and Total price-->
+                <div class="d-flex justify-content-end pb-3 pt-2">
+                    <div class="col-md-6 text-right p-2" style="border-right: 2px solid #457b9d33; background-color: #2c7cae12; ">
+                        <div class="font-weight-bold font_2">NET PRICE</div>
+                        <span id="rent_item_net_price" class="font_5">0</span><span class="font_3"> EUR</span>
+                    </div>
+                    <div class="col-md-6 text-right p-2" style="background-color: #2c7cae12; ">
+                        <div class="font-weight-bold font_2">TOTAL AMOUNT</div>
+                        <span id="rent_item_total_price" class="font_5">0</span><span class="font_3"> EUR</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer d-flex justify-content-between">
+                <button class="btn btn_silver m-1" data-dismiss="modal">Cancel</button>
+                <button class="btn btn_primary" onclick="modal_new_item_rent.bl.add_new_item(); "><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- templates -->
+<div>
+
+    <!--template for list items-->
+    <template id="rent_item_li">
+        <li class="dropdown_li" data-id="${id}" data-code="${code}" data-total="${total_value}" data-vat="${vat}" data-vatextra="${vat_extra}" onclick="select_drop">
+            <div class="d-flex align-items-center">
+                <span>${name}</span>
+            </div>
+        </li>
+    </template>
+
+</div>
+
+<!-- scripts -->
+<script>
+
+    var modal_new_item_rent = {};
+
+    modal_new_item_rent.load = async () => {
+
+        modal_new_item_rent.ui.close_on_esc();
+        modal_new_item_rent.ui.modal_close('modal_new_rent_item');
+
+        modal_new_item_rent.ui.set_item_values();
+
+        // Items dropdown
+        await modal_new_item_rent.bl.load_items_list();
+        ui.dropdown_list("rent_item_dropdown");
+        modal_new_item_rent.ui.filter_search_list("rent_item_dropdown");
+
+    }
+
+    modal_new_item_rent.ui = new function () {
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+        }
+
+        // Close modal on escape
+        this.close_on_esc = () => {
+
+            $(document).keydown(function (e) {
+                // ESCAPE key pressed
+                if (e.keyCode == 27) {
+                    modal_new_item_rent.ui.hide_modal();
+                }
+            });
+        }
+
+        // Modal - close details
+        this.modal_close = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    modal_new_item_rent.ui.hide_modal();
+                }
+            }
+
+            document.addEventListener("mousedown", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        modal_new_item_rent.ui.hide_modal();
+                    }
+                }
+            });
+
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        modal_new_item_rent.ui.hide_modal();
+                    }
+                }
+            };
+
+            // closing modal on esc key
+            addEventListener('keyup', (event) => {
+                if (event.key === 'Escape') {
+                    modal_new_item_rent.ui.hide_modal();
+                }
+            })
+        }
+
+        this.hide_modal = () => {
+
+            modal_new_rent_item.classList.add('visuallyhidden');
+            modal_new_rent_item.addEventListener('transitionend', function (e) {
+                modal_new_rent_item.classList.add('hidden');
+            }, {
+                capture: false,
+                once: true,
+                passive: false
+            });
+        }
+
+        this.clear_modal = async () => {
+
+            rent_item_dropdown.dataset.id = '';
+            rent_item_dropdown.dataset.name = '';
+            document.getElementById("rent_item").innerText = ''
+
+            item_price.value = 0;
+            item_quantity.value = 1;
+            item_vat.value = 0;
+
+            item_search_field.value = '';
+            await modal_new_item_rent.bl.load_items_list();
+
+            rent_item_net_price.innerHTML = '0';
+            rent_item_total_price.innerHTML = '0';
+
+        }
+
+        this.filter_search_list = function (id) {
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".dropdown_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].children[0].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+
+        // Set Price and VAT depending on selected value from dropdown
+        this.set_item_values = () => {
+
+            rent_items_list.addEventListener("click", function (e) {
+
+                item_price.value = e.target.dataset.total;
+                item_vat.value = e.target.dataset.vat;
+
+                modal_new_item_rent.ui.calculate_price()
+
+            });
+
+        }
+
+        this.calculate_price = () => {
+
+            if (checkbox_bruto.checked == false) {
+
+                var price_sum_neto = (item_price.value * item_quantity.value).toFixed(2);
+                var price_sum = (price_sum_neto * (1 + item_vat.value/100)).toFixed(2);
+            }
+            else {
+                var price_sum = (item_price.value * item_quantity.value).toFixed(2);
+                var price_sum_neto = (price_sum / (1 + item_vat.value/100)).toFixed(2);
+            }
+
+            rent_item_net_price.innerHTML = price_sum_neto;
+            rent_item_total_price.innerHTML = price_sum;
+
+        }
+
+    }
+
+    modal_new_item_rent.bl = new function () {
+
+        //load items list
+        this.load_items_list = async function () {
+
+            var items_list = await bl.item.get();
+            rent_items_list.innerHTML = '';
+
+            for (var il of items_list) {
+
+                var t = rent_item_li.innerHTML;
+                t = t.replaceAll('${id}', il['id']);
+                t = t.replaceAll('${code}', il['code']);
+                t = t.replaceAll('${name}', il['name']);
+                t = t.replaceAll('${total_value}', il['price']);
+                t = t.replaceAll('${vat}', il['vat']);
+                t = t.replaceAll('${vat_extra}', il['vat_extra']);
+                rent_items_list.insertAdjacentHTML('beforeend', t);
+
+            }
+        }
+
+        // Add new item
+        this.add_new_item = async () => {
+
+            await ui.content_loading('modal_rent_details_content_loading');
+
+            // Close modal
+            add_new_item_close_btn.click();
+
+            var url = '/api/rents_items/add/' + modal_details_rent.rent_id;
+            var response = await ajax.get_json(url);
+
+            var item = {};
+
+            if (checkbox_bruto.checked) {
+                item.price = (item_price.value) / (1 + item_vat.value/100);
+            }
+            else {
+                item.price = item_price.value;
+            }
+
+            item.name = rent_item_dropdown.dataset.name;
+            item.quantity = item_quantity.value;
+            item.vat = item_vat.value;
+
+            item.rent_item_id = response;
+            item.rent_item_type = 'earning';
+            item.rent_id = modal_details_rent.rent_id;
+            item.currency_id = modal_details_rent.currency_id;
+            item.exchange = modal_details_rent.exchange;
+
+            var url = '/api/rents_items/save';
+            var response = await ajax.post_json(url, item);
+
+            // Clear modal
+            modal_new_item_rent.ui.clear_modal();
+
+            //reload items
+            modal_details_rent.bl.rent_items_load();
+
+            await ui.content_loading_hide('modal_rent_details_content_loading');
+
+        }
+    }
+
+    modal_new_item_rent.load();
+
+</script>

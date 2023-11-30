@@ -1,0 +1,1260 @@
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+            </div>
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_real_estate_header_object_name"></span>
+                <span class="d-md-none d-block view_header_mobile_label">Apartment with balcony</span>
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="objects_real_estate_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content object_calendars pt-3">
+            <div class="row">
+                <div class="col-lg-4 col-xl-5">
+
+                    <!-- Details -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold">
+                                <i class="fas fa-info-circle pr-2"></i>Details
+                            </div>
+                            <div class="card-header_arrow"></div>
+                        </div>
+                        <div class="card-body font_3">
+                            <div class="row">
+
+                                <!-- Bedrooms -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_bedrooms" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>Bedrooms</div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px;min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_bedrooms">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Livingrooms -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_livingrooms" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>Livingrooms</div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px;min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_livingrooms">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bathrooms -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_bathrooms" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>Bathrooms</div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px;min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_bathrooms">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Toilets -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_toilets" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>Toilets</div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px;min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_toilets">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr class="mt-0">
+                            <div class="row">
+
+                                <!-- Optimum people -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_optimum_people" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div data-toggle="tooltip" data-placement="top"
+                                                 data-original-title="Optimal number of guests that the real estate can accommodate">
+                                                Optimum people
+                                            </div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px; min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_optimum_people">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Maximum people -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_maximum_people" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div data-toggle="tooltip" data-placement="top"
+                                                 data-original-title="Maximum number of guests that the real estate can accommodate">
+                                                Maximum people
+                                            </div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px; min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_maximum_people">
+                                                <div class="input-group-append plus cursor_point">
+                                                    <span class="input-group-text px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sitting dinning -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_sitting_dinning" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div data-toggle="tooltip" data-placement="top"
+                                                 data-original-title="How many people can seat at the dinning table">
+                                                Seating dining room
+                                            </div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px; min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_sitting_dinning">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sitting living -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div id="input_sitting_living" class="form-group">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div data-toggle="tooltip" data-placement="top"
+                                                 data-original-title="How many people can seat in the living area">
+                                                Seating living room
+                                            </div>
+                                            <div class="input-group input_group_sm input_remove_number_arrow"
+                                                 style="width: 90px; min-width: 90px;">
+                                                <div class="input-group-prepend cursor_point">
+                                                    <span class="input-group-text minus px-2">
+                                                        <i class="fas fa-minus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="number"
+                                                       class="form-control focus text-center px-2"
+                                                       value="0" id="object_real_estate_sitting_living">
+                                                <div class="input-group-append cursor_point">
+                                                    <span class="input-group-text plus px-2">
+                                                        <i class="fas fa-plus fa-xs"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Object size -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div class="form-group">
+                                        <div class="form-group position-relative input_remove_number_arrow">
+                                            <label class="mb-1">Object size</label>
+                                            <input type="number" class="form-control focus position-relative bg-transparent" style="z-index: 1;" id="object_real_estate_object_size">
+                                            <span class="position-absolute" style="bottom: .4rem; right: .5rem;">sqm</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Property size -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div class="form-group position-relative input_remove_number_arrow">
+                                        <label class="mb-1">Property size</label>
+                                        <input type="number" class="form-control focus position-relative bg-transparent" style="z-index: 1;" id="object_real_estate_property_size">
+                                        <span class="position-absolute" style="bottom: .4rem; right: .5rem;">sqm</span>
+                                    </div>
+                                </div>
+
+                                <!-- Check-in -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div class="form-group position-relative input_remove_number_arrow">
+                                        <label class="mb-1">Check-in</label>
+                                        <input type="time" class="form-control focus position-relative bg-transparent" style="z-index: 1;" id="object_real_estate_property_check_in_info">
+                                    </div>
+                                </div>
+
+                                <!-- Check-out -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div class="form-group position-relative input_remove_number_arrow">
+                                        <label class="mb-1">Check-out</label>
+                                        <input type="time" class="form-control focus position-relative bg-transparent" style="z-index: 1;" id="object_real_estate_property_check_out_info">
+                                    </div>
+                                </div>
+
+
+                                <!-- WiFi Network -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div class="form-group position-relative input_remove_number_arrow">
+                                        <label class="mb-1">WiFi Network</label>
+                                        <input type="text" class="form-control focus position-relative bg-transparent" style="z-index: 1;" id="object_real_estate_property_wifi_network_name" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <!-- WiFi password -->
+                                <div class="col-md-6 col-xl-12 col-xxl-6">
+                                    <div class="form-group position-relative input_remove_number_arrow">
+                                        <label class="mb-1">WiFi password</label>
+                                        <input type="password" class="form-control focus position-relative bg-transparent" id="object_real_estate_property_wifi_password" autocomplete="off">
+                                        <span class="position-absolute" style="bottom: .4rem; right: 1.1rem; cursor: pointer;" onclick="object_real_state.ui.show_hide_password();"><i id="toggle_password_eye_icon" class="fas fa-eye-slash"></i></span>
+                                    </div>
+                                </div>
+
+                                <!-- Purchased year -->
+                                <div style="width: 100%; display:flex; justify-content: space-around; align-items:center; flex-direction: row; ">
+                                    <div class="form-group position-relative input_remove_number_arrow" style="width:40%;">
+                                        <label class="mb-1">Purchased year</label>
+                                        <input type="text" disabled class="form-control position-relative" style="z-index: 1; text-align: center;" id="object_real_estate_property_purchased_year">
+                                    </div>
+                                </div>
+
+                                <!-- Cancellation policy -->
+                                <!--<div class="col-12">
+        <div class="form-group">
+            <div class="d-flex">
+                <label class="mb-1">Cancellation policy</label>
+                <div class="ml-auto" data-toggle="tooltip"
+                     data-placement="top"
+                     data-original-title="zaggy default cancellation policy">
+                    <i class="fas fa-question fa-xs px-1"></i>
+                </div>
+            </div>
+            <div id="object_real_estate_select_cancellation_policy" class="select">
+                <button class="custom-select focus"></button>
+                <i class="fas fa-angle-down"></i>
+                <ul class="select_ul hidden" id="object_real_estate_cancellation_policies_ul">
+                    <li class="select_li" data-id="1">Example 01</li>
+                    <li class="select_li" data-id="2">Example 02</li>
+                    <li class="select_li" data-id="3">Example 03</li>
+                    <li class="select_li" data-id="4">Example 04</li>
+                    <li class="select_li" data-id="5">Example 05</li>
+                    <li class="select_li" data-id="6">Example 06</li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+                                <!-- Button -->
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button class="btn btn_secondary" onclick="object_real_state.bl.save_realestate();"><i class="fas fa-save pr-2"></i>Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Modal add description language-->
+                <div class="modal fade view_modal" id="modal_add_desc_language" role="dialog" data-backdrop="false">
+                    <div class="modal_backdrop"></div>
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal_content position-relative">
+
+                            <!-- Loading -->
+                            <div id="modal_add_desc_language_content_loading" class="view_loading" style="display: none;">
+                                <img src="/assets/images/icons/loading.svg">
+                            </div>
+
+                            <!-- Header -->
+                            <div class="modal_header bg_primary">
+                                <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                                    <i class="fas fa-file-invoice pr-2"></i>Add new description
+                                </div>
+                                <btn class="close" id="add_new_lng_close_modal" data-dismiss="modal"><i class="fas fa-times"></i></btn>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="mb-1">Language</label>
+                                            <div id="object_realestate_select_filter_lng" class="select">
+                                                <button class="custom-select focus" id="object_realestate_select_filter_lng_btn">
+                                                </button>
+                                                <i class="fas fa-angle-down"></i>
+                                                <div class="select_ul_filter_wrapper hidden pb-2">
+                                                    <div class="select_search m-2">
+                                                        <input type="text" class="form-control" placeholder="Search">
+                                                    </div>
+                                                    <ul class="select_filter_ul mt-2" id="object_realestate_select_filter_lng_ul">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="modal-footer d-flex justify-content-between">
+                                <button type="button" class="btn btn_silver" data-dismiss="modal">Close</button>
+                                <button class="btn btn_secondary" onclick="object_real_state.bl.add_desc_language();"><i class="fas fa-plus pr-2"></i>Add</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-xl-7">
+
+                    <!-- Descriptions -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex">
+                                <span class="pr-2">
+                                    <img id="object_realestate_current_lng" src="" style="width: 20px;">
+                                </span>
+                                <div class="font-weight-bold">Descriptions</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex" id="languages_list">
+
+                                </div>
+                                <button class="btn btn_secondary" data-toggle="modal" data-target="#modal_add_desc_language" onclick="object_real_state.ui.show_modal_add_lng();">Add New</button>
+                            </div>
+                        </div>
+
+                        <div id="description_tabs" class="card-body font_3">
+                            <div class="row">
+                                <!-- Web name -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="d-flex">
+                                            <label class="mb-1">Web name</label>
+                                            <div class="ml-auto" data-toggle="tooltip"
+                                                 data-placement="top"
+                                                 data-original-title="Name of the real estate displayed on your website">
+                                                <i class="fas fa-question fa-xs px-1"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control focus" id="object_real_estate_name">
+                                    </div>
+                                </div>
+
+                                <!-- Motto -->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="d-flex">
+                                            <label class="mb-1">Motto</label>
+                                            <div class="ml-auto" data-toggle="tooltip"
+                                                 data-placement="top"
+                                                 data-original-title="Real estate motto text">
+                                                <i class="fas fa-question fa-xs px-1"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control focus" id="object_real_estate_motto">
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="tab_pills nav nav-pills nav-tabs">
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_div" class="active px-3" onclick="object_real_state.ui.open_description('object_realestate_description_div');">Main</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_short_description_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_short_description_div');">Short</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_arrival_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_arrival_div');">Arrival</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_welcome_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_welcome_div');">Welcome</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_landlord_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_landlord_div');">Landlord</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_area_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_area_div');">Location</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_environment_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_environment_div');">Environment</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_bedrooms_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_bedrooms_div');">Bedrooms</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_bathrooms_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_bathrooms_div');">Bathrooms</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="pill" href="#object_realestate_description_house_rules_div" class="px-3" onclick="object_real_state.ui.open_description('object_realestate_description_house_rules_div');">House rules</a>
+                                </li>
+                            </ul>
+
+                            <!-- Description -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_div" class="tab-pane show active">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Description" />
+                                        <img src="/assets/images/icons/portals/hometogo.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/expedia.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/holidu.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/web.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/traum.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Listing description" />
+                                        <img src="/assets/images/icons/portals/zaggy.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/agoda.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-popup="tooltip" title="The space" />
+                                        <!--<img src="/assets/images/icons/portals/edomizil.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />-->
+                                    </div>
+                                    <textarea name="objects_realestate_description" id="objects_realestate_description"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Short description -->
+                            <div class="tab-content">
+                                <div id="object_realestate_short_description_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/traum.svg" style="height: 1.2rem;" data-toggle="tooltip" data-placement="top" data-original-title="short description" />
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.2rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.2rem;" data-popup="tooltip" title="" />
+                                        <span>(guest portal)</span>
+                                    </div>
+                                    <textarea name="objects_realestate_note" id="objects_realestate_note" rows="50"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Arrival -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_arrival_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-popup="tooltip" title="Guest access" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-popup="tooltip" title="Getting around" />
+                                        <span> | DESCRIBE CHECK-IN PROCEDURE (MOSTLY USING EMAIL TEMPLATES)</span>
+                                    </div>
+
+                                    <textarea name="objects_realestate_description_arrival" id="objects_realestate_description_arrival"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Welcome -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_welcome_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <span>(guest portal)</span>
+                                    </div>
+                                    <textarea name="objects_realestate_description_welcome" id="objects_realestate_description_welcome"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Landlord -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_landlord_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Owner" />
+                                        <img src="/assets/images/icons/portals/traum.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Landlord" />
+                                    </div>
+                                    <textarea name="objects_realestate_description_landlord" id="objects_realestate_description_landlord"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Area -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_area_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Location description" />
+                                        <img src="/assets/images/icons/portals/traum.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Vacation area description" />
+                                        <img src="/assets/images/icons/portals/agoda.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Vacation area description" />
+                                        <img src="/assets/images/icons/portals/holidu.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Neighbourhood description" />
+                                    </div>
+                                    <textarea name="objects_realestate_description_area" id="objects_realestate_description_area"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Environment -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_environment_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Activities located near the listing" />
+                                        <img src="/assets/images/icons/portals/traum.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Surroundings description" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-popup="tooltip" title="Other things to note" />
+                                    </div>
+                                    <textarea name="objects_realestate_description_environment" id="objects_realestate_description_environment"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Bedrooms -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_bedrooms_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="Details about the bedroom(s)" />
+                                    </div>
+                                    <textarea name="objects_realestate_description_bedrooms" id="objects_realestate_description_bedrooms"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Bathrooms -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_bathrooms_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/homeaway.svg" style="height: 1.8rem;" data-toggle="tooltip" data-placement="top" data-original-title="details about the bedroom(s)" />
+                                    </div>
+                                    <textarea name="objects_realestate_description_bathrooms" id="objects_realestate_description_bathrooms"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- House rules -->
+                            <div class="tab-content">
+                                <div id="object_realestate_description_house_rules_div" class="tab-pane show">
+                                    <div class="pl-3 pb-2">
+                                        <img src="/assets/images/icons/portals/agoda.svg" style="height: 1.8rem;" data-popup="tooltip" title="" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-popup="tooltip" title="Additional rules" />
+                                        <img src="/assets/images/icons/portals/airbnb.svg" style="height: 1.8rem;" data-popup="tooltip" title="Guest manual" />
+                                    </div>
+                                    <textarea name="objects_realestate_description_house_rules" id="objects_realestate_description_house_rules"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-flex justify-content-between pt-3">
+                                <button class="btn btn_secondary" onclick="object_real_state.bl.translate_description();">
+                                    <img id="object_realestate_translate_lng" src="" style="width: 20px;" class="pr-1 hidden"> Translate
+                                </button>
+                                <button class="btn btn_secondary" onclick="object_real_state.bl.save_descriptions();"><i class="fas fa-save pr-2"></i>Save</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--templates-->
+    <div>
+        <!--template for list of cancellation policies-->
+        <template id="template_cancellation_policies_list">
+            <li class="select_li" data-id="${id}">${name}</li>
+        </template>
+
+        <!-- Template for descriptions languages list-->
+        <template id="template_languages_list">
+            <div class="mr-3">
+                <a onclick="object_real_state.bl.objects_description_dispaly('${lng_id}')" class="cursor_point">
+                    <img src="/assets/images/icons/flags/${lng_code}.svg" style="width: 20px;">
+                </a>
+            </div>
+        </template>
+
+        <!--template for list of all languages-->
+        <template id="template_all_languages_list">
+            <li class="select_filter_li" data-id="${lng_id}">
+                <span>
+                    <img src="/assets/images/icons/flags/${code_iso_country}.svg">
+                </span>
+                <span>
+                    ${language}
+                </span>
+            </li>
+
+        </template>
+    </div>
+
+</div>
+
+<div class="modal_cancellation_policies"></div>
+
+<script>
+
+    var object_real_state = {};
+
+    object_real_state.object_id = '';
+    object_real_state.description_id = '';
+    object_real_state.existing_languages_ids = [];
+
+    object_real_state.load = async () => {
+
+        // loading
+        await ui.content_loading('objects_real_estate_content_loading');
+
+        // Local ui
+        await object_real_state.bl.object_load();
+
+        // Load languages
+        await object_real_state.bl.load_existing_languages();
+
+        object_real_state.ui.dropdown_list();
+
+        // Load
+        $(".filter_general").load("/pages/partals/filter_general.html");
+        $(".modal_cancellation_policies").load("/pages/components/modal_cancellation_policies.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        //ui.custom_select('object_real_estate_select_cancellation_policy');
+
+        // ck editor for short description
+        CKEDITOR.replace('objects_realestate_note', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for description
+        CKEDITOR.replace('objects_realestate_description', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for arrival description
+        CKEDITOR.replace('objects_realestate_description_arrival', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for landlord description
+        CKEDITOR.replace('objects_realestate_description_landlord', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for environment description
+        CKEDITOR.replace('objects_realestate_description_environment', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for area description
+        CKEDITOR.replace('objects_realestate_description_area', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for bedrooms description
+        CKEDITOR.replace('objects_realestate_description_bedrooms', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for bathrooms description
+        CKEDITOR.replace('objects_realestate_description_bathrooms', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for bathrooms description
+        CKEDITOR.replace('objects_realestate_description_house_rules', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // ck editor for bathrooms description
+        CKEDITOR.replace('objects_realestate_description_welcome', {
+            height: 450, toolbar: ui.ck_edit.toolbar_small
+        });
+
+        // load data
+        await object_real_state.bl.object_display();
+
+    }
+
+    // ui components
+    object_real_state.ui = new function () {
+
+        //// Load cancellation policies into dropdown menu
+        //this.load_cancellation_policies = () => {
+
+        //    var cp_list = bl.cancellation_policies.list();
+        //    object_real_estate_cancellation_policies_ul.innerHTML = '';
+
+        //    for (var cp of cp_list) {
+        //        var t = template_cancellation_policies_list.innerHTML;
+        //        t = t.replace('${id}', cp['id']);
+        //        t = t.replace('${name}', cp['name']);
+        //        js.html.insertAdjacentHTML('object_real_estate_cancellation_policies_ul', t);
+        //    }
+        //}
+
+        // showing textarea for descriptons
+        this.open_description = function (id) {
+
+            var description = document.getElementById("object_realestate_description_div");
+            var short = document.getElementById("object_realestate_short_description_div");
+            var arrival = document.getElementById("object_realestate_description_arrival_div");
+            var welcome = document.getElementById("object_realestate_description_welcome_div");
+            var area = document.getElementById("object_realestate_description_area_div");
+            var environment = document.getElementById("object_realestate_description_environment_div");
+            var bedrooms = document.getElementById("object_realestate_description_bedrooms_div");
+            var bathrooms = document.getElementById("object_realestate_description_bathrooms_div");
+            var house_rules = document.getElementById("object_realestate_description_house_rules_div");
+            var landlord = document.getElementById("object_realestate_description_landlord_div");
+
+            let list = [];
+
+            list.push(description);
+            list.push(short);
+            list.push(arrival);
+            list.push(welcome);
+            list.push(area);
+            list.push(environment);
+            list.push(bedrooms);
+            list.push(bathrooms);
+            list.push(house_rules);
+            list.push(landlord);
+
+            for (tab of list) {
+                if (!tab.classList.contains("hidden")) {
+                    tab.classList.add("d-hidden");
+                    tab.classList.remove("active", "show");
+                }
+            }
+
+            var chosen_tab = document.getElementById(id);
+
+            chosen_tab.classList.remove('hidden');
+            chosen_tab.classList.add('show');
+            chosen_tab.classList.add('active');
+
+        }
+
+        // Open modal for adding new lng description
+        this.show_modal_add_lng = async () => {
+
+            // Load new languages into dropdown list
+            await object_real_state.bl.load_new_languages_list();
+
+            // New languages dropdown search
+            await object_real_state.ui.filter_search_list('object_realestate_select_filter_lng');
+            await object_real_state.ui.select_filter_custom('object_realestate_select_filter_lng');
+
+        }
+
+
+        // ditems in dropdown list for security deopsit, promotion, and deposit type
+        this.dropdown_list = function () {
+
+            var t = document.getElementById('deposit_type_translations').innerHTML;
+            var tp = document.getElementById('promotion_types').innerHTML;
+
+        }
+
+        this.input_counter = () => {
+
+            ui.input_counter('input_bedrooms');
+            ui.input_counter('input_livingrooms');
+            ui.input_counter('input_bathrooms');
+            ui.input_counter('input_toilets');
+            ui.input_counter('input_optimum_people');
+            ui.input_counter('input_sitting_dinning');
+            ui.input_counter('input_maximum_people');
+            ui.input_counter('input_sitting_living');
+
+        }
+
+        // Custom select
+        this.select_filter_custom = function (id) {
+
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul_wrapper = select_id.getElementsByClassName("select_ul_filter_wrapper")[0];
+            let ul = select_id.getElementsByClassName("select_filter_ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul_wrapper.classList.remove("hidden");
+                    let ulOffset = $(ul_wrapper).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul_wrapper).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul_wrapper).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul_wrapper.classList.add("reverse");
+                    } else {
+                        ul_wrapper.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul_wrapper.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(btn).has(e.target).length === 0) {
+                    if (!$(ul_wrapper).is(e.target) && $(ul_wrapper).has(e.target).length === 0) {
+                        ul_wrapper.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    btn.setAttribute('data-id', e.currentTarget.dataset.id);
+                    ul_wrapper.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+
+        // filter search
+        this.filter_search_list = function (id) {
+
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".select_filter_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+
+        this.show_hide_password = () => {
+
+            if (object_real_estate_property_wifi_password.type == "password") {
+                object_real_estate_property_wifi_password.type = "text";
+                toggle_password_eye_icon.classList.replace('fa-eye', 'fa-eye-slash');
+            }
+            else {
+                object_real_estate_property_wifi_password.type = "password";
+                toggle_password_eye_icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    }
+
+
+
+    // bl components
+    object_real_state.bl = new function () {
+
+        // object load details
+        this.object_load = async () => {
+
+            var hash = location.hash;
+            var object_id = hash.split('?')[1];
+
+            object_real_state.object_id = object_id;
+
+            await bl.objects.object_load(object_id, this.object_display);
+
+        }
+
+        // display data
+        this.object_display = async () => {
+
+            var o = await bl.objects.object_get();
+
+            object_real_estate_header_object_name.innerHTML = o['general'][0]['name'];
+
+            // Details card
+            var name = o['description'][0]['title'];
+            var motto = o['description'][0]['motto'];
+            var bedrooms = o['realstate'][0]['bedrooms'];
+            var livingrooms = o['realstate'][0]['livingrooms'];
+            var bathrooms = o['realstate'][0]['bathrooms'];
+            var toilets = o['realstate'][0]['toilets'];
+            var optimum_people = o['realstate'][0]['can_sleep_optimal'];
+            var maximum_people = o['realstate'][0]['can_sleep_max'];
+            var seating_dinning = o['realstate'][0]['seating_dining'];
+            var seating_lounge = o['realstate'][0]['seating_lounge'];
+
+            var object_size = o['realstate'][0]['space'];
+            var property_size = o['realstate'][0]['space_yard'];
+
+            let check_in_info = o['realstate'][0]['check_in'];
+            let check_out_info = o['realstate'][0]['check_out'];
+
+            let purchased_year = o['realstate'][0]['purchased_year'];
+
+            let wifi_password = o['realstate'][0]['wifi_password'];
+            let wifi_network = o['realstate'][0]['wifi_network'];
+
+            object_real_estate_name.value = name;
+            object_real_estate_motto.value = motto;
+            object_real_estate_object_size.value = object_size;
+            object_real_estate_property_size.value = property_size;
+            object_real_estate_bedrooms.value = bedrooms;
+            object_real_estate_livingrooms.value = livingrooms;
+            object_real_estate_bathrooms.value = bathrooms;
+            object_real_estate_toilets.value = toilets;
+            object_real_estate_optimum_people.value = optimum_people;
+            object_real_estate_maximum_people.value = maximum_people;
+            object_real_estate_sitting_dinning.value = seating_dinning;
+            object_real_estate_sitting_living.value = seating_lounge;
+
+            object_real_estate_property_check_in_info.value = check_in_info;
+            object_real_estate_property_check_out_info.value = check_out_info;
+
+            object_real_estate_property_wifi_network_name.value = wifi_network == null ? '-' : wifi_network;
+            object_real_estate_property_wifi_password.value = wifi_password;
+
+            object_real_estate_property_purchased_year.value = purchased_year;
+
+            // description id
+            object_real_state.description_id = o['description'][0]['id'];
+            object_realestate_current_lng.dataset.descId = o['description'][0]['id'];
+            object_realestate_current_lng.dataset.lngId = o['description'][0]['language_id'];
+            object_realestate_current_lng.src = `/assets/images/icons/flags/${o['description'][0]['code_iso_country']}.svg`;
+
+            // setting object realestate id to global variable
+            object_real_state.id = o['general'][0]['id4'];
+
+            // descriptions
+            var house_rules = o['description'][0]['house_rules'];
+
+            var description = o['description'][0]['description'];
+            var short = o['description'][0]['short'];
+            var welcome = o['description'][0]['welcome'];
+            var arrival = o['description'][0]['arrival'];
+            var landlord = o['description'][0]['landlord'];
+            var environment = o['description'][0]['environment'];
+            var vacation_area = o['description'][0]['vacation_area'];
+            var bathroom = o['description'][0]['bathroom'];
+            var bedroom = o['description'][0]['bedroom'];
+
+            // set up descriptions
+            CKEDITOR.instances['objects_realestate_description'].setData(description)
+            CKEDITOR.instances['objects_realestate_note'].setData(short)
+            CKEDITOR.instances['objects_realestate_description_arrival'].setData(arrival)
+            CKEDITOR.instances['objects_realestate_description_landlord'].setData(landlord)
+            CKEDITOR.instances['objects_realestate_description_environment'].setData(environment)
+            CKEDITOR.instances['objects_realestate_description_area'].setData(vacation_area)
+            CKEDITOR.instances['objects_realestate_description_bathrooms'].setData(bathroom)
+            CKEDITOR.instances['objects_realestate_description_bedrooms'].setData(bedroom)
+            CKEDITOR.instances['objects_realestate_description_welcome'].setData(welcome)
+            CKEDITOR.instances['objects_realestate_description_house_rules'].setData(house_rules)
+
+            // Hide loading
+            ui.content_loading_hide('objects_real_estate_content_loading');
+
+            object_real_state.ui.input_counter();
+
+        }
+
+        // Load languages
+        this.load_existing_languages = async () => {
+
+            // Show loading
+            await ui.content_loading('objects_real_estate_content_loading');
+
+            languages_list.innerHTML = '';
+            object_real_state.existing_languages_ids = [];
+
+            var url = `/api/objects_realestates_descriptions/get_languages/?id=${object_real_state.object_id}`;
+            var existing_languages_list = await ajax.get_json(url);
+
+            for (var l of existing_languages_list) {
+
+                var tr = template_languages_list.innerHTML;
+
+                tr = tr.replaceAll('${lng_id}', l['language_id']);
+                tr = tr.replaceAll('${lng_code}', l['code_iso_country']);
+
+                await js.html.insertAdjacentHTML('languages_list', tr);
+
+                // Add lng id to list of existing languages ids
+                object_real_state.existing_languages_ids.push(l['language_id']);
+            }
+
+            // Hide loading
+            await ui.content_loading_hide('objects_real_estate_content_loading');
+
+        }
+
+        // Loading a list of new languages, but without already added languages
+        this.load_new_languages_list = async function () {
+
+            var url = '/api/languages/list_real';
+            var lng_list_all = await ajax.get_json(url);
+
+            object_realestate_select_filter_lng_ul.innerHTML = '';
+
+            for (var l of lng_list_all) {
+
+                if (object_real_state.existing_languages_ids.includes(l['id'])) {
+                    continue;
+                }
+
+                var t = template_all_languages_list.innerHTML;
+                t = t.replaceAll('${lng_id}', l['id']);
+                t = t.replaceAll('${code_iso_country}', l['code_iso_country']);
+                t = t.replaceAll('${language}', l['language']);
+                js.html.insertAdjacentHTML('object_realestate_select_filter_lng_ul', t);
+
+            }
+        }
+
+        this.objects_description_dispaly = async (lng_id) => {
+
+            var url = `/api/objects_realestates_descriptions/get/?id=${object_real_state.object_id}&lng_id=${lng_id}`;
+            var res = await ajax.get_json(url);
+
+            // Set flag to header
+            var language_code = res[0]['code_iso_country'];
+
+            object_realestate_current_lng.src = `/assets/images/icons/flags/${language_code}.svg`;
+            object_realestate_current_lng.dataset.descId = res[0]['id'];
+            object_realestate_current_lng.dataset.lngId = lng_id;
+
+            // Set flag to Translate button or hide for English
+            if (lng_id != '1') {
+                object_realestate_translate_lng.src = `/assets/images/icons/flags/${language_code}.svg`;
+                object_realestate_translate_lng.classList.remove('hidden');
+            }
+            else {
+                object_realestate_translate_lng.classList.add('hidden');
+            }
+
+            // Set title and motto
+            object_real_estate_name.value = res[0]['title'];
+            object_real_estate_motto.value = res[0]['motto'];
+
+            // Set descriptions
+            CKEDITOR.instances['objects_realestate_description'].setData(res[0]['description'])
+            CKEDITOR.instances['objects_realestate_note'].setData(res[0]['short'])
+            CKEDITOR.instances['objects_realestate_description_arrival'].setData(res[0]['arrival'])
+            CKEDITOR.instances['objects_realestate_description_landlord'].setData(res[0]['landlord'])
+            CKEDITOR.instances['objects_realestate_description_environment'].setData(res[0]['environment'])
+            CKEDITOR.instances['objects_realestate_description_area'].setData(res[0]['vacation_area'])
+            CKEDITOR.instances['objects_realestate_description_bathrooms'].setData(res[0]['bathroom'])
+            CKEDITOR.instances['objects_realestate_description_bedrooms'].setData(res[0]['bedroom'])
+            CKEDITOR.instances['objects_realestate_description_welcome'].setData(res[0]['welcome'])
+            CKEDITOR.instances['objects_realestate_description_house_rules'].setData(res[0]['house_rules'])
+
+        }
+
+        // save details for real estate
+        this.save_realestate = async () => {
+
+            var object = {};
+
+            // mandatory fields
+            object.object_id = object_real_state.object_id;
+            object.user_id = bl.workers.current_user_id();
+
+            // details
+            //object.name = document.getElementById('object_real_estate_name').value;
+            //object.motto = document.getElementById('object_real_estate_motto').value;
+            object.space = document.getElementById('object_real_estate_object_size').value;
+            object.space_yard = document.getElementById('object_real_estate_property_size').value;
+            object.bedrooms = document.getElementById('object_real_estate_bedrooms').value;
+            object.livingrooms = document.getElementById('object_real_estate_livingrooms').value;
+            object.bathrooms = document.getElementById('object_real_estate_bathrooms').value;
+            object.toilets = document.getElementById('object_real_estate_toilets').value;
+            object.can_sleep_optimal = document.getElementById('object_real_estate_optimum_people').value;
+            object.can_sleep_max = document.getElementById('object_real_estate_maximum_people').value;
+            object.seating_dining = document.getElementById('object_real_estate_sitting_dinning').value;
+            object.seating_lounge = object_real_estate_sitting_living.value;
+            object.check_in = object_real_estate_property_check_in_info.value;
+            object.check_out = object_real_estate_property_check_out_info.value;
+            object.wifi_network = object_real_estate_property_wifi_network_name.value;
+            object.wifi_password = object_real_estate_property_wifi_password.value;
+            //object.cancellation_policy_id = document.querySelector('#object_real_estate_select_cancellation_policy > button').dataset.id;
+
+            console.log("KANCEL", object.cancellation_policy_id);
+
+            // descriptions
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            object.note = objects_realestate_note.value;
+            object.description = objects_realestate_description.value;
+
+            ui.content_loading('objects_real_estate_content_loading');
+
+            var url = '/api/objects_realestates/save_json/';
+            await ajax.post_json(url, object);
+
+            ui.content_loading_hide('objects_real_estate_content_loading');
+
+            // Refresh cache
+            bl.objects.list_load();
+
+        }
+
+        // save all descriptions
+        this.save_descriptions = async () => {
+
+            ui.content_loading("objects_real_estate_content_loading");
+
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+
+            var desc = {};
+
+            desc.title = document.getElementById('object_real_estate_name').value;
+            desc.motto = document.getElementById('object_real_estate_motto').value;
+            desc.house_rules = objects_realestate_description_house_rules.value;
+            desc.short = objects_realestate_note.value;
+            desc.welcome = objects_realestate_description_welcome.value;
+            desc.arrival = objects_realestate_description_arrival.value;
+            desc.landlord = objects_realestate_description_landlord.value;
+            desc.environment = objects_realestate_description_environment.value;
+            desc.vacation_area = objects_realestate_description_area.value;
+            desc.bathroom = objects_realestate_description_bathrooms.value;
+            desc.bedroom = objects_realestate_description_bedrooms.value;
+            desc.description = objects_realestate_description.value;
+            desc.id = object_realestate_current_lng.dataset.descId;
+
+            var url = '/api/objects_realestates_descriptions/save_all';
+            await ajax.post_json(url, desc);
+
+            await object_real_state.bl.object_load();
+
+            ui.content_loading_hide("objects_real_estate_content_loading");
+
+        }
+
+        this.add_desc_language = async () => {
+
+            await ui.content_loading('modal_add_desc_language_content_loading');
+
+            var new_desc = {};
+
+            new_desc.object_id = object_real_state.object_id;;
+            new_desc.user_id = bl.workers.current_user_id();
+            new_desc.language_id = object_realestate_select_filter_lng_btn.dataset.id;
+
+            var url = '/api/objects_realestates_descriptions/add';
+            var response = await ajax.post_json(url, new_desc); 
+
+            // Reload languages
+            await object_real_state.bl.load_existing_languages();
+
+            // Close and clear modal
+            add_new_lng_close_modal.click();
+            object_realestate_select_filter_lng_btn.innerHTML = '';
+            object_realestate_select_filter_lng_btn.dataset.id = '';
+
+            await ui.content_loading_hide('modal_add_desc_language_content_loading');
+        }
+
+        this.translate_description = async () => {
+
+            ui.content_loading('objects_real_estate_content_loading');
+
+            var object_id = object_real_state.object_id;
+            var lng_id = object_realestate_current_lng.dataset.lngId;
+
+            var url = `/api/objects_realestates_descriptions/translate_desc/?id=${object_id}&lng_id_to=${lng_id}`;
+            var res = await ajax.get_json(url);
+
+            // Reload object descriptions
+            object_real_state.bl.objects_description_dispaly(lng_id);
+
+            ui.content_loading_hide("objects_real_estate_content_loading");
+
+        }
+
+    }
+
+    // Load
+    object_real_state.load();
+
+</script>

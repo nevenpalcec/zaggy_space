@@ -1,0 +1,1514 @@
+﻿<!-- bills edit -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white" style="z-index: 999;">
+
+        <!-- left side -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-file-invoice pr-2"></i>Invoice Edit
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!--Menu buttons-->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <button class="btn btn_hover px-2" style="padding-top: .6rem; padding-bottom: .6rem;" id="bills_edit_print_bill" onclick="bills_edit.bl.print();">
+            <div class="d-flex align-items-center">
+                <span class="font_5"><i class="fas fa-print font_7"></i>  Preview</span>
+            </div>
+        </button>
+        <div class="filter_line_y"></div>
+        <button class="btn btn_hover px-2" style="padding-top: .6rem; padding-bottom: .6rem;" id="bills_edit_mail_bill">
+            <div class="d-flex align-items-center">
+                <span><i class="far fa-envelope font_7"></i></span>
+            </div>
+        </button>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!--Loading-->
+        <div id="bills_edit_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+
+        <div class="row pt-3">
+
+            <!--Service Card-->
+            <div class="col-md-12">
+                <div id="bills_edit_service_card" class="card">
+                    <div class="card_loading visuallyhidden hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold align-self-center">
+                            <i class="fas fa-concierge-bell pr-2"></i>Services
+                        </div>
+
+                        <button class="btn btn_secondary" onclick="modal_new_item.ui.show_modal('modal_new_invoice_item');">
+                            <i class="fas fa-plus pr-2"></i>Add item
+                        </button>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Table -->
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div id="bills_edit_items_table" class="overflow-auto mobile_overflow_select pb_16_mobile" style="width:100%;">
+                                    <table class="table modal_table m-0">
+                                        <thead>
+                                            <tr class="opacity_50">
+                                                <th scope="col" class="text-left pl-0 font_3">Code</th>
+                                                <th scope="col" class="text-left font_3">Item name </th>
+                                                <th scope="col" class="text-center font_3">Price</th>
+                                                <th scope="col" class="text-center font_3">Exchange</th>
+                                                <th scope="col" class="text-center font_3">Quantity</th>
+                                                <th scope="col" class="text-center font_3">VAT(%)</th>
+                                                <th scope="col" class="text-center font_3">Discount </th>
+                                                <th scope="col" class="text-center font_3">Total</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bills_edit_items_tbody">
+
+                                            <!-- Add new item manually -->
+                                            <!--<tr id="modal_rent_details_tr">
+
+                                    <td class="px-0 border-top-0 pb-0" style="min-width: 11rem;">
+                                        <div class="form-group m-0">
+                                            <div class="form-group m-0">
+                                                <input type="text" class="form-control focus" placeholder="Code" id="bills_edit_item_code">
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="pr-0 border-top-0 pb-0" style="min-width: 11rem;">
+                                        <div class="form-group m-0">
+                                            <div class="form-group m-0">-->
+                                            <!--<input type="text" class="form-control focus" placeholder="Item name" id="bills_edit_item_name">-->
+                                            <!--<div id="bills_edit_select_item" class="select">
+
+                                    <div id="bills_edit_dropdown_example_item_search" class="light_dropdown icon search">
+                                        <div class="light_dropdown-btn light_dropdown-toggle">
+                                            <input type="text" class="light_dropdown-input bg-white" id="bills_edit_details_items" data-value="hr" />
+                                            <div class="light_dropdown-box">
+                                                Search item
+                                            </div>
+                                        </div>
+                                        <ul class="light_dropdown-menu hidden" id="bills_edit_details_items_ul">-->
+                                            <!-- Only text no item -->
+                                            <!--<li class="no_result hidden" data-value="">Not found</li>
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="pr-0 border-top-0 pb-0">
+                                            <div class="form-group mb-0 position-relative input_remove_number_arrow">
+                                                <input type="number" class="form-control focus text-left pr-5" placeholder="Price" id="bills_edit_item_price" onchange="bills_edit.bl.update_row_values_onchange()">
+                                                <span class="value font_2 opacity_50" id="bills_edit_price_amount_label">EUR</span>
+                                            </div>
+                                        </td>
+                                        <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                                            <div class="form-group mb-0 input_remove_number_arrow">
+                                                <input type="number" class="form-control focus text-center" placeholder="Exchange" id="bills_edit_item_exchange" onchange="bills_edit.bl.update_row_values_onchange()" value="1">
+                                            </div>
+                                        </td>
+                                        <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                                            <div class="form-group mb-0 input_remove_number_arrow">
+                                                <input type="number" class="form-control focus text-center" placeholder="Quantity" id="bills_edit_item_quantity" onchange="bills_edit.bl.update_row_values_onchange()" value="1">
+                                            </div>
+                                        </td>
+                                        <td class="pr-0 border-top-0 pb-0">
+                                            <div class="form-group mb-0 input_remove_number_arrow">
+                                                <input type="number" class="form-control focus text-center pr-4" placeholder="Vat" id="bills_edit_item_tax" onchange="bills_edit.bl.update_row_values_onchange()" value="0">
+                                                <span class="value font_1 opacity_50"><i class="fas fa-percent"></i></span>
+                                            </div>
+                                        </td>
+                                        <td class="pr-0 border-top-0 pb-0">
+                                            <div class="form-group mb-0 input_remove_number_arrow">
+                                                <input type="number" class="form-control focus text-center pr-4" placeholder="Discount" id="bills_edit_item_discount" onchange="bills_edit.bl.update_row_values_onchange()" value="0">
+                                                <span class="value font_1 opacity_50"><i class="fas fa-percent"></i></span>
+                                            </div>
+                                        </td>
+                                        <td class="border-top-0 pr-0 pb-0">
+                                            <div class="form-group mb-0">
+                                                <input type="text" class="form-control text-left pr-5" placeholder="Total value" readonly="" disabled="" id="bills_edit_item_total">
+                                                <span class="value font_2 opacity_50" id="modal_rent_details_item_total_label">EUR</span>
+                                            </div>
+                                        </td>
+                                        <td scope="row" class="border-top-0 pr-0 pb-0">
+                                            <button class="btn btn_border_secondary" onclick="bills_edit.bl.save_item_data();" data-toggle="tooltip" data-placement="top" data-original-title="Add">
+                                                <i class="fas fa-plus p-0"></i>
+                                            </button>
+                                        </td>
+                                    </tr>-->
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- table bottom -->
+                        <div class="d-flex justify-content-end mt-2 pt-3">
+                            <!--<button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>-->
+                            <!--<button id="btn_save_item" class="btn btn_secondary" onclick="bills_edit.bl.save_all_items_data();"><i class="fas fa-save pr-2"></i>Save</button>-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Data Card-->
+            <div class="col-md-6">
+                <div id="bills_edit_data_card" class="card">
+                    <div class="card_loading visuallyhidden hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header">
+                        <div class="font-weight-bold d-flex justify-content-between">
+                            <span><i class="far fa-clipboard pr-2"></i>Data</span>
+                            <div class="d-flex">
+                                <span id="issue_invoice_check" class="d-flex align-items-center hidden pr-3" style="color: #457b9d; ">
+                                    <span class="pr-2 font_bold">Issued</span><i class="fas fa-check"></i>
+                                </span>
+                                
+                                <span id="bills_edit_bill_type" class="d-flex justify-content-center pt-1 pr-2 pl-2 align-content-center font_3 text-uppercase" style="max-width:150px; border: 1px solid #ced4da; color: white;  border-radius: 3px;background-color: ${color}; ">-</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <!--Payment method-->
+                            <div class="col-md-6">
+                                <label class="mb-1">Payment method</label>
+                                <div id="modal_rent_details_paid" class="view_dropdown dropdown" data-id="" style="height: unset !important;">
+                                    <button type="button" class="btn btn_hover px-2 py-2 w-100 border" style=" height: calc(1.5em + 0.75rem + 2px);">
+                                        <div class="d-flex align-items-center w-100">
+                                            <i class="fas fa-hand-holding-usd"></i>
+                                            <div class="dropdown_label ml-2">
+                                                <div class="font_3 dropdown_name text-left">Payment</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <ul class="dropdown_ul font_3" style="max-height: 15rem; overflow-y: auto;" id="modal_rent_details_payment_method_type">
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Date -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Date of Invoice</label>
+                                    <input type="text" class="form-control focus text-center border" id="bills_edit_date" disabled>
+                                </div>
+                            </div>
+
+                            <!--Invoice time-->
+                            <div class="col-md-6">
+                                <label class="mb-1">Time</label>
+                                <div class="input-group">
+                                    <div class="ui calendar sm-time w-100">
+                                        <input type="text" class="form-control time text-center border" placeholder="hh:mm:ss" name="inv_time" value="" autocomplete="off" id="bills_edit_inv_time" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="col-md-6" style="margin-bottom: 1rem !important;">
+                                <label class="mb-1">Price</label>
+
+                                <div style="display: flex; justify-content: space-between; border-radius: 0.25rem !important; background-color: #e9ecef !important;" class="border">
+
+                                    <input id="bills_edit_price" readonly="readonly" class="form-group view_dropdown w-100 dropdown h-auto border" style="outline: none; margin-bottom: 0px !important; border-width: 0px !important; margin: 0rem 0.75rem !important; padding: 0px !important; background-color: #e9ecef !important; " />
+
+                                    <div id="bills_edit_currency_dropdown" class="form-group view_dropdown w-100 dropdown h-auto" style="border-left-width: 0px !important; margin-bottom: 0px !important; border-radius:0.25rem; background-color:white" onmouseover="this.style.backgroundColor='rgba(206, 212, 218, 0.5)'" onmouseout="this.style.backgroundColor='white'">
+                                        <button class="btn btn_hover pl-2 pr-2 py-1 w-100 h-auto">
+                                            <div class="d-flex align-items-center w-100 ">
+                                                <span><i class="fas fa-coins"></i></span>
+                                                <div class="dropdown_label mr-1">
+                                                    <div class="font_4 dropdown_name white ml-2" id="bills_edit_currency" data-id="" data-name="">-</div>
+                                                </div>
+                                                <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
+                                        </button>
+                                        <div class="dropdown_menu w-100 hidden" id="currency_drop_menu">
+                                            <ul id="bills_edit_currency_list" class="dropdown_ul dropdown_icon ul_icon_white font_3" data-name="" style="max-height: 15rem; overflow-y: auto;">
+                                                <!--add currencies-->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Number -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Invoice Number</label>
+                                    <input type="number" class="form-control focus border" id="bills_edit_number" disabled>
+                                </div>
+                            </div>
+
+                            <!-- Reservation -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Reservation Number</label>
+                                    <input type="text" class="form-control focus border" id="bills_edit_reservation" disabled>
+                                </div>
+                            </div>
+
+                            <!-- Office -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Office</label>
+                                    <input type="text" class="form-control focus border" id="bills_edit_office" disabled>
+                                </div>
+                            </div>
+
+                            <!-- POS -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">POS</label>
+                                    <input type="text" class="form-control focus border" id="bills_edit_pos" disabled>
+                                </div>
+                            </div>
+
+                            <!-- Object -->
+                            <div class="col-md-6">
+                                <label class="mb-1">Object</label>
+
+                                <div id="bills_edit_objects_dropdown" class="view_dropdown dropdown dropdown_sm w-100" data-id="" data-name="">
+                                    <button class="btn btn_hover pl-2 pr-2 py-1 w-100 border">
+                                        <div class="d-flex align-items-center w-100 ">
+                                            <span><i class="fas fa-home pr-2"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_4 dropdown_name white" id="bills_edit_object" data-id="" data-name="">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden" id="objects_drop_menu">
+                                        <div class="dropdown_search px-3 py-2">
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul id="bills_edit_object_list" class="dropdown_ul ul_icon_white font_3" data-name="" style="max-height: 15rem; overflow-y: auto;">
+                                            <!--<li class="dropdown_li" data-object="1">Apartment 01</li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Worker -->
+                            <div class="col-md-6">
+                                <label class="mb-1">Worker</label>
+
+                                <div id="bills_edit_workers_dropdown" class="view_dropdown dropdown dropdown_sm w-100" data-id="" data-name="">
+                                    <button class="btn btn_hover pl-2 pr-2 py-1 w-100 border">
+                                        <div class="d-flex align-items-center w-100 ">
+                                            <span><i class="fas fa-user"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div id="bills_edit_worker" class="font_4 dropdown_name white ml-2" data-id="" data-name=""> - </div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="dropdown_search px-3 py-2">
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul id="bills_edit_worker_list" class="dropdown_ul ul_icon_white font_3" data-name="" style="max-height: 15rem; overflow-y: auto;">
+                                            <!--list workers-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Private note -->
+                            <div class="col-md-12" style="padding: 30px 15px 15px 15px;">
+                                <div class="form-group">
+                                    <label>Private note &nbsp;</label><label class="pull-right text-muted">*not visible to customer</label>
+                                    <input type="text" class="form-control border" value="" autocomplete="off" id="bills_edit_private_note">
+                                </div>
+                            </div>
+
+                            <!-- Invoice note -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label><i class="icon-quill4"></i>Invoice note</label>
+                                    <textarea class="form-control border" id="bills_edit_short_note"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <!--<button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>-->
+                            
+                            <div class="d-flex">
+                                <button class="btn btn_red mr-2" onclick="bills_edit.bl.delete_invoice()">
+                                    <i class="far fa-trash-alt pr-2"></i>Delete
+                                </button>
+
+                                <button id="issue_invoice_btn" class="btn btn-light btn_border hidden" onclick="bills_edit.bl.issue_invoice()">
+                                    <i class="fas fa-receipt pr-2"></i>Issue
+                                </button>
+
+                            </div>
+
+                            <button id="btn_save_details" class="btn btn_secondary" onclick="bills_edit.bl.save_details();"><i class="fas fa-save pr-2"></i>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Contact Card-->
+            <div class="col-md-6">
+                <div id="bills_edit_contact_card" class="card">
+                    <div class="card_loading visuallyhidden hidden">
+                        <img src="./assets/images/icons/loading.svg" alt="loading">
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold">
+                            <i class="far fa-address-book pr-2"></i>Contact
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Customer name</label>
+                                    <input type="text" class="form-control focus border" id="bills_edit_customer_name">
+                                </div>
+                            </div>
+
+                            <!-- OIB -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Customer VAT ID</label>
+                                    <input type="number" class="form-control focus border" id="bills_edit_customer_VAT">
+                                </div>
+                            </div>
+
+                            <!-- Customer street adress -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Customer street adress</label>
+                                    <input type="text" class="form-control focus border" id="bills_edit_customer_address">
+                                </div>
+                            </div>
+
+                            <!-- ZIP code -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Customer city code</label>
+                                    <input type="number" class="form-control focus border" id="bills_edit_customer_zip_code">
+                                </div>
+                            </div>
+
+                            <!-- City -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Customer city name</label>
+                                    <input type="text" class="form-control focus border" id="bills_edit_customer_city">
+                                </div>
+                            </div>
+
+                            <!-- Country -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Customer country</label>
+                                    <div id="invoice_edit_select_country" class="select">
+
+                                        <div id="invoice_edit_dropdown_example_country_search" class="light_dropdown icon search">
+                                            <div class="light_dropdown-btn light_dropdown-toggle">
+                                                <input type="text" class="light_dropdown-input bg-white" id="invoice_edit_details_country border" data-value="hr" />
+                                                <div class="light_dropdown-box">
+                                                    Search country
+                                                </div>
+                                            </div>
+                                            <ul class="light_dropdown-menu hidden" id="invoice_edit_details_countries_ul">
+                                                <!-- Only text no country -->
+                                                <li class="no_result hidden" data-value="">Not found</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div id="bills_filter_country" class="view_dropdown dropdown dropdown_sm w-100 col-md-6" data-id="" data-name="">
+                    <label class="mb-1">Customer country</label>
+
+                    <button class="btn btn_hover pl-2 pr-2 py-1 w-100 ">
+                        <div class="d-flex align-items-center w-100 ">
+
+                            <div class="dropdown_label mr-1">
+                                <div class="font_4 dropdown_name white"><i class="far fa-flag"></i></div>
+                            </div>
+                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </button>
+                    <div class="dropdown_menu w-100 hidden">
+                        <div class="dropdown_search px-3 py-2">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <hr class="m-0">
+                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;" id="bills_edit_countries_ul">-->
+                            <!-- Countries added from template -->
+                            <!--</ul>
+                        </div>
+                    </div>-->
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Email</label>
+                                    <input type="email" class="form-control focus border" id="bills_edit_customer_mail">
+                                </div>
+                            </div>
+
+                            <!-- Tel -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="mb-1">Telephone</label>
+                                    <input type="number" class="form-control focus border" id="bills_edit_customer_telephone">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-2">
+                            <!--<button class="btn btn_red"><i class="far fa-times-circle pr-2"></i>Deactivate</button>-->
+                            <button id="btn_save_customer" class="btn btn_secondary" onclick="bills_edit.bl.save_customer_data()"><i class="fas fa-save pr-2"></i>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- modals -->
+<div>
+
+    <!-- Modal add new invoice item -->
+    <div id="modal_add_new_invoice_item" class="modal_add_new_invoice_item"></div>
+
+</div>
+
+<!-- templates -->
+<div>
+
+    <!-- Add new item manually -->
+    <template id="add_modal_rent_details_tr_manually">
+
+        <tr id="modal_rent_details_tr" class="hidden">
+
+            <td class="px-0 border-top-0 pb-0" style="min-width: 11rem;">
+                <div class="form-group m-0">
+                    <div class="form-group m-0">
+                        <input type="text" class="form-control focus" placeholder="Code" id="bills_edit_item_code">
+                    </div>
+                </div>
+            </td>
+
+            <td class="pr-0 border-top-0 pb-0" style="min-width: 11rem;">
+                <div class="form-group m-0">
+                    <div class="form-group m-0">
+                        <!--<input type="text" class="form-control focus" placeholder="Item name" id="bills_edit_item_name">-->
+
+                        <div id="bills_edit_select_item" class="select">
+
+                            <div id="bills_edit_dropdown_example_item_search" class="light_dropdown icon search">
+                                <div class="light_dropdown-btn light_dropdown-toggle">
+                                    <input type="text" class="light_dropdown-input bg-white" id="bills_edit_details_items" data-value="hr" />
+                                    <div class="light_dropdown-box">
+                                        Search item
+                                    </div>
+                                </div>
+                                <ul class="light_dropdown-menu hidden" id="bills_edit_details_items_ul">
+                                    <!-- Only text no item -->
+                                    <li class="no_result hidden" data-value="">Not found</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0">
+                <div class="form-group mb-0 position-relative input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-left pr-5" placeholder="Price" id="bills_edit_item_price" onchange="bills_edit.bl.update_row_values_onchange()">
+                    <span class="value font_2 opacity_50" id="bills_edit_price_amount_label">EUR</span>
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center" placeholder="Exchange" id="bills_edit_item_exchange" onchange="bills_edit.bl.update_row_values_onchange()" value="1">
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center" placeholder="Quantity" id="bills_edit_item_quantity" onchange="bills_edit.bl.update_row_values_onchange()" value="1">
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center pr-4" placeholder="Vat" id="bills_edit_item_tax" onchange="bills_edit.bl.update_row_values_onchange()" value="0">
+                    <span class="value font_1 opacity_50"><i class="fas fa-percent"></i></span>
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center pr-4" placeholder="Discount" id="bills_edit_item_discount" onchange="bills_edit.bl.update_row_values_onchange()" value="0">
+                    <span class="value font_1 opacity_50"><i class="fas fa-percent"></i></span>
+                </div>
+            </td>
+            <td class="border-top-0 pr-0 pb-0">
+                <div class="form-group mb-0">
+                    <input type="text" class="form-control text-left pr-5" placeholder="Total value" readonly="" disabled="" id="bills_edit_item_total">
+                    <span class="value font_2 opacity_50" id="modal_rent_details_item_total_label">EUR</span>
+                </div>
+            </td>
+            <td scope="row" class="border-top-0 pr-0 pb-0">
+                <button class="btn btn_border_secondary" onclick="bills_edit.bl.save_item_data();" data-toggle="tooltip" data-placement="top" data-original-title="Add">
+                    <i class="fas fa-plus p-0"></i>
+                </button>
+            </td>
+        </tr>
+    </template>
+
+    <!--Countries template-->
+    <template id="bills_edit_countries_template">
+
+        <!--<li class="dropdown_li" data-id="${id}" data-name="${country}">
+            <div class="d-flex align-items-center">
+                <span class="flag pr-2">
+                    <img style="height: 1rem" src="./assets/images/icons/flags/${code2}.svg" alt="">
+                </span>
+                <span>${country}</span>
+            </div>
+        </li>-->
+
+        <li class="light_dropdown-item select_li" data-id="${id}" data-code1="${code1}">
+            <span class="light_dropdown-icon">
+                <img src="./assets/images/icons/flags/${code2}.svg" alt="">
+            </span>
+
+            <div class="light_dropdown-label">${country}</div>
+        </li>
+
+    </template>
+
+    <!--Bills edit items template-->
+    <template id="bills_edit_items_template">
+
+        <li class="light_dropdown-item select_li" data-id="${id}" data-code="${code}" data-name="${name}">
+
+            <div class="light_dropdown-label">${name}</div>
+        </li>
+
+    </template>
+
+    <!--template for list of objects-->
+    <template id="bills_edit_object_list_li">
+        <li class="dropdown_li" data-id="${id}" data-name="${name}">
+            <div class="d-flex align-items-center">
+                <span>${name}</span>
+            </div>
+        </li>
+    </template>
+
+    <!--template for list of objects-->
+    <template id="bills_edit_currency_list_li">
+        <li class="dropdown_li" data-id="${id}" data-name="${code}">
+            <div class="d-flex align-items-center">
+                <span>${name}</span>
+            </div>
+        </li>
+    </template>
+
+    <!--template for list of workers-->
+    <template id="bills_edit_worker_list_li">
+        <li class="dropdown_li" data-id="${id}" data-name="${code}">
+            <div class="d-flex align-items-center">
+                <span>${name}</span>
+            </div>
+        </li>
+    </template>
+
+    <!--template for list of invoice items-->
+    <template id="bills_edit_invoice_item">
+
+        <tr id="bills_edit_one_row_${row_id_num}">
+
+            <!-- code -->
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 100px; ">
+                <div class="form-group m-0">
+                    <div class="form-group m-0">
+                        <input type="text" class="form-control focus" placeholder="Code" id="bills_edit_item_code_${row_id_num}" value="${code}">
+                    </div>
+                </div>
+            </td>
+
+            <!-- item name -->
+            <td class="pr-0 border-top-0 pb-0">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="text" class="form-control focus text-left" placeholder="Item name" id="bills_edit_item_name_${row_id_num}" value="${item_name}" onchange="bills_edit.bl.update_row_values_onchange(${row_id_num})">
+                </div>
+            </td>
+
+            <!-- price -->
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 position-relative input_remove_number_arrow">
+                    <input type="number" class="form-control focus pr-5 text-right" placeholder="Price" id="bills_edit_item_price_${row_id_num}" value="${item_price}" onchange="bills_edit.bl.update_row_values_onchange(${row_id_num})">
+                    <span class="value font_2 opacity_50" id="bills_edit_price_amount_label">EUR</span>
+                </div>
+            </td>
+
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center" placeholder="Exchange" id="bills_edit_item_exchange_${row_id_num}" value="${exchange}" onchange="bills_edit.bl.update_row_values_onchange(${row_id_num})">
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center" placeholder="Quantity" id="bills_edit_item_quantity_${row_id_num}" value="${quantity}" onchange="bills_edit.bl.update_row_values_onchange(${row_id_num})">
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center pr-4" placeholder="Vat" id="bills_edit_item_tax_${row_id_num}" value="${vat}" onchange="bills_edit.bl.update_row_values_onchange(${row_id_num})">
+                    <span class="value font_1 opacity_50"><i class="fas fa-percent"></i></span>
+                </div>
+            </td>
+            <td class="pr-0 border-top-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0 input_remove_number_arrow">
+                    <input type="number" class="form-control focus text-center pr-4" placeholder="Discount" id="bills_edit_item_discount_${row_id_num}" value="${discount}" onchange="bills_edit.bl.update_row_values_onchange(${row_id_num})">
+                    <span class="value font_1 opacity_50"><i class="fas fa-percent"></i></span>
+                </div>
+            </td>
+            <td class="border-top-0 pr-0 pb-0" style="max-width: 5rem;">
+                <div class="form-group mb-0">
+                    <input type="text" class="form-control text-right pr-5" placeholder="Total value" readonly="" disabled="" value="${total}" id='bills_edit_item_total_${row_id_num}'>
+                    <span class="value font_2 opacity_50" id="modal_rent_details_item_total_label">EUR</span>
+                </div>
+            </td>
+            <td scope="row" class="border-top-0 pr-0 pb-0" style="max-width: 5rem;">
+                <button class="btn" style="border: 1px solid lightgray" data-toggle="tooltip" data-placement="top" data-original-title="Remove" id="bills_edit_item_remove_${row_id_num}" onclick="bills_edit.ui.remove_bill(this)">
+                    <i class="fas fa-trash-alt red fa-lg"></i>
+                </button>
+            </td>
+
+        </tr>
+    </template>
+
+    <!--template for payment methods list-->
+    <template id="template_payment_methods_li_2">
+        <li class="dropdown_li" data-id="${payment_method_id}" data-name="${name}" onclick="select_drop">
+            <div class="d-flex align-items-center">
+                <!--<div class="icon"><i class="fas fa-piggy-bank"></i></div>-->
+                <div class="name align-self-center">${name}</div>
+            </div>
+        </li>
+    </template>
+
+</div>
+
+<!-- scripts -->
+<script>
+
+    var bills_edit = {};
+
+    var bill_guid = "";
+
+    // Onload function
+    bills_edit.load = async () => {
+
+        ui.content_loading("bills_edit_content_loading");
+
+        //Load country data
+        await bills_edit.bl.load_countries_list();
+        //ui.dropdown_list("bills_filter_country");
+        //bills_edit.ui.filter_search_list("bills_filter_country");
+        ui.custom_select("invoice_edit_select_country");
+        light.dropdown.init('#invoice_edit_dropdown_example_country_search');
+
+        // Load modal add new invoice
+        await $(".modal_add_new_invoice_item").load("/pages/components/modal_add_invoice_item.html");
+
+        await bills_edit.bl.load_object_list();
+        ui.dropdown_list("bills_edit_objects_dropdown");
+        bills_edit.ui.filter_search_list("bills_edit_objects_dropdown");
+
+        await bills_edit.bl.load_currency_list();
+        ui.dropdown_list("bills_edit_currency_dropdown");
+
+        await bills_edit.bl.load_worker_list();
+        ui.dropdown_list("bills_edit_workers_dropdown");
+        bills_edit.ui.filter_search_list("bills_edit_workers_dropdown");
+
+        //Load payment methods
+        bills_edit.ui.load_payment_methods();
+
+        //bills_edit.ui.filter_search_list("bills_edit_currency_dropdown");
+        //bills_edit.bl.load_items_list();
+
+        //Get data
+        await bills_edit.bl.load_bill();
+
+        // Load
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        // Global ui
+        ui.display_title("Edit Bill");
+
+        ui.dropdown_list("modal_rent_details_paid");
+
+        ui.content_loading_hide('bills_edit_content_loading');
+    }
+
+    // ui components
+    bills_edit.ui = new function () {
+
+        // Table - yes or no
+        this.yes_or_no = function (e) {
+            if (e.classList.contains("yes")) {
+                e.classList.add("active");
+                e.parentElement.children[1].classList.remove("active");
+            } else if (e.classList.contains("no")) {
+                e.classList.add("active");
+                e.parentElement.children[0].classList.remove("active");
+            }
+        }
+
+        // Remove bill
+        this.remove_bill = function (html_element_ref) {
+
+            let element_id = html_element_ref.id.split('_').pop();
+
+            if (Number(element_id)) {
+
+                let row_in_table = html_element_ref.parentElement.parentElement;
+                row_in_table.remove();
+
+                bl.invoices.invoice_item_delete(element_id.toString());
+            }
+
+            //e.offsetParent.parentElement.remove();
+            //id = id.toString();
+            //bl.invoices.delete_invoice(id);
+
+        }
+
+        // Checked bill background
+        this.checked_bill = function (e) {
+            var inside_tag = document.getElementById("insite_filter_tag");
+            if (e.children[0].checked == true) {
+                e.offsetParent.parentElement.classList.add("checked_tr");
+                inside_tag.style.display = "";
+            } else {
+                e.offsetParent.parentElement.classList.remove("checked_tr");
+                inside_tag.style.display = "none";
+            }
+        }
+        this.filter_search_list = function (id) {
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".dropdown_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].children[0].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+        this.toggle_dropdown = (e) => {
+
+            let dropdown = e.querySelector(".dropdown_menu");
+
+            if (!dropdown.classList.contains("hidden")) {
+                dropdown.classList.add("hidden");
+            } else {
+                dropdown.classList.remove("hidden");
+            }
+
+        }
+
+
+        // load payment methods
+        this.load_payment_methods = async function () {
+
+            let url = '/api/registars/payment_methods/?id=-1';
+            var payment_methods = await ajax.get_json(url);
+
+            modal_rent_details_payment_method_type = '';
+
+            for (var pm of payment_methods) {
+
+                var pm_id = pm['id'];
+
+                // Add only Cash (984), Card (985), Bank (986) and Other (987) to dropdown list
+                if ( [984, 985, 986, 987].includes(pm_id) ) {
+                    var t = template_payment_methods_li_2.innerHTML;
+
+                    t = t.replace('${payment_method_id}', pm_id);
+                    t = t.replaceAll('${name}', pm['name']);
+
+                    js.html.insertAdjacentHTML('modal_rent_details_payment_method_type', t);
+                }
+            }
+
+
+        }
+    }
+
+
+    // bl components
+    bills_edit.bl = new function () {
+
+        // Loads bill
+        this.load_bill = async function () {
+
+            bill_id = location.hash.split('?')[1];
+
+            let url = '/api/invoices/get_single_invoice/' + bill_id;
+            var data = await ajax.get_json(url);
+
+            //Fill in bill data
+
+            bill_guid = data[0]['guid'];
+
+            var now = new Date(data[0]['inv_date']);
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+            var date_formated = moment(today, 'YYYY-MM-DD').format('DD.MM.YYYY.').toString();
+
+            $('#bills_edit_date').val(date_formated);
+
+            bills_edit_number.value = data[0]['number'];
+            bills_edit_reservation.value = data[0]['rent_id'];
+
+            let selected_apartment = bills_edit_object_list.querySelector('[data-id="' + data[0]['object_id'] + '"]');
+            if (selected_apartment) {
+                selected_apartment.click();
+            }
+
+            let selected_curr = bills_edit_currency_list.querySelector('[data-id="' + data[0]['currency_id'] + '"]');
+            if (selected_curr) {
+                selected_curr.click();
+            }
+
+            let selected_worker = bills_edit_worker_list.querySelector('[data-id="' + data[0]['worker_id'] + '"]');
+            if (selected_worker) {
+                selected_worker.click();
+            }
+
+            //Fill in price
+            bills_edit_price.value = data[0]['price'].toFixed(2);
+
+            //Invoice time
+            bills_edit_inv_time.value = data[0]['inv_time'];
+
+            //Office
+            bills_edit_office.value = data[0]['number_office'];
+
+            //POS
+            bills_edit_pos.value = data[0]['number_pos'];
+
+            // Private note
+            bills_edit_private_note.value = data[0]['private_note'];
+
+            // Short note
+            bills_edit_short_note.value = data[0]['note_short'];
+
+            //Fill in customer data
+            bills_edit_customer_name.value = data[0]['customer_name'];
+            bills_edit_customer_VAT.value = data[0]['company_number'];
+            bills_edit_customer_address.value = data[0]['customer_adress'];
+            bills_edit_customer_zip_code.value = data[0]['customer_city_zip'];
+
+            // Show Issue invoice button or Issued checkmark
+            if (data[0]['inv_lock'] == 'Y') {
+                issue_invoice_btn.classList.add('hidden');
+                issue_invoice_check.classList.remove('hidden');
+            }
+            else {
+                issue_invoice_btn.classList.remove('hidden');
+                issue_invoice_check.classList.add('hidden');
+            }
+
+            try {
+
+                let customer_country_id = data[0]['customer_country_id'];
+
+                document.querySelector(`#invoice_edit_details_countries_ul > li[data-id="${customer_country_id}"]`).click();
+
+            } catch (error) {
+                console.log(error);
+            }
+
+
+            bills_edit_customer_city.value = data[0]['customer_city_name'];
+            bills_edit_customer_mail.value = data[0]['customer_email'];
+            bills_edit_customer_telephone.value = data[0]['customer_tel'];
+
+            //Display payment method
+            document.getElementById('modal_rent_details_paid').children[0].children[0].children[1].children[0].innerText = data[0]['payment_method_name'];;
+
+            //Fill in item data
+            var invoice_items = await bl.invoices_items.list(bill_id);
+            console.log("ITEMS", invoice_items);
+
+            //Load table for invoices items
+            bills_edit_items_tbody.innerHTML = "";
+            bills_edit_items_tbody.insertAdjacentHTML('beforeend', add_modal_rent_details_tr_manually.innerHTML);
+
+            //Load dropdown for items list in default row
+            await bills_edit.bl.load_items_list('bills_edit_details_items_ul');
+            ui.custom_select("bills_edit_select_item");
+            light.dropdown.init('#bills_edit_dropdown_example_item_search');
+
+            for (invoice_item of invoice_items) {
+
+                var t = bills_edit_invoice_item.innerHTML;
+
+                t = t.replaceAll('${row_id_num}', invoice_item['id']);
+
+                t = t.replaceAll('${code}', invoice_item['code1']);
+                t = t.replaceAll('${item_name}', invoice_item['item_name']);
+                t = t.replaceAll('${item_price}', invoice_item['price'].toFixed(2));
+                t = t.replaceAll('${exchange}', invoice_item['exchange']);
+                t = t.replaceAll('${quantity}', invoice_item['quantity']);
+                t = t.replaceAll('${vat}', invoice_item['vat']);
+                t = t.replaceAll('${discount}', invoice_item['discount']);
+                t = t.replaceAll('${total}', Number(invoice_item['price_all']).toFixed(2));
+
+                bills_edit_items_tbody.insertAdjacentHTML('beforeend', t);
+
+                //Load items list of each row
+                await bills_edit.bl.load_items_list('bills_edit_details_items_ul_' + invoice_item['id']);
+                 
+                light.dropdown.init('#bills_edit_dropdown_example_item_search_' + invoice_item['id']);
+
+                try {
+                    let selected_item = document.getElementById('bills_edit_details_items_ul_' + invoice_item['id']).querySelector('[data-id="' + invoice_item['item_id'] + '"]');
+                    selected_item.click();
+                } catch (error) {
+                    console.log(error);
+                }
+
+            }
+
+            var type = "";
+            let color = "";
+
+            if (data[0]['type'].split('T')[0] === 'invoice') {
+                bills_edit_bill_type.innerText = "inv";
+                bills_edit_bill_type.style.backgroundColor = "#38a3a5"
+            } else if (data[0]['type'].split('T')[0] === 'inv_advance') {
+                bills_edit_bill_type.innerText = "adv";
+                bills_edit_bill_type.style.backgroundColor = "#397D02";
+            } else if (data[0]['type'].split('T')[0] === 'inv_owner') {
+                bills_edit_bill_type.innerText = "own";
+                bills_edit_bill_type.style.backgroundColor = "#FF7F50";
+            } else if (data[0]['type'].split('T')[0] === 'owner_fin') {
+                bills_edit_bill_type.innerText = "own fin";
+                bills_edit_bill_type.style.backgroundColor = "#B22222";
+            } else {
+                bills_edit_bill_type.innerText = "-";
+                bills_edit_bill_type.style.backgroundColor = "#36454F";
+            }
+
+            console.log("Loaded bill: ", data);
+
+        }
+
+        this.save_details = async () => {
+
+            ui.content_loading("bills_edit_content_loading");
+
+            data = {};
+
+            data.payment_method_id = document.getElementById('modal_rent_details_paid').dataset.id;
+
+            data.invoice_id = location.hash.split('?')[1]; //ne salje se invoice_id nego samo id, pitati nevena
+            data.date = bills_edit_date.value;
+            data.currency = bills_edit_currency_dropdown.dataset.id;
+            data.number = bills_edit_number.value;
+            data.reservation = bills_edit_reservation.value;
+            data.object = bills_edit_objects_dropdown.dataset.id;
+            data.worker = bills_edit_workers_dropdown.dataset.id;
+            data.private_note = bills_edit_private_note.value;
+            data.note_short = bills_edit_short_note.value;
+
+            if (!data.date) {
+                alert("You must pick a date!");
+            } else {
+                var url = 'api/invoices/invoice_details_save';
+                var response = await ajax.post_json(url, data);
+                await bl.invoices.list_by_user();
+            }
+
+            ui.content_loading_hide("bills_edit_content_loading");
+
+        }
+
+        this.delete_invoice = async () => {
+
+            await Swal.fire({
+
+                title: 'Are you sure you want to delete invoice?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6', 
+                confirmButtonText: 'Delete'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    var invoice_id = location.hash.split('?')[1];
+
+                    var url = '/api/invoices/delete_invoice/' + invoice_id;
+                    ajax.get(url);
+
+                    window.location.href = "#bills";
+
+                }
+
+            });
+
+        }
+
+        this.issue_invoice = async () => {
+
+            ui.content_loading("bills_edit_content_loading");
+
+            var invoice_id = location.hash.split('?')[1];
+
+            var url = '/api/invoices/issue_invoice/' + invoice_id;
+            await ajax.get(url);
+
+            await bills_edit.bl.load_bill();
+
+            ui.content_loading_hide("bills_edit_content_loading");
+
+        }
+
+
+        this.save_customer_data = async () => {
+
+            ui.content_loading("bills_edit_content_loading");
+
+            customer = {};
+
+            //debugger;
+
+            // -> /invoices/invoice_customer_save
+            customer.invoice_id = location.hash.split('?')[1];
+            customer.name = bills_edit_customer_name.value;
+            customer.company_number = bills_edit_customer_VAT.value;
+            customer.address = bills_edit_customer_address.value;
+            customer.zip_code = bills_edit_customer_zip_code.value;
+            customer.city = bills_edit_customer_city.value;
+            //customer.country = bills_filter_country.dataset.id;
+            try {
+                customer.country = document.getElementById("invoice_edit_dropdown_example_country_search").children[0].children[1].children[0].dataset.id;
+            } catch (error) {
+
+                console.log(error);
+                customer.country = null;
+            }
+
+            customer.email = bills_edit_customer_mail.value;
+            customer.telephone = bills_edit_customer_telephone.value;
+
+            var url = '/api/invoices/invoice_customer_save';
+            var response = await ajax.post_json(url, customer);
+            await bl.invoices.list_by_user();
+
+            ui.content_loading_hide("bills_edit_content_loading");
+        }
+
+        this.save_item_data = async () => {
+
+            //When adding new item
+
+            ui.content_loading("bills_edit_content_loading");
+
+
+            item = {};
+
+            item.invoice_id = location.hash.split('?')[1];
+            item.user_id = bl.workers.current_user_id();
+            item.worker_id = bl.workers.current_worker_id();
+
+
+
+            //Get selected currency id
+            let currencies = JSON.parse(localStorage.getItem("registars")).currency;
+            for (let i = 0; i < currencies.length; i++) {
+                if (currencies[i].code == bills_edit_currency.children[0].children[0].innerText) {
+                    item.selected_currency_id = currencies[i].id;
+                }
+            }
+
+            //debugger;
+
+            //Getting rent id
+            var url = 'api/invoices_rents/get_by_invoice_id';
+
+
+
+            //hardcoded, need to make dropdown menus
+            //item.rent_id = '2066112';
+            //item.currency_id = '2';
+            //item.neto_currency_id = '2';
+            //treba item_id i invoice_id_storno
+
+
+            //item.total = bills_edit_item_total.value;
+
+
+            //item.item_name = bills_edit_item_name.value;
+
+
+            //item.code = bills_edit_item_code.value;
+
+            try {
+
+                item.item_id = document.getElementById("bills_edit_dropdown_example_item_search").children[0].children[1].children[0].dataset.id;
+                item.item_code = document.getElementById("bills_edit_dropdown_example_item_search").children[0].children[1].children[0].dataset.code;
+                item.item_name = document.getElementById("bills_edit_dropdown_example_item_search").children[0].children[1].children[0].dataset.name;
+
+            } catch (error) {
+                console.log(error);
+
+                item.item_id = null;
+                item.item_code = null;
+                item.item_name = null;
+            }
+
+            item.price = bills_edit_item_price.value;
+            item.exchange = bills_edit_item_exchange.value || 1;
+            item.quantity = bills_edit_item_quantity.value || 1;
+            item.vat = bills_edit_item_tax.value || 0;
+            item.discount = bills_edit_item_discount.value || 0;
+
+            if (item.item_id && Number(item.price) > 0) {
+
+                var url = 'api/invoices/invoice_item_save';
+                await ajax.post_json(url, item).then(data => {
+                    set_row_values_to_default();
+                });
+
+                await bl.invoices.list_by_user();
+                await bills_edit.bl.load_bill();
+
+            }
+
+            ui.content_loading_hide("bills_edit_content_loading");
+
+            function set_row_values_to_default() {
+
+                bills_edit_item_code.value = '';
+                bills_edit_item_price.value = '';
+
+                bills_edit_item_price.value = '';
+                bills_edit_item_exchange.value = '1';
+                bills_edit_item_quantity.value = '1';
+                bills_edit_item_tax.value = '0';
+                bills_edit_item_discount.value = '0';
+                bills_edit_item_total.value = '';
+            }
+
+        }
+
+        //saves all items data in database
+        this.save_all_items_data = async () => {
+
+            let item = {}
+
+            item.invoice_id = location.hash.split('?')[1];
+            item.user_id = bl.workers.current_user_id();
+            item.worker_id = bl.workers.current_worker_id();
+
+            let table_body = document.getElementById('bills_edit_items_tbody');
+
+            for (let i = 0; i < table_body.children.length; i++) {
+
+                let one_row = table_body.children[i];
+                let last_part_of_id_of_single_row = one_row.id.split('_').pop();
+
+                if (Number(last_part_of_id_of_single_row)) {
+
+                    item.id = last_part_of_id_of_single_row;
+
+                    try {
+
+                        item.item_id = document.getElementById("bills_edit_dropdown_example_item_search_" + last_part_of_id_of_single_row).children[0].children[1].children[0].dataset.id;
+                        item.item_code = document.getElementById("bills_edit_dropdown_example_item_search_" + last_part_of_id_of_single_row).children[0].children[1].children[0].dataset.code;
+                        item.item_name = document.getElementById("bills_edit_dropdown_example_item_search_" + last_part_of_id_of_single_row).children[0].children[1].children[0].dataset.name;
+
+                        item.price = document.getElementById('bills_edit_item_price_' + last_part_of_id_of_single_row).value;
+                        item.exchange = document.getElementById('bills_edit_item_exchange_' + last_part_of_id_of_single_row).value;
+                        item.quantity = document.getElementById('bills_edit_item_quantity_' + last_part_of_id_of_single_row).value;
+                        item.vat = document.getElementById('bills_edit_item_tax_' + last_part_of_id_of_single_row).value;
+                        item.discount = document.getElementById('bills_edit_item_discount_' + last_part_of_id_of_single_row).value;
+
+                        await ajax.post_json('api/invoices/invoice_item_save', item);
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            }
+        }
+
+        //opens bill for printing in a new tab
+        this.print = () => {
+
+            let guid_url = 'https://api.zaggys.com/invoices/pdf/' + bill_guid;
+
+            window.open(guid_url, '_blank');
+
+        }
+
+        //changing bills payment status
+        this.bills_status = function (id, status) {
+            var url = 'api/invoices/invoice_status_save' + `?id=${id}&paid=${status}`;
+            $.post(url).done((data) => { console.log(data) });
+
+        }
+
+        // loading countries into dropdown menu
+        this.load_countries_list = function () {
+
+            //debugger;
+
+            var countries_list = bl.countries.list();
+            invoice_edit_details_countries_ul.innerHTML = '';
+
+            for (var cl of countries_list) {
+
+                var t = bills_edit_countries_template.innerHTML;
+
+                t = t.replaceAll('${id}', cl['id']);
+                t = t.replaceAll('${code1}', cl['code1']);
+                t = t.replaceAll('${code2}', cl['code2'].toLowerCase());
+                t = t.replaceAll('${country}', cl['country']);
+
+                invoice_edit_details_countries_ul.insertAdjacentHTML('beforeend', t);
+            }
+
+        }
+
+        // loading object list
+        this.load_object_list = function () {
+            
+            var object_list = bl.objects.list_get();
+            bills_edit_object_list.innerHTML = '';
+
+            for (var ol of object_list) {
+
+                var t = bills_edit_object_list_li.innerHTML;
+                t = t.replace('${id}', ol['id']);
+                t = t.replace('${id}', ol['id']);
+                t = t.replace('${name}', ol['name']);
+                t = t.replace('${name}', ol['name']);
+                bills_edit_object_list.insertAdjacentHTML('beforeend', t);
+
+            }
+        }
+
+        //load currency list
+        this.load_currency_list = async function () {
+
+            var curr_list = await bl.currency.list();
+            bills_edit_currency_list.innerHTML = '';
+
+            for (var ol of curr_list) {
+
+                var t = bills_edit_worker_list_li.innerHTML;
+                t = t.replace('${id}', ol['id']);
+                t = t.replace('${code}', ol['code']);
+                t = t.replace('${name}', ol['code']);
+                bills_edit_currency_list.insertAdjacentHTML('beforeend', t);
+
+            }
+        }
+
+
+        //load item list
+        this.load_items_list = async function (id_ul_element) {
+
+            try {
+
+                var items_list = await bl.item.get();
+
+                let ulElement = document.getElementById(id_ul_element);
+                ulElement.innerHTML = '';
+
+                for (var item of items_list) {
+
+                    var t = bills_edit_items_template.innerHTML;
+
+                    t = t.replaceAll('${id}', item['id']);
+                    t = t.replaceAll('${code}', item['code']);
+                    t = t.replaceAll('${name}', item['name']);
+
+                    ulElement.insertAdjacentHTML('beforeend', t);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+
+        //load worker list
+        this.load_worker_list = async () => {
+            var worker_list = await bl.workers.list_all();
+
+            bills_edit_worker_list.innerHTML = '';
+
+            for (var ol of worker_list) {
+
+                var t = bills_edit_currency_list_li.innerHTML;
+                t = t.replace('${id}', ol['id']);
+                t = t.replace('${name}', ol['name']);
+                bills_edit_worker_list.insertAdjacentHTML('beforeend', t);
+
+            }
+        }
+
+
+        // adding item to a bill
+        this.bills_item_add = async () => {
+
+            //var url = '/api/rents_items/add/' + modal_details_rent.rent_id; TODO: NEW URL
+            //var response = await ajax.get(url);
+
+            var item = {};
+
+            item.code = bills_edit_item_code.value;
+            item.name = bills_edit_item_name.value;
+            item.price = bills_edit_item_price.value;
+            item.quantity = bills_edit_item_quantity.value;
+            item.vat = bills_edit_item_tax.value;
+            //var total = modal_rent_details_item_total.value;
+            item.rent_item_id = response;
+
+            //var url = '/api/rents_items/save';
+            //var response = await ajax.post(url, item);
+
+
+            //modal_details_rent.bl.rent_items_load();
+        }
+
+
+        // on input change in adding item to bill
+        this.update_row_values_onchange = async (id_num_of_row = '') => {
+
+            let suffix = id_num_of_row.toString().length > 0 && Number(id_num_of_row) ? '_' + id_num_of_row : '';
+
+            //Elements
+            let priceElement = document.getElementById('bills_edit_item_price' + suffix);
+            let exchangeElement = document.getElementById('bills_edit_item_exchange' + suffix);
+            let quantityElement = document.getElementById('bills_edit_item_quantity' + suffix);
+            let vatElement = document.getElementById('bills_edit_item_tax' + suffix);
+            let discountElement = document.getElementById('bills_edit_item_discount' + suffix);
+            let totalElement = document.getElementById('bills_edit_item_total' + suffix);
+
+            //Values
+            let price = Number(priceElement.value) && Number(priceElement.value) >= 0 ? Number(priceElement.value) : 0;
+            let exchange = Number(exchangeElement.value) && Number(exchangeElement.value) > 0 ? Number(exchangeElement.value) : 1;
+            let quantity = Number(quantityElement.value) && Number(quantityElement.value) >= 0 ? Number(quantityElement.value) : 0;
+            let vat = Number(vatElement.value) && Number(vatElement.value) >= 0 ? Number(vatElement.value) : 0;
+            let discount = Number(discountElement.value) && Number(discountElement.value) >= 0 ? Number(discountElement.value) : 0;
+
+            let total = price * exchange * quantity * ((100 + vat) / 100) * ((100 - discount) / 100);
+
+            if (total < 0) {
+                total = 0;
+            }
+
+            totalElement.value = total.toFixed(2);
+
+            var json = {
+                id: id_num_of_row,
+                item_code: document.getElementById('bills_edit_item_code_' + id_num_of_row).value,
+                item_name: document.getElementById('bills_edit_item_name_' + id_num_of_row).value,
+                price: document.getElementById('bills_edit_item_price_' + id_num_of_row).value,
+                quantity: document.getElementById('bills_edit_item_quantity_' + id_num_of_row).value,
+                vat: document.getElementById('bills_edit_item_tax_' + id_num_of_row).value,
+                discount: document.getElementById('bills_edit_item_discount_' + id_num_of_row).value,
+            }
+
+            // save 
+            ajax.post_json('/api/invoices_items/save', json);
+
+        }
+
+    }
+
+    // On load
+    bills_edit.load();
+
+</script>
+

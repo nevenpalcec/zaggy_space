@@ -1,0 +1,97 @@
+﻿<!-- Modal cancellation policies -->
+<div id="modal_cancellation_policies" class="view_modal hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-info-circle pr-2"></i>Cancellation policies</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body">
+                <div class="mb-1 font_medium text-uppercase font_5">No refund</div>
+                <div>No refund if reservation is canceled any time, no refund is available for the guest</div>
+                <div class="border-bottom my-3"></div>
+                <div class="mb-1 font_medium text-uppercase font_5">Strict</div>
+                <div>100% refund if reservation is canceled at least 60 days before the arrival date</div>
+                <div class="border-bottom my-3"></div>
+                <div class="mb-1 font_medium text-uppercase font_5">Firm</div>
+                <div>100% refund if reservation is canceled at least 60 days before the arrival date 50% refund if reservation is canceled at least 30 days before the arrival date</div>
+                <div class="border-bottom my-3"></div>
+                <div class="mb-1 font_medium text-uppercase font_5">Moderate</div>
+                <div>100% refund if reservation is canceled at least 30 days before the arrival date 50% refund if reservation is canceled at least 14 days before the arrival date</div>
+                <div class="border-bottom my-3"></div>
+                <div class="mb-1 font_medium text-uppercase font_5">Relaxed</div>
+                <div>100% refund if reservation is canceled at least 14 days before the arrival date 50% refund if reservation is canceled at least 7 days before the arrival date</div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button class="btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var modal_cancellation_policies = {};
+
+    // Load function
+    modal_cancellation_policies.load = () => {
+
+        modal_cancellation_policies.bl.close_modal("modal_cancellation_policies");
+
+    }
+
+    // BL logic
+        modal_cancellation_policies.bl = new function () {
+
+            // CLose modal
+            this.close_modal = function (id) {
+                let details_id = document.getElementById(id);
+                let modal_content = details_id.getElementsByClassName("modal_content")[0];
+                let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+                for (let i = 0; i < dismiss.length; i++) {
+                    dismiss[i].onclick = function () {
+                        hide_modal();
+                    }
+                }
+                document.addEventListener("mouseup", function (e) {
+                    if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                        if (!details_id.classList.contains("hidden")) {
+                            hide_modal();
+                        }
+                    }
+                });
+                document.onkeydown = function (e) {
+                    if (!details_id.classList.contains("hidden")) {
+                        if (e.keyCode === 27) {// || e.keyCode === 13) {
+                            hide_modal();
+                        }
+                    }
+                };
+                function hide_modal() {
+                    details_id.classList.add('visuallyhidden');
+                    details_id.addEventListener('transitionend', function (e) {
+                        details_id.classList.add('hidden');
+                    }, {
+                        capture: false,
+                        once: true,
+                        passive: false
+                    });
+                }
+            }
+
+            // Open modal
+            this.show_modal = function (id) {
+                let modal_id = document.getElementById(id);
+                modal_id.classList.remove("hidden");
+                setTimeout(function () {
+                    modal_id.classList.remove('visuallyhidden');
+                }, 20);
+            };
+
+        };
+
+    // On load
+    modal_cancellation_policies.load();
+
+</script>

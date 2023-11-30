@@ -1,0 +1,785 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>User settings
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#settings" class="filter_link active"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_status" class="filter_link"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Status</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#rents_sources" class="filter_link"><i class="fas fa-code-branch pr-lg-2"></i><span class="d-none d-lg-flex">Sources</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#payments_methods" class="filter_link hidden"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Payment methods</span></a>
+        <div class="filter_line_y hidden"></div>
+        <a href="#evisitor" class="filter_link"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">eVisitor</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoice_text" class="filter_link"><i class="fas fa-file-invoice pr-lg-2"></i><span class="d-none d-lg-flex">Invoice text</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#email_templates" class="filter_link"><i class="fas fa-envelope pr-lg-2"></i><span class="d-none d-lg-flex">Email templates</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="settings_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content settings pt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Person details -->
+                    <div class="font_5 font_bold color_primary pb-2">User account</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Name</label>
+                                <input type="text" class="form-control focus" id="settings_user_name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Email</label>
+                                <input type="email" class="form-control focus" id="settings_user_email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Username</label>
+                                <input type="text" class="form-control focus" id="settings_user_username">
+                            </div>
+                        </div>
+                        <div class="col-md-6 hidden">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="mb-1">Zip</label>
+                                        <input type="text" class="form-control focus" id="settings_user_postal_code">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 hidden">
+                                    <div class="form-group">
+                                        <label class="mb-1">City</label>
+                                        <input type="text" class="form-control focus" id="settings_user_city">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="mb-1">Country</label>
+                                <div id="settings_personal_select_filter_countries" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <div class="select_ul_filter_wrapper hidden">
+                                        <div class="select_search m-2">
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                        <ul class="select_filter_ul mt-2" id="settings_personal_select_filter_countries_ul">
+                                            <li class="select_filter_li">
+                                                <span data-id="1">
+                                                    <span><img src="./assets/images/icons/flags/ad.svg" alt="icon"></span>
+                                                    <span>Example so looooook nameeeeeeeeeeee</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="2">
+                                                    <span><img src="./assets/images/icons/flags/at.svg" alt="icon"></span>
+                                                    <span>Austria</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="3">
+                                                    <span><img src="./assets/images/icons/flags/es.svg" alt="icon"></span>
+                                                    <span>Spain</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="4">
+                                                    <span><img src="./assets/images/icons/flags/fi.svg" alt="icon"></span>
+                                                    <span>Finska</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="5">
+                                                    <span><img src="./assets/images/icons/flags/fr.svg" alt="icon"></span>
+                                                    <span>France</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="6">
+                                                    <span><img src="./assets/images/icons/flags/hr.svg" alt="icon"></span>
+                                                    <span>Croatia</span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Phone</label>
+                                <input type="tel" class="form-control focus" id="settings_tel">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Company details -->
+                    <div class="font_5 font_bold color_primary pb-2 mt-4">Company</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Name</label>
+                                <input type="text" class="form-control focus" id="settings_company_name">
+                            </div>
+                        </div>
+                        <div class="col-md-6 hidden">
+                            <div class="form-group">
+                                <label class="mb-1">Surname</label>
+                                <input type="text" class="form-control focus">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Address</label>
+                                <input type="text" class="form-control focus" id="settings_company_adress">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="mb-1">Zip</label>
+                                        <input type="text" class="form-control focus" id="settings_company_city_zip">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="mb-1">City</label>
+                                        <input type="text" class="form-control focus" id="settings_company_city_name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="mb-1">Country</label>
+                                <div id="settings_company_select_filter_countries" class="select">
+                                    <button class="custom-select focus" id="settings_company_select_filter_countries_btn"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <div class="select_ul_filter_wrapper hidden">
+                                        <div class="select_search m-2">
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                        <ul class="select_filter_ul mt-2" id="settings_company_select_filter_countries_ul">
+                                            <li class="select_filter_li">
+                                                <span data-id="1">
+                                                    <span><img src="./assets/images/icons/flags/ad.svg" alt="icon"></span>
+                                                    <span>Example so looooook nameeeeeeeeeeee</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="2">
+                                                    <span><img src="./assets/images/icons/flags/at.svg" alt="icon"></span>
+                                                    <span>Austria</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="3">
+                                                    <span><img src="./assets/images/icons/flags/es.svg" alt="icon"></span>
+                                                    <span>Spain</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="4">
+                                                    <span><img src="./assets/images/icons/flags/fi.svg" alt="icon"></span>
+                                                    <span>Finska</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="5">
+                                                    <span><img src="./assets/images/icons/flags/fr.svg" alt="icon"></span>
+                                                    <span>France</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="6">
+                                                    <span><img src="./assets/images/icons/flags/hr.svg" alt="icon"></span>
+                                                    <span>Croatia</span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">VATID/OIB</label>
+                                <input type="number" class="form-control focus" id="settings_company_id">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Add custom cancellation policy -->
+                    <div class="font_5 font_bold color_primary pb-2 mt-4 hidden">Custom cancellation policy</div>
+                    <div class="row hidden">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Policy name</label>
+                                <input type="text" class="form-control focus" id="settings_cancellation_policy_name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Policy description</label>
+                                <textarea class="form-control focus" rows="1" cols="50" id="settings_cancellation_policy_description"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2 ml-auto mr-2">
+                            <button class="btn btn_secondary" onclick="settings.bl.add_cancellation_policy()">Add</button>
+                        </div>
+
+                    </div>
+
+                    <!-- Application settings -->
+                    <div class="font_5 font_bold color_primary pb-2 mt-4 hidden">Application settings</div>
+                    <div class="row">
+                        <div class="col-md-6 hidden">
+
+                            <div class="form-group ">
+                                <label class="mb-1">Country</label>
+                                <div id="select_settings_time_language" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <div class="select_ul_filter_wrapper hidden">
+                                        <div class="select_search m-2">
+                                            <input type="text" class="form-control" placeholder="Search">
+                                        </div>
+                                        <ul class="select_filter_ul mt-2" id="select_settings_time_language_ul">
+                                            <li class="select_filter_li">
+                                                <span data-id="1">
+                                                    <span><img src="./assets/images/icons/flags/ad.svg" alt="icon"></span>
+                                                    <span>Example so looooook nameeeeeeeeeeee</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="2">
+                                                    <span><img src="./assets/images/icons/flags/at.svg" alt="icon"></span>
+                                                    <span>Austria</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="3">
+                                                    <span><img src="./assets/images/icons/flags/es.svg" alt="icon"></span>
+                                                    <span>Spain</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="4">
+                                                    <span><img src="./assets/images/icons/flags/fi.svg" alt="icon"></span>
+                                                    <span>Finska</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="5">
+                                                    <span><img src="./assets/images/icons/flags/fr.svg" alt="icon"></span>
+                                                    <span>France</span>
+                                                </span>
+                                            </li>
+                                            <li class="select_filter_li">
+                                                <span data-id="6">
+                                                    <span><img src="./assets/images/icons/flags/hr.svg" alt="icon"></span>
+                                                    <span>Croatia</span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-none">
+                            <div class="form-group">
+                                <label class="mb-1">Time Zone</label>
+                                <div id="select_settings_time_zone" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="1">Example 01</li>
+                                        <li class="select_li" data-id="2">Example 02</li>
+                                        <li class="select_li" data-id="3">Example 03</li>
+                                        <li class="select_li" data-id="4">Example 04</li>
+                                        <li class="select_li" data-id="5">Example 05</li>
+                                        <li class="select_li" data-id="6">Example 06</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-none">
+                            <div class="form-group">
+                                <label class="mb-1">Rents' currency</label>
+                                <div id="select_settings_currency" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden" id="settings_currency_ul">
+                                        <li class="select_li" data-id="1">Example 01</li>
+                                        <li class="select_li" data-id="2">Example 02</li>
+                                        <li class="select_li" data-id="3">Example 03</li>
+                                        <li class="select_li" data-id="4">Example 04</li>
+                                        <li class="select_li" data-id="5">Example 05</li>
+                                        <li class="select_li" data-id="6">Example 06</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-none">
+                            <div class="form-group">
+                                <label class="mb-1">Billing currency</label>
+                                <div id="select_settings_currency_bills" class="select">
+                                    <button class="custom-select focus"></button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden" id="select_settings_currency_bills_ul">
+                                        <li class="select_li" data-id="1">Example 01</li>
+                                        <li class="select_li" data-id="2">Example 02</li>
+                                        <li class="select_li" data-id="3">Example 03</li>
+                                        <li class="select_li" data-id="4">Example 04</li>
+                                        <li class="select_li" data-id="5">Example 05</li>
+                                        <li class="select_li" data-id="6">Example 06</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Method of payment -->
+                    <div class="font_5 font_bold color_primary pb-2 mt-4 hidden">Payment method</div>
+                    <div class="pb-2 hidden">You can pay for the Syncbeds subscription with a Maestro, MasterCard or Visa card.</div>
+                    <button class="btn btn_primary hidden"><i class="fas fa-plus pr-2"></i>Add</button>
+
+                    <!-- Note -->
+                    <div class="font_5 font_bold color_primary pb-2 mt-4">Note</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <textarea id="users_note" class="form-control" style="height: 125px;">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-right mt-3">
+                        <button class="btn btn_secondary" onclick="settings.bl.save_settings();"><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>
+                    <!--<div class="text-right mt-3">
+        <button class="btn btn_primary" onclick="settings.bl.save_settings()"><i class="fas fa-save pr-2"></i>Save</button>
+    </div>-->
+                </div>
+
+                <div class="col-md-6">
+                    <div class="font_5 font_bold color_primary pb-2">Profile image</div>
+                    <div id="img_avatar_wrapper" class="img_avatar_wrapper pb-2 d-inline-block">
+
+                        <!-- User image -->
+                        <div class="img_avatar" style="display: none;">
+                            <img src="" alt="Profile image" id="settings_avatar_image">
+                        </div>
+
+                        <div id="avatar_dropdown" class="avatar_dropdown_menu w-100 hidden">
+                            <a class="avatar_dropdown_item open" href="#" target="_blank">
+                                Open
+                            </a>
+                            <div class="avatar_dropdown_item upload" style="cursor: pointer;" onclick="avatar_upload.click();">
+                                <form id="avatar_upload_form" name="upload" action="/home/user_picture_add" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <input type="file" id="avatar_upload" name="avatar_upload" class="d-none" onchange="this.parentElement.submit();" />
+                                    Upload new
+                                </form>
+                            </div>
+                            <!--<a class="avatar_dropdown_item" href="#">Take photo...</a>-->
+                            <!--<a class="avatar_dropdown_item" href="#">Use from Google</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--templates-->
+<div>
+    <!--template for list of countries-->
+    <template id="template_settings_countries_list">
+        <li class="select_filter_li" style="" data-id="${country_id}" data-name="${country}">
+            <span>
+                <span><img src="./assets/images/icons/flags/${code2}.svg" alt="icon"></span>
+                <span>${country}</span>
+            </span>
+        </li>
+    </template>
+
+    <!--template for currency list-->
+    <template id="template_currency_list">
+        <li class="select_li" data-id="${id}">${name}</li>
+    </template>
+
+    <template id="template_settings_languages">
+        <li class="select_filter_li" style="" data-id="${id}" data-name="${language}">
+            <span>
+                <span><img src="./assets/images/icons/flags/${code_iso_country}.svg" alt="icon"></span>
+                <span>${language}</span>
+            </span>
+        </li>
+    </template>
+</div>
+
+<script>
+
+    var settings = {};
+
+    // settings load function
+    settings.load = () => {
+
+        settings.ui.load_languages();
+        settings.ui.load_countries_list();
+        settings.ui.load_company_countries_list();
+        settings.ui.load_currency();
+        settings.ui.setup_avatar();
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        ui.display_title("Settings");
+        ui.custom_select("select_settings_time_zone");
+
+        settings.ui.filter_search_list("select_settings_time_language");
+        settings.ui.select_filter_custom("select_settings_time_language");
+
+        // company country dropdown search
+        settings.ui.filter_search_list('settings_company_select_filter_countries');
+        settings.ui.select_filter_custom('settings_company_select_filter_countries');
+
+        // personal country dropdown search
+        settings.ui.filter_search_list('settings_personal_select_filter_countries');
+        settings.ui.select_filter_custom('settings_personal_select_filter_countries');
+
+        // application time and language
+        settings.ui.filter_search_list('select_settings_time_language');
+        settings.ui.select_filter_custom('select_settings_time_language');
+
+        settings.ui.load_settings();
+
+        avatar_upload_form.action = '/home/user_picture_add/' + bl.workers.current_user_id();
+
+    }
+
+    settings.ui = new function () {
+
+        this.setup_avatar = function () {
+
+            img_avatar_wrapper.onmouseover = function () {
+                avatar_dropdown.classList.remove('hidden');
+            }
+
+            img_avatar_wrapper.onmouseout = function () {
+                avatar_dropdown.classList.add('hidden');
+            }
+
+        }
+
+        // Loading list of countries for person in template
+        this.load_countries_list = function () {
+
+            var countries_list = bl.countries.list();
+            settings_personal_select_filter_countries_ul.innerHTML = '';
+
+            for (var cl of countries_list) {
+
+                var t = template_settings_countries_list.innerHTML;
+                t = t.replace('${country_id}', cl['id']);
+                t = t.replace('${code2}', cl['code2']);
+                t = t.replace('${country}', cl['country']);
+                t = t.replace('${country}', cl['country']);
+                js.html.insertAdjacentHTML('settings_personal_select_filter_countries_ul', t);
+
+            }
+
+        }
+
+        // Loading list of countries for company in template
+        this.load_company_countries_list = function () {
+
+            var countries_list = bl.countries.list();
+            settings_company_select_filter_countries_ul.innerHTML = '';
+
+            for (var cl of countries_list) {
+                var t = template_settings_countries_list.innerHTML;
+                t = t.replace('${country_id}', cl['id']);
+                t = t.replace('${code2}', cl['code2']);
+                t = t.replace('${country}', cl['country']);
+                t = t.replace('${country}', cl['country']);
+                js.html.insertAdjacentHTML('settings_company_select_filter_countries_ul', t);
+
+            }
+
+        }
+
+        // Loading list of currency in template
+        this.load_currency = async () => {
+
+            var url = '/api/users/get_currency/';
+            var response = await ajax.get(url);
+            var response_json = JSON.parse(response);
+
+            settings_currency_ul.innerHTML = '';
+            select_settings_currency_bills_ul.innerHTML = '';
+            for (var cl of response_json) {
+
+                var t = template_currency_list.innerHTML;
+                t = t.replace('${id}', cl['id']);
+                t = t.replace('${name}', cl['name_full']);
+                js.html.insertAdjacentHTML('settings_currency_ul', t);
+                js.html.insertAdjacentHTML('select_settings_currency_bills_ul', t);
+
+            }
+
+            ui.custom_select("select_settings_currency_bills");
+
+        }
+
+
+        // loading
+        this.load_settings = async function () {
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/users/details/' + user_id;
+            var response = await ajax.get(url);
+
+            var user = JSON.parse(response)[0];
+
+            //console.log(user);
+
+            document.getElementById('settings_user_name').value = user['name']
+            document.getElementById('settings_tel').value = user['tel']
+            document.getElementById('settings_company_name').value = user['company_name'];
+            document.getElementById('settings_company_adress').value = user['company_adress'];
+            document.getElementById('settings_company_city_zip').value = user['company_city_zip'];
+            document.getElementById('settings_company_city_name').value = user['company_city_name'];
+            document.getElementById('settings_company_id').value = user['company_id'];
+            document.getElementById('settings_user_username').value = user['user'];
+            document.getElementById('settings_user_email').value = user['email'];
+            document.getElementById('settings_tel').value = user['tel'];
+            users_note.value = user['note'];
+
+            var company_country_id = user['company_country_id'];
+            var currency_id_inv = user['currency_id_inv'];
+            var country_id = user['country_id'];
+            var currency_id_rent = user['currency_id_rent'];
+
+            if (company_country_id != null) {
+                document.querySelector(`#settings_company_select_filter_countries_ul > li[data-id="${company_country_id}"]`).click();
+            }
+
+            if (currency_id_inv != null) {
+                document.querySelector(`#select_settings_currency_bills_ul > li[data-id="${currency_id_inv}"]`).click();
+            }
+
+            if (country_id != null) {
+                document.querySelector(`#settings_personal_select_filter_countries_ul > li[data-id="${country_id}"]`).click();
+
+            }
+
+            if (currency_id_rent != null) {
+                document.querySelector(`#settings_currency_ul > li[data-id="${currency_id_rent}"]`).click();
+            }
+
+            var url = '/api/users/picture/' + bl.workers.current_user_id();
+
+            settings_avatar_image.src = 'https://api.zaggy.net/users/picture/' + bl.workers.current_user_id();
+            $(settings_avatar_image.parentElement).fadeIn(250);
+
+            // Set avatar buttons
+            document.querySelector('.avatar_dropdown_item.open').href = settings_avatar_image.src;
+
+        }
+
+        // loading languages for user account
+        this.load_languages = async () => {
+
+            var url = '/api/users/list_languages/';
+            var response = await ajax.get(url);
+            var response_json = JSON.parse(response);
+
+            select_settings_time_language_ul.innerHTML = '';
+
+            //console.log(response_json);
+
+            for (var lng of response_json) {
+
+                //console.log(lng);
+                var t = template_settings_languages.innerHTML;
+                t = t.replace('${id}', lng['id']);
+                t = t.replace('${code_iso_country}', lng['code_iso_country']);
+                t = t.replace('${language}', lng['language']);
+                t = t.replace('${language}', lng['language']);
+
+                js.html.insertAdjacentHTML('select_settings_time_language_ul', t);
+            }
+
+        }
+
+        // Custom select
+        this.select_filter_custom = function (id) {
+
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul_wrapper = select_id.getElementsByClassName("select_ul_filter_wrapper")[0];
+            let ul = select_id.getElementsByClassName("select_filter_ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul_wrapper.classList.remove("hidden");
+                    let ulOffset = $(ul_wrapper).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul_wrapper).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul_wrapper).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul_wrapper.classList.add("reverse");
+                    } else {
+                        ul_wrapper.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul_wrapper.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(btn).has(e.target).length === 0) {
+                    if (!$(ul_wrapper).is(e.target) && $(ul_wrapper).has(e.target).length === 0) {
+                        ul_wrapper.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    btn.setAttribute('data-id', e.currentTarget.dataset.id);
+                    btn.setAttribute('data-code1', e.currentTarget.dataset.name);
+                    ul_wrapper.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+
+        // filter search
+        this.filter_search_list = function (id) {
+
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".select_filter_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+
+
+    }
+
+    settings.bl = new function () {
+
+        this.add_cancellation_policy = async () => {
+
+            ui.content_loading("settings_content_loading");
+
+            let user_id = bl.workers.current_user_id();
+
+            var url = "/api/cancellation_policies/cancellations_add?user_id=" + user_id;
+            var cancellation_id = await ajax.get_json(url);
+
+            data = {};
+
+            data.cancellation_id = cancellation_id;
+            data.name = settings_cancellation_policy_name.value;
+            data.note = settings_cancellation_policy_description.value;
+
+            url = "/api/cancellation_policies/cancellations_save";
+            let res = await ajax.post_json(url, data);
+
+            ui.content_loading_hide("settings_content_loading");
+
+        }
+
+        //save user settings
+        this.save_settings = async () => {
+
+            user_settings = {};
+
+            user_settings.user_id = bl.workers.current_user_id();
+
+            //personal details
+            user_settings.name = settings_user_name.value;
+            //settings.address = settings_user_address.value;
+            user_settings.postal_code = settings_user_postal_code.value;
+            user_settings.city = settings_user_city.value;
+            user_settings.phone = settings_tel.value;
+            user_settings.user = settings_user_username.value;
+            user_settings.email = settings_user_email.value;
+            user_settings.tel = settings_tel.value;
+
+            //company details
+            user_settings.company_adress = settings_company_adress.value;
+            user_settings.company_name = settings_company_name.value;
+            user_settings.company_city_zip = settings_company_city_zip.value;
+            user_settings.company_city_name = settings_company_city_name.value;
+            user_settings.company_country_id = settings_company_select_filter_countries_btn.dataset.id;
+            user_settings.company_id = settings_company_id.value;
+
+            // Note
+            user_settings.note = users_note.value;
+
+            var url = '/api/users/user_settings/';
+
+            await ajax.post_json(url, user_settings);
+            await $(".view_content").animate({ scrollTop: 0 }, "slow").promise();
+
+            routing.reload();
+
+        }
+
+
+    }
+
+    // Load
+    settings.load();
+
+</script>

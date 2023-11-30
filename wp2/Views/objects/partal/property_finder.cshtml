@@ -1,0 +1,202 @@
+﻿@{
+    var user_id = bl.settings_current.user_id;
+
+    var settings_str = (string) System.Web.HttpContext.Current.Session["settings"];
+    var settings = bl.sys.json.obj(settings_str);
+
+    var wp2_search_menu_type = (string) settings["wp2_search_menu_type"];
+    var objects_filters_amenities = (string) settings["objects_filters_amenities"];
+    var objects_filters_pets = (string) settings["objects_filters_pets"];
+
+    var date_from = (string) (ViewData["date_from"] ?? "");
+    var date_until = (string) (ViewData["date_until"] ?? "");
+    var adults = (string) (ViewData["adults"] ?? "1");
+    var pets = (string) (ViewData["pets"] ?? "");
+    var amenity_id = (string) (ViewData["amenity_id"] ?? "");
+    var cities = bl.units.get_user_cities(user_id).Rows;
+    var objects_types = bl.objects_types.list_active(user_id).Rows;
+   
+    if (adults == "5") {
+        adults += '+';
+    }
+}
+
+<div class="finder">
+
+    <div class="finder-item calendar">
+        <i class="far fa-calendar-alt"></i>
+        <input id="finder_check_in" type="text" class="form-control" placeholder="@bl.lng.l.Check_IN" name="date_from">
+    </div>
+
+    <div class="finder-item calendar">
+        <i class="far fa-calendar-alt"></i>
+        <input id="finder_check_out" type="text" class="form-control" placeholder="@bl.lng.l.Check_OUT" name="date_until">
+    </div>
+
+    <div class="finder-item">
+        <div class="dropdown" id="dropdown_adults">
+            <i class="fas fa-user mr-4"></i>
+
+            <div class="dropdown-toggle btn" data-adult-id="1" type="text" id="dropdown_adults_id" data-toggle="dropdown" name="adults" style="padding-left: 30px !important;"
+                 contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@adults">
+                @adults
+            </div>
+
+            <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton">
+                <a data-id="1" class="dropdown-item">1</a>
+                <a data-id="2" class="dropdown-item">2</a>
+                <a data-id="3" class="dropdown-item">3</a>
+                <a data-id="4" class="dropdown-item">4</a>
+                <a data-id="5" class="dropdown-item">5+</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="finder-item">
+        <!-- pets filter -->
+        <div class="dropdown @(wp2_search_menu_type == "pet_friendly" ?  "" : "d-none")" id="dropdown_pets">
+            <i class="fas fa-dog mr-4"></i>
+            <div class="dropdown-toggle btn" data-children-id="1" type="button" id="dropdown_pets_id" data-toggle="dropdown" style="padding-left: 30px !important;"
+                 contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@pets" placeholder="@bl.lng.l.Pets">
+                @(string.IsNullOrEmpty(pets) == true ? " - - - " : pets)
+            </div>
+            <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton">
+                <a data-id="0" class="dropdown-item"> - - - </a>
+                <a data-id="1" class="dropdown-item">1</a>
+                <a data-id="2" class="dropdown-item">2</a>
+                <a data-id="3" class="dropdown-item">3</a>
+                <a data-id="4" class="dropdown-item">4</a>
+                <a data-id="5" class="dropdown-item">5+</a>
+            </div>
+        </div>
+
+        <!-- amenites filters -->
+        <div class="dropdown @(wp2_search_menu_type == "amenities" ?  "" : "d-none")" id="dropdown_amenity">
+            <div class="dropdown-toggle btn" data-children-id="1" type="button" id="dropdown_amenity_id" data-toggle="dropdown" style="padding-left: 30px !important;"
+                 contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@amenity_id" placeholder="@bl.lng.l.Amenites">
+                - - -
+            </div>
+            <div class="dropdown-menu w-100 rounded-0" aria-labelledby="dropdownMenuButton">
+                <a data-id="" data-name="" class="dropdown-item"> - - - </a>
+                <a data-id="512" data-name="gym" class="dropdown-item"> @bl.lng.l.Gym </a>
+                <a data-id="645" data-name="wifi" class="dropdown-item"> @bl.lng.l.WiFi </a>
+                <a data-id="230" data-name="sauna" class="dropdown-item"> @bl.lng.l.Sauna </a>
+                <a data-id="284" data-name="seaview" class="dropdown-item"> @bl.lng.l.Seaview </a>
+                <a data-id="788" data-name="terrace" class="dropdown-item"> @bl.lng.l.Terrace </a>
+                <a data-id="614" data-name="parking" class="dropdown-item"> @bl.lng.l.Parking </a>
+                <a data-id="606" data-name="luxurious" class="dropdown-item"> @bl.lng.l.Luxurious </a>
+                <a data-id="686" data-name="pets_allowed" class="dropdown-item"> @bl.lng.l.Pets allowed </a>
+                <a data-id="1022" data-name="swimming_pool" class="dropdown-item"> @bl.lng.l.Swimming_pool </a>
+                <a data-id="666" data-name="air_conditioning" class="dropdown-item"> @bl.lng.l.Air_conditioning </a>
+            </div>
+        </div>
+
+        <!-- location filters -->
+        <div class="dropdown @(wp2_search_menu_type == "location" ?  "" : "d-none")" id="dropdown_location">
+            <div class="dropdown-toggle btn h-100" type="button" data-toggle="dropdown" aria-expanded="false">
+                <input type="text" class="form-control p-0 cursor-pointer bg-white" style="height: unset; padding-left: 30px !important;" id="dropdown_city" value="" placeholder="@bl.lng.l.Location" readonly>
+            </div>
+            <div class="dropdown-menu w-100 rounded-0 overflow-auto" aria-labelledby="dropdownMenuButton" tabindex="-1" style="max-height: 13rem;">
+                <a data-id="all" data-value="" class="dropdown-item" onclick="document.getElementById('dropdown_city').value=this.dataset.value; return false;"> - - - </a>
+                @foreach (System.Data.DataRow r in cities) {
+                    <a class="dropdown-item" data-value="@r["city_name"].ToString()" onclick="document.getElementById('dropdown_city').value=this.dataset.value; return false;">@r["city_name"].ToString()</a>
+                }
+            </div>
+        </div>
+
+        <!-- accommodation filters -->
+        <div class="dropdown @(wp2_search_menu_type == "accommodation_type" ?  "" : "d-none")" id="dropdown_accommodation">
+            <div class="dropdown-toggle btn h-100" type="button" data-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-home"></i>
+                <input type="text" class="form-control p-0 cursor-pointer bg-white" style="height: unset; padding-left: 20px !important;" id="dropdown_accommodation_type" placeholder="@bl.lng.l.Accommodation" value="" readonly>
+            </div>
+            <div class="dropdown-menu w-100 rounded-0 overflow-auto" aria-labelledby="dropdownMenuButton" tabindex="-1" style="max-height: 13rem;">
+                <a data-id="all" data-value="" class="dropdown-item" onclick="document.getElementById('dropdown_accommodation_type').value=this.dataset.value; return false;"> - - - </a>
+                @foreach (System.Data.DataRow r in objects_types) {
+                    <a class="dropdown-item" data-value="@r["name"].ToString()" onclick="document.getElementById('dropdown_accommodation_type').value=this.dataset.value; return false;">@r["name"].ToString()</a>
+                }
+            </div>
+        </div>
+
+        <!-- empty field -->
+        @*<div class="dropdown @(wp2_search_menu_type == "empty" ?  "" : "d-none")" id="dropdown_accommodation">
+            <div class="dropdown-toggle btn h-100" type="button" data-toggle="dropdown" aria-expanded="false">                
+            </div>
+            <div class="dropdown-menu w-100 rounded-0 overflow-auto" aria-labelledby="dropdownMenuButton" tabindex="-1" style="max-height: 13rem;">
+            </div>
+        </div>*@
+    </div>
+
+    <div class="finder-btn">
+        <button type="button" class="btn btn-effect" onclick="property_finder.search();">@bl.lng.l.Check_availability</button>
+    </div>
+
+</div>
+
+<script>
+
+    var property_finder = {};
+
+    property_finder.search = function () {
+
+        //debugger;
+
+        let date_from = finder_check_in.value;
+        let date_until = finder_check_out.value;
+        let adults = dropdown_adults_id.dataset.id;
+        let pets = dropdown_pets_id.dataset.id;
+        let amenity_id = dropdown_amenity_id.dataset.id;   
+        let facilitie_name = document.querySelectorAll(`[data-id="${parseInt(amenity_id)}"]`)[1]?.dataset.name;
+        let city_name = dropdown_city.value;
+        let object_type_name = dropdown_accommodation_type.value;
+
+        facilitie_name = !facilitie_name == true ? '' : facilitie_name;
+
+        var url = '/objects/list/?date_from=' + date_from + '&date_until=' + date_until + '&adults=' + adults + '&pets=' + pets + '&amenity_id=' + amenity_id + '&city_name=' + city_name + '&object_type_name=' + object_type_name + '&facilitie_name=' + facilitie_name;
+
+        location.href = url;
+    }
+
+    $(function () {
+
+        // Datepicker - check in
+        $("#finder_check_in").datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            minDate: 0,
+            defaultDate: 1,
+
+            onSelect: function (date) {
+                $("#finder_check_out").datepicker("setDate", date);
+            },
+
+            onClose: function () {
+                $("#finder_check_out").datepicker("show");
+            }
+
+        });
+
+        // Datepicker - check out
+        $("#finder_check_out").datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            minDate: 0,
+            defaultDate: 3,
+
+        });
+
+        // set dates
+        $("#finder_check_in").datepicker("setDate", "@date_from");
+        $("#finder_check_out").datepicker("setDate", "@date_until");
+
+        fr.dropdown('dropdown_adults');
+        fr.dropdown('dropdown_pets');
+        fr.dropdown('dropdown_amenity');
+
+    });
+
+
+
+
+</script>

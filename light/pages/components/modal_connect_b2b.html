@@ -1,0 +1,604 @@
+﻿<!-- Modal add status -->
+<div id="modal_connect_b2b" class="view_modal  hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+
+            <!--loading -->
+            <div id="modal_connect_b2b_content_loading" class="view_loading" style="display: none;">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-list-ul pr-2"></i>Pick a booking site to connect to</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0 pt-0">
+                <!-- List of b2b'' -->
+                <div class="row pt-0" id="modal_connect_b2b_image_list">
+
+
+
+                </div>
+
+                <!--loading -->
+                <div id="modal_connect_b2b_body_content_loading" class="view_loading" style="display: none;">
+                    <img src="/assets/images/icons/loading.svg" />
+                </div>
+
+                <div class="row" id="modal_connect_b2b_body">
+
+                </div>
+
+
+
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div>
+                    <button class="btn btn_silver" data-dismiss="modal" id="modal_connect_b2b_cancel_btn">Cancel</button>
+                    <button class="btn btn_red hidden" id="modal_connect_b2b_delete_btn" onclick="modal_connect_b2b.bl.delete_status();">Delete</button>
+                </div>
+                <button class="btn btn_primary hidden" id="modal_connect_b2b_save_btn" onclick="modal_connect_b2b.bl.update_status();">Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--template for rent sources list-->
+<template id="modal_connect_b2b_list_template">
+
+
+    <div class="col-3">
+        <a class="location_card cursor_point black" id="${name}" onclick="modal_connect_b2b.bl.pick_b2b(id)">
+            <div class="location_wrapper">
+                <div class=" leaflet-container">
+                    <img src="./assets/images/icons/portals/${img}.svg" class="pt-0 d-flex float-left flex-wrap" style="height:150px; width:100%;">
+                </div>
+                <div class="location_body tiny_scrollbar">
+                    <div class="location_under d-flex justify-content-between font_4">
+                        <div class="font_medium mb-1">${name}</div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</template>
+
+<!-- template for connecting Booking.com - First step -->
+<template id="modal_connect_b2b_booking_template">
+
+    <div id="booking_check_connection" class="col-12 border-top pt-2">
+
+        <h5>Connect zaggy to Booking</h5>
+
+        <img src="./assets/images/pictures/booking_connected.png" class="w-100" style="max-height: 25rem" />
+        <p class=" col-10 mt-2 text-muted mb-0">If your Booking.com settings look like this, you have successfully connected zaggy to your Booking account </p>
+
+        <div class="col-2 float-right mb-3 pr-0">
+            <button class="btn btn_primary float-right" onclick="modal_connect_b2b.bl.booking_next();"><i class="fas fa-plus pr-2"></i> Next </button>
+        </div>
+    </div>
+
+</template>
+
+<!-- template for connecting Booking.com - Second step -->
+<template id="modal_connect_b2b_booking_form_template">
+
+    <div id="booking_form" class="col-12 border-top pt-2">
+        <h5>Connect to Booking</h5>
+        <div class="form-group row">
+
+            <div class="col-6">
+                <label class="mb-1">Room ID:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control focus" required id="modal_connect_b2b_booking_room_id">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Pricing ID:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control focus" required  id="modal_connect_b2b_booking_pricing">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Price variation (%):</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" required id="modal_connect_b2b_booking_price_variation_percent">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Price variation (flat):</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" required id="modal_connect_b2b_booking_price_variation_flat">
+                </div>
+            </div>
+            <div class="col-6">
+                <p class="mb-1">Should extra be taken from bruto or neto?</p>
+
+                <input type="radio" id="neto" name="price_percent_type" checked value="regular">
+                <label for="neto">Neto</label><br>
+
+                <input type="radio" id="bruto" name="price_percent_type" value="sell">
+                <label for="bruto">Bruto</label><br>
+            </div>
+
+            <div class="col-12 float-right">
+                 <button type="submit" class="btn btn_primary float-right" onclick="modal_connect_b2b.bl.connect_booking();"><i class="fas fa-plus pr-2"></i>Connect</button>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template id="modal_connect_b2b_airbnb_template">
+
+    <div id="airbnb_form" class="col-12 border-top pt-2">
+        <h5>Connect to AirBNB</h5>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="mb-5">
+                        <button type="submit" class="btn btn_primary float-right" onclick="modal_connect_b2b.bl.load_airbnb_properties();"><i class="fas fa-cloud-download-alt pr-2"></i>Get AirBNB properties</button>
+                    </div>
+                     
+                    <table class="table table-bordered table-sm table-hover">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    Airbnb ID
+                                </th>
+                                <th>
+                                    Object name
+                                </th>
+                                <th class="text-center">
+                                    Country
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                                <th class="text-center">
+                                    <img src="./assets/images/icons/portals/airbnb.svg" alt="" style="height: 20px;">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal_airbnb_property_list">
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</template>
+
+<!-- template for connecting AirBNB -->
+<template id="modal_connect_b2b_airbnb_form_template">
+
+    <div id="airbnb_form" class="col-12 border-top pt-2">
+        <h5>Connect to AirBNB</h5>
+        <p class=" col-10 mt-2 text-muted mb-0"> You need to be logged into your AirBNB account in the same browser as this application!  </p>
+
+        <div class="col-2 float-right mb-3 pr-0">
+            <button class="btn btn_primary float-right" onclick="modal_connect_b2b.bl.airbnb_next();"><i class="fas fa-plus pr-2"></i>Next</button>
+        </div>
+    </div>
+
+</template>
+
+<template id="template_modal_airbnb_property_list">
+    <tr ${text_color}>
+        <td class="text-center"> ${id} </td>
+        <td class="text-bold"> ${name} </td>
+        <td class="text-center"> <img src="/assets/images/icons/flags/${country_code}.svg" style="height: 15px;">  </td>
+        <td> ${city} </td>
+        <td class="text-center">
+            <button class="btn btn_secondary font_1 text-uppercase py-1 px-2" onclick="modal_connect_b2b.bl.airbnb_connect_property(`${id}`);" ${cursor} ${disabled}>Select</button>
+        </td>
+    </tr>
+</template>
+
+
+<!-- template for connecting Expedia -->
+<template id="modal_connect_b2b_expedia_template">
+
+    <div id="booking_form" class="col-12 border-top pt-2">
+        <h5>Connect to Expedia</h5>
+        <div class="form-group row">
+
+            <div class="col-6">
+                <label class="mb-1">Hotel ID:</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" id="modal_connect_b2b_expedia_hotel_id">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Room type ID:</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" id="modal_connect_b2b_expedia_room_type_id">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Rate plan ID:</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" id="modal_connect_b2b_expedia_rate_plan_id">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Price variation (%):</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" id="modal_connect_b2b_expedia_price_variation_percent">
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-1">Price variation (flat):</label>
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control focus" id="modal_connect_b2b_expedia_price_variation_flat">
+                </div>
+            </div>
+
+            <div class="col-6">
+                <p class="mb-1">Pricing model:</p>
+
+                <input type="radio" checked id="expedia_pricing_per_day" name="expedia_pricing" value="PerDay">
+                <label for="neto">Per day pricing</label><br>
+
+                <input type="radio" id="expedia_pricing_per_occupancy" name="expedia_pricing" value="Occupancy">
+                <label for="bruto">Occupancy based pricing</label><br>
+            </div>
+
+            <div class="col-12 float-right">
+                <button class="btn btn_primary float-right" onclick="modal_connect_b2b.bl.connect_expedia();"><i class="fas fa-plus pr-2"></i>Connect</button>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<script>
+
+    var modal_connect_b2b = {};
+
+    modal_connect_b2b.object_id = '';
+    modal_connect_b2b.user_id = '';
+
+    // Load function
+    modal_connect_b2b.load = () => {
+
+        // Global components
+        // ui.select_custom("modal_edit_room_select_type_bed");
+        //ui.filter_search_list("modal_add_review_select_filter_countries");
+        //ui.select_filter_custom("modal_add_review_select_filter_countries");
+
+        modal_connect_b2b.bl.load_b2b_connections();
+
+        //modal_connect_b2b.bl.dropdown("modal_connect_b2b_b2b_id");
+        //ui.dropdown_list("modal_connect_b2b_b2b_id");
+        //document.querySelectorAll('#modal_connect_b2b_b2b_id_type > li')[0].click();
+
+        // BL components
+        modal_connect_b2b.bl.close_modal("modal_connect_b2b");
+
+        // get object id from url
+        modal_connect_b2b.object_id = page.get_id();
+        modal_connect_b2b.user_id = bl.workers.current_user_id();
+
+    };
+
+    // UI logic
+    modal_connect_b2b.ui = new function () {
+
+        this.toggle_dropdown = (el) => {
+
+            let e = el.parentElement.children[1];
+
+            if (e.classList.contains("hidden")) {
+                e.classList.remove("hidden");
+            } else {
+                e.classList.add("hidden");
+            }
+
+        }
+
+        // Close modal
+        this.close_airbnb_modal = async () => {
+
+            var modal_id = document.getElementById('t_modal_add_airbnb_objects');
+            modal_id.classList.add('hidden');
+            modal_id.classList.add('visuallyhidden');
+        }
+
+    };
+
+    // BL logic
+    modal_connect_b2b.bl = new function () {
+
+        // Close modal
+        this.close_modal = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+
+                modal_connect_b2b.bl.clear_modal();
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            modal_connect_b2b_delete_btn.classList.add('hidden');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        //load b2b dropdown list
+        this.load_b2b_connections = function () {
+
+            var sources = JSON.parse(localStorage.getItem('b2b'));
+            //modal_rent_details_rent_source_dropdown = '';
+
+            sources = sources.filter((a) => {
+
+                if (a.name.toLowerCase() == "expedia" || a.name.toLowerCase() == "airbnb" || a.name.toLowerCase() == "booking") {
+                    return a;
+                }
+
+            });
+
+            for (var s of sources) {
+                var t = modal_connect_b2b_list_template.innerHTML;
+                t = t.replace('${img}', s['icon']);
+                t = t.replaceAll('${name}', s['name']);
+                t = t.replaceAll('${name}', s['name']);
+                js.html.insertAdjacentHTML('modal_connect_b2b_image_list', t);
+            }
+
+        }
+
+        // add new b2b connection to object
+        this.save_b2b = async () => {
+
+            var url = '/api/objects_b2b/add';
+
+            var b2b = {};
+
+            b2b.b2b_id = modal_connect_b2b_b2b_id.dataset.id;
+            b2b.b2b_value = modal_connect_b2b_value.value;
+            b2b.object_id = modal_connect_b2b.object_id;
+            b2b.price_id = modal_connect_b2b_price_id.value;
+            b2b.user_id = modal_connect_b2b.user_id;
+            b2b.item_id = "-1";
+
+            await ajax.post_json(url, b2b);
+            await object_general.bl.load_b2b_connections();
+            //await object_general.bl.sync_b2b(b2b.b2b_id);
+
+            this.clear_modal();
+            this.close_modal('modal_connect_b2b');
+        }
+
+        this.pick_b2b = (id) => {
+
+            modal_connect_b2b_body.innerHTML = "";
+
+            let b2b = id.toLowerCase();
+
+            if (b2b == "booking") {
+
+                var t = modal_connect_b2b_booking_template.innerHTML;
+                js.html.insertAdjacentHTML('modal_connect_b2b_body', t);
+
+            } else if (b2b == "airbnb") {
+                var t = modal_connect_b2b_airbnb_form_template.innerHTML;
+                js.html.insertAdjacentHTML('modal_connect_b2b_body', t);
+            } else if (b2b == "expedia") {
+                var t = modal_connect_b2b_expedia_template.innerHTML;
+                js.html.insertAdjacentHTML('modal_connect_b2b_body', t);
+            }
+
+        }
+
+        this.booking_next = () => {
+
+            modal_connect_b2b_body.innerHTML = "";
+
+            var t = modal_connect_b2b_booking_form_template.innerHTML;
+            js.html.insertAdjacentHTML('modal_connect_b2b_body', t);
+        }
+
+        this.airbnb_next = async () => {
+
+            window.open(`https://www.airbnb.com/oauth2/auth?client_id=3ydgk097wanhpharqle1v8j4s&redirect_uri=https://api.zaggy.net/airbnb/auth&scope=property_management,messages_write,messages_read&state=${modal_connect_b2b.user_id}`, '_blank', 'noopener');
+
+            modal_connect_b2b_body.innerHTML = "";
+
+            var t = modal_connect_b2b_airbnb_template.innerHTML;
+            js.html.insertAdjacentHTML('modal_connect_b2b_body', t);
+            await modal_connect_b2b.bl.load_airbnb_properties();
+        }
+
+        this.load_airbnb_properties = async () => {
+
+            ui.content_loading("modal_connect_b2b_body_content_loading");
+            debugger;
+            var object_id = modal_connect_b2b.object_id;
+            var url = `/api/b2b/airbnb_listings_list/${object_id}`;
+            var response = await ajax.get_json(url);
+
+            var properties = JSON.parse(response);
+
+            modal_airbnb_property_list.innerHTML = '';
+
+            for (var p of properties) {
+
+                var t = template_modal_airbnb_property_list.innerHTML;
+
+                var disabled = '<i class="fas fa-ban text-danger"></i>';
+                var enabled = '<i class="far fa-check-circle text-success"></i>';
+
+                var sync = p['synchronization_category'] == 'sync_rates_and_availability' ? 'LIMIT' : !p['synchronization_category'] == false ? 'ALL' : '-';
+
+                t = t.replaceAll('${id}', p['id']);
+                t = t.replace('${name}', decodeURI(p['name']));
+                t = t.replace('${country_code}', p['country_code']);
+                t = t.replace('${city}', p['city']);
+                t = t.replace('${has_availability}', p['has_availability'] == true ? enabled : disabled);
+                t = t.replace('${synchronization_category}', js.text.check_if_empty(sync));
+
+                if (p['has_availability'] == true) {
+                    t = t.replace('${text_color}', '');
+                    t = t.replace('${cursor}', '');
+                    t = t.replace('${disabled}', '');
+
+                } else {
+                    t = t.replace('${text_color}', 'style = "color: #6c757d61;" ');
+                    t = t.replace('${cursor}', 'style = "cursor: auto" ');
+                    t = t.replace('${disabled}', 'disabled');
+                }
+
+                if (sync != 'LIMIT') {
+                    js.html.insertAdjacentHTML('modal_airbnb_property_list', t);
+                }
+            }
+
+            ui.content_loading_hide("modal_connect_b2b_body_content_loading");
+        }
+
+        this.airbnb_connect_property = async (id) => {
+
+            //add loading
+            ui.content_loading("modal_connect_b2b_body_content_loading");
+
+            var object_id = object_general.object_id;
+            var user_id = await bl.workers.current_user_id();
+
+            var j = {
+                object_id,
+                value: id,
+                user_id
+            }
+
+            var url = '/api/objects_b2b/airbnb_connect';
+            var response = await ajax.post_json(url, j);
+
+            // Close modal
+            modal_connect_b2b.ui.close_airbnb_modal();
+
+            // reload connections
+            await object_general.bl.load_b2b_connections();
+
+            //hide loading
+            ui.content_loading_hide("modal_connect_b2b_body_content_loading");
+        }
+
+        this.connect_booking = async () => {
+
+            ui.content_loading("modal_connect_b2b_content_loading");
+
+            let data = {};
+
+            data['user_id'] = bl.workers.current_user_id();
+            data['object_id'] = bl.objects.object_get().general[0].id;
+
+            data['value'] = modal_connect_b2b_booking_room_id.value;
+            data['price_id'] = modal_connect_b2b_booking_pricing.value;
+            data['price_percent_type'] = document.querySelector('input[name="price_percent_type"]:checked').value;
+            data['price_percent'] = modal_connect_b2b_booking_price_variation_percent.value;
+            data['price_extra'] = modal_connect_b2b_booking_price_variation_flat.value;
+
+            let url = "/api/objects_b2b/add_booking";
+
+            await ajax.post_json(url, data);
+
+            document.getElementById("modal_connect_b2b").classList.add("hidden");
+
+            await object_general.ui.sync_all();
+            await object_general.bl.load_b2b_connections();
+
+            ui.content_loading_hide("modal_connect_b2b_content_loading");
+        }
+
+        this.connect_expedia = async () => {
+
+            ui.content_loading("modal_connect_b2b_content_loading");
+
+            let data = {};
+            let expedia_b2b_id = '205';
+
+            data['user_id'] = bl.workers.current_user_id();
+            data['object_id'] = bl.objects.object_get().general[0].id;
+            data['b2b_id'] = expedia_b2b_id;
+
+            data['value'] = modal_connect_b2b_expedia_hotel_id.value;
+            data['price_id'] = modal_connect_b2b_expedia_rate_plan_id.value;
+            data['price_type'] = document.querySelector('input[name="expedia_pricing"]:checked').value;
+            data['price_percent'] = modal_connect_b2b_expedia_price_variation_percent.value;
+            data['price_extra'] = modal_connect_b2b_expedia_price_variation_flat.value;
+            data['tolken'] = modal_connect_b2b_expedia_room_type_id.value;
+                        
+            let url = "/api/objects_b2b/add_b2b";
+
+            await ajax.post_json(url, data);
+
+            document.getElementById("modal_connect_b2b").classList.add("hidden");
+
+            await object_general.ui.sync_b2b(expedia_b2b_id);
+            await object_general.bl.load_b2b_connections();
+
+            ui.content_loading_hide("modal_connect_b2b_content_loading");
+        }
+
+        // clear input fields
+        this.clear_modal = () => {
+
+            modal_connect_b2b_cancel_btn.click();
+            modal_connect_b2b_body.innerHTML = '';
+        }
+
+    };
+
+    // On load
+    modal_connect_b2b.load();
+
+</script>

@@ -1,0 +1,25 @@
+.collapse {
+    border-right: 1px solid $color-silver02;
+    border-top: 1px solid $color-silver02;
+    border-left: 1px solid $color-silver02;
+    .card {
+        margin-bottom: 0;
+        box-shadow: none;
+    &:hover {
+        box-shadow: none !important;
+    }
+        .btn.btn-link {
+            text-decoration: none;
+            color: $color-black;
+        }
+    }
+}
+
+.accordion  {
+    .card {
+        box-shadow: none;
+        &:hover {
+            box-shadow: none;
+        }
+    }
+}

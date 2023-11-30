@@ -1,0 +1,392 @@
+﻿<!-- Modal add new room -->
+<div id="modal_add_new_room" class="view_modal hidden visuallyhidden">
+
+    <!-- Loading -->
+    <div id="modal_add_new_room_loading" class="view_loading" style="display: none;">
+        <img src="/assets/images/icons/loading.svg" />
+    </div>
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold" id="modal_add_new_room_title"><i class="fas fa-plus pr-2"></i>Edit room</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Name</label>
+                            <input type="text" class="form-control focus" id="modal_add_new_room_name">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Type</label>
+                            <div id="modal_add_new_room_select_type" class="select">
+                                <button class="custom-select focus"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden" id="modal_add_new_room_type_ul">
+        
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Bathroom</label>
+                            <div id="modal_add_new_room_select_bathroom" class="select">
+                                <button class="custom-select focus"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden">
+                                    <li class="select_li" data-id="">-</li>
+                                    <li class="select_li" data-id="shower">Shower</li>
+                                    <li class="select_li" data-id="bath">Bath</li>
+                                    <li class="select_li" data-id="shower_bath">Shower & Bath</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Bathroom type</label>
+                            <div id="modal_add_new_room_select_bathroom_type" class="select">
+                                <button class="custom-select focus"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden">
+                                    <li class="select_li" data-id="">-</li>
+                                    <li class="select_li" data-id="shared">Shared</li>
+                                    <li class="select_li" data-id="private">Private</li>
+                                    <li class="select_li" data-id="en_suite">En Suite</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Toilet</label>
+                            <input type="text" class="form-control focus" id="modal_add_new_room_toilet">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 hidden">
+                        <div class="form-group">
+                            <label class="mb-1">Amenities</label>
+                            <div id="modal_add_new_room_select_amenities" class="select">
+                                <button class="custom-select focus"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden">
+                                    <li class="select_li" data-id="1">Example 01</li>
+                                    <li class="select_li" data-id="2">Example 02</li>
+                                    <li class="select_li" data-id="3">Example 03</li>
+                                    <li class="select_li" data-id="4">Example 04</li>
+                                    <li class="select_li" data-id="5">Example 05</li>
+                                    <li class="select_li" data-id="6">Example 06</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="custom_collapse" id="modal_add_new_room_collapse_description">
+                                <label class="mb-1">
+                                    <span>Description</span>
+                                </label>
+                                <div class="pt-2 custom_collapse_inside">
+                                    <textarea name="description" id="modal_add_new_room_description" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn_silver" data-dismiss="modal" id="modal_add_room_cancel_btn">Cancel</button>
+                <div>
+                    <button class="btn btn_primary hidden" onclick="modal_add_new_room.bl.save_room();" id="modal_add_new_room_save_btn">Save</button>
+                    <button class="btn btn_primary" onclick="modal_add_new_room.bl.add_new();" id="modal_add_new_room_add_btn"><i class="fas fa-plus pr-2"></i>Add</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="modal_add_new_room_type_template">
+    <li class="select_li" data-id="${type_id}">${text}</li>
+</template>
+
+
+<script>
+
+    var modal_add_new_room = {};
+    
+
+    modal_add_new_room.room_id = '';
+    modal_add_new_room.room_type = '';
+
+    // Load function
+    modal_add_new_room.load = () => {
+
+
+
+        // BL components
+        modal_add_new_room.bl.close_modal("modal_add_new_room");
+        modal_add_new_room.bl.load_room_types();
+
+
+        // Global components
+        ui.custom_select("modal_add_new_room_select_amenities");
+        ui.custom_select("modal_add_new_room_select_bathroom_type");
+        ui.custom_select("modal_add_new_room_select_bathroom");
+        ui.custom_select("modal_add_new_room_select_type");
+
+        modal_add_new_room.bl.custom_collapse("modal_add_new_room_collapse_description");
+
+    };
+
+    // UI logic
+    modal_add_new_room.ui = new function () {
+
+    };
+
+    // BL logic
+    modal_add_new_room.bl = new function () {
+
+        // CLose modal
+        this.close_modal = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+            modal_add_new_room_title.innerHTML = 'Add new room';
+            modal_add_new_room_save_btn.classList.add('hidden');
+            modal_add_new_room_add_btn.classList.remove('hidden');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        // Collapse
+        this.custom_collapse = function (id) {
+
+            let collapse_id = document.getElementById(id);
+            let label_btn = collapse_id.getElementsByClassName("collapse_label")[0];
+            let arrow = collapse_id.getElementsByClassName("arrow")[0];
+            let collapse_inside = collapse_id.getElementsByClassName("custom_collapse_inside")[0];
+
+            if (!label_btn == true) return;
+
+            label_btn.addEventListener("click", function () {
+
+                if (label_btn.classList.contains("open")) {
+
+                    label_btn.classList.remove("open");
+                    $(collapse_inside).toggleClass("show");
+                    arrow.classList.remove("rotate_180");
+
+                } else {
+
+                    label_btn.classList.add("open");
+                    $(collapse_inside).toggleClass("show");
+                    arrow.classList.add("rotate_180");
+
+                };
+
+            });
+        };
+
+        this.show_room = async (room_id, room_type) => {
+
+            ui.content_loading("modal_add_new_room_loading");
+            
+            modal_add_new_room.room_id = room_id;
+            modal_add_new_room.room_type = room_type;
+
+            this.show_modal('modal_add_new_room');
+            modal_add_new_room_title.innerText = 'Edit room';
+            modal_add_new_room_save_btn.classList.remove('hidden');
+            modal_add_new_room_add_btn.classList.add('hidden');
+
+            //load room
+
+            var url = '/api/objects_rooms/get/' + room_id;
+
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+            var data = json_response[0];
+
+            console.log("ROOM RES", data);
+
+            //display room data
+
+            modal_add_new_room_name.value = data['name'];
+            modal_add_new_room_description.value = data['description'];
+            modal_add_new_room_toilet.value = data['toilets'];
+
+            modal_add_new_room_select_bathroom.querySelector("button").dataset.id = data["en_suite_bathroom"];
+            for (li of modal_add_new_room_select_bathroom.querySelectorAll("ul > li")) {
+
+                if (li.dataset.id === data["en_suite_bathroom"]) {
+                    li.click();
+
+                } else if (data["en_suite_bathroom"] == null) {
+                    modal_add_new_room_select_bathroom.querySelector("ul > li").click();
+                }
+
+            }
+
+            modal_add_new_room_select_bathroom_type.querySelector("button").dataset.id = data["en_suite_bathroom_type"];
+            for (li of modal_add_new_room_select_bathroom_type.querySelectorAll("ul > li")) {
+
+                if (li.dataset.id === data["en_suite_bathroom_type"]) {
+                    li.click();
+
+                } else if (data["en_suite_bathroom_type"] == null) {
+
+                    modal_add_new_room_select_bathroom_type.querySelector("ul > li").click();
+
+                }
+
+            }
+
+            modal_add_new_room_select_type.querySelector("button").dataset.id = data["type_id"];
+            for (li of modal_add_new_room_select_type.querySelectorAll("ul > li")) {
+                if (li.dataset.id == data["type_id"]) {
+
+                    li.click();
+
+                } else if (data["type_id"] == null) {
+    
+                    modal_add_new_room_select_type.querySelector("ul > li").click();
+
+                }
+
+            }
+
+            //hide toilets section if room isnt a bathroom
+            if (data['type_id'] != 8) {
+                modal_add_new_room_toilet.parentElement.classList.add("hidden");
+            } else {
+                modal_add_new_room_toilet.parentElement.classList.remove("hidden");
+            }
+
+            ui.content_loading_hide("modal_add_new_room_loading");
+            
+
+        }
+
+        // save changes
+        this.save_room = async () => {
+            
+            var url = '/api/objects_rooms/save_room/';
+
+            ui.content_loading('modal_add_new_room_loading');
+
+            var r = {};
+            r.name = modal_add_new_room_name.value;
+            r.description = modal_add_new_room_description.value;
+            r.room_id = modal_add_new_room.room_id;
+            r.type_id = modal_add_new_room.room_type;
+            r.en_suite_bathroom = modal_add_new_room_select_bathroom.querySelector("button").dataset.id;
+            r.en_suite_bathroom_type = modal_add_new_room_select_bathroom_type.querySelector("button").dataset.id;
+            r.toilets = modal_add_new_room_toilet.value;
+            r.type_id = modal_add_new_room_select_type.querySelector("button").dataset.id;
+
+            await ajax.post_json(url, r);
+
+            modal_add_room_cancel_btn.click();
+
+            ui.content_loading_hide('modal_add_new_room_loading');
+
+            objects_rooms.bl.refresh_page()
+        }
+
+        this.add_new = async (type) => {
+
+            ui.content_loading('object_rooms_content_loading');
+
+            var object_id = page.get_id();
+
+            var room = {};
+            
+            room.object_id = object_id;
+            room.user_id = bl.workers.current_user_id();
+            room.name = 'Room';
+            room.type_id = type;
+            room.quantity = '1';
+            room.description = modal_add_new_room_description.value;
+
+            var url = '/api/objects_rooms/add_room/';
+            await ajax.post_json(url, room);
+
+            objects_rooms.bl.refresh_page();
+            ui.content_loading_hide('object_rooms_content_loading');
+
+        }
+
+        this.load_room_types = () => {
+
+            let types = bl.rooms_types.list();
+
+            for (var type of types) {
+
+
+                var t = modal_add_new_room_type_template.innerHTML;
+
+                t = t.replace('${type_id}', type['id']);
+                t = t.replace('${text}', type['name']);
+
+
+                js.html.insertAdjacentHTML('modal_add_new_room_type_ul', t);
+            }
+        }
+
+    };
+
+    // On load
+    modal_add_new_room.load();
+
+</script>

@@ -1,0 +1,29 @@
+﻿img[src="/assets/images/icons/spinner.gif"] {
+    width: 150px !important;
+    height: 150px !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card.rent-details {
+    .loading {
+        backdrop-filter: blur(1px);
+        img {
+            width: 80px !important;
+            height: 80px !important;
+        }
+    }
+}
+
+.card-img {
+    img[src="/assets/images/icons/spinner.gif"] {
+        width: 80px !important;
+        height: 80px !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

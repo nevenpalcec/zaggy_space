@@ -1,0 +1,82 @@
+﻿<!-- page -->
+<div id="modal_email_preview" class="view_modal hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+            <div class="modal_header">
+                <div class="text-white"><i class="far fa-file-pdf"></i> E-mail preview</div>
+                <div class="close" data-dismiss="modal" id="modal_rent_details_close_modal"><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body">
+                <div style="height: 650px" id="modal_email_preview_html_body">
+                    <!--<h1>
+                        Ovdje ide html
+                    </h1>-->
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div class="m-0">
+                    <button type="button" class="btn btn_red m-1" onclick="modal_details_rent.bl.delete_reservation();">Delete</button>
+                    <button type="button" class="btn btn_primary m-1" onclick="location.href = '#bills'">
+                        <i class="fas fa-file-alt pr-2"></i>Invoice
+                    </button>
+                    <button type="button" class="btn btn_primary">
+                        <i class="fas fa-sign-in-alt pr-2"></i>Check in
+                    </button>
+                    <!--<button type="button" class="btn btn_primary" onclick="ui.content_loading('modal_rent_details_content_loading')">
+                        <i class="fas fa-vial"></i>
+                    </button>-->
+                    <a class="btn btn_primary text-white" href="https://rent.zaggy.net/e8645f01-00d3-11ec-8df4-00505640e080" target="_blank" id="guest_portal_btn">
+                        <i class="fas fa-sign-in-alt pr-2"></i>Guest portal
+                    </a>
+                </div>
+                <div class="m-0">
+
+                    <button type="button" class="btn btn_primary m-1" onclick="modal_details_rent.bl.save_rent();">
+                        <i class="fas fa-save pr-2"></i>Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modal_email_preview = {};
+
+    modal_email_preview.load = () => {
+
+    }
+
+    modal_email_preview.bl = new function () {
+
+        // Open modal
+        this.show_modal = function (id) {
+            let modal_id = document.getElementById(id);
+            view_modal.classList.add('hidden')
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+            this.load_email();
+        };
+
+        this.close_modal = function (id) {
+
+            var modal = document.getElementById(id);
+            modal.classList.add('hidden');
+            modal.classList.add('visuallyhidden');
+            view_modal.classList.remove('hidden')
+        };
+
+        this.load_email = async () => {
+
+            var url = '/api/rents/generate_confirmation/2043631';
+            await ajax.get(url);
+        }
+
+    }
+
+    modal_email_preview.load();
+</script>

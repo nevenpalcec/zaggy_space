@@ -1,0 +1,186 @@
+﻿@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    string worker_id = "54094";
+
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var list_front_page = bl.objects_relstate_pictures.list_front_page(user_id);
+    var list_gallery = bl.objects_relstate_pictures.list_front_page(user_id);
+
+    var date_from = (string)(ViewData["date_from"] ?? "");
+    var date_until = (string)(ViewData["date_until"] ?? "");
+    var adults = (string)(ViewData["adults"] ?? "");
+    var pets = (string)(ViewData["pets"] ?? "0");
+    var amenity_id = (string)(ViewData["amenity_id"] ?? "");
+    var facilitie_name = (string)(ViewData["facilitie_name"] ?? "");
+    var city_name = (string)(ViewData["city_name"] ?? "");
+    var object_type_name = (string)(ViewData["object_type_name"] ?? "");
+
+    if (pets.Contains("-") == true)
+    {
+        pets = "0";
+    }
+
+    var objects = (System.Data.DataTable)(ViewData["objects"]);
+
+    ViewBag.Title = bl.lng.l.Search_property;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "objects_list" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- Finder -->
+<section class="section-finder">
+    <div class="wrapper">
+        <div class="bg-img">
+            <img src="@booking_engine_db["picture_main_link"]" alt="Cover image">
+        </div>
+        <div class="container-wrapper py-5">
+            <div style="">
+                @Html.Partial("/Views/objects/partal/property_finder.cshtml", new ViewDataDictionary { { "date_from", date_from }, { "date_until", date_until }, { "adults", adults }, { "pets", pets }, { "amenity_id", amenity_id } })
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Accommodation -->
+<section class="section-accommodation">
+    <div class="px-4">
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    @if (objects != null && objects.Rows.Count > 0)
+                    {
+                        foreach (System.Data.DataRow r in objects.Rows)
+                        {
+                            @Html.Raw(Html.Partial("/Views/objects/partal/object_detail.cshtml", new ViewDataDictionary { { "object_detail", r }, { "date_from", date_from }, { "date_until", date_until }, { "adults", adults } }));
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <h2 class="heading-title mb-3 text-uppercase"> <a href="/users/about" style="color: black;"> @bl.lng.l.List_of_properties</a> </h2>
+                            <div class="rd-description-text">
+                                <p> @bl.lng.l.Sorry, @bl.lng.l.No_available_properties </p>
+                                <p> @bl.lng.l.Please_try_diferent_period </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="px-2 py-2" v-show="display == 'map'">
+                    <div id="mapid" class="box-shadow-md" style="z-index: 3; height: 80vh; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- contact us -->
+<div style="margin-bottom: 25px;">
+    @Html.Partial("/Views/partal/contact_us.cshtml")
+</div>
+
+<div>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Your JavaScript file with the Leaflet and Mapbox code -->
+    <script src="path/to/your/script.js"></script>
+
+</div>
+
+<script>
+    var maps = {};
+
+    maps.map = null;
+    //maps.map_layer_group = null;
+    //maps.map_points = [];
+    maps.zagreb_coordinates = {
+        lat: 45.815399,
+        lan: 15.966568
+    }
+    maps.markers = L.layerGroup();
+
+    //load map
+    maps.load = async function () {
+        var token = 'pk.eyJ1IjoibWdyYW92YWMiLCJhIjoiY2xmY2IwOGJ4Mzh1MjNvcjA5bTJ1MG5mYyJ9.i78C8kbNAlMwpR_7DbLWbw';
+
+        var mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + token;
+
+        var streets = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11' });
+        var grayscale = L.tileLayer(mbUrl, { id: 'mapbox/light-v10' });
+        var satellite = L.tileLayer(mbUrl, { id: 'mapbox/satellite-v9' });
+        var outdoors = L.tileLayer(mbUrl, { id: 'mapbox/outdoors-v11' });
+        maps.map = L.map('mapid', {
+            maxZoom: 18,
+            zoom: 14,
+            layers: [streets]
+        });
+
+        maps.map.setView([maps.zagreb_coordinates.lat, maps.zagreb_coordinates.lan], 12);
+
+        debugger;
+        var marker_array = [];
+
+        var objects = await maps.bl.get_objects();
+
+        if (objects) {
+            objects.forEach(obj => {
+                var lat = obj["latitude"];
+                var lng = obj["longitude"];
+                var object_name = obj["name"];
+                var object_id = obj["id"];
+                var object_picture = obj["picture_url_amazon"];
+                if (lat && lng && lat !== 0 && lng !== 0) {
+                    var marker = L.marker([lat, lng]);
+                    marker.bindPopup(`<div style="display: flex; flex-direction: column; min-width: 200px; max-width: 200px;">
+                    <p style="font-size: 20px; font-weight: bold; margin-bottom: -10px;">${object_name}<p>
+                    <div style="width: 100%; max-height: 300px;"></div>
+                     <img src="${object_picture}" alt="Marker Image" style="width: 100%; height: 100%; object-fit: cover">
+                     <div class="mt-1 mb-1"/>
+                     <a href="/objects/property/?id=${object_id}" target="_blank" type="button" class="btn btn-primary">Iznajmi</a>
+                    </div > `).openPopup();
+                    marker_array.push(marker);
+                }
+            })
+        }
+
+        L.featureGroup(marker_array).addTo(maps.map);
+
+        var baseLayers = {
+            "Streets": streets,
+            "Grayscale": grayscale,
+            "Satellite": satellite,
+            "Outdoors": outdoors,
+        };
+
+        // add to map
+        L.control.layers(baseLayers).addTo(maps.map);
+    }
+
+    maps.bl = new function () {
+
+        //get all objects for worker
+        this.get_objects = async () => {
+
+            var url = '/api/objects/get_objects?worker_id="@worker_id"';
+            var objects = await js.http.async.get_json(url);
+            return objects;
+        }
+
+        //when clicked on rent
+        this.on_make_rent_click = (object_id) => {
+            window.location.href = `/objects/property/?id=${object_id}`;
+        }
+    }
+
+    maps.load();
+</script>

@@ -1,0 +1,27 @@
+.form-control {
+    border-radius: 0 !important;
+    border: none !important;
+
+    &:active, &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
+
+.form-control.search {
+    border: 1px solid $color-silver !important;
+    padding-right: 2rem;
+}
+
+.modal {
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+}

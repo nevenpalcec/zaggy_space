@@ -1,0 +1,29 @@
+﻿/*// Avenir Next Regular – [Metropolis ExtraLight]*/
+@font-face {
+    font-family: Avenir Next ExtraLight;
+    src: url("../plugins/fonts/Metropolis-ExtraLight.otf") format("opentype");
+}
+
+/*// Avenir Next Regular – [Metropolis Light]*/
+@font-face {
+    font-family: Avenir Next Light;
+    src: url("../plugins/fonts/Metropolis-Light.otf") format("opentype");
+}
+
+/*// Avenir Next Regular – [Metropolis Regular]*/
+@font-face {
+    font-family: Avenir Next Regular;
+    src: url("../plugins/fonts/Metropolis-Regular.otf") format("opentype");
+}
+
+/*// Avenir Next Regular – [Metropolis Medium]*/
+@font-face {
+    font-family: Avenir Next Medium;
+    src: url("../plugins/fonts/Metropolis-Medium.otf") format("opentype");
+}
+
+/*// Avenir Next Regular – [Metropolis Bold]*/
+@font-face {
+    font-family: Avenir Next Bold;
+    src: url("../plugins/fonts/Metropolis-Bold.otf") format("opentype");
+}

@@ -1,0 +1,56 @@
+<div class="view_user_wrapper">
+    <div class="view_user">
+        <img src=""  alt="" id="header_user_logo" loading="lazy">
+    </div>
+    <ul class="view_user_dropdown_menu font_4" style="display: none;">
+        <li class="view_user_dropdown_item">
+            <a href="#settings" class="view_user_dropdown_link">
+                <i class="fas fa-cogs pr-2"></i>User settings
+            </a>
+        </li>
+        <li class="view_user_dropdown_item">
+            <a href="#balance" class="view_user_dropdown_link">
+                <i class="fas fa-coins pr-2"></i>My balance
+            </a>
+        </li>
+        <li class="view_user_dropdown_item hidden"><a href="#subscription" class="view_user_dropdown_link">Subscription</a></li>
+        <li class="view_user_dropdown_item hidden">
+            <a href="#invoices" class="view_user_dropdown_link">Invoicing</a>
+        </li>
+        <li class="view_user_dropdown_item border-top">
+            <a onclick="bl.workers.worker_logout();" class="view_user_dropdown_link">
+                <i class="fas fa-sign-out-alt pr-2"></i>Sign out
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+
+    var header_user = {};
+
+    header_user.load = () => {        
+        header_user_logo.src = '/api/users/picture/' + bl.workers.current_user_id();
+        header_user.user_dropdown();
+    }
+
+    // User dropdown
+    header_user.user_dropdown = function () {
+
+        let user_avatar = document.querySelector(".view_user");
+        let user_dropdown = document.querySelector(".view_user_dropdown_menu");
+
+        user_avatar.onclick = function () {
+            $(user_dropdown).fadeToggle(100);
+        };
+
+        document.addEventListener("mouseup", function (e) {
+            $(user_dropdown).fadeOut(100);
+        });
+
+    };
+
+    header_user.load();
+
+
+</script>

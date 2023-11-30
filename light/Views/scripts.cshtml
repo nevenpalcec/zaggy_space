@@ -1,0 +1,144 @@
+﻿@{
+    var date_token = new Random().Next(0, 9999).ToString("D4");
+}
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<!-- jQUery -->
+<link rel="stylesheet" href="/assets/css/jquery-ui.css">
+<script src="/assets/plugins/jquery/jquery-3.4.1.js"></script>
+<script src="/assets/plugins/jquery/jquery-ui.js"></script>
+
+<!-- lazy loading images-->
+<script src="~/assets/plugins/unveil/jquery.unveil.js"></script>
+
+<!-- Moment -->
+<script type="text/JavaScript" src=" https://MomentJS.com/downloads/moment.js"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<script src="/assets/plugins/bootstrap/bootstrap.bundle.js"></script>
+<script src="/assets/plugins/bootstrap/popper.min.js"></script>
+<script src="/assets/plugins/bootstrap/bootstrap.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/light-dropdown.css" />
+
+<!-- Slick -->
+<link rel="stylesheet" href="/assets/css/slick.css">
+<link rel="stylesheet" href="/assets/css/slick-theme.css">
+<script src="/assets/plugins/slick/slick.min.js"></script>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="/assets/css/leaflet.css">
+<script src="/assets/plugins/leatflet/leaflet.js"></script>
+
+<!-- Charts.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<!-- falt picker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css" />
+
+<!-- Spectrum -->
+<script src="/assets/plugins/spectrum/spectrum.js"></script>
+<link rel='stylesheet' href='/assets/css/spectrum.css' />
+
+<!-- ck edit-->
+<script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+
+<!-- dropzone, file upload -->
+<link rel='stylesheet' href='~/assets/plugins/dropzone/dropzone.min.css' />
+<script src="~/assets/plugins/dropzone/dropzone.min.js"></script>
+
+<!-- sweetalert2-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+
+<!-- Script - main -->
+@*<script src="https://cdn.jsdelivr.net/gh/nevenpalcec/hiza_js/hiza/core/hiza.core.js"></script>
+    <script>var js = hiza.core;</script>*@
+<!-- Script - main -->
+<script src="~/assets/js/light.core.js"></script>
+<script>var js = light.core;</script>
+
+
+@*<script src="~/assets/js/js.js"></script>*@
+@*<script src="https://s3.eu-central-1.amazonaws.com/zaggy.cdn/js/js.js"></script>*@
+
+@*Tiny text editor*@
+<script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script src="/assets/js/main.js?v=@date_token"></script>
+<script src="/assets/js/routing.js?v=@date_token"></script>
+<script src="/assets/js/ui.js?v=@date_token"></script>
+<script src="/assets/js/page.js?v=@date_token"></script>
+
+<!-- translate -->
+<script src="/assets/translate/tran.js"></script>
+
+
+<!-- scripts bl -->
+<script src="/bl/sys/ajax.js?v=@date_token"></script>
+<script src="/bl/bl.js?v=@date_token"></script>
+<script src="/bl/workers.js?v=@date_token"></script>
+<script src="/bl/objects.js?v=@date_token"></script>
+<script src="/bl/units.js?v=@date_token"></script>
+<script src="/bl/rents.js?v=@date_token"></script>
+<script src="/bl/rents_sources.js?v=@date_token"></script>
+<script src="/bl/rents_status.js?v=@date_token"></script>
+<script src="/bl/payment_methods.js?v=@date_token"></script>
+<script src="/bl/countries.js?v=@date_token"></script>
+<script src="/bl/invoices.js?v=@date_token"></script>
+<script src="/bl/invoices_items.js?v=@date_token"></script>
+<script src="/bl/rent_doors_locks.js?v=@date_token"></script>
+<script src="/bl/messages.js?v=@date_token"></script>
+<script src="/bl/log_email.js?v=@date_token"></script>
+<script src="~/bl/payments_recive.js?v=@date_token"></script>
+<script src="~/bl/rents_prices_day.js?v=@date_token"></script>
+<script src="~/bl/user.js?v=@date_token"></script>
+<script src="~/bl/guests.js?v=@date_token"></script>
+<script src="~/bl/items.js?v=@date_token"></script>
+<script src="~/bl/cancellation_policies.js?v=@date_token"></script>
+<script src="~/bl/objects_realestates_pictures.js?v=@date_token"></script>
+<script src="~/bl/objects_b2b.js?v=@date_token"></script>
+<script src="~/bl/currency.js?v=@date_token"></script>
+<script src="~/bl/rooms_types.js?v=@date_token"></script>
+<script src="~/bl/b2b.js?v=@date_token"></script>
+<script src="~/bl/object_cleans.js?v=@date_token"></script>
+
+
+
+
+<!--Dropdown menu with icons and search, comes with previously loaded css-->
+<script src="~/assets/js/light.dropdown.js"></script>
+
+
+
+<!--template for deposit types-->
+<template id="deposit_type_translations">
+    <li class="select_li" data-id="1">@bl.lng.l.No_deposit1</li>
+    <li class="select_li" data-id="2">@bl.lng.l.Percentage_of_total_price (@bl.lng.l.without_cleaning)</li>
+    <li class="select_li" data-id="3">@bl.lng.l.Percentage_of_total_price</li>
+    <li class="select_li" data-id="4">@bl.lng.l.Fixed_amount_per_day</li>
+    <li class="select_li" data-id="5">@bl.lng.l.Flat_amount_per_stay</li>
+</template>
+
+
+<!--template for promotion types-->
+<template id="promotion_types">
+    <li class="select_li" data-id="">-</li>
+    <li class="select_li" data-id="1">@bl.lng.l.First_minute</li>
+    <li class="select_li" data-id="2">@bl.lng.l.Last_minute</li>
+    <li class="select_li" data-id="3">@bl.lng.l.Best_buy</li>
+    <li class="select_li" data-id="4">@bl.lng.l.Best_Seller</li>
+    <li class="select_li" data-id="5">@bl.lng.l.Vip_Holiday</li>
+    <li class="select_li" data-id="6">@bl.lng.l.Special_Offer</li>
+    <li class="select_li" data-id="7">@bl.lng.l.Features</li>
+    <li class="select_li" data-id="8">@bl.lng.l.Slider</li>
+    <li class="select_li" data-id="9"> COVID-19 </li>
+</template>
+

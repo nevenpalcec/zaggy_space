@@ -1,0 +1,227 @@
+input[type="checkbox"] {
+    display: none;
+}
+// Size
+.check_md {
+    width: .8rem;
+    height: .8rem;
+    font-size: .8rem;
+}
+.check_lg {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+}
+.check_xl {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1.2rem;
+}
+.checkbox {
+    margin: 0;
+    padding: .5rem;
+    cursor: pointer;
+    .check {
+        position: relative;
+        background-color: $color-white;
+        border: 1px solid rgba($color-silver02, .6);
+        display: block;
+    }
+    input[type="checkbox"]:checked ~ .check {
+        &:before {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            transform: translateY(-50%);
+            color: #1d3557;
+        }
+    }
+}
+
+// Slider switch
+.slider_switch {
+    position: relative;
+    display: inline-block;
+    width: 2.3rem;
+    height: 1.4rem;
+    margin: 0;
+
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: .25rem;
+
+        &:before {
+            position: absolute;
+            content: "";
+            height: 1rem;
+            width: 1rem;
+            left: .2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: .25rem;
+            background-color: white;
+            transition: .4s;
+        }
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        transform: translate(.9rem,-50%);
+    }
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round {
+        &:before {
+            border-radius: 50%;
+        }
+    }
+}
+.checkbox_label {
+    user-select: none;
+    width: 100%;
+    .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background-color: $color-primary;
+        margin-right: .5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color-white;
+        i {
+            font-size: .6rem;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            /*padding: .3rem;*/
+        }
+    }
+    .icon.icon_img {
+        background-color: $color-white;
+    }
+    // .check_icon {
+    //     position: absolute;
+    //     top: 50%;
+    //     right: .5rem;
+    //     transform: translateY(-50%);
+    //     background-color: rgba($color-white, .5);
+    //     width: .8rem;
+    //     height: .8rem;
+    //     border: 1px solid rgba($color-silver02, .5);
+    // }
+}
+#modal_body_details {
+    .check_icon {
+        position: absolute;
+        top: 50%;
+        right: .7rem;
+        border: 1px solid white;
+        width: 1.2rem;
+        height: 1.2rem;
+        background-color: white;
+        transform: translateY(-50%);
+        &:before {
+            right: -.1rem !important;
+        }
+    }
+}
+
+#modal_body_bills {
+    .checkbox {
+        padding:0;
+        vertical-align: sub;
+    }
+    .check_icon {
+        position: relative;
+        border: 1px solid $color-silver02;
+        width: 1.2rem;
+        height: 1.2rem;
+        display: block;
+        background-color: $color-white;
+        &:before {
+            font-size: 1.2rem;
+            right: 0;
+        }
+    }
+}
+
+// Table row checkbox
+.row_checkbox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    @include hover;
+/*    opacity: 0;
+*/    .check {
+        background-color: $color-white;
+        display: block;
+        width: 1.1rem;
+        height: 1.1rem;
+        border: 1px solid rgba($color-silver02, .5);
+        cursor: pointer;
+        position: relative;
+    }
+    input[type="checkbox"]:checked ~ .check {
+        &:before {
+            content: "\f00c";
+            position: absolute;
+            line-height: normal;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #1d3557;
+        }
+    }
+}
+.view_table {
+    tbody {
+        th:hover {
+            .row_checkbox {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.step_checkbox {
+    .checkmark {
+        border: 2px solid $color-silver;
+        height: 8rem;
+    }
+
+    input[type=checkbox]:checked + .checkmark {
+        border: 2px solid $color-primary;
+    }
+}

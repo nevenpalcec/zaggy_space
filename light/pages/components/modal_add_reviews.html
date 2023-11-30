@@ -1,0 +1,603 @@
+﻿<!-- Modal add review -->
+<div id="modal_add_review" class="view_modal hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content position-relative">
+
+            <div id="modal_add_review_content_loading" class="view_loading" style="display: none;">
+                <img src="/assets/images/icons/loading.svg">
+            </div>
+
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-list-ul pr-2"></i>Add review</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Date</label>
+                            <div class="position-relative">
+                                <input id="modal_add_review_date" type="text" class="form-control focus modal_datepicker_input_add_review">
+                                <span id="modal_datepicker_add_review_inside" class="position-absolute shadow-sm" style="z-index: 5; display: none;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Headline</label>
+                            <input type="text" class="form-control focus" id="modal_add_review_headline" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Contact</label>
+                            <input type="text" class="form-control focus" id="modal_add_review_contact" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Country</label>
+                            <div id="modal_add_reviews_select_filter_countries" class="select">
+                                <button class="custom-select focus" id="modal_add_reviews_select_filter_countries_btn"></button>
+                                <i class="fas fa-angle-down"></i>
+                                <div class="select_ul_filter_wrapper hidden">
+                                    <div class="select_search m-2">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </div>
+                                    <ul class="select_filter_ul mt-2" id="modal_add_reviews_select_filter_countries_ul">
+                                        <li class="select_filter_li">
+                                            <span data-id="1">
+                                                <span><img src="./assets/images/icons/flags/ad.svg" alt="icon"></span>
+                                                <span>Example so looooook nameeeeeeeeeeee</span>
+                                            </span>
+                                        </li>
+                                        <li class="select_filter_li">
+                                            <span data-id="2">
+                                                <span><img src="./assets/images/icons/flags/at.svg" alt="icon"></span>
+                                                <span>Austria</span>
+                                            </span>
+                                        </li>
+                                        <li class="select_filter_li">
+                                            <span data-id="3">
+                                                <span><img src="./assets/images/icons/flags/es.svg" alt="icon"></span>
+                                                <span>Spain</span>
+                                            </span>
+                                        </li>
+                                        <li class="select_filter_li">
+                                            <span data-id="4">
+                                                <span><img src="./assets/images/icons/flags/fi.svg" alt="icon"></span>
+                                                <span>Finska</span>
+                                            </span>
+                                        </li>
+                                        <li class="select_filter_li">
+                                            <span data-id="5">
+                                                <span><img src="./assets/images/icons/flags/fr.svg" alt="icon"></span>
+                                                <span>France</span>
+                                            </span>
+                                        </li>
+                                        <li class="select_filter_li">
+                                            <span data-id="6">
+                                                <span><img src="./assets/images/icons/flags/hr.svg" alt="icon"></span>
+                                                <span>Croatia</span>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Rate</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_rate" value="1.00">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Check-in</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_check_in" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Cleanliness</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_cleanliness" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Communication</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_communication" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Location</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_location" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Value for money</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_value_for_money" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Accuracy</label>
+                            <input type="number" class="form-control focus" id="modal_add_review_accuracy" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Object ID</label>
+                            <input type="text" class="form-control focus" id="modal_add_review_object_id" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="mb-1">Rent ID</label>
+                            <input type="text" class="form-control focus" id="modal_add_review_rent_id" value="1">
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <label class="checkbox">
+                            <div class="d-flex align-items-center user_select_none">
+                                <input type="checkbox" id="modal_add_review_checkbox_review_active">
+                                <div class="check check_lg"></div>
+                                <div class="pl-2">Review active</div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <div class="custom_collapse" id="modal_add_review_collapse_public">
+                            <label class="mb-1 d-flex justify-content-between border-bottom p-1 cursor_point collapse_label">
+                                <div>Public</div>
+                                <div class="p-1 d-flex arrow"><i class="fas fa-angle-down"></i></div>
+                            </label>
+                            <div class="pt-2 custom_collapse_inside">
+                                <textarea name="description" id="modal_add_review_public" rows="5"
+                                          class="form-control focus"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="custom_collapse" id="modal_add_review_collapse_owner_response">
+                                <label class="mb-1 d-flex justify-content-between border-bottom p-1 cursor_point collapse_label">
+                                    <div>Owner response</div>
+                                    <div class="p-1 d-flex arrow"><i class="fas fa-angle-down"></i></div>
+                                </label>
+                                <div class="pt-2 custom_collapse_inside">
+                                    <textarea name="description" id="modal_add_review_owner_response" rows="5" class="form-control focus"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <div>
+                    <button class="btn btn_silver" data-dismiss="modal" id="modal_add_reviews_cancel_btn">Cancel</button>
+                    <button class="btn btn_red" onclick="modal_add_review.bl.delete_review();">Delete</button>
+                </div>
+                <button class="btn btn_primary visible" id="modal_add_review_save_btn" onclick="">Save</button>
+                <button class="hidden btn btn_primary " style="display:none" onclick="modal_add_review.bl.add_reviews();" id="modal_add_review_add_btn"><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <template id="template_countries_list_add_reviews">
+        <li class="select_filter_li" data-id="${id}">
+            <span> 
+                <span><img src="./assets/images/icons/flags/${code2}.svg" alt="icon"></span>
+                <span>${country}</span>
+            </span>
+        </li>
+    </template>
+</section>
+
+<script>
+
+    var modal_add_review = {};
+
+    modal_add_review.object_id = '';
+    modal_add_review.review_id = '';
+
+    // Load function
+    modal_add_review.load = () => {
+
+        // Global components
+
+        // load country into list
+        modal_add_review.bl.load_countries_list();
+
+        // UI components
+        modal_add_review.ui.filter_search_list("modal_add_reviews_select_filter_countries");
+        modal_add_review.ui.select_filter_custom("modal_add_reviews_select_filter_countries");
+
+        // BL components
+        modal_add_review.bl.close_modal("modal_add_review");
+        modal_add_review.bl.custom_collapse("modal_add_review_collapse_public");
+        modal_add_review.bl.custom_collapse("modal_add_review_collapse_owner_response");
+        modal_add_review.bl.datepicker_input("modal_datepicker_add_review_inside", "modal_add_review_date");
+
+        // set up object id 
+        modal_add_review.object_id = page.get_id();
+
+    };
+
+    // UI logic
+    modal_add_review.ui = new function () {
+
+        // Custom select
+        this.select_filter_custom = function (id) {
+
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul_wrapper = select_id.getElementsByClassName("select_ul_filter_wrapper")[0];
+            let ul = select_id.getElementsByClassName("select_filter_ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul_wrapper.classList.remove("hidden");
+                    let ulOffset = $(ul_wrapper).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul_wrapper).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul_wrapper).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul_wrapper.classList.add("reverse");
+                    } else {
+                        ul_wrapper.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul_wrapper.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(btn).has(e.target).length === 0) {
+                    if (!$(ul_wrapper).is(e.target) && $(ul_wrapper).has(e.target).length === 0) {
+                        ul_wrapper.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul_wrapper.classList.add("hidden");
+                    btn.classList.remove("open");
+                    btn.setAttribute('data-id', e.currentTarget.dataset.id);
+                }
+            }
+        }
+
+        // filter search
+        this.filter_search_list = function (id) {
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".select_filter_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+      
+    };
+
+    // BL logic
+    modal_add_review.bl = new function () {
+
+        // Close modal
+        this.close_modal = function (id) {
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mousedown", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+                modal_add_review.bl.clear_modal();
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            ui.content_loading('modal_add_review_content_loading');
+
+            modal_add_review_save_btn.onclick = modal_add_review.bl.add_reviews;
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+            ui.content_loading_hide('modal_add_review_content_loading');
+
+        };
+
+        // Collapse
+        this.custom_collapse = function (id) {
+            
+            let collapse_id = document.getElementById(id);
+            let label_btn = collapse_id.getElementsByClassName("collapse_label")[0];
+            let arrow = collapse_id.getElementsByClassName("arrow")[0];
+            let collapse_inside = collapse_id.getElementsByClassName("custom_collapse_inside")[0];
+
+            try {
+
+                if (!label_btn == true) return;
+
+                label_btn.addEventListener("click", function () {
+
+                    if (label_btn.classList.contains("open")) {
+
+                        label_btn.classList.remove("open");
+                        $(collapse_inside).toggleClass("show");
+                        arrow.classList.remove("rotate_180");
+
+                    } else {
+
+                        label_btn.classList.add("open");
+                        $(collapse_inside).toggleClass("show");
+                        arrow.classList.add("rotate_180");
+
+                    };
+                });
+
+            } catch (error) {
+
+                console.log(error);
+            }
+
+        };
+
+        // Modal date option
+        this.datepicker_input = function (id, input) {
+            let input_date = document.getElementById(input);
+            input_date.addEventListener("focus", function () {
+                $("#" + id).fadeIn(100);
+                $("#" + input).addClass("open");
+            });
+            $(function () {
+                $("#" + id).datepicker({
+                    onSelect: function (dateText, inst) {
+                        $("#" + input).val(dateText);
+                        $("#" + id).fadeOut(100);
+                    }
+                });
+            });
+            $(document).mouseup(function (e) {
+                if (!$("#" + input).is(e.target) && $("#" + input).has(e.target).length === 0) {
+                    $("#" + id).fadeOut(100);
+                }
+            });
+        };
+
+        // add new reviews
+        this.add_reviews = async () => {
+
+            ui.content_loading('modal_add_review_content_loading');
+
+            var user_id = bl.workers.current_user_id();
+
+            var url = `/api/reviews/add/${user_id}?object_id=${modal_add_review.object_id}`;
+            var review_id_json = await ajax.get(url);
+            var review_id = review_id_json.slice(1, -1);
+            modal_add_review.review_id = review_id;
+
+            var url = '/api/reviews/save/';
+
+            var rev = {};
+
+            rev.rating_accuracy = modal_add_review_accuracy.value || 1;
+            rev.rating_check_in = modal_add_review_check_in.value || 1;
+            rev.rating_cleanliness = modal_add_review_cleanliness.value || 1;
+            rev.rating_communication = modal_add_review_communication.value || 1;
+            rev.rating_value_for_money = modal_add_review_value_for_money.value || 1;
+            rev.rating_location = modal_add_review_location.value || 1;
+            var d = new Date(modal_add_review_date.value);
+            rev.date = js.date.toIsoFormat(d);
+            rev.rating = modal_add_review_rate.value || 1;
+            rev.review_id = review_id;
+            //rev.active = modal_add_review_active.value;
+            rev.note_public = modal_add_review_public.value;
+            rev.contact_name = modal_add_review_contact.value;
+            rev.rent_id = modal_add_review_rent_id.value;            
+            rev.object_id = modal_add_review.object_id;
+            rev.note_owner = modal_add_review_owner_response.value;
+            rev.headline = modal_add_review_headline.value;
+            if (modal_add_reviews_select_filter_countries_btn.innerText != "") {
+                rev.contact_country_id = document.querySelector('#modal_add_reviews_select_filter_countries > button').dataset.id;
+            }
+
+            await ajax.post_json(url, rev);
+
+            reviews.bl.load_reviews();
+
+            ui.content_loading_hide('modal_add_review_content_loading');
+
+            modal_add_reviews_cancel_btn.click();
+            this.clear_modal();
+
+        }
+
+        //Load countries list into dropdown list
+        this.load_countries_list = function () {
+
+            var countries = bl.countries.list();
+            modal_add_reviews_select_filter_countries_ul.innerHTML = '';
+
+            for (var c of countries) {
+                var t = template_countries_list_add_reviews.innerHTML;
+                t = t.replace('${id}', c['id']);
+                t = t.replace('${code2}', c['code2']);
+                t = t.replace('${country}', c['country']);
+                js.html.insertAdjacentHTML('modal_add_reviews_select_filter_countries_ul', t);
+            }
+        }
+
+        // clear all inputs in modal
+        this.clear_modal = () => {
+
+            modal_add_review_accuracy.value = '';
+            modal_add_review_rent_id.value = '';
+            modal_add_review_object_id.value = '';
+            modal_add_review_check_in.value = '';
+            modal_add_review_cleanliness.value = '';
+            modal_add_review_communication.value = '';
+            modal_add_review_value_for_money.value = '';
+            modal_add_review_location.value = '';
+            //modal_add_review_contact_country_id.value = '';
+            modal_add_review_date.value = '';
+            modal_add_review_rate.value = '';
+            //modal_add_review_active.value = '';
+            modal_add_review_public.value = '';
+            modal_add_review_contact.value = '';
+            modal_add_review_owner_response.value = '';
+            modal_add_review_headline.value = '';
+
+            if (modal_add_review_save_btn.classList.contains('hidden')) {
+                //modal_add_review_save_btn.classList.add('hidden');
+                modal_add_review_add_btn.classList.remove('hidden');
+
+            }
+
+        }
+
+        // load data from database to modal
+        this.edit_reviews = async(review_id) => {
+
+            //modal_add_review_save_btn.classList.add('hidden');
+            modal_add_review_add_btn.classList.remove('hidden');
+            modal_add_review.review_id = review_id;
+            this.show_modal('modal_add_review');
+
+            var url = '/api/reviews/get/' + review_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+            
+            modal_add_review_accuracy.value = json_response[0]['rating_accuracy'];
+            modal_add_review_object_id.value = json_response[0]['object_id'] ?? '-';
+            modal_add_review_rent_id.value = json_response[0]['rent_id'] ?? '-';
+            modal_add_review_check_in.value = json_response[0]['rating_check_in'];
+            modal_add_review_cleanliness.value = json_response[0]['rating_cleanliness'];
+            modal_add_review_communication.value = json_response[0]['rating_communication'];
+            modal_add_review_value_for_money.value = json_response[0]['rating_value_for_money'];
+            modal_add_review_location.value = json_response[0]['rating_location'];
+            //modal_add_review_contact_country_id.value = '';
+            modal_add_review_date.value = !json_response[0]['date'] == true ? '' : json_response[0]['date'].split('T')[0];
+            modal_add_review_rate.value = json_response[0]['rating'].toFixed(2);
+            //modal_add_review_active.value = json_response[0]['active'];
+            modal_add_review_public.value = json_response[0]['note_public'];
+            modal_add_review_contact.value = json_response[0]['contact_name'];
+            modal_add_review_owner_response.value = json_response[0]['note_owner'];
+            modal_add_review_headline.value = json_response[0]['headline'];
+            if (json_response[0]['contact_country_id'] != null) {
+                document.querySelector(`#modal_add_reviews_select_filter_countries_ul > li[data-id= '${json_response[0]['contact_country_id']}']`).click()
+            }
+
+            modal_add_review_save_btn.onclick = modal_add_review.bl.update_review;  
+
+            if (json_response[0]['open'] != 'Y') {
+                var url = '/api/reviews/set_open/' + review_id;
+                var response = await ajax.get(url);
+            }
+        }
+
+        // change data into database
+        this.update_review = async () => {
+
+            ui.content_loading('modal_add_review_content_loading');
+
+            // api call
+            var url = '/api/reviews/save';
+
+            var rev = {};
+
+            rev.review_id = modal_add_review.review_id;
+            rev.rating_accuracy = modal_add_review_accuracy.value || 1;
+            rev.rating_check_in = modal_add_review_check_in.value || 1;
+            rev.rating_cleanliness = modal_add_review_cleanliness.value || 1;
+            rev.rating_communication = modal_add_review_communication.value || 1;
+            rev.rating_value_for_money = modal_add_review_value_for_money.value || 1;
+            rev.rating_location = modal_add_review_location.value || 1;
+            //rev.contact_country_id = modal_add_review_contact_country_id.value;
+            rev.date = modal_add_review_date.value;
+            rev.rating = modal_add_review_rate.value || 1;
+            //rev.active = modal_add_review_active.value;
+            rev.note_public = modal_add_review_public.value;
+            rev.contact_name = modal_add_review_contact.value;
+            rev.object_id = modal_add_review.object_id;
+            rev.note_owner = modal_add_review_owner_response.value;
+
+            rev.headline = modal_add_review_headline.value;
+            if (modal_add_reviews_select_filter_countries_btn.innerText != "") {
+                rev.contact_country_id = document.querySelector('#modal_add_reviews_select_filter_countries > button').dataset.id;
+            }
+
+            await ajax.post_json(url, rev);
+
+            ui.content_loading_hide('modal_add_review_content_loading');
+
+            modal_add_reviews_cancel_btn.click();
+            this.clear_modal();
+
+            document.title == "All reviews" ? all_reviews.bl.get_all() : reviews.bl.load_reviews();
+            //components.bl.pop_up_open('pop_up_saved');
+        }
+
+        this.delete_review = async () => {
+
+            var url = '/api/reviews/delete/' + modal_add_review.review_id;
+            await ajax.get(url);
+
+            reviews.bl.load_reviews();
+            modal_add_reviews_cancel_btn.click();
+            this.clear_modal();
+        }
+
+    };
+
+    // On load
+    modal_add_review.load();
+
+</script> 

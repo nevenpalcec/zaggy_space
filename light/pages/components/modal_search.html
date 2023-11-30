@@ -1,0 +1,633 @@
+﻿<!-- Modal search -->
+<div id="modal_search" class="view_modal hidden visuallyhidden">
+
+    <!-- Loading -->
+    <div class="view_loading" id="modal_search_content_loading" style="display: none;">
+        <img src="/assets/images/icons/loading.svg" />
+    </div>
+
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog modal_lg">
+        <div class="modal_content">
+
+            <!-- Modal header -->
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold" id="modal_add_new_room_title">
+                    <i class="fas fa-search pr-2"></i> Search rents
+                </div>
+                <div class="close" data-dismiss="modal"><i class="fas fa-times"></i></div>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body pb-0">
+
+                <!-- Search input -->
+                <div class="d-flex justify-content-between py-2">
+                    <input type="text" class="col-md-6 form-control py-2 mr-4 focus" placeholder="Type to search..." id="rents_modal_search">
+                    <label class="checkbox py-0">
+                        <div class="d-flex align-items-center pt-1">
+                            <input type="checkbox" id="rents_search_active_checkbox" checked onchange="modal_search.bl.list_rents();">
+                            <div class="check check_md"></div>
+                            <div class="pl-2">Active rents</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Table -->
+                <div class="view_table rents modal_list_rents mt-3 position-relative" id="rents_table" style="">
+                    <table class="table" id="modal_table">
+                        <thead>
+                            <tr class="sticky bg_light_silver">
+                                <th scope="col" class="guests" id="guest_or_object" style="padding-left: 4rem;">Guests</th>
+                                <th scope="col" class="period" id="period_or_owner">Period</th>
+                                <th scope="col" class="object" id="object_or_location">Object</th>
+                                <th scope="col" class="object" id="object_type" style="display: none">Type</th>
+                                <th scope="col" class="object" id="percentage" style="display: none">Data quality</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rents_modal_tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer justify-content-between">
+                <div class="font_3">Search results: <span id="search_modal_count">0</span></div>
+                <button class="btn btn_silver" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="modal_rents_search_row">
+    <tr class="cursor_point" data-rent_id="${id}" onclick="modal_details_rent.ui.show_details('${id}');" data-dismiss="modal" style="background-color: ${background_color_active}">
+        <td class="td_item01">
+            <div class="d-flex align-items-center">
+                <div class="td_icon">
+                    <!--<img src="/assets/images/icons/portals/${rent_source_icon}.png" alt="" loading="lazy">-->
+                    <img src="/assets/images/icons/portals/${rent_source_icon | 'syncbeds'}.svg" alt="" loading="lazy">
+                </div>
+                <div class="td_wrapper">
+                    <div class="td_guest">
+                        <strong class="d-flex">
+                            <span class=""><img src="/assets/images/icons/flags/${contact_country_code2}.svg" alt="" loading="lazy"></span>
+                            <span>${contact_name}</span>
+                        </strong>
+                    </div>
+                    <!--<div class="d-flex flex-wrap">
+                        <div class="item"><span>3</span><i class="fas fa-user"></i></div>
+                        <div class="line"></div>
+                        <div class="item"><span>3</span><i class="fas fa-child"></i></div>
+                        <div class="line"></div>
+                        <div class="item"><span>1</span><i class="fas fa-paw"></i></div>
+                        <div class="line"></div>
+                    </div>-->
+                </div>
+            </div>
+        </td>
+        <td class="td_item02 period">
+            <!--<div><strong>17.10 - 22.10</strong></div>-->
+            <div><strong>${period_from} - ${period_until}</strong></div>
+            <span>${days}. nights, ${year_from}</span>
+        </td>
+        <td class="td_item03 object">
+            <div><strong>${object_name}</strong></div>
+        </td>
+    </tr>
+</template>
+
+<template id="modal_objects_search_row">
+    <tr class="cursor_point" data-object_id="${id}" onclick="modal_search.bl.redirect_to_object(this);" data-dismiss="modal">
+        <td class="td_item01">
+            <div class="d-flex align-items-center">
+                <div class="td_wrapper">
+                    <div>
+                        <strong class="d-flex">
+                            <span><img src="/assets/images/icons/flags/${country_code}.svg" alt="" loading="lazy"></span>
+                            <span>${object_name}</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="td_item02 period">
+            <!--<div><strong>17.10 - 22.10</strong></div>-->
+            <div><strong>${owner_name}</strong></div>
+        </td>
+        <td class="td_item03 object">
+            <div><strong>${location}</strong></div>
+            <span>${city}</span>
+        </td>
+        <td class="td_item04 object">
+            <div><strong><span>${object_type}</span></strong></div>
+        </td>
+        <td class="td_item05 object">
+            <div><strong>${percentage}</strong></div>
+        </td>
+    </tr>
+</template>
+
+<template id="modal_guests_search_row">
+    <tr class="cursor_point" data-object_id="${id}" onclick="modal_search.bl.redirect_to_object(this);" data-dismiss="modal">
+        <td class="td_item01">
+            <div class="d-flex align-items-center">
+                <div class="td_wrapper">
+                    <div>
+                        <strong class="d-flex">
+                            <span>${guest_name}</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="td_item02 period">
+            <!--RENT ID-->
+            <div>
+                <span><img src="/assets/images/icons/portals/${source_icon}.svg" alt="" loading="lazy" style="width:30px" /></span>
+                <strong>${rent_bearer}</strong>
+            </div>
+        </td>
+        <td class="td_item03 object">
+            <div><strong>ID# ${document_number}</strong></div>
+            <!--<span>DOC NUM</span>-->
+        </td>
+        <td class="td_item04 object">
+            <div><strong><span>${evis_status}</span></strong></div>
+        </td>
+        <td class="td_item05 object">
+            <div>
+                <strong>
+                    <span>${verified}</span>
+                    <span>${imported}</span>
+                </strong>
+            </div>
+        </td>
+    </tr>
+</template>
+
+<script>
+
+    var modal_search = {};
+
+    modal_search.room_id = '';
+    modal_search.room_type = '';
+
+    // Load function
+    modal_search.load = () => {
+
+        ;
+
+        // Global components
+        modal_search.ui.setup_search();
+
+        // BL components
+        modal_search.bl.close_modal("modal_search");
+
+    };
+
+    // UI logic
+    modal_search.ui = new function () {
+
+        this.setup_search = function () {
+
+            // Init a timeout variable to be used below
+            var timeout = null;
+
+            // Listen for keystroke events
+            rents_modal_search.onkeyup = function (e) {
+
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 800ms
+                timeout = setTimeout(function () {
+
+                    // Search only rents
+                    modal_search.bl.list_rents();
+
+                }, 500);
+            };
+        }
+
+        this.click_type = function (li) {
+
+            console.log(`Setting '${li.innerText}' as clicked...`);
+
+            for (let other of li.parentElement.children) {
+                console.log(`Removing clicked from '${other.innerText}'`);
+                other.classList.remove('selected');
+            }
+
+            console.log(`Adding 'selected' to ${li.innerText}`);
+            li.classList.add('selected');
+
+        }
+
+    };
+
+    // BL logic
+    modal_search.bl = new function () {
+
+        var objects = bl.objects.list_get();
+
+        this.hide_modal = function () {
+
+            if (document.getElementsByClassName('modal_rent_details')[0].classList.contains("hidden")) {
+                let details_id = document.getElementById("modal_search");
+
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+            }
+
+        };
+
+        // Close modal
+        this.close_modal = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    modal_search.bl.hide_modal();
+                };
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    modal_search.bl.hide_modal();
+                }
+            })
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        modal_search.bl.hide_modal();
+                    };
+                };
+            });
+
+        };
+
+        this.list_rents = async () => {
+
+            var s = rents_modal_search.value;
+            var user_id = bl.workers.current_user_id();
+            var active = rents_search_active_checkbox.checked ? "Y" : "N";
+            var url = '/api/rents/search/?id=' + user_id + '&search=' + s + '&active=' + active;
+
+            var data = await ajax.get_json(url);
+            console.log(data);
+
+            search_modal_count.innerText = data.length == 10 ? (data.length + '+') : data.length;
+
+            // Prepare objects for templating
+            data = data.map(rent => {
+
+                if (rent['active'] == 'N') {
+                    rent['background_color_active'] = 'mistyrose';
+                }
+
+                if (rent['contact_country_code2']) {
+                    rent['contact_country_code2'] = rent['contact_country_code2'].toLowerCase();
+                }
+
+                let from = rent['from_date'].split('T')[0];
+                let until = rent['until_date'].split('T')[0];
+
+                // Show in format dd.mm.yyyy.
+                rent['period_from'] = from.split('-').reverse().join('.') + '.';
+                rent['period_until'] = until.split('-').reverse().join('.') + '.';
+
+                rent['year_from'] = from.split('-')[0];
+                rent['contact_name'] = rent['contact_name'] || 'No name';
+
+                return rent;
+
+            });
+
+            document.getElementById('guest_or_object').innerText = "Guest";
+            document.getElementById('period_or_owner').innerText = "Period";
+            document.getElementById('object_or_location').innerText = "Object";
+            percentage.style.display = "none";
+            object_type.style.display = "none";
+
+            var html = js.template.insert_all_objects('#modal_rents_search_row', data).join('');
+            rents_modal_tbody.innerHTML = html;
+
+        };
+
+        //opens object page from search modal
+        this.redirect_to_object = function (e) {
+
+            console.log("ID", e.getAttribute("data-object_id"));
+            let id = e.getAttribute("data-object_id");
+            modal_search.bl.hide_modal()
+
+            window.location.href = "#objects";
+            window.location.href = "#object_general?" + id;
+
+        }
+
+        //filters objects in search modal according to query
+        this.search_objects = function () {
+            ui.content_loading("modal_search_content_loading");
+            let query = document.getElementById("rents_modal_search").value.toLowerCase();
+            rents_modal_tbody.innerHTML = "";
+
+            function filterObject(object) {
+
+                rents_modal_search.value.toLowerCase();
+
+                if ((object['name'] || '-').toLowerCase().includes(query)) {
+                    return object;
+                } else if ((object['owner_name'] || '-').toLowerCase().includes(query)) {
+                    return object;
+                } else if ((object['adress'] || '-').toLowerCase().includes(query)) {
+                    return object;
+                } else if ((object['city_name'] || '-').toLowerCase().includes(query)) {
+                    return object;
+                }
+            }
+
+            if (query == "") {
+                modal_search.bl.list_objects(objects);
+            } else {
+                modal_search.bl.list_objects(objects.filter(filterObject));
+            }
+
+        };
+
+        //displays objects in search modal
+        this.list_objects = async function (objects) {
+            ui.content_loading("modal_search_content_loading");
+            console.log("OBJEKTI", objects);
+
+            percentage.style.display = "";
+            object_type.style.display = "";
+            rents_modal_tbody.innerHTML = "";
+            guest_or_object.innerText = "Object";
+            period_or_owner.innerText = "Owner";
+            object_or_location.innerText = "Location";
+
+            search_modal_count.innerText = objects.length;
+
+            var html;
+            for (var o of objects) {
+
+                var tr = document.getElementById('modal_objects_search_row').innerHTML;
+
+                if (!o['name']) {
+                    o['name'] = '-';
+                }
+                if (!o['owner_name']) {
+                    o['owner_name'] = '-';
+                }
+                if (!o['adress']) {
+                    o['adress'] = '-';
+                }
+                if (!o['city_name']) {
+                    o['city_name'] = '-';
+                }
+
+                tr = tr.replace('${id}', o['id']);
+                tr = tr.replace('${object_name}', o['name']);
+                tr = tr.replace('${owner_name}', o['owner_name']);
+                tr = tr.replace('${location}', o['adress']);
+                tr = tr.replace('${city}', o['city_name']);
+                tr = tr.replace('${country_code}', o['country_code']);
+                tr = tr.replace('${object_type}', o['objects_types_name']);
+                tr = tr.replace('${percentage}', o['score_percent'] + '%');
+
+                document.getElementById("rents_modal_tbody").innerHTML += tr;
+            }
+
+            ui.content_loading_hide("modal_search_content_loading");
+
+        };
+
+        //fetches all guest data and calls display_guests()
+        this.list_guests = async function () {
+
+            ui.content_loading("modal_search_content_loading");
+
+            var current_user = bl.workers.current_user_id();
+            var rents;
+            var guests;
+
+            var current_date = new Date();
+            current_date.setDate(current_date.getDate() - 365);
+
+            //GET guests
+            await fetch('/api/guests/get_guest_by_user_id/' + current_user)
+                .then(res => res.json())
+                .then(r => { guests = r; })
+
+            var p = {
+                user_id: current_user,
+                date_from: current_date,
+                days: 700
+            };
+
+            //GET rents
+            await $.post('/api/rents/list/' + current_user, JSON.stringify(p)).done((data) => {
+
+                var rent_data = data;
+                localStorage.setItem('rents', JSON.stringify(rent_data));
+
+                rents = bl.rents_local.get();
+
+            });
+
+            //filter only guests from current date - 1 year to curr date + 1 year
+            guests = guests
+                .filter(guests => {
+                    return new Date(guests['date_from']).getFullYear() >= current_date.getFullYear()
+                        && new Date(guests['date_from']).getFullYear() <= current_date.getFullYear() + 2;
+                });
+
+            var result = [];
+
+            //get a union of rents and guests
+            for (guest of guests) {
+                for (rent of rents) {
+                    if (guest['rent_id'] == rent['id']) {
+                        result.push(guest);
+                    }
+                }
+            }
+
+            console.log("GOSTI", result);
+
+            //filter guests from user input
+            let query = document.getElementById("rents_modal_search").value.toLowerCase();
+            rents_modal_tbody.innerHTML = "";
+
+            function filterObject(guest) {
+
+                rents_modal_search.value.toLowerCase();
+
+                if ((guest['name_first'] || '-').toLowerCase().includes(query)) {
+                    return guest;
+                } else if ((guest['name_last'] || '-').toLowerCase().includes(query)) {
+                    return guest;
+                } else if ((guest['document_number'] || '-').toLowerCase().includes(query)) {
+                    return guest;
+                } else if ((guest['contact_name'] || '-').toLowerCase().includes(query)) {
+                    return guest;
+                }
+            }
+
+            if (query == "") {
+                modal_search.bl.display_guests(result, rents);
+            } else {
+                modal_search.bl.display_guests(result.filter(filterObject), rents);
+            }
+
+            //display_guests(result);
+            ui.content_loading_hide("modal_search_content_loading");
+        }
+
+        //Displays filtered guests
+        this.display_guests = function (guests, rents) {
+
+            ui.content_loading("modal_search_content_loading");
+
+            search_modal_count.innerText = guests.length;
+
+            percentage.style.display = "";
+            object_type.style.display = "";
+            rents_modal_tbody.innerHTML = "";
+
+            guest_or_object.innerText = "Guest";
+            period_or_owner.innerText = "Rent";
+            object_or_location.innerText = "Document";
+            object_type.innerText = "Status"
+            percentage.innerText = "";
+
+            //display guests
+            for (var o of guests) {
+
+                var last_rent = rents[rents.length - 1];
+
+                var tr = document.getElementById('modal_guests_search_row').innerHTML;
+
+                if (!o['guest_name']) {
+                    o['guest_name'] = '-';
+                }
+                if (!o['document_number']) {
+                    o['document_number'] = '-';
+                }
+                if (!o['adress']) {
+                    o['adress'] = '-';
+                }
+                if (!o['city_name']) {
+                    o['city_name'] = '-';
+                }
+
+                let status;
+                if (o['checkin'] == 'Y') {
+                    status = "Checked-in";
+                } else {
+                    status = "Pending";
+                }
+
+                tr = tr.replace('${id}', o['id']);
+                tr = tr.replace('${guest_name}', o['name_first'] + ' ' + o['name_last']);
+                tr = tr.replace('${document_number}', o['document_number']);
+                tr = tr.replace('${rent_bearer}', last_rent['contact_name']);
+                tr = tr.replace('${source_icon}', last_rent['rent_source_icon']);
+                tr = tr.replace('${evis_status}', status);
+
+                //put verified and imported icons
+                if (o['imported'] == 'Y') {
+                    tr = tr.replace('${imported}', '<i class="fas fa-mobile-alt"></i>');
+                } else {
+                    tr = tr.replace('${imported}', '');
+                }
+
+                if (o['verified'] == 'Y') {
+                    tr = tr.replace('${verified}', '<i class="fas fa-user-check"></i>');
+                } else {
+                    tr = tr.replace('${verified}', '');
+                }
+
+                document.getElementById("rents_modal_tbody").innerHTML += tr;
+            }
+            ui.content_loading_hide("modal_search_content_loading");
+        };
+
+        // Open modal
+        this.show_modal = async function (id) {
+
+            await ui.content_loading('modal_search_content_loading')
+
+            rents_modal_search.value = '';
+            rents_search_active_checkbox.checked = true;
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+
+            await modal_search.bl.list_rents();
+
+            await ui.content_loading_hide('modal_search_content_loading')
+
+        };
+
+        // Search select
+        this.search_select = function (id) {
+
+            var dropdown_id = document.getElementById(id);
+            var dropdown_btn = dropdown_id.getElementsByClassName("btn")[0];
+            var dropdown_menu = dropdown_id.getElementsByClassName("search_dropdown_menu")[0];
+
+            dropdown_btn.addEventListener("click", function () {
+                if (!dropdown_btn.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+
+            for (let i = 0; i < dropdown_menu.children.length; i++) {
+                dropdown_menu.children[i].onclick = function (e) {
+                    dropdown_btn.innerHTML = e.currentTarget.innerHTML;
+                    if (dropdown_btn.innerHTML == "Object") {
+                        modal_search.bl.list_objects(objects);
+                    } else if (dropdown_btn.innerHTML == "Rent") {
+                        modal_search.bl.list_rents();
+                    } else if (dropdown_btn.innerHTML == "Guest") {
+                        modal_search.bl.list_guests();
+                    }
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            };
+
+            document.addEventListener("mouseup", function (e) {
+                if (e.target.classList.contains("btn") == false) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            });
+        }
+
+    };
+
+    // On load
+    modal_search.load();
+
+</script>

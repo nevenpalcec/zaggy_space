@@ -1,0 +1,181 @@
+﻿@{
+    var users_text = (System.Data.DataRow)ViewData["users_text"];
+    var list_front_page = (System.Data.DataTable)ViewData["list_front_page"];
+    var list_curosel = (System.Data.DataTable)ViewData["list_curosel"];
+    var be = (System.Data.DataRow)Session["booking_engine"];
+    var header_display_title = be["header_display_title"].ToString();
+    var remove_header_footer = be["remove_header_footer"].ToString();
+    var title = be["moto_header"].ToString();
+    var moto = be["moto_header_small"].ToString();
+    var page = (string)ViewData["page"];
+
+    string user_title = users_text["title"].ToString();
+    string user_moto = users_text["moto"].ToString();
+}
+
+<!-- components change to: header_component01, header_component02, header_component03, header_component04 -->
+<div class="header_component01">
+
+    <!-- Navigation -->
+    <div class="banner d-none">
+        <div class="container-wrapper d-flex justify-content-between py-2 px-3">
+            <div class="logo align-self-center">
+                <a href="./index.html">
+                    <img src="/assets/images/icons/cropped-zaggy_logo-POTPIS.png" style="height: 3rem; width: auto;" alt="logo">
+                </a>
+            </div>
+
+            <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
+                <button class="navbar-toggler" type="button" onclick="navbar.bl.open_mobile_navbar();">
+                    <div class="icon_bar"><span></span><span></span><span></span></div>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">@bl.lng.l.Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/pictures/gallery">@bl.lng.l.Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/objects/list">@bl.lng.l.Accommodation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blogs/blogs">@bl.lng.l.Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/reviews/list">@bl.lng.l.Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users/about">@bl.lng.l.About_us</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div id="navbar_nav_inside" class="d-none" onclick="navbar.bl.close_mobile_navbar();">
+        <div class="m-3 d-flex justify-content-end">
+            <button class="btn text-white w-0  text_3xl"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="navbar_nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">@bl.lng.l.Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pictures/gallery">@bl.lng.l.Gallery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/objects/list">@bl.lng.l.Accommodation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/blogs/blogs">@bl.lng.l.Blogs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reviews/list">@bl.lng.l.Reviews</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/about">@bl.lng.l.About_us</a>
+            </li>
+        </ul>
+    </div>
+
+    <section class="section-carousel">
+        <div id="carouselControls" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-box">
+                @if (string.IsNullOrWhiteSpace(user_title) == false)
+                {
+                    <h2 class="carousel-title"> @user_title </h2>
+                }
+                @if (string.IsNullOrWhiteSpace(user_moto) == false)
+                {
+                    <h2 class="carousel-sub mt-2"> @user_moto </h2>
+                }
+            </div>
+            <div class="carousel-inner">
+                @foreach (System.Data.DataRow r in list_curosel.Rows)
+                {
+                    int index = list_curosel.Rows.IndexOf(r);
+                    <div class="carousel-item @(index == 0 ? "active" : string.Empty)">
+                        <img class="d-block w-100 lazy"
+                             src="/assets/images/icons/spinner.gif"
+                             data-src="@r["link"]"
+                             alt="@r["name"]">
+                    </div>
+                }
+
+                @foreach (System.Data.DataRow r in list_front_page.Rows)
+                {
+                    int index = list_front_page.Rows.IndexOf(r);
+                    <div class="carousel-item @(index == 0 && list_curosel.Rows.Count < 1 ? "active" : string.Empty)">
+                        <img class="d-block w-100 lazy"
+                             src="/assets/images/icons/spinner.gif"
+                             data-src="@r["link_amazon"]"
+                             alt="@r["name"]">
+                    </div>
+                }
+
+
+                @if (list_curosel.Rows.Count < 1 && list_front_page.Rows.Count < 1)
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        <div class="carousel-item @(i == 1 ? "active" : string.Empty)">
+                            <img class="d-block w-100 lazy"
+                                 src="/assets/images/icons/spinner.gif"
+                                 data-src="https://zaggypictures.s3.eu-central-1.amazonaws.com/wp2/carousel/carousel/@(i).jpg"
+                                 alt="Picutre: @i">
+                        </div>
+                    }
+
+                }
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+                <div class="carousel-icon-left" aria-hidden="true"><i class="fas fa-chevron-left"></i></div>
+            </a>
+            <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+                <div class="carousel-icon-right" aria-hidden="true"><i class="fas fa-chevron-right"></i></div>
+            </a>
+        </div>
+    </section>
+
+</div>
+
+
+
+<script>
+
+    var navbar = {};
+
+    // Load function
+    navbar.load = () => {
+
+
+    }
+
+    // BL logic
+    navbar.bl = new function () {
+
+        // Open mobile navbar
+        this.open_mobile_navbar = function () {
+            navbar_nav_inside.classList.remove("d-none");
+        }
+
+        this.close_mobile_navbar = function () {
+            navbar_nav_inside.classList.add("d-none");
+        }
+
+    }
+
+    // Carousel
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: false
+        });
+    });
+
+</script>
+

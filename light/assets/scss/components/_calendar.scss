@@ -1,0 +1,274 @@
+.ui-datepicker {
+    padding: unset !important;
+
+    @media screen and (max-width: 575px) {
+        width: 100%;
+    }
+
+    .ui-widget-header {
+        background: rgba($color-silver02, .2);
+        border: unset;
+    }
+
+    .ui-datepicker-calendar {
+        thead {
+            th {
+                font-size: .75rem;
+            }
+        }
+    }
+
+    .ui-state-highlight {
+        background: $color-secondary !important;
+        color: white !important;
+        border: unset !important;
+    }
+
+    .ui-state-active {
+        // background: #F68A3D !important;
+        border: unset !important;
+    }
+
+    .td-highlight {
+        background: $color-primary !important;
+
+        a {
+            color: #FFF;
+        }
+    }
+
+    .td-highlight-hover {
+        background: $color-primary !important;
+
+        a {
+            color: #FFF;
+        }
+    }
+
+    .ui-datepicker-next-hover {
+        right: 2px !important;
+    }
+
+    .ui-datepicker-prev-hover {
+        left: 2px !important;
+    }
+
+    .ui-datepicker-prev-hover, .ui-datepicker-next-hover {
+        top: 2px !important;
+
+        &:hover {
+            border: unset !important;
+        }
+    }
+
+    .ui-datepicker-next, .ui-datepicker-prev {
+        cursor: pointer;
+
+        span {
+            display: none !important;
+        }
+    }
+
+    .ui-datepicker-next {
+        width: 2rem;
+        height: 2rem;
+
+        &:before {
+            content: "\f105";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 1.1rem;
+        }
+    }
+
+    .ui-datepicker-prev {
+        width: 2rem;
+        height: 2rem;
+
+        &:before {
+            content: "\f104";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 1.1rem;
+        }
+    }
+
+    .ui-state-default {
+        text-align: center;
+        border: unset !important;
+        position: relative;
+    }
+
+    thead {
+        background-color: rgba($color-silver02, .5);
+    }
+
+    tbody {
+        td {
+            border: 1px solid rgba($color-silver02, .5);
+            height: 33px;
+
+            a {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        td:hover {
+            background: $color-primary;
+
+            a {
+                color: #FFF;
+            }
+        }
+    }
+}
+.ui-widget.ui-widget-content {
+    border:unset !important;
+}
+// Datepicker inline
+.datepicker_inline {
+    .ui-datepicker-inline {
+        display: flex !important;
+        width: auto !important;
+        .ui-datepicker-group {
+            box-shadow: 0 0 5px rgba(0,0,0,.2);
+            margin: .5rem;
+            flex: 0 0 31.9%;
+            background-color: #fff;
+        }
+    }
+}
+#double_calendar {
+    .ui-datepicker {
+        @media screen and (max-width: 575px) {
+            width: 100%;
+        }
+    }
+}
+
+// Object calendars
+#object_calendars_datepicker {
+    position: relative;
+    .ui-datepicker-multi {
+        width: unset !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        .ui-datepicker-group {
+            flex: 0 0 25%;
+            @media screen and (max-width: 1600px) {
+                flex: 0 0 33.333%;
+            }
+            @media screen and (max-width: 1300px) {
+                flex: 0 0 50%;
+            }
+            @media screen and (max-width: 575px) {
+                flex: 0 0 100%;
+            }
+            .ui-widget-header {
+                background: rgba($color-silver02, .2);
+                margin: 0 .55rem;
+            }
+        }
+    }
+    .ui-datepicker .ui-datepicker-header {
+        position: unset !important;
+    }
+    .ui-datepicker .ui-datepicker-prev {
+        left: unset !important;
+        right: 2rem;
+    }
+    .ui-datepicker .ui-datepicker-next {
+        margin-right: -.5rem;
+    }
+    .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+        top: -3.75rem !important;
+        @include hover;
+        &:hover {
+            opacity: .7;
+        }
+    }
+}
+.ui-state-highlight {
+    background: #00818C !important;
+    color: white !important; 
+    border: unset !important;
+}
+.ui-state-active {
+    background: $color-primary !important;
+    border: unset !important;
+}
+.td-highlight {
+    background: #F68A3D !important;
+    a {
+        color: #FFF;
+    }
+}
+.td-highlight-hover {
+    background: #F68A3D !important;
+    a {
+        color: #FFF;
+    }
+}
+.modal_dropdown_menu_calendar {
+    @media screen and (max-width: 991px) {
+        width: 100%;
+        .ui-datepicker {
+            width: 100%;
+        }
+    }
+}
+
+// Booked from first until end ===========================================================
+.td-booked-first {
+    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, $color-red 50%, $color-red 100%) !important
+}
+.td-booked-all {
+    background-color: $color-red;
+}
+.td-booked-end {
+    background: linear-gradient(to bottom right, $color-red 0%, $color-red 50%, #fff 50%, #fff) !important;
+}
+
+/*form datetime piceker - calendar*/
+.fp-booked-first {
+    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, #eb6c6c 50%, #eb6c6c 100%) !important;
+}
+
+.fp-booked-last {
+    background: linear-gradient(to bottom right, #eb6c6c 0%, #eb6c6c 50%, #fff 50%, #fff) !important;
+}
+
+.fp-small-booked-first {
+    background: linear-gradient(to bottom right, #333 0%, #333 50%, #eb6c6c 50%, #eb6c6c 100%);
+}
+
+.fp-small-booked-last {
+    background: linear-gradient(to bottom right, #eb6c6c 0%, #eb6c6c 50%, #333 50%, #333);
+}
+
+.fp-booked-all {
+    background-color: #eb6c6c;
+}
+
+.fp-select-first {
+    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, #eb6c6c 50%, #eb6c6c 100%);
+}
+
+.fp-select-last {
+    background: linear-gradient(to bottom right, #eb6c6c 0%, #eb6c6c 50%, #fff 50%, #fff 100%);
+}
+
+.fp-select-all {
+    background-color: #20baba;
+}

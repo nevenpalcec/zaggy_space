@@ -1,0 +1,75 @@
+﻿@code {
+    [Parameter] public System.Data.DataTable reviews { get; set; }
+}
+
+@if (reviews != null)
+{
+    <div class="card mb-3">
+
+        <div class="card-header bg-light">
+            <h5 class="mb-0 text-dark text-uppercase" id="account"> <i class="fab fa-rev"></i> &nbsp; @lng.l.Reviews</h5>
+        </div>
+
+        <div class="card-body">
+            @if (reviews != null)
+            {
+                <div class="table-responsive scrollbar">
+                    <table class="table table-hover table-striped overflow-hidden">
+                        <thead style="border-bottom-width: 2px">
+                            <tr>
+
+                                <th scope="col">@lng.l.Reservation</th>
+                                <th scope="col">@lng.l.Created</th>
+                                <th class="text-end" scope="col">@lng.l.Rating</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_rents">
+
+
+                            @foreach (System.Data.DataRow r in reviews.Rows)
+                            {
+                                <tr>
+
+                                    <td class="text-dark">
+                                        <div style="display:flex">
+                                            <div>
+                                                <a class="link-dark" href="/reviews/details/@r["id_hash"]">@r["contact_name"]</a>
+                                                <div>
+                                                    @if (string.IsNullOrWhiteSpace(r["country_code"].ToString()) == false)
+                                                    {
+                                                        <img src="/assets/images/icons/flags/@(r["country_code"]).svg" style="height: 15px; margin-right: 10px;" loading="lazy" />
+                                                    }
+                                                    <span class="text-500 fs--1 mb-0">
+                                                        @lng.l.Reservation ID: @r["rent_id"]
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-dark">
+                                        @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.")
+                                        <p class="text-500 fs--1 mb-0">
+                                            @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("yyyy")
+                                        </p>
+                                    </td>
+
+                                    <td class="text-end text-dark">
+                                        <span class="fw-bold">@double.Parse(r["rating_average"].ToString()).ToString("N2")</span>
+                                        <p class="text-500 fs--1 mb-0">
+                                            @lng.l.Review ID:@r["id"]
+                                        </p>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+    </div>
+
+}

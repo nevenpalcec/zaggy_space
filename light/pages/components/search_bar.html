@@ -1,0 +1,744 @@
+﻿<div>
+    <div class="view_filter bg-white p-2 d-flex flex-wrap">
+        <!-- Icon, Name & Checkbox -->
+        <div id="filter_dropdown_example" class="view_dropdown filter_tip d-lg-block d-none">
+            <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="far fa-object-ungroup"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold">Example</div>
+                        <div class="font_3 text-left">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Exaemple</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-id="1">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon"><i class="far fa-thumbs-up"></i></div>
+                                <div class="align-self-center">Example01</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-id="2">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon"><i class="far fa-file-archive"></i></div>
+                                <div class="align-self-center">Example02</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-id="3">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon"><i class="far fa-trash-alt"></i></div>
+                                <div class="align-self-center">Example03</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                </ul>
+                <hr class="m-0">
+                <div class="dropdown_footer d-flex">
+                    <div class="dropdown_btn all w-100 text-center font_3">All</div>
+                    <div class="dropdown_btn remove w-100 text-red text-center font_3">Remove</div>
+                </div>
+            </div>
+        </div>
+        <div class="filter_line_y"></div>
+        <!-- Name -->
+        <div id="filter_dropdown_example02" class="view_dropdown dropdown d-md-block d-none">
+            <button class="btn btn_hover px-2 py-1 d-md-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-cube"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold">Example02</div>
+                        <div class="dropdown_name font_3 text-left">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Example02</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-id="1">Example02</li>
+                    <li class="dropdown_li" data-id="2">Example02</li>
+                </ul>
+            </div>
+        </div>
+        <div class="filter_line_y"></div>
+        <!-- Circle color, name & checkbox -->
+        <div id="filter_status_example03" class="view_dropdown filter_status d-lg-block d-none">
+            <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-layer-group"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold">Status</div>
+                        <div class="font_3 text-left">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Status</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-status="1">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #DDDDDD;"></div>
+                                <div class="align-self-center">Owner</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="2">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #414f6e;"></div>
+                                <div class="align-self-center">Paid</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="3">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #e2a74d;"></div>
+                                <div class="align-self-center">OW pending</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="4">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #df6969;"></div>
+                                <div class="align-self-center">Deleted</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="5">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #389b7a;"></div>
+                                <div class="align-self-center">Check OUT</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="6">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #337e61;"></div>
+                                <div class="align-self-center">ADV Paid</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="7">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #287533;"></div>
+                                <div class="align-self-center">Guest confirmed</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="8">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #942121;"></div>
+                                <div class="align-self-center">Blocked</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="9">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #6ae488;"></div>
+                                <div class="align-self-center">Confirm</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="10">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #c255b3;"></div>
+                                <div class="align-self-center">ORVAS VHC</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="11">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #c27e3f;"></div>
+                                <div class="align-self-center">Waiting</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="12">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #4dc4e2;"></div>
+                                <div class="align-self-center">Check IN</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-status="13">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-item-center">
+                                <div class="icon" style="background-color: #f0ee94;"></div>
+                                <div class="align-self-center">Offer</div>
+                            </div>
+                            <input type="checkbox">
+                            <span class="check check_md"></span>
+                        </label>
+                    </li>
+                </ul>
+                <hr class="m-0">
+                <div class="dropdown_footer d-flex">
+                    <div class="dropdown_btn all w-100 text-center font_3">All</div>
+                    <div class="dropdown_btn remove w-100 text-red text-center font_3">Remove</div>
+                </div>
+            </div>
+        </div>
+        <div class="filter_line_y"></div>
+        <!-- Links -->
+        <a href="#" class="filter_link active"><i class="far fa-file-alt pr-lg-2"></i><span class="d-none d-lg-flex">Example</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#" class="filter_link"><i class="far fa-images pr-lg-2"></i><span class="d-none d-lg-flex">Example</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#" class="filter_link"><i class="fas fa-coins pr-lg-2"></i><span class="d-none d-lg-flex">Example</span></a>
+
+        <!-- Dropdown -->
+        <div id="example_filter_dropdown" class="view_dropdown toggle ml-auto" style="height: unset;">
+            <button class="btn btn_hover">
+                <div class="d-flex align-items-center">
+                    <span class="font_6"><i class="fas fa-cog"></i></span>
+                    <span class="font_1 ml-2"><i class="fas fa-chevron-down"></i></span>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Reports</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fab fa-connectdevelop"></i></div>
+                                <div class="align-self-center">Rent list</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-user"></i></div>
+                                <div class="align-self-center">Owner</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Housekeeping</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-bed"></i></div>
+                                <div class="align-self-center">Hotel housekeeping</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-csv"></i></div>
+                                <div class="align-self-center">Export CSV/XLS</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-file-word"></i></div>
+                                <div class="align-self-center">Word</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                                <div class="align-self-center">Payment</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon"><i class="fas fa-users"></i></div>
+                                <div class="align-self-center">Payment</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var search_bar = {};
+
+    search_bar.load = function () {
+
+        // Load
+
+        search_bar.ui.select_custom("example_select");
+        search_bar.ui.select_custom("example_select_countries");
+        search_bar.ui.select_search_custom("example_select_search");
+        search_bar.ui.select_search_custom("example_select_search_icon");
+        search_bar.ui.filter_dropdown("filter_dropdown_example");
+        search_bar.ui.filter_dropdown("filter_dropdown_example02");
+        search_bar.ui.filter_dropdown("filter_status_example03");
+        search_bar.ui.filter_dropdown("example_filter_dropdown");
+        search_bar.ui.card_loading("card_example");
+        search_bar.ui.btn_loading("btn_save");
+        search_bar.ui.pop_up_top("pop_up_top.success", "pop_up_top_btn.success");
+        search_bar.ui.pop_up_top("pop_up_top.failed", "pop_up_top_btn.failed");
+
+        // Default
+        search_bar.ui.modal_input_counter("modal_default_counter_price", 20);
+        search_bar.ui.modal_input_counter("modal_default_counter_min_stay", 4);
+        search_bar.ui.modal_close("modal_default");
+        search_bar.ui.modal_single_calendar("modal_default", "components_inside_default_calendar_from", "input_calendar_from", "inside_calendar_from");
+        search_bar.ui.modal_single_calendar("modal_default", "components_inside_default_calendar_until", "input_calendar_until", "inside_calendar_until");
+
+        // Price
+        search_bar.ui.modal_input_counter("modal_price_counter_price", 20);
+        search_bar.ui.modal_close("modal_price");
+        search_bar.ui.modal_single_calendar("modal_price", "components_inside_price_calendar_from", "input_calendar_from", "inside_calendar_from");
+        search_bar.ui.modal_single_calendar("modal_price", "components_inside_price_calendar_until", "input_calendar_until", "inside_calendar_until");
+
+    }
+
+    search_bar.ui = new function () {
+
+        // Pop up top
+        this.pop_up_top = function (id, btn) {
+            let pop_up_show = document.querySelector("." + id);
+            let pop_up_btn = document.querySelector("." + btn);
+            pop_up_btn.addEventListener("click", function () {
+                console.log("Clicked");
+                $(pop_up_show).fadeIn(300);
+                setTimeout(function () {
+                    $(pop_up_show).fadeOut(400);
+                }, 3000)
+            });
+        }
+
+        // Custom select
+        this.select_custom = function (id) {
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul = select_id.getElementsByTagName("ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul.classList.remove("hidden");
+                    let ulOffset = $(ul).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul.classList.add("reverse");
+                    } else {
+                        ul.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(ul).has(e.target).length === 0) {
+                    if (!$(ul).is(e.target) && $(ul).has(e.target).length === 0) {
+                        ul.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    ul.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+
+        // Custom select search
+        this.select_search_custom = function (id) {
+            var select_id = document.getElementById(id);
+            var input = select_id.getElementsByTagName("input")[0];
+            var ul = select_id.getElementsByTagName("ul")[0];
+            var li = ul.querySelectorAll(".select_li");
+            var span = select_id.getElementsByTagName("span")[0];
+            var clean = select_id.getElementsByClassName("clean")[0];
+
+            input.addEventListener("click", function () {
+                ul.classList.remove("hidden");
+                if (input.value.length <= 0) {
+                    input.style.backgroundColor = "rgba(255,255,255,.5)";
+                }
+            });
+            // menu close by click out botder's menu
+            document.addEventListener("mouseup", function (e) {
+                if (!$(ul).is(e.target) && $(ul).has(e.target).length === 0) {
+                    ul.classList.add("hidden");
+                    if (input.value.length <= 0) {
+                        input.style.backgroundColor = "";
+                    }
+                }
+                if (!$(input).is(e.target) && $(input).has(e.target).length === 0) {
+                    clean.classList.add("hidden");
+                }
+            });
+            // focus on input to show clean when contais is true
+            input.addEventListener("focus", function () {
+                clean.classList.remove("hidden");
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    span.innerHTML = e.currentTarget.innerHTML;
+                    ul.classList.add("hidden");
+                    input.style.backgroundColor = "";
+                    input.value = "";
+                    for (let j = 0; j < ul.children.length; j++) {
+                        const element = ul.children[j];
+                        ul.children[j].style.display = "";
+                    }
+                }
+            }
+            input.onclick = function () {
+                var ulOffset = $(ul).offset();
+                var spaceUp = (ulOffset.top - $(input).height() - $(ul).height()) - $(window).scrollTop();
+                var spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul).height());
+                if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                    ul.classList.add("reverse");
+                } else {
+                    ul.classList.remove("reverse");
+                }
+                clean.classList.remove("hidden");
+            }
+            input.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    var list = li[i];
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+            document.addEventListener("keyup", function () {
+                if (input.value.length > 0) {
+                    input.style.backgroundColor = "white";
+                } else {
+                    input.style.backgroundColor = "rgba(255,255,255,.5)";
+                }
+            })
+            clean.addEventListener("click", function () {
+                span.innerHTML = "";
+            });
+        }
+
+        // Tooltip
+        this.event_tooltip = function (e) {
+            var attr_value = e.attributes[4];
+            attr_value.value = "Copied!";
+        }
+
+        // Filter dropdown
+        this.dropdown = function (id) {
+            var dropdown_id = document.getElementById(id);
+            var dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            var dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            var dropdown_name = dropdown_id.getElementsByClassName("dropdown_name")[0];
+            var button = dropdown_id.getElementsByClassName("btn")[0];
+            var dropdown_close = dropdown_id.getElementsByClassName("dropdown_close")[0];
+            button.addEventListener("click", function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.remove("hidden");
+                    button.classList.add("open");
+                }
+            })
+            $(document).mouseup(function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    button.classList.remove("open");
+                }
+            });
+            dropdown_close.onclick = function () {
+                if (!dropdown_menu.classList.contains("open")) {
+                    dropdown_menu.classList.add("hidden");
+                    button.classList.remove("open");
+                }
+            }
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                const element = dropdown_ul.children[i];
+                element.onclick = function (e) {
+                    dropdown_name.innerHTML = e.currentTarget.innerHTML;
+                    dropdown_menu.classList.add("hidden");
+                    button.classList.remove("open");
+                }
+            }
+        }
+
+        // Filter check all
+        this.filter_check_all = function (id) {
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("all")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = true;
+                }
+            });
+        }
+
+        // Filter uncheck all
+        this.filter_unCheck_all = function (id) {
+            var check_id = document.getElementById(id);
+            var check_btn = check_id.getElementsByClassName("remove")[0];
+            var checkboxes = check_id.querySelectorAll("input[type='checkbox']");
+            check_btn.addEventListener("click", function () {
+                for (var i in checkboxes) {
+                    checkboxes.item(i).checked = false;
+                }
+            });
+        }
+
+        // Filter dropdown
+        this.filter_dropdown = function (id) {
+            var id = document.getElementById(id);
+            var btn = id.getElementsByClassName("btn")[0];
+            var dropdown = id.lastElementChild;
+            var close = id.lastElementChild.children[0].lastElementChild;
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            close.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            $(document).mouseup(function (e) {
+                if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+            if (id.classList.contains("toggle")) {
+                var dropdown_li = id.querySelectorAll(".dropdown_li");
+                for (let i = 0; i < dropdown_li.length; i++) {
+                    dropdown_li[i].addEventListener("click", function () {
+                        dropdown.classList.add("hidden");
+                        btn.classList.remove("open");
+                    })
+                }
+            }
+        }
+
+        // Card - save to get loading
+        this.card_loading = function (id) {
+            var card_id = document.getElementById(id);
+            var btn = card_id.getElementsByClassName("btn_primary")[0];
+            var loading = card_id.getElementsByClassName("card_loading")[0];
+            btn.onclick = function () {
+                if (loading.classList.contains('hidden')) {
+                    loading.classList.remove('hidden');
+                    // Lagano se otvara loading, visuallyhidden ima svog koda "opacity: 0;"
+                    setTimeout(function () {
+                        loading.classList.remove('visuallyhidden');
+                    }, 20);
+                    // Nakon otvaranja i sam se gasi loading
+                    setTimeout(function () {
+                        loading.classList.add('visuallyhidden');
+                        loading.addEventListener('transitionend', function () {
+                            loading.classList.add('hidden');
+                        });
+                    }, 1000);
+                }
+            }
+        }
+
+        // Button - loading
+        this.btn_loading = function (id) {
+            var btn = document.getElementById(id);
+            var loading = btn.getElementsByClassName("btn_loading")[0];
+            btn.onclick = function () {
+                if (loading.classList.contains('hidden')) {
+                    loading.classList.remove('hidden');
+                    setTimeout(function () {
+                        loading.classList.remove('visuallyhidden');
+                    }, 20);
+                    setTimeout(function () {
+                        loading.classList.add('visuallyhidden');
+                        loading.addEventListener('transitionend', function () {
+                            loading.classList.add('hidden');
+                        });
+                    }, 1000);
+                }
+            }
+        }
+
+        // Modal - close
+        this.modal_close = function (id) {
+            let modal_id = document.getElementById(id);
+            var dismiss = modal_id.querySelectorAll("[data-dismiss='modal']");
+
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                }
+            }
+
+            // Event on mouse to close
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_id).is(e.target) && $(modal_id).has(e.target).length === 0) {
+                    if (!modal_id.classList.contains("hidden")) {
+                        hide_modal();
+                    }
+                }
+            });
+            // on keyboard to ESC to close
+            document.onkeydown = function (e) {
+                if (!modal_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+
+            function hide_modal() {
+                modal_id.classList.add('visuallyhidden');
+                modal_id.addEventListener('transitionend', function (e) {
+                    modal_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+
+        }
+
+        // Modal - input counter
+        this.modal_input_counter = function (id, value) {
+            let input_counter_id = document.querySelector("." + id);
+            let counter = value;
+            let input = input_counter_id.getElementsByClassName("form-control")[0];
+            let btn_up = input_counter_id.getElementsByClassName("up")[0];
+            let btn_down = input_counter_id.getElementsByClassName("down")[0];
+
+            btn_up.onclick = function () {
+                counter++;
+                input.value = counter;
+            }
+
+            btn_down.onclick = function () {
+                if (counter > 0) {
+                    counter--;
+                    input.value = counter;
+                }
+            }
+
+        }
+
+        // Modal - calendar
+        this.modal_single_calendar = function (id, calendar, input_calendar, inside_calendar_class) {
+            let modal_id = document.getElementById(id);
+            let input = modal_id.getElementsByClassName(input_calendar)[0];
+            let inside_calendar = modal_id.getElementsByClassName(inside_calendar_class)[0];
+
+            input.onclick = function () {
+                inside_calendar.classList.remove("hidden");
+            }
+
+            $("#" + calendar).datepicker({
+                firstDay: 1,
+                minDate: 0,
+                onSelect: function (dateText, inst) {
+                    inside_calendar.classList.add("hidden");
+                    input.value = dateText;
+                }
+
+            });
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(inside_calendar).is(e.target) && $(inside_calendar).has(e.target).length === 0) {
+                    inside_calendar.classList.add("hidden");
+                }
+            });
+        }
+
+    }
+
+</script>

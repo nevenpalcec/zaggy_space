@@ -1,0 +1,689 @@
+﻿<!-- page -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white" style="z-index: 999;">
+
+        <!-- left side -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-file-invoice pr-2"></i>Invoices
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+    <!--<div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">-->
+    <!-- Mobile btn -->
+    <!--<div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-file-invoice pr-2"></i>Bill
+            </div>
+        </div>
+        <div class="align-self-center ml-auto">
+            <div class="view_sidebar d-flex text-dark font_6">
+                <div class="view_sidebar_item align-self-center position-relative">
+                    <i class="far fa-bell"></i>
+                    <span class="notice text-white">10</span>
+                </div>
+                <div class="view_sidebar_line_y sidebar_silver"></div>
+                <div class="view_user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Calendar -->
+        <div class="d-flex">
+            <button class="btn btn_hover" onclick="bills.bl.go_before();"><i class="fas fa-angle-left"></i></button>
+            <div id="bills_filter_calendar" class="view_dropdown filter_calendar d-md-block d-none">
+                <button class="btn btn_hover px-2 py-1 d-md-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1 text-left">
+                            <div class="font_1 text-uppercase font_bold">Calendar</div>
+                            <div id="custom_calendar" class="font_3 font_light">-</div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div id="bills_form_calendar" class="dropdown_menu calendar hidden">
+                    <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                        <div class="font_bold">Calendar</div>
+                        <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                    </div>
+                    <hr class="m-0">
+                    <div id="bills_filter_dropdown_calendar" class="filter_dropdown_calendar">
+                    </div>
+                    <hr class="m-0">
+                    <div class="dropdown_footer d-flex">
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;"><i class="fas fa-angle-left"></i></div>
+                        <div class="dropdown_btn flex_1 text-center font_3">Today</div>
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <a id="bills_filter_calendar_btn" class="filter_link d-md-none d-block mobile"><i class="far fa-calendar-alt"></i></a>
+            <button class="btn btn_hover" onclick="bills.bl.go_next();"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Input - number of day -->
+        <div class="input_remove_number_arrow">
+            <input type="number" class="form-control focus text-center" value="30" style="max-width: 3.5rem; min-width: 3.5rem;" id="bills_filter_days" onchange="bills.bl.load_bills();">
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control" style="min-width: 9rem;" placeholder="Search name" id="bills_input_search" onkeyup="bills.ui.search()">
+            <span class="search_icon"><i class="fas fa-search"></i></span>
+        </div>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Checkbox - click to all bills on table -->
+        <div class="filter_checkbox d-flex align-items-center hidden">
+            <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                <input type="checkbox">
+                <span class="check check_xl"></span>
+            </label>
+        </div>
+
+        <!-- inside filter -->
+        <div id="insite_filter_tag" class="hidden" style="display: none; height: 2.7rem;">
+            <div class="d-flex align-items-center h-100">
+                <div class="filter_line_y"></div>
+                <div id="filter_actions" class="view_dropdown filter_source hidden">
+                    <button class="btn btn_hover px-2 py-1">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-3 font_7"><i class="fas fa-clipboard-check"></i></span>
+                            <div class="dropdown_label mr-1">
+                                <div class="font_1 text-uppercase font_bold">Actions</div>
+                                <div class="font_3">-</div>
+                            </div>
+                            <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                    </button>
+                    <div class="dropdown_menu filter_min_width hidden">
+                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                            <div class="font_bold">Actions</div>
+                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                        </div>
+                        <hr class="m-0">
+                        <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                            <li class="dropdown_li" data-action="1">
+                                <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon"><i class="fas fa-file-excel"></i></div>
+                                        <div class="align-self-center">Pregled računa (Excel)</div>
+                                    </div>
+                                </label>
+                            </li>
+                            <li class="dropdown_li" data-action="2">
+                                <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon"><i class="fas fa-file-excel"></i></div>
+                                        <div class="align-self-center">Stavke računa (Excel)</div>
+                                    </div>
+                                </label>
+                            </li>
+                            <li class="dropdown_li" data-action="3">
+                                <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon"><i class="fas fa-file-pdf"></i></div>
+                                        <div class="align-self-center">Izvoz PDF</div>
+                                    </div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter_line_y"></div>
+                <div style="white-space: nowrap;">1 je označeno.</div>
+            </div>
+        </div>
+        <div class="filter_print ml-auto font_6 hidden" onclick="bills.bl.print_bills();">- </div>
+        <div class="filter_print ml-auto font_6" onclick="bills.bl.load_bills();"><i class="fas fa-redo"></i> </div>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="bills_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <div class="view_table">
+            <div class="table_wrapper">
+                <table class="table bills">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" style="text-align:center; width:90px;">Type</th>
+                            <th scope="col" style="text-align:center; width:50px;">Print</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">No.</th>
+                            <th scope="col">Client</th>
+                            <th scope="col" class="amount text-right" style="min-width: 6rem;">Amount</th>
+                            <th scope="col" class="text-center">Payment</th>
+                            <th scope="col" class="text-center">Object</th>
+                            <th scope="col" class="text-center">Issued</th>
+                            <th scope="col" class="text-center">Paid</th>
+                            <!--<th scope="col" class="text-center">Fisc.</th>-->
+                            <th scope="col" class="text-center">Src</th>
+                            <th scope="col" class="text-center">Rent</th>
+
+                            <th class="text-right" style="min-width: 4rem;"><i class="fas fa-ellipsis-v"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bills_list_tbody">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- modals -->
+<section>
+
+</section>
+
+<!-- tamplates -->
+<section>
+
+    <!--template for list of bills-->
+    <template id="template_bills_list">
+        <tr id="bill_list_tr_${tr_id}" style="${storno_color}">
+
+            <!--ID-->
+            <td scope="row">
+                ${count}
+            </td>
+
+            <!--Type-->
+            <td class=" type">
+                <a class="text-decoration-none" href="#bills_edit?${invoice_id}">
+                    <div name="type_div" class="d-flex justify-content-center pt-1 text-uppercase align-content-center" style=" max-width: 80px; border: 1px solid #ced4da; color: white; border-radius:3px; background-color: ${color}; ">
+                        <strong>${type}</strong>
+                    </div>
+                </a>
+            </td>
+
+            <!--Print-->
+            <td class="td_item09 red icons text-center edit_trash font_5">
+                <span class="filter_print ml-auto font_6 edit_trash" onclick="bills.bl.print_bills(this);" data-guid="${guid}"><i class="fas fa-file-pdf"></i></span>
+            </td>
+
+            <!--Date-->
+            <td class="td_item01">
+                <div>${inv_date}</div>
+            </td>
+
+            <!--No.-->
+            <td class="td_item02">
+                <div>${number_code}</div>
+            </td>
+
+            <!--Client-->
+            <td class="td_item04 client">
+                <div class="td_bill">${customer_name}</div>
+            </td>
+
+            <!--Amount-->
+            <td class="td_item05 text-right">
+                <div><strong> ${advance} ${currency_label}</strong></div>
+                <span>${price} ${currency_label} </span>
+            </td>
+
+            <!--Payment-->
+            <td class="td_item08 text-center">
+                <div class="td_bill">${payment_method_name}</div>
+            </td>
+
+            <!--Object-->
+            <td class="td_item08 text-center">
+                <a href="#object_general?${object_id}" class="text-uppercase black" style="font-weight: 600; font-size: 0.8rem !important;">
+                    <div class="td_bill">${object_name}</div>
+                </a>
+            </td>
+
+            <!--Issued-->
+            <td class="td_item08 text-center">
+                <div class="yes_or_no justify-content-center">
+                    <span data-id="${id}" class="${issued} active" style="pointer-events: none;">${issued_text}</span>
+                    <!--<span class="no active ${lock_no}" >No</span>-->
+                </div>
+            </td>
+
+            <!--Paid-->
+            <td class="td_item06 paid ">
+                <div class="yes_or_no justify-content-center">
+                    <span data-id="${id}" data-status="${paid_y_n}" class="${paid} active" style="pointer-events: none;">${paid_text}</span>
+                </div>
+            </td>
+
+            <!--Fisc-->
+            <!--<td class="td_item07 text-center ">
+                <div class="yes_or_no justify-content-center">
+                    <span data-id="${id}" class="${fiscalised} active" style="pointer-events: none;">${fiscalised_text}</span>
+
+                </div>
+            </td>-->
+
+            <!--Src-->
+            <td class="justify-content-center">
+                <div class="justify-content-center">
+                    <img src="${source_icon}" style="max-width:40px;display:block;margin:0 auto;" />
+                </div>
+            </td>
+
+            <!--Rent-->
+            <td class="td_item01 text-center">
+                <div class="td_bill">
+                    <a onclick="modal_details_rent.ui.show_details('${rent_id}');" class="text-uppercase" style="font-weight: 600; font-size: 0.8rem !important;">
+                        ${rent_text}
+                    </a>
+                </div>
+                <!--<div class="td_bill">
+                    <a href="#object_general?${object_id}" class="text-uppercase" style="color: black; font-size: 0.8rem !important";">
+                        Object
+                    </a>
+                </div>-->
+            </td>
+
+            <!--Remove or invoice-->
+            <td class="td_item09 icons edit_trash text-right font_5" style="opacity: 0.8">
+                <span class="trash" onclick="bills.ui.remove_bill(this, ${id})"><i class="far fa-trash-alt"></i></span>
+            </td>
+        </tr>
+    </template>
+
+</section>
+
+<!-- scripts -->
+<script>
+
+    var bills = {};
+
+    var checked_bills = [];
+    bills.date_from = js.date.toIso(new Date());
+
+    // Onload function
+    bills.load = async () => {
+
+        await bills.bl.load_bills();
+
+        // Load
+        await $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        await $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        // Global ui
+        ui.dropdown_date("bills_filter_calendar");
+        ui.display_title("Bills");
+        ui.content_loading("bills_content_loading");
+        ui.filter_mobile_btn("bills_filter_calendar_btn", "bills_filter_calendar");
+
+        // Local
+        bills.ui.filter_calendar();
+
+        ui.content_loading_hide('bills_content_loading');   
+    }
+
+    // ui components
+    bills.ui = new function () {
+
+
+        // Filter calendar
+        this.filter_calendar = function () {
+            $("#bills_filter_dropdown_calendar").datepicker({
+                firstDay: 1,
+                //minDate: -180,
+                numberOfMonths:1,
+                onSelect: function (dateText, inst) {
+                    $("#bills_form_calendar").addClass("hidden");
+                    document.querySelector(".filter_calendar > button").classList.remove("open");
+                    custom_calendar.innerHTML = dateText;
+                    bills.date_from = js.date.toIso(dateText.toString());
+                    bills.bl.load_bills();
+
+                }
+            });
+        }
+
+        // Table - yes or no
+        this.yes_or_no = function (e) {
+
+
+            if (e.classList.contains("yes")) {
+                e.classList.add("no");
+                e.innerText = "No";
+                e.dataset.status = "N";
+                e.classList.remove("yes");
+
+            } else if (e.classList.contains("no")) {
+                e.classList.add("yes");
+                e.innerText = "Yes";
+                e.dataset.status = "Y";
+                e.classList.remove("no");
+                e.style.pointerEvents = "none";
+
+            }
+
+
+        }
+
+        // Search by client name
+        this.search = () => {
+
+            // Declare variables
+            var input, filter, tr, td, a, i, txtValue;
+            input = document.getElementById('bills_input_search');
+            filter = input.value.toUpperCase();
+            tr = document.getElementById('bills_list_tbody');
+            td = document.getElementsByClassName('td_item04');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < td.length; i++) {
+
+                a = td[i].getElementsByClassName('td_bill')[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    td[i].parentElement.style.display = '';
+                } else {
+                    //td[i].style.display = "none";
+                    td[i].parentElement.style.display = 'none';
+                }
+            }
+        }
+
+        // Remove bill
+        this.remove_bill = async function (e, id) {
+
+            await Swal.fire({
+
+                title: 'Are you sure you want to delete invoice?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Delete'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    var url = '/api/invoices/delete_invoice/' + id;
+                    ajax.get_json(url);
+
+                    bills.bl.load_bills();
+
+                }
+
+            });
+
+        }
+
+        // Checked bill background
+        //this.checked_bill = function (e) {
+        //    var inside_tag = document.getElementById("insite_filter_tag");
+        //    if (e.children[0].checked == true) {
+        //        e.offsetParent.parentElement.classList.add("checked_tr");
+        //        inside_tag.style.display = "";
+        //    } else {
+        //        e.offsetParent.parentElement.classList.remove("checked_tr");
+        //        inside_tag.style.display = "none";
+        //    }
+        //}
+
+        
+
+    }
+
+    // bl components
+    bills.bl = new function () {
+
+        this.issue_invoice = async (elem) => {
+
+            let id = elem.dataset.id;
+
+            let url = '/api/invoices/issue_invoice/' + id;
+
+            js.fetch.get(url);
+        }
+
+        this.invoice_storno = async (id) => {
+
+            url = "api/invoices/invoice_storno/" + id;
+
+            let new_invoice_id = await js.fetch.get(url);
+
+            await bills.bl.load_bills();
+
+        }
+
+        this.fiscalise = async (elem) => {
+
+            let id = elem.dataset.id;
+
+            let url = '/api/invoices/fiscalise/' + id;
+            let res = await js.fetch.get(url);
+
+            if (res.status != 200) {
+                var msg = await res.json();
+                alert(msg);
+            } else {
+                await bills.bl.load_bills();
+            }
+        }
+
+        // go next with calendar
+        this.go_next = async () => {
+
+            var date_from = bills.date_from;
+
+            var date_from_new = js.date.add_day(date_from, 30);
+            bills.date_from = date_from_new;
+
+            $('#bills_filter_calendar').datepicker('setDate', new Date(date_from_new));
+
+            // load rents
+            bills.bl.load_bills();
+
+        }
+
+        // go before with calendar
+        this.go_before = async () => {
+
+            var date_from = bills.date_from;
+
+            var date_from_new = js.date.add_day(date_from, -30);
+            bills.date_from = date_from_new;
+
+            $('#bills_filter_calendar').datepicker('setDate', new Date(date_from_new));
+
+            // load rents
+            bills.bl.load_bills();
+
+        }
+
+        // Load all bills of user
+        this.load_bills = async () => {
+
+            //debugger;
+
+            await ui.content_loading("bills_content_loading");
+
+            var user_id = await bl.workers.current_user_id();
+            var url = '/api/invoices/list_by_user_filtered';
+
+            custom_calendar.innerText = bills.date_from;
+
+            data = {};
+            data['user_id'] = user_id;
+            data['date_from'] = js.date.add_day(js.date.toIso(custom_calendar.innerText), -1 * parseInt(bills_filter_days.value));
+            data['date_until'] = js.date.toIso(custom_calendar.innerText);
+
+
+            var bills_list = await ajax.post_json(url, data);
+
+            try {
+
+                bills_list_tbody.innerHTML = '';
+                var count = 1;
+
+                // console.log(bills_list);
+
+                for (var b of bills_list) {
+
+                    var type = "";
+                    let color = "";
+
+                    //set icon
+                    if (b['type'].split('T')[0] === 'invoice') {
+                        type = "inv";
+                        color = "#38a3a5"
+                    } else if (b['type'].split('T')[0] === 'inv_advance') {
+                        type = "adv";
+                        color = "#397D02";
+                    } else if (b['type'].split('T')[0] === 'inv_owner') {
+                        type = "own";
+                        color = "#FF7F50";
+                    } else if (b['type'].split('T')[0] === 'owner_fin') {
+                        type = "own fin";
+                        color = "#B22222";
+
+                    } else {
+                        type = "-";
+                        color = "#36454F";
+                    }
+
+                    var t = template_bills_list.innerHTML;
+                    t = t.replace('${guid}', b['guid']);
+                    t = t.replace('${tr_id}', count);
+                    t = t.replace('${count}', count);
+                    t = t.replace('${inv_date}', b['inv_date'] == null ? '-' : b['inv_date'].split('T')[0]);
+                    t = t.replace('${number_code}', b['number_code'] == null ? '-' : b['number_code']);
+                    t = t.replace('${type}', type);
+                    t = t.replace('${price}', b['price'].toFixed([2]));
+                    t = t.replace('${advance}', b['advance'].toFixed([2]));
+                    t = t.replace('${color}', color);
+                    t = t.replaceAll('${source_icon}', '/assets/images/icons/portals/' + b['rent_source_icon'] + '.svg');
+
+                    t = t.replace('${object_name}', b['object_name'] == null ? '-' : b['object_name']);
+                    t = t.replace('${object_id}', b['object_id']);
+                    t = t.replace('${payment_method_name}', !b['payment_method_name'] ? '-' : b['payment_method_name']);
+
+                    t = t.replace('${invoice_id}', b['id']);
+
+                    //set paid Y/N
+                    if (b['paid'] == 'Y') {
+                        t = t.replace('${paid}', 'yes');
+                        t = t.replace('${paid_text}', 'Yes');
+                        t = t.replace('${paid_y_n}', 'Y');
+                    }
+                    else {
+                        t = t.replace('${paid}', 'no');
+                        t = t.replace('${paid_text}', 'No');
+                        t = t.replace('${paid_y_n}', 'N');
+                    }
+
+                    //set issued Y/N
+                    if (b['inv_lock'] == 'Y') {
+                        t = t.replace('${issued}', 'yes');
+                        t = t.replace('${issued_text}', 'Yes');
+                    }
+                    else {
+                        t = t.replace('${issued}', 'no');
+                        t = t.replace('${issued_text}', 'No');
+                    }
+
+                    //set fiscalised Y/N
+                    if (b['status_fis'] == 'Y') {
+                        t = t.replace('${fiscalised}', 'yes');
+                        t = t.replace('${fiscalised_text}', 'Yes');
+                    }
+                    else {
+                        t = t.replace('${fiscalised}', 'no');
+                        t = t.replace('${fiscalised_text}', 'No');
+                    }
+
+                    //set red background if invoice is storno
+                    if (b['storno'] == 'Y') {
+                        t = t.replace('${storno_color}', 'background-color: #ff000012;');
+                    }
+                    else {
+                        t = t.replace('${storno_color}', '');
+                    }
+
+
+                    t = t.replaceAll('${currency_label}', b['currency_label']);
+                    t = t.replace('${currency_label}', b['currency_label']);
+                    t = t.replaceAll('${id}', b['id']);
+                    t = t.replaceAll('${rent_id}', b['rent_id']);
+                    t = t.replaceAll('${rent_text}', b['rent_id'] == null ? '' : 'Rent');
+                    t = t.replaceAll('${object_id}', b['object_id']);
+                    t = t.replace('${customer_name}', b['customer_name'] == null ? '-' : b['customer_name']);
+
+
+                    js.html.insertAdjacentHTML('bills_list_tbody', t);
+                    count++;
+                }
+
+            } catch (error) {
+
+                console.log(error);
+            }
+
+            await ui.content_loading_hide("bills_content_loading");
+        }
+
+        //changing bills payment status
+        this.bills_status = async function (elem) {
+
+            let id = elem.dataset.id;
+            let status = elem.dataset.status;
+
+            var url = 'api/invoices/invoice_status_save' + `?id=${id}&paid=${status}`;
+            $.post(url).done((data) => { console.log(data) });
+            await bl.invoices.list_by_user();
+
+        }
+
+        //opens invoices for printing in a new tab
+        this.print_bills = async (element) => {
+
+            let guid_url = 'https://api.zaggys.com/invoices/pdf/' + element.dataset.guid;
+
+            window.open(guid_url, '_blank');
+
+        }
+
+    }
+
+    // On load
+    setTimeout(
+        async () => {
+            await bills.load();
+        }, 500);
+    
+
+</script>

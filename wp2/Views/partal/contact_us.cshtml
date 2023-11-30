@@ -1,0 +1,174 @@
+﻿@{ 
+    //var object_id = ViewData["object_id"].ToString() ?? "";
+}
+
+<!-- Contact us -->
+<section class="section-contact-us">
+    <div class="container-wrapper position-relative">
+
+        <!-- working progres -->
+        <span class="loading" id="div_loading_contat_us" style="display: none;">
+            <img src="/assets/images/icons/Spinner.gif" alt="">
+        </span>
+
+        <h2 id="heading_title_contact_us" class="heading-title mb-3 text-uppercase"> <a href="/users/about" style="color: black;"> @bl.lng.l.Please_contat_us </a> </h2>
+        <div class="row ">
+
+
+            <div class="col-md-5">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="@bl.lng.l.Full_name" style="background-color: whitesmoke;" id="contat_us_name" autocomplete="off" required />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="@bl.lng.l.Email" style="background-color: whitesmoke;" id="contat_us_email" autocomplete="off" required />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="@bl.lng.l.Contact_telephone" style="background-color: whitesmoke;" id="contat_us_telephone" autocomplete="off" required />
+                        </div>
+                    </div>
+                    <div class="col-12" style="display: none;">
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="@bl.lng.l.Email" style="background-color: whitesmoke;" id="email" autocomplete="off" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="@bl.lng.l.Message..." style="background-color: whitesmoke; height: 146px;" id="contat_us_message" autocomplete="off" required></textarea>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="contact-us-btn d-inline-block" style="float: right;">
+                    <button class="btn btn-primary btn-effect px-4" id="countat_us_button_send">@bl.lng.l.Send_message</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- modal confirm -->
+<div id="modal_thanks_for_asking" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header" style="font-weight: bolder;">
+                <div class="text-uppercase text-body"> <i class="far fa-comment-dots"></i> &nbsp; @bl.lng.l.Message @bl.lng.l.Send.ToLower() </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="contact_us.modal_confirm_hide();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-logo text-center pb-4">
+                    <img src="/assets/images/icons/spinner.gif"
+                         data-src="https://api.zaggy.net/users/picture/@bl.settings_current.user_id"
+                         class="img-fluid lazy" alt="logo" style="object-fit: cover;">
+                </div>
+                <div class="text-center font-weight-bold"> @bl.lng.l.Thank_you_for_your_message <br /> @bl.lng.l.We_will_get_back_to_you_as_soon_as_possible </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contact_us.modal_confirm_hide();"> @bl.lng.l.Close </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CSS container -->
+<div id="css_container" style="display: none !important;"></div>
+
+<!-- Red border css -->
+<template id="invalid_input_template">
+    <style id="invalid_input_style">
+        input:invalid {
+            border: 1px solid red !important;
+        }
+    </style>
+</template>
+
+<script>
+
+    var contact_us = {};
+
+    contact_us.object_id = '';
+
+    // Detailed check for validity
+    contact_us.is_input_valid = function (input) {
+        return input.validity.valid === true ||
+            input.checkValidity() === true ||
+            !input.value === false;
+    }
+
+    // Check invalid inputs and set style
+    contact_us.all_inputs_valid = function (input_arr) {
+
+        let invalid_inputs = Array.from(input_arr).filter(inp => contact_us.is_input_valid(inp) !== true);
+        if (invalid_inputs.length > 0) {
+            css_container.innerHTML = invalid_input_template.innerHTML;
+            return false;
+        }
+
+        return true;
+    }
+
+    countat_us_button_send.addEventListener("click", async function () {
+
+        // Add loading
+        div_loading_contat_us.style.display = 'flex';
+
+        let all_inputs = [contat_us_name, contat_us_email, contat_us_telephone]; //, contat_us_message];
+        var email_v = email.value;
+
+        // If inputs OK
+        if (!email_v && contact_us.all_inputs_valid(all_inputs)) {
+
+            var url = '/api/emails/send';
+            var body = {
+                name: contat_us_name.value,
+                email: contat_us_email.value,
+                telephone: contat_us_telephone.value,
+                message: contat_us_message.value,
+                user_id: '@bl.settings_current.user_id',
+                //object_id: 'object_id`
+                object_id: contact_us.object_id
+            };
+            
+            // Send & catch errors
+            await js.http.async.post(url, body).then(response => {
+                console.log(response);
+                contact_us.modal_confirm_show();
+            }).catch(err => console.log(err));
+
+        }
+
+        // Remove loading
+        div_loading_contat_us.style.display = 'none';
+
+    });
+
+    contact_us.modal_confirm_show = function () {
+        $('#modal_thanks_for_asking').show('fast');
+    }
+
+
+    contact_us.modal_confirm_hide = function () {
+        div_loading_contat_us.style.display = 'none';
+        $('#modal_thanks_for_asking').hide('fast');
+    }
+
+
+</script>

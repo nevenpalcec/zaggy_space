@@ -1,0 +1,559 @@
+﻿@page "/dashboard/general"
+
+@code {
+
+    int p_y = 0;
+    int p_n = 0;
+    int p_u = 0;
+
+    string picture_v_y_count = "";
+    string picture_v_n_count = "";
+    string picture_v_total_count = "";
+
+    string users_count = "0", users_count_active = "0", users_count_inactive = "0";
+    string object_count = "0", object_count_active = "0", object_count_inactive = "0";
+    string reviews_total_30 = "0", reviews_total_90 = "0", reviews_total_180 = "0";
+    string rents_30 = "0", rents_90 = "0", rents_180 = "0";
+    string units_count = "0", units_count_active = "0", units_count_inactive = "0";
+    string inquries_total_30 = "0", inquries_total_90 = "0", inquries_total_180 = "180";
+
+    System.Data.DataRow unit_statistics = bl.B2B.zaggy.units.units_contract_statistics(bl.B2B.zaggy.shared.reseller_id).Rows[0];
+
+    string regions_count_hr = "0", regions_count_sl = "0";
+    string invoices_count = "";
+
+    bool is_loading = false;
+    string spinning = "";
+
+    //protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // execute conditionally for loading data, otherwise this will load
+        // every time the page refreshes
+        if (firstRender)
+        {
+            //await Perm.reseller_worker_perm();
+
+            await staistics_load();
+
+            StateHasChanged();
+
+        }
+
+    }
+
+    async Task staistics_generate()
+    {
+        is_loading = true;
+        await Task.Delay(1);
+        StateHasChanged();
+
+        bl.B2B.zaggy.users.statistics_general_add_to_app_cashe();
+
+        await staistics_load();
+
+        is_loading = false;
+        await Task.Delay(1);
+        StateHasChanged();
+
+    }
+
+    async Task staistics_load()
+    {
+        is_loading = true;
+        await Task.Delay(1);
+        StateHasChanged();
+
+        var json_string = bl.B2B.zaggy.users.get_statistics_general();
+
+        var json = json_string.json();
+
+        var users = ((string)json[0]["users"]).json();
+        users_count = decimal.Parse((string)users["users_reseller_total"]).ToString("N0");
+        users_count_active = decimal.Parse((string)users["users_reseller_active"]).ToString("N0");
+        users_count_inactive = decimal.Parse((string)users["users_reseller_disable"]).ToString("N0");
+
+        var units = ((string)json[0]["units"]).json();
+        units_count = decimal.Parse((string)units["units_reseller_total"]).ToString("N0");
+        units_count_active = decimal.Parse((string)units["units_reseller_active"]).ToString("N0");
+        units_count_inactive = decimal.Parse((string)units["units_reseller_disable"]).ToString("N0");
+
+        var rents = ((string)json[0]["rents"]).json();
+        rents_30 = decimal.Parse((string)rents["rents_30"]).ToString("N0");
+        rents_90 = decimal.Parse((string)rents["rents_90"]).ToString("N0");
+        rents_180 = decimal.Parse((string)rents["rents_180"]).ToString("N0");
+
+        var objects = ((string)json[0]["objects"]).json();
+        object_count = decimal.Parse((string)objects["objects_reseller_total"]).ToString("N0");
+        object_count_active = decimal.Parse((string)objects["objects_reseller_active"]).ToString("N0");
+        object_count_inactive = decimal.Parse((string)objects["objects_reseller_disable"]).ToString("N0");
+
+        var regions = ((string)json[0]["regions"]).json();
+        regions_count_hr = decimal.Parse((string)regions["regions_hr"]).ToString("N0");
+        regions_count_sl = decimal.Parse((string)regions["regions_sl"]).ToString("N0");
+
+        var reviews = ((string)json[0]["reviews"]).json();
+        reviews_total_30 = decimal.Parse((string)reviews["reviews_total_30"]).ToString("N0");
+        reviews_total_90 = decimal.Parse((string)reviews["reviews_total_90"]).ToString("N0");
+        reviews_total_180 = decimal.Parse((string)reviews["reviews_total_180"]).ToString("N0");
+
+        var inquries = ((string)json[0]["inquries"]).json();
+        inquries_total_30 = decimal.Parse((string)inquries["inquries_total_30"]).ToString("N0");
+        inquries_total_90 = decimal.Parse((string)inquries["inquries_total_90"]).ToString("N0");
+        inquries_total_180 = decimal.Parse((string)inquries["inquries_total_180"]).ToString("N0");
+
+
+        // finish loading
+        await Task.Delay(10);
+        spinning = "none";
+
+        is_loading = false;
+        StateHasChanged();
+    }
+}
+
+<PageTitle> @lng.l.Dashboard </PageTitle>
+
+@if (is_loading == true)
+{
+    <LoadingLoader></LoadingLoader>
+}
+
+
+@if (Perm.dashboard == true)
+{
+
+    <!-- header -->
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card shadow-none border" style="background-color: #163d73;">
+                <div class="row gx-0 flex-between-center">
+
+                    <div class="col-sm-auto d-flex align-items-center ms-2">
+
+                        <a @onclick="staistics_generate">
+                            <img class="p-2" src="@Settings.img_avatar_small" alt="" height="90" />
+                        </a>
+
+                        <div>
+                            <h6 class="fs--1 mb-0" style="color: #fff;"> @lng.l.Welcome_to: <span style="color: blue">  </span>  </h6>
+                            <h4 class="fw-black mb-0" style="color: #fff;"> @Settings.app_name  <span class="fw-medium" style="color: #fff;">  </span></h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-auto p-3">
+                        <div class="">
+                            <div class="text-right">
+                                <h4 class="fw-black mb-0" style="color: #fff;"> <span class="fw-medium" style="color: #fff;"> @Settings.app_name </span></h4>
+                            </div>
+                            <div class="text-right">
+                                <a href="@Settings.url_company" target="_blank" style="color: #fff;"> @Settings.url_company </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (is_loading == false)
+    {
+
+        <div class="row mb-3">
+
+            <!-- left side -->
+            <div class="col-md-9">
+
+                <!-- suer, objects, locations -->
+                <div class="row g-3 mb-3">
+
+                    <!-- users -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/users/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-user-alt"></i> @lng.l.Users </h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold">@lng.l.Total</span></div>
+                                            <span class=" fw-bold">@users_count</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-success"></span><span class="fw-semi-bold">@lng.l.Active</span></div>
+                                            <span>@users_count_active</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-danger"></span><span class="fw-semi-bold">@lng.l.Disabled</span></div>
+                                            <span>@users_count_inactive</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- properties -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/objects/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-home"></i> @lng.l.Properties</h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold">@lng.l.Total</span></div>
+                                            <span class=" fw-bold">@object_count</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-success"></span><span class="fw-semi-bold">@lng.l.Active</span></div>
+                                            <span>@object_count_active</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-danger"></span><span class="fw-semi-bold">@lng.l.Disabled</span></div>
+                                            <span>@object_count_inactive</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- units / loacitons -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/units/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-images"></i> @lng.l.Location </h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold">@lng.l.Total</span></div>
+                                            <span class=" fw-bold">@units_count</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-success"></span><span class="fw-semi-bold">@lng.l.Activate</span></div>
+                                            <span>@units_count_active</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-danger"></span><span class="fw-semi-bold">@lng.l.Disabled</span></div>
+                                            <span>@units_count_inactive</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- rents, inqueris, reviews -->
+                <div class="row g-3 mb-3">
+
+                    <!-- rents -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/rents/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-concierge-bell"></i> @lng.l.Reservations</h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold"> @lng.l.Last  30 @lng.l.Days.ToLower() </span></div>
+                                            @*Mirko - dodati ukupan broj rezervacija*@
+                                            <span class=" fw-bold">@rents_30</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-success"></span><span class="fw-semi-bold"> @lng.l.Last 90 @lng.l.Days.ToLower() </span></div>
+                                            @*Mirko - dodati aktivan broj rezervacija*@
+                                            <span> @rents_90  </span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-danger"></span><span class="fw-semi-bold"> @lng.l.Last 180 @lng.l.Days.ToLower() </span></div>
+                                            @*Mirko - dodati disablean broj rezervacija*@
+                                            <span> @rents_180  </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- inqueries -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/inquires/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="far fa-comment-alt"></i> @bl.lng.l.Inquiries </h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold"> @lng.l.Last 30 @lng.l.Days.ToLower() </span></div>
+                                            @*Mirko - dodati ukupan broj rezervacija*@
+                                            <span class=" fw-bold">@inquries_total_30</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-success"></span><span class="fw-semi-bold"> @lng.l.Last 90 @lng.l.Days.ToLower() </span></div>
+                                            @*Mirko - dodati aktivan broj rezervacija*@
+                                            <span> @inquries_total_90  </span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-danger"></span><span class="fw-semi-bold"> @lng.l.Last 180 @lng.l.Days.ToLower() </span></div>
+                                            @*Mirko - dodati disablean broj rezervacija*@
+                                            <span> @inquries_total_180  </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    @*Stats Reviews*@
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/reviews/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-star"></i> @lng.l.Reviews</h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold"> @lng.l.Last 30 @lng.l.Days.ToLower() </span></div>
+                                            <span class=" fw-bold">@reviews_total_30</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-success"></span><span class="fw-semi-bold"> @lng.l.Last 90 @lng.l.Days.ToLower() </span></div>
+                                            <span>@reviews_total_90</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-danger"></span><span class="fw-semi-bold"> @lng.l.Last 180 @lng.l.Days.ToLower() </span></div>
+                                            <span>@reviews_total_180</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- invoices, regions, support -->
+                <div class="row g-3 mb-4">
+
+                    <!-- regions -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+                            <a class="text-decoration-none" href="/regions/list">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-draw-polygon"></i> @lng.l.Regions </h6>
+                                    <div class="fs--1 mt-3 text-white">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold">@lng.l.Total Croatia</span></div>
+                                            <span class=" fw-bold">@regions_count_hr</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-bold">@lng.l.Total Slovenia</span></div>
+                                            <span class=" fw-bold">@regions_count_sl</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- units -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-dark text-white">
+
+                            <a class="text-decoration-none" href="/units/list">
+
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-secondary"><i class="fas fa-file-invoice-dollar"></i> @lng.l.Location</h6>
+                                    <div class="fs--1 mt-3 text-white">
+
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center">
+                                                <span class="dot bg-primary"></span>
+                                                <span class="fw-bold"> @lng.l.Terms </span>
+                                            </div>
+                                            <span class=" fw-bold"> @unit_statistics["terms_signed"] </span>
+                                        </div>
+
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center">
+                                                <span class="dot bg-primary"></span>
+                                                <span class="fw-bold"> @bl.lng.l.Contracts </span>
+                                            </div>
+                                            <span class=" fw-bold"> @unit_statistics["contract_signed"] </span>
+                                        </div>
+
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center">
+                                                <span class="dot bg-primary"></span>
+                                                <span class="fw-bold"> Categorizations </span>
+                                            </div>
+                                            <span class=" fw-bold"> @unit_statistics["categorization_file"] </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- support -->
+                    <div class="col-md-4">
+                        <div class="card h-md-100 bg-light text-dark bg-light">
+                            <a class="text-decoration-none" href="/settings">
+                                <div class="card-body justify-content-between">
+                                    <h6 class="mt-1 text-dark"><i class="fas fa-user-astronaut"></i> @lng.l.Support</h6>
+                                    <div class="fs--1 mt-3 text-dark">
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span>@lng.l.Phone:</span></div>
+                                            @*Mirko - dodati disablean broj invoicesa*@
+                                            <span>+385 (0)1 6500 953</span>
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span>Email:</span></div>
+                                            @*Mirko - dodati disablean broj reviewa*@
+                                        </div>
+                                        <div class="d-flex flex-between-center mb-1">
+                                            <div class="d-flex align-items-center"><span>@lng.l.Work_hours:</span></div>
+                                            @*Mirko - dodati disablean broj reviewa*@
+                                            <span>@lng.l.Every_day 8:00–20:00h</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- global statistics -->
+                <div class="row g-3 mb-3">
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card overflow-hidden" style="min-width: 12rem">
+
+                            <div class="bg-holder bg-card" style="background-image:url(assets/img/icons/spot-illustrations/corner-1.png);"> </div>
+
+                            <div class="card-body position-relative">
+                                <h6> Active Customers<span class="badge badge-soft-warning rounded-pill ms-2">  </span></h6>
+                                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-warning"> @users_count_active </div>
+                                <a class="fw-semi-bold fs--1 text-nowrap" href="/users/list"> All customers <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card overflow-hidden" style="min-width: 12rem">
+
+                            <div class="bg-holder bg-card" style="background-image:url(assets/img/icons/spot-illustrations/corner-2.png);"> </div>
+
+                            <div class="card-body position-relative">
+                                <h6> Active properties <span class="badge badge-soft-info rounded-pill ms-2"> </span></h6>
+                                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif text-info"> @object_count_active </div>
+                                <a class="fw-semi-bold fs--1 text-nowrap" href="/objects/list">
+                                    All properties <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card overflow-hidden" style="min-width: 12rem">
+
+                            <div class="bg-holder bg-card" style="background-image:url(assets/img/icons/spot-illustrations/corner-3.png);"></div>
+
+                            <div class="card-body position-relative">
+                                <h6> Inquries last 180 days <span class="badge badge-soft-success rounded-pill ms-2">  </span></h6>
+                                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif"> @inquries_total_180 </div>
+                                <a class="fw-semi-bold fs--1 text-nowrap" href="/rents/list">
+                                    All inquries <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card overflow-hidden" style="min-width: 12rem">
+
+                            <div class="bg-holder bg-card" style="background-image:url(assets/img/icons/spot-illustrations/corner-3.png);"></div>
+
+                            <div class="card-body position-relative">
+                                <h6> Rents last 180 days <span class="badge badge-soft-success rounded-pill ms-2">  </span></h6>
+                                <div class="display-4 fs-4 mb-2 fw-normal font-sans-serif">@rents_180</div>
+                                <a class="fw-semi-bold fs--1 text-nowrap" href="/rents/list">
+                                    All reservations <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!-- right side -->
+            <div class="col-md-3">
+
+                <div class="card mb-3 text-dark" style="background-color:  #1787AEAA;">
+                    <div class="card-body d-flex justify-content-between">
+
+                        <a class="text-decoration-none" href="" target="_blank">
+                            <div>
+                                 
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+ 
+
+                <!-- CRM -->
+                <div class="row mb-3">
+                    <a class="text-decoration-none" href="/dashboard/crm">
+                        <div class="card text-dark bg-light">
+                            <div class="card-body d-flex justify-content-between">
+                                <h6 class="mt-1 text-dark fw-bold">CRM @bl.lng.l.Data</h6>
+                                <i class="fas fa-chart-pie" style="height: 28px;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- KPI -->
+                <div class="row mb-3">
+                    <a class="text-decoration-none" href="/users/kpi">
+                        <div class="card text-dark bg-light">
+                            <div class="card-body d-flex justify-content-between">
+                                <h6 class="mt-1 text-dark fw-bold">KPI @bl.lng.l.Data </h6>
+                                <i class="fas fa-chart-bar" style="height: 28px;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Property map -->
+                <div class="row mb-3">
+                    <a class="text-decoration-none" href="/units/map">
+                        <div class="card text-dark bg-light">
+                            <div class="card-body d-flex justify-content-between">
+                                <h6 class="mt-1 text-dark fw-bold"> @lng.l.Properties_on_a_map </h6>
+                                <i class="fas fa-map-marked-alt" style="height: 28px;"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+    <!-- links -->
+    <div class="row g-3 mb-3">
+
+    </div>
+
+}

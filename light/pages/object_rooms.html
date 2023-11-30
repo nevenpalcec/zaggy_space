@@ -1,0 +1,582 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2"><i class="fas fa-align-justify"></i></button>
+            </div>
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-none d-md-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_rooms_header_object_name"></span>
+                <span class="d-md-none d-block view_header_mobile_label">
+                    <i class="fas fa-home pr-2"></i>Apartment with
+                    balcony
+                </span>
+            </div>
+        </div>
+        <!--<div class="align-self-center ml-auto">
+            <div class="view_sidebar d-flex text-dark font_6">-->
+        <!-- <div class="view_sidebar_item align-self-center"><i class="far fa-plus-square"></i></div> -->
+        <!-- <div class="view_sidebar_line_y sidebar_silver"></div> -->
+        <!--<div class="view_sidebar_item align-self-center position-relative">
+            <i class="far fa-bell"></i>
+            <span class="notice text-white">10</span>
+        </div>
+        <div class="view_sidebar_line_y sidebar_silver"></div>-->
+        <!-- <div class="view_sidebar_item align-self-center"><i class="fas fa-search"></i></div> -->
+        <!--<div class="view_user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                         alt="">
+                </div>
+            </div>
+        </div>-->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <!--<div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+
+    </div>-->
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Loading -->
+    <div id="object_rooms_content_loading" class="view_loading" style="display: none;">
+        <img src="/assets/images/icons/loading.svg" />
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Content -->
+        <div class="content general pt-3">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Rooms -->
+                    <div class="card mb-5">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+
+                            <div class="font-weight-bold space_nowrap"><i class="fab fa-stack-overflow pr-2"></i>Rooms<span id="objects_rooms_number"></span>: </div>
+
+                            <div class="d-flex flex-wrap justify-content-end ml-auto">
+                                <!--<button class="btn btn_secondary text-uppercase m-1 line_normal p-2 font_2 font_medium"><i class="fas fa-plus pr-2"></i>Add auto</button>-->
+                                <div class="card-header_icon" onclick="objects_rooms.bl.refresh_page();"><i class="fas fa-sync-alt"></i></div>
+                                <!--<button class="btn btn_primary text-uppercase m-1 line_normal p-2 font_2 font_medium" onclick="modal_add_new_room.bl.show_modal('modal_add_new_room');"><i class="fas fa-plus pr-2"></i>Add new room</button>-->
+                            </div>
+                            
+                            <div class="d-flex justify-content-end ml-3">
+                                <button class="btn btn_secondary mr-2 hidden"><i class="fas fa-save pr-2"></i>Save</button>
+                                <div id="dropdown_add_new_room" class="view_dropdown toggle">
+                                    <button class="btn btn_primary">
+                                        <div class="d-flex align-items-center">
+                                            <span><i class="fas fa-plus pr-2"></i>Add</span>
+                                            <span class="font_1 ml-2"><i class="fas fa-chevron-down"></i></span>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu hidden" style="right: 0;">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">List rooms</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul dropdown_ul_max_height">
+                                            <li class="dropdown_li" onclick="modal_add_new_room.bl.add_new('1')">
+                                                <a class="dropdown_a">
+                                                    <div class="d-flex align-item-center">
+                                                        <div class="icon"><i class="fas fa-tv"></i></div>
+                                                        <div class="align-self-center">Livingroom</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="dropdown_li" onclick="modal_add_new_room.bl.add_new('2')">
+                                                <a class="dropdown_a">
+                                                    <div class="d-flex align-item-center">
+                                                        <div class="icon"><i class="fas fa-bed"></i></div>
+                                                        <div class="align-self-center">Bedroom</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="dropdown_li" onclick="modal_add_new_room.bl.add_new('8')">
+                                                <a class="dropdown_a">
+                                                    <div class="d-flex align-item-center">
+                                                        <div class="icon"><i class="fas fa-bath"></i></div>
+                                                        <div class="align-self-center">Bathroom</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="card-body font_3">
+                            <!-- Livingrooms -->
+                            <div class="d-flex align-items-center border-bottom mb-1">
+                                <div class="text-uppercase font_3"><i class="fas fa-tv pr-2"></i>Livingrooms</div>
+                            </div>
+                            <div class="row" id="object_rooms_livingrooms_cards">
+                                <div class="col-md-4">
+
+                                </div>
+                            </div>
+                            <!-- Bedrooms -->
+                            <div class="d-flex align-items-center border-bottom mb-1">
+                                <div class="text-uppercase font_3"><i class="fas fa-bed pr-2"></i>Bedrooms</div>
+                            </div>
+                            <div class="row" id="object_rooms_bedrooms_cards">
+                                <div class="col-md-4">
+
+                                </div>
+                            </div>
+                            <!-- Bathrooms -->
+                            <div class="d-flex align-items-center border-bottom mb-2">
+                                <div class="text-uppercase font_3"><i class="fas fa-bath pr-2"></i>Bathrooms</div>
+                            </div>
+                            <div class="row" id="object_rooms_bathrooms_cards">
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="card p-3">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                            <div><i class="fas fa-bath pr-2"></i>-</div>
+                                            <button class="btn btn_secondary px-2 line_normal text-uppercase font_medium font_2">Clone</button>
+                                        </div>
+                                        <div class="text-uppercase font_3 d-flex align-items-center py-2">
+                                            <div class="font_medium">Type of rooms:</div>
+                                            <div class="text-uppercase">| bathroom</div>
+                                        </div>
+                                        <div class="d-flex flex-wrap text-uppercase border-bottom pb-2">
+                                            <div class="flex-grow-1">
+                                                <div class="font_medium pr-2">Bathroom:</div>
+                                                <div>Shower_bath</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="font_medium pr-2">Type</div>
+                                                <div>-</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between flex-wrap pt-2">
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Amenities:</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Size:</div>
+                                                <div>0 m<sup>2</sup></div>
+                                            </div>
+                                            <div><i class="fas fa-bed mr-2">:</i>2</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between flex-wrap pt-2">
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Description:</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Lng:</div>
+                                                <div>0 m<sup>2</sup></div>
+                                            </div>
+                                            <div><i class="fas fa-toilet mr-2">:</i>2</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between pt-3">
+                                            <button class="btn btn_red line_normal px-2 py-1 text-uppercase font_2 font_medium m-1">Del</button>
+                                            <div class="d-flex flex-wrap">
+                                                <button class="btn btn_secondary line_normal ppx-2 py-1 text-uppercase font_2 font_medium m-1">Details</button>
+                                                <button class="btn btn_silver line_normal px-2 py-1 text-uppercase font_2 font_medium m-1">Beds</button>
+                                                <button class="btn btn_silver line_normal px-2 py-1 text-uppercase font_2 font_medium m-1 hidden d-none" hidden>Amenities</button>
+                                                <button class="btn btn_silver line_normal px-2 py-1 text-uppercase font_2 font_medium m-1">Edit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="card p-3">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                            <div><i class="fas fa-bath pr-2"></i>-</div>
+                                            <button class="btn btn_secondary px-2 line_normal text-uppercase font_medium font_2">Clone</button>
+                                        </div>
+                                        <div class="text-uppercase font_3 d-flex align-items-center py-2">
+                                            <div class="font_medium">Type of rooms:</div>
+                                            <div class="text-uppercase">| bathroom</div>
+                                        </div>
+                                        <div class="d-flex flex-wrap text-uppercase border-bottom pb-2">
+                                            <div class="flex-grow-1">
+                                                <div class="font_medium pr-2">Bathroom:</div>
+                                                <div>Shower_bath</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="font_medium pr-2">Type</div>
+                                                <div>-</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between flex-wrap pt-2">
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Amenities:</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Size:</div>
+                                                <div>0 m<sup>2</sup></div>
+                                            </div>
+                                            <div><i class="fas fa-bed mr-2">:</i>2</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between flex-wrap pt-2">
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Description:</div>
+                                                <div>0</div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="pr-2 text-uppercase font_medium">Lng:</div>
+                                                <div>0 m<sup>2</sup></div>
+                                            </div>
+                                            <div><i class="fas fa-toilet mr-2">:</i>2</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between pt-3">
+                                            <button class="btn btn_red line_normal px-2 py-1 text-uppercase font_2 font_medium m-1">Del</button>
+                                            <div class="d-flex flex-wrap">
+                                                <button class="btn btn_secondary line_normal ppx-2 py-1 text-uppercase font_2 font_medium m-1">Details</button>
+                                                <button class="btn btn_silver line_normal px-2 py-1 text-uppercase font_2 font_medium m-1">Beds</button>
+                                                <button class="btn btn_silver line_normal px-2 py-1 text-uppercase font_2 font_medium m-1 hidden">Amenities</button>
+                                                <button class="btn btn_silver line_normal px-2 py-1 text-uppercase font_2 font_medium m-1">Edit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal add room -->
+<section class="modal_add_new_room"></section>
+<section class="modal_add_beds"></section>
+
+<section>
+    <template id="template_rooms">
+        <div class="col-lg-4 col-xl-3 pt-2">
+            <div class="card p-3">
+                <div class="border-bottom pb-2 mb-3 font-weight-bold cursor_point">
+                    <div class="w-10 float-right mb-2 mr-0 "><button class="btn btn_secondary px-2 line_normal text-uppercase font_medium font_2 float-left" onclick="objects_rooms.bl.clone_room(`${id}`)">Clone</button></div>
+                    <div class="w-90 m-0 text-uppercase">${name}</div>
+                </div>
+                <div class="d-flex ">
+                    <div class="pr-2 font_medium">Type:</div>
+                    <span class="text-lowercase">${type}</span>
+                </div>
+                <div class="d-flex ${hidden_space}">
+                    <div class="pr-2 font_medium">Size:</div>
+                    <div>${space} m<sup>2</sup></div>
+                </div>
+                <div class="d-flex ${hidden_beds}">
+                    <div class="font_medium pr-2">Beds:</div>
+                    <div>${beds}</div>
+                </div>
+                <div class="d-flex ${hidden_bathroom}">
+                    <div class="font_medium pr-2">Bathroom:</div>
+                    <div class="d-inline">${en_suite_bathroom} - ${en_suite_bathroom_type}</div>
+                </div>
+                <div class="d-flex ${hidden_toilets}">
+                    <div class="font_medium pr-2">Toilets:</div>
+                    <div>${toilets}</div>
+                </div>
+                <div class="d-flex ${hidden_description}">
+                    <div class="pr-2 font_medium">Description:</div>
+                    <div>${description}</div>
+                </div>
+                <div class="d-flex ${hidden_floor}">
+                    <div class="pr-2 font_medium">Floor:</div>
+                    <div>${floor}</div>
+                </div>
+                <div class="d-flex flex-wrap pt-3">
+                    <button class="btn btn_red d-flex  mr-auto font_2 font_medium m-1" onclick="objects_rooms.bl.delete_room(`${id}`);">Remove</button>
+                    <button class="btn btn_silver d-flex  font_2 font_medium m-1 ${hidden_beds}" onclick="modal_add_beds.bl.open_modal(`${id}`)">Beds</button>
+                    <button class="btn btn_silver d-flex font_2 font_medium m-1 hidden" ${hidden}">Amenities</button>
+                    <button class="btn btn_silver d-flex text-uppercase font_2 font_medium m-1" onclick="modal_add_new_room.bl.show_room(`${id}`, `${room_type}`)">Edit</button>
+                </div>
+
+            </div>
+            
+        </div>
+    </template>
+</section>
+<script>
+
+    $(".filter_general").load("/pages/partals/filter_general.html");
+    $(".modal_add_new_room").load("/pages/components/modal_add_room.html");
+    $(".modal_add_beds").load("/pages/components/modal_add_bed.html");
+    $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+    var objects_rooms = {};
+
+    objects_rooms.object_id = '';
+    objects_rooms.number = 0;
+
+    // Load function
+    objects_rooms.load = async () => {
+
+        // Title
+        document.title = "Rooms";
+
+        // Global components
+
+        object_rooms_header_object_name.innerHTML = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+        objects_rooms.object_id = page.get_id();
+
+        //clear demo data
+        object_rooms_bathrooms_cards.innerHTML = '';
+
+        // UI components
+
+        // BL components
+        objects_rooms.number = 0;
+        await objects_rooms.bl.load_bathrooms();
+        await objects_rooms.bl.load_bedrooms();
+        await objects_rooms.bl.load_livingrooms();
+        objects_rooms_number.innerText = ' (' + objects_rooms.number + ')';
+        objects_rooms.bl.custom_dropdown("dropdown_add_new_room");
+
+    }
+
+    // UI logic
+    objects_rooms.ui = new function () {
+    }
+
+    // BL logic
+    objects_rooms.bl = new function () {
+
+        this.refresh_page = () => {
+
+            ui.content_loading('object_rooms_content_loading');
+            objects_rooms.bl.load_bathrooms();
+            objects_rooms.bl.load_bedrooms();
+            objects_rooms.bl.load_livingrooms();
+            ui.content_loading_hide('object_rooms_content_loading');
+
+        }
+
+        this.load_livingrooms = async () => {
+            var url = '/api/objects_rooms/list_livingrooms/' + objects_rooms.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            object_rooms_livingrooms_cards.innerHTML = '';
+            objects_rooms.number += json_response.length;
+
+            for (var r of json_response) {
+
+                console.log("ROOOM",r);
+                var t = template_rooms.innerHTML;
+
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${room_type}', r['type_id']);
+                t = t.replace('${name}', !r['name'] == true ? '-' : r['name']);
+
+                t = t.replace('${en_suite_bathroom}', !r['en_suite_bathroom'] == true ? '' : r['en_suite_bathroom']);
+                t = t.replace('${hidden_bathroom}', !r['bathroom'] == true ? 'hidden' : '');
+                t = t.replace('${en_suite_bathroom_type}', !r['en_suite_bathroom_type'] == true ? '' : r['en_suite_bathroom_type']);
+
+                t = t.replace('${toilets}', !r['toilets'] == true ? '' : r['toilets']);
+                t = t.replace('${hidden_toilets}', 'hidden');
+
+                t = t.replace('${floor}', !r['floor'] == true ? '' : r['floor']);
+                t = t.replace('${hidden_floor}', !r['floor'] == true ? 'hidden' : '');
+
+                t = t.replace('${beds}', !r['beds'] == true ? '' : r['beds']);
+                t = t.replace('${hidden_beds}', !r['beds'] == true ? 'hidden' : '');
+
+                t = t.replace('${space}', !r['space'] == true ? '' : r['space']);
+                t = t.replace('${hidden_space}', !r['space'] == true ? 'hidden' : '');
+
+                t = t.replace('${description}', !r['description'] == true ? '' : r['description']);
+                t = t.replace('${hidden_description}', !r['description'] == true ? 'hidden' : '');
+
+                t = t.replace('${icon}', '<i class="fas fa-tv"></i>');
+                t = t.replace('${hidden}', 'hidden');
+
+                t = t.replace('${type}', 'LIVINGROOM');
+                t = t.replace('${hidden_type}', !r['en_suite_bathroom'] == true && !r['en_suite_bathroom_type'] == true ? 'hidden' : '');
+
+                js.html.insertAdjacentHTML('object_rooms_livingrooms_cards', t);
+            }
+
+        }
+
+        this.load_bedrooms = async () => {
+
+            var url = '/api/objects_rooms/list_bedrooms/' + objects_rooms.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            // console.log(json_response);
+
+            object_rooms_bedrooms_cards.innerHTML = '';
+            objects_rooms.number += json_response.length;
+
+            for (var r of json_response) {
+
+                var t = template_rooms.innerHTML;
+
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${room_type}', r['type_id']);
+                t = t.replace('${name}', !r['name'] == true ? '-' : r['name']);
+
+                t = t.replace('${en_suite_bathroom}', !r['en_suite_bathroom'] == true ? '' : r['en_suite_bathroom']);
+                t = t.replace('${hidden_bathroom}', !r['bathroom'] == true ? 'hidden' : '');
+                t = t.replace('${en_suite_bathroom_type}', !r['en_suite_bathroom_type'] == true ? '' : r['en_suite_bathroom_type']);
+
+                t = t.replace('${toilets}', !r['toilets'] == true ? '' : r['toilets']);
+                t = t.replace('${hidden_toilets}', !r['toilets'] == true ? 'hidden' : '');
+
+                t = t.replace('${floor}', !r['floor'] == true ? '' : r['floor']);
+                t = t.replace('${hidden_floor}', !r['floor'] == true ? 'hidden' : '');
+
+                t = t.replace('${beds}', !r['beds'] == true ? '' : r['beds']);
+                t = t.replace('${hidden_beds}', !r['beds'] == true ? 'hidden' : '');
+
+                t = t.replace('${space}', !r['space'] == true ? '' : r['space']);
+                t = t.replace('${hidden_space}', !r['space'] == true ? 'hidden' : '');
+
+                t = t.replace('${description}', !r['description'] == true ? '' : r['description']);
+                t = t.replace('${hidden_description}', !r['description'] == true ? 'hidden' : '');
+
+                t = t.replace('${icon}', '<i class="fas fa-bed"></i>');
+                t = t.replace('${hidden}', 'hidden');
+
+                t = t.replace('${type}', 'BEDROOM');
+                t = t.replace('${hidden_type}', !r['en_suite_bathroom'] == true && !r['en_suite_bathroom_type'] == true ? 'hidden' : '');
+
+                js.html.insertAdjacentHTML('object_rooms_bedrooms_cards', t);
+
+            }
+        }
+
+        this.load_bathrooms = async () => {
+
+            var url = '/api/objects_rooms/list_bathrooms/' + objects_rooms.object_id;
+            var response = await ajax.get(url);
+            var json_response = JSON.parse(response);
+
+            //console.log(json_response);
+
+            object_rooms_bathrooms_cards.innerHTML = '';
+            objects_rooms.number += json_response.length;
+
+            for (var r of json_response) {
+
+                var t = template_rooms.innerHTML;
+
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${id}', r['id']);
+                t = t.replace('${room_type}', r['type_id']);
+                t = t.replace('${name}', !r['name'] == true ? '-' : r['name']);
+
+                t = t.replace('${en_suite_bathroom}', !r['en_suite_bathroom'] == true ? '' : r['en_suite_bathroom']);
+                t = t.replace('${hidden_bathroom}', !r['bathroom'] == true ? 'hidden' : '');
+                t = t.replace('${en_suite_bathroom_type}', !r['en_suite_bathroom_type'] == true ? '' : r['en_suite_bathroom_type']);
+
+                t = t.replace('${toilets}', !r['toilets'] == true ? '' : r['toilets']);
+                t = t.replace('${hidden_toilets}', !r['toilets'] == true ? 'hidden' : '');
+
+                t = t.replace('${floor}', !r['floor'] == true ? '' : r['floor']);
+                t = t.replace('${hidden_floor}', !r['floor'] == true ? 'hidden' : '');
+
+                t = t.replace('${beds}', !r['beds'] == true ? '' : r['beds']);
+                t = t.replace('${hidden_beds}', 'hidden');
+                t = t.replace('${hidden_beds}', 'hidden');
+
+                t = t.replace('${space}', !r['space'] == true ? '' : r['space']);
+                t = t.replace('${hidden_space}', !r['space'] == true ? 'hidden' : '');
+
+                t = t.replace('${description}', !r['description'] == true ? '' : r['description']);
+                t = t.replace('${hidden_description}', !r['description'] == true ? 'hidden' : '');
+
+                t = t.replace('${icon}', '<i class="fas fa-bath"></i>');
+                t = t.replace('${hidden}', '');
+
+                t = t.replace('${type}', 'BATHROOM');
+                t = t.replace('${hidden_type}', !r['en_suite_bathroom'] == true && !r['en_suite_bathroom_type'] == true ? 'hidden' : '');
+
+                js.html.insertAdjacentHTML('object_rooms_bathrooms_cards', t);
+
+            }
+
+
+        }
+
+        this.clone_room = async (room_id) => {
+
+            var url = '/api/objects_rooms/clone/' + room_id;
+            var response = await ajax.get(url);
+
+            this.refresh_page();
+
+        }
+
+        this.delete_room = async (room_id) => {
+
+            var url = '/api/objects_rooms/del_room/' + room_id;
+            var response = await ajax.get(url);
+
+            this.refresh_page();
+        }
+
+        // Custom dropdown
+        this.custom_dropdown = function (id) {
+            var id = document.getElementById(id);
+            var btn = id.getElementsByClassName("btn")[0];
+            var dropdown = id.lastElementChild;
+            var close = id.lastElementChild.children[0].lastElementChild;
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            close.addEventListener("click", function () {
+                dropdownToggle();
+            });
+            $(document).mouseup(function (e) {
+                if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+            if (id.classList.contains("toggle")) {
+                var dropdown_li = id.querySelectorAll(".dropdown_li");
+                for (let i = 0; i < dropdown_li.length; i++) {
+                    dropdown_li[i].addEventListener("click", function () {
+                        dropdown.classList.add("hidden");
+                        btn.classList.remove("open");
+                    })
+                }
+            }
+        }
+
+    }
+
+    objects_rooms.load();
+
+</script>

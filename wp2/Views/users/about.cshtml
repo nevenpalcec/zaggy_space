@@ -1,0 +1,144 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.settings_current.registars.booking_engine_user.Rows[0];
+    var booking_engine_db = (System.Data.DataRow)Session["booking_engine"];
+
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var list_gallery = bl.objects_relstate_pictures.list_front_page(user_id);
+    var user = bl.users.get(user_id).Rows[0];
+
+    var settings = bl.sys.json.obj(booking_engine_db["settings"].ToString());
+    var share_buttons_show = (string)(settings["share_buttons_show"] ?? "N");
+
+    ViewBag.Title = users_text["title"].ToString() + " | " + bl.lng.l.About_us;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "user" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- About us -->
+<section class="section-about-us">
+
+    <!-- top header picture-->
+    <div class="wrapper">
+        <div class="bg-img">
+            <img src="@booking_engine_db["picture_main_link"]" alt="Cover image">
+        </div>
+        <div class="container-wrapper">
+            <h1 class="gallery-title"> @bl.lng.l.About_us </h1>
+        </div>
+    </div>
+
+    <!-- about us -->
+    <div class="about-us">
+        <div class="container-wrapper">
+            <div class="heading-title mb-3"> @bl.lng.l.Contact </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="https://api.zaggy.net/users/picture/@bl.settings_current.user_id"
+                         alt="">
+                </div>
+                <div class="col-md-7" style="font-size: 1rem;">
+
+                    <!-- Company name -->
+                    <div class="about-us-p">
+                        <i class="fas fa-building pr-2"></i> @user_db["company_name"]
+                    </div>
+
+                    <!-- Phone number -->
+                    @if (string.IsNullOrWhiteSpace(user_db["telephone"].ToString()) == false)
+                    {
+                        <div class="about-us-p">
+                            <i class="fas fa-phone pr-2"></i><a href="tel:@user_db["telephone"]"> @user_db["telephone"] </a>
+                        </div>
+                    }
+
+                    <!-- E-mail address -->
+                    @if (string.IsNullOrWhiteSpace(user_db["email"].ToString()) == false)
+                    {
+                        <div class="about-us-p">
+                            <i class="fas fa-envelope pr-2"></i><a href="mailto:@user_db["email"]"> @user_db["email"] </a>
+                        </div>
+                    }
+
+                    <!-- Company address -->
+                    <div class="about-us-p">
+                        <i class="fas fa-map-marker-alt pr-2"></i> @user_db["address"], @user_db["city_zip"] @user_db["city_name"]
+                    </div>
+
+                    <!-- Company ID (oib) -->
+                    @if (string.IsNullOrWhiteSpace(user_db["oib"].ToString()) == false)
+                    {
+                        <div class="about-us-p">
+                            <i class="fas fa-fingerprint pr-2"></i> @bl.lng.l.Company_ID: @user_db["oib"]
+                        </div>
+                    }
+
+                    @if (share_buttons_show == "Y")
+                    {
+
+                        <div>
+
+                            <!-- Facebook -->
+                            @if (string.IsNullOrWhiteSpace(user["link_facebook"].ToString()) == false)
+                            {
+                                <div class="about-us-p">
+                                    <i class="fab fa-facebook pr-2"></i> <a href="@user["link_facebook"]"> Facebook </a>
+                                </div>
+                            }
+
+                            <!-- YouTube -->
+                            @if (string.IsNullOrWhiteSpace(user["link_youtube"].ToString()) == false)
+                            {
+                                <div class="about-us-p">
+                                    <i class="fab fa-youtube pr-2"></i> <a href="@user["link_youtube"]"> YouTube </a>
+                                </div>
+                            }
+
+                            <!-- Twitter -->
+                            @if (string.IsNullOrWhiteSpace(user["link_tweeter"].ToString()) == false)
+                            {
+                                <div class="about-us-p">
+                                    <i class="fab fa-twitter-square pr-2"></i> <a href="@user["link_tweeter"]"> Twitter </a>
+                                </div>
+                            }
+
+                            <!-- Instagram -->
+                            @if (string.IsNullOrWhiteSpace(user["link_instagram"].ToString()) == false)
+                            {
+                                <div class="about-us-p">
+                                    <i class="fab fa-instagram-square pr-2"></i>  <a href="@user["link_instagram"]"> Instagram </a>
+                                </div>
+                            }
+
+                        </div>
+                       
+
+                    }
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- about as text -->
+<section class="mb-5">
+    @Html.Partial("/Views/users/partal/about_us_description.cshtml", new ViewDataDictionary { { "users_text", users_text } })
+</section>
+
+<!-- contact us -->
+@Html.Partial("/Views/partal/contact_us.cshtml")
+
+<!-- Photo galery -->
+@*@Html.Partial("/Views/partal/gallery.cshtml", new ViewDataDictionary { { "list_gallery", list_gallery } })*@
+
+<!-- Location -->
+@Html.Partial("/Views/partal/location.cshtml")

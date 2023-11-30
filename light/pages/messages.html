@@ -1,0 +1,346 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+        <!-- left menu -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="far fa-envelope pr-2"></i>Messages
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Calendar -->
+        <div class="d-flex">
+            <div id="messages_filter_calendar" class="view_dropdown filter_calendar d-lg-block d-none">
+                <button class="btn btn_hover  px-2 py-1 d-lg-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1">
+                            <div class="font_1 text-uppercase font_bold text-left">Calendar</div>
+                            <div class="font_bold">
+                                <span id="calendar_filter_date_from" class="font_3 font_light text-left"></span> &minus;
+                                <span id="calendar_filter_date_until" class="font_3 font_light text-left"></span>
+                            </div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div class="dropdown_menu calendar hidden">
+                    <div id="messages_filter_dropdown_calendar" class="filter_dropdown_calendar">
+                    </div>
+                    <div class="dropdown_footer d-flex">
+                    </div>
+                </div>
+            </div>
+            <a id="messages_filter_calendar_btn" class="filter_link d-lg-none d-block mobile"><i class="far fa-calendar-alt"></i></a>
+        </div>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Search reservation -->
+        <div class="filter_search_name position-relative ml-auto">
+            <input type="text" class="form-control focus" placeholder="Search..." id="messages_input_search" style=" min-width: 9rem;">
+            <span class="search_icon"><i class="fas fa-search" style="margin-top: .15rem;"></i></span>
+        </div>
+    </div>
+
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-0">
+
+        <!-- Loading -->
+        <div id="messages_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr class="sticky bg_light_silver" style="height: auto !important">
+                    <th scope="col" class="text-center border-0"><span class="text-capitalize">Source</span></th>
+                    <th scope="col" class="border-0"><span class="text-capitalize">Reservation</span></th>
+                    <th scope="col" class="border-0"><span class="text-capitalize">Messages</span></th>
+                    <th scope="col" class="border-0"><span class="text-capitalize">Period</span></th>
+                    <th scope="col" class="text-right border-0">Price</th>
+                </tr>
+            </thead>
+            <tbody id="messages_tbody">
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+
+
+<!-- templates -->
+<section>
+
+    <!-- message row -->
+    <template id="template_message_tr">
+        <tr class="cursor_point ${font_bold}" onclick="modal_details_rent.ui.show_details('${rent_id}'); messages.ui.remove_font_bold(this); ">
+
+            <td class="text-center align-middle" ${border_color}>
+                <div>
+                    <img width="30" height="30" src="/assets/images/icons/portals/${rent_source_icon}.svg" alt="" loading="lazy">
+                </div>
+            </td>
+
+            <td ${border_color}>
+                <div>
+                    <span class="${hidden_flags}"><img width="16" height="16" src="/assets/images/icons/flags/${code2}.svg" alt="" loading="lazy"></span>
+                    <span> ${contact_name} </span>
+                </div>
+                <div class="text-black-50">
+                    ${id_hash}
+                </div>
+            </td>
+
+            <td class="align-middle" ${border_color}>
+                <div id="message_rent_${rent_id}" style="padding-left: 15%;">
+                    ${new_messages}
+                </div>
+            </td>
+
+            <td ${border_color}>
+                <div>
+                    ${checkin}
+                </div>
+                <div>
+                    ${checkout}
+                </div>
+            </td>
+
+            <td class="text-right align-middle" ${border_color}>
+                <div><strong> ${price} </strong></div>
+                <div> ${in_advance} </div>
+            </td>
+        </tr>
+    </template>
+
+</section>
+
+<!-- script -->
+<script>
+
+    var messages = {};
+
+    messages.date_from = '';
+    messages.date_until = '';
+
+    messages.load = () => {
+
+        ui.content_loading("messages_content_loading");
+
+        ui.display_title("Messages");
+        ui.filter_mobile_btn("messages_filter_calendar_btn", "messages_filter_calendar");
+
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+
+        messages.ui.double_calendar("messages_filter_dropdown_calendar", "calendar_filter_date_from", "calendar_filter_date_until", "messages_filter_calendar  > .dropdown_menu");
+        messages.ui.filter_dropdown("messages_filter_calendar");
+        messages.ui.search();
+
+        // load messages
+        messages.bl.messages_load();
+
+        ui.content_loading_hide("messages_content_loading");
+    }
+
+    messages.bl = new function () {
+
+        this.messages_load = async () => {
+
+            var user_id = await bl.workers.current_user_id();
+
+            if (messages_input_search.value != "") {
+                url = "/api/messages/list_filtered";
+            }
+            else {
+                url = "/api/messages/list_by_dates";
+            }
+
+            data = {};
+            data['user_id'] = user_id;
+            data['date_from'] = js.date.toIso(calendar_filter_date_from.innerText);
+            data['date_until'] = js.date.toIso(calendar_filter_date_until.innerText);
+            data['search'] = messages_input_search.value;
+            data['new_messages'] = location.hash.slice(1).split('?')[1];
+
+            var messages = await ajax.post_json(url, data);
+            messages_tbody.innerHTML = '';
+
+            for (var m of messages) {
+
+                t = template_message_tr.innerHTML;
+
+                var date_from = m['date_from'];
+                var date_until = m['date_until'];
+
+                var date_from_year = js.date.get_year(date_from);
+
+                var date_from_short = js.date.get_day(date_from) + '.' + js.date.get_mounth(date_from) + '.' + date_from_year;
+                var date_until_short = js.date.get_day(date_until) + '.' + js.date.get_mounth(date_until) + '.' + date_from_year;
+
+                var exchange_rate_info = 7.53450;
+
+                var rent_source_provision = m['rent_source_provision'].toFixed(2);
+                var rent_source_provision_local = (rent_source_provision * exchange_rate_info).toFixed(2);
+
+                var price = m['price'].toFixed(2) ?? 0.00;
+                var price_local = (price * exchange_rate_info).toFixed(2);
+
+                t = t.replaceAll('${rent_source_icon}', !m['rent_source_icon'] == true ? 'syncbeds' : m['rent_source_icon']);
+                t = t.replaceAll('${new_messages}', m['new_messages'] > 0 ? m['new_messages'] : '-');
+                t = t.replaceAll('${object_name}', m['object_name']);
+                t = t.replaceAll('${contact_name}', js.text.check_if_empty(m['contact_name']));
+                t = t.replaceAll('${code2}', !m['code2'] == true ? 'no-image' : m['code2']);
+                t = t.replaceAll('${hidden_flags}', !m['code2'] == true ? 'hidden' : '');
+                t = t.replaceAll('${id_hash}', js.text.check_if_empty(m['rent_id_hash']));
+                t = t.replaceAll('${checkin}', date_from_short);
+                t = t.replaceAll('${checkout}', date_until_short);
+                t = t.replaceAll('${rent_id}', js.text.check_if_empty(m['rent_id']));
+                t = t.replaceAll('${font_bold}', Number(m['messages_not_seen']) > 0 ? "font_bold" : "");
+
+                t = t.replace('${price}', m['price'] == null ? '' : m['price'].toFixed([2]) + ' ' + m['currency_label']);
+                t = t.replace('${in_advance}', m['in_advance'] == 0 ? '' : m['in_advance'] + ' ' + m['currency_label']);
+
+                js.html.insertAdjacentHTML('messages_tbody', t);
+            }
+        }
+
+    }
+
+    messages.ui = new function () {
+
+        // Filter - double calendar
+        this.double_calendar = function (cal, input_from, input_until, close_calendar) {
+
+            $("#" + cal).datepicker({
+
+                firstDay: 1,
+                numberOfMonths: 1,
+                altFormat: "yy-mm-dd",
+
+                onSelect: async function (dateText, inst) {
+
+                    if (!messages.date_from == true || !messages.date_until == false) {
+
+                        messages.date_from = js.date.toIso(new Date(dateText));;
+                        messages.date_until = '';
+
+                        $(this).datepicker();
+
+                    } else {
+
+                        messages.date_until = js.date.toIso(new Date(dateText));
+
+                        calendar_filter_date_from.innerHTML = messages.date_from;
+                        calendar_filter_date_until.innerHTML = messages.date_until;
+
+                        $(this).datepicker();
+
+                        $("#" + close_calendar).addClass("hidden");
+                        $(".btn").removeClass("open");
+
+                        messages_tbody.style.visibility = "hidden";
+
+                        // load messages
+                        await messages.bl.messages_load();
+
+                        messages_tbody.style.visibility = "visible";
+
+                    }
+                }
+            });
+
+            $("#" + cal).datepicker('setDate', new Date());
+
+            var date_until = js.date.toIso(new Date());
+
+            // Set date from to 03.05.2023 (start od instant booking)
+            calendar_filter_date_from.innerHTML = js.date.toIso(new Date('2023-05-03'));
+            calendar_filter_date_until.innerHTML = js.date.add_day(date_until, 1);
+
+        }
+
+        // Filter dropdown
+        this.filter_dropdown = function (id) {
+
+            var id = document.getElementById(id);
+            var btn = id.getElementsByClassName("btn")[0];
+            var dropdown = id.lastElementChild;
+
+            btn.addEventListener("click", function () {
+                dropdownToggle();
+            });
+
+            document.addEventListener("mouseup", function (e) {
+                if (id.outerHTML.includes(e.target.outerHTML) == false) {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            });
+
+            function dropdownToggle() {
+                if (!btn.classList.contains("open")) {
+                    dropdown.classList.remove("hidden");
+                    btn.classList.add("open");
+                } else {
+                    dropdown.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+
+            if (id.classList.contains("toggle")) {
+                var dropdown_li = id.querySelectorAll(".dropdown_li");
+                for (let i = 0; i < dropdown_li.length; i++) {
+                    dropdown_li[i].addEventListener("click", function () {
+                        dropdown.classList.add("hidden");
+                        btn.classList.remove("open");
+                    })
+                }
+            }
+
+        }
+
+        // Search messages
+        this.search = () => {
+
+            // Init a timeout variable to be used below
+            var timeout = null;
+
+            // Listen for keystroke events
+            messages_input_search.onkeyup = function (e) {
+
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 800ms
+                timeout = setTimeout(function () {
+                    messages.bl.messages_load();
+                }, 1500);
+            };
+
+        }
+
+        // After clicking on a row with new message, remove font bold
+        this.remove_font_bold = (element) => {
+            element.classList.remove("font_bold");
+        }
+    }
+
+    // on load
+    messages.load();
+
+</script>

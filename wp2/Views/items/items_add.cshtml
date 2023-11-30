@@ -1,0 +1,181 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = (System.Data.DataRow)Session["booking_engine"];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+
+    var object_id = ViewData["object_id"].ToString();
+    var obj = bl.objects.get_all(object_id, bl.settings_current.language_id);
+
+    var date_from = ViewData["date_from"].ToString();
+    var date_until = ViewData["date_until"].ToString();
+    var adults = ViewData["adults"].ToString();
+    var pets = ViewData["pets"].ToString();
+
+    var persons = int.Parse(obj.Tables["realstate"].Rows[0]["can_sleep_max"].ToString());
+
+    ViewBag.Title = bl.lng.l.Home;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+    <section class="section-rd">
+
+        <div class="bg-img">
+            <div class="container-wrapper">
+                <div class="rd-title"> @obj.Tables["general"].Rows[0]["name"] </div>
+            </div>
+        </div>
+
+        <div class="container-wrapper py-5">
+
+            <div class="row">
+
+                <!-- Property details -->
+                <div class="col-md-8">
+
+                    <div class="rd-description">
+
+                        <!-- Propety details  -->
+                        <div class="heading-title" style="font-size: 1.4rem; margin-top: 0px; padding-top: 0px;">@obj.Tables["general"].Rows[0]["name"]</div>
+                        <div class="rd-description-short">
+                            <div class="rd-description-short-label">
+                                <span> @obj.Tables["realstate"].Rows[0]["can_sleep_max"]</span>&nbsp;@bl.lng.l.Guest
+                            </div>
+                            <div class="rd-description-short-line"></div>
+                            <div class="rd-description-short-label">
+                                <span>@obj.Tables["realstate"].Rows[0]["bedrooms"]</span>&nbsp;@bl.lng.l.Bedrooms
+                            </div>
+                            <div class="rd-description-short-line"></div>
+                            <div class="rd-description-short-label">
+                                <span>@obj.Tables["realstate"].Rows[0]["bathrooms"]</span>&nbsp;@bl.lng.l.Bathroom
+                            </div>
+                            <div class="rd-description-short-line"></div>
+                            <div class="rd-description-short-label">
+                                <span>@obj.Tables["realstate"].Rows[0]["floor"]</span>&nbsp;@bl.lng.l.Floor
+                            </div>
+                            <div class="rd-description-short-line"></div>
+                            <div class="rd-description-short-label">
+                                <span>@obj.Tables["realstate"].Rows[0]["space"]</span>&nbsp;sqm
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Book details  -->
+                <div class="col-md-4">
+                    <div class="card rent-details">
+                        <div class="card-main">
+                            <hr>
+                            <div class="card-main-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="d-flex justify-content-between" style="height: 58px;">
+                                <div class="card-main-wrapper position-relative">
+                                    <div class="card-main-value pl-2"><span id="price_per_night_price"> - </span> <span id="price_per_night_currency_label"> Kn </span> </div>
+                                    <div class="card-main-p" style="width: 60px;"><span>per night</span></div>
+                                    <hr>
+                                </div>
+                                <div class="card-main-wrapper position-relative">
+                                    <div class="card-main-value pr-2"><span id="price_per_night_person_price"> - </span> <span id="price_per_night_person_currency_label"> Kn </span> </div>
+                                    <div class="card-main-p" style="width: 60px;"><span>person</span></div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+
+                            <div class="card-body-item calendar" id="rd-flatpickr" style="margin-top: -15px;">
+
+                            </div>
+                           
+                            <div class="card-body-item dropdown">
+                                <div class="dropdown" id="dropdown_items">
+                                    <i class="fas fa-grip-vertical mr-4"></i>
+                                    <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_item_id" data-toggle="dropdown" style="padding-left: 30px !important;"
+                                         contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="-1">
+                                        @bl.lng.l.Standard
+                                    </div>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @*<a data-id="-1" class="dropdown-item"> Standard </a>*@
+                                        @foreach (System.Data.DataRow r in obj.Tables["items"].Rows)
+                                        {
+                                            <a data-id="@r["item_id"]" class="dropdown-item"> <i class="fas fa-grip-vertical mr-4" style="margin-top: -3px;"></i> &nbsp; @r["name"] </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                             
+                            <div class="card-body-item dropdown">
+                                <div class="dropdown" id="dropdown_pets">
+                                    <i class="fas fa-dog mr-4"></i>
+                                    <div class="btn dropdown-toggle" data-children-id="1" type="button" id="dropdown_pets_id" data-toggle="dropdown" style="padding-left: 30px !important;"
+                                         contenteditable="true" aria-haspopup="true" aria-expanded="false" data-id="@pets">
+                                        @(pets == "0" ? " - - - " : pets)
+                                    </div>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a data-id="0" class="dropdown-item"> - - - </a>
+                                        <a data-id="1" class="dropdown-item">1</a>
+                                        <a data-id="2" class="dropdown-item">2</a>
+                                        <a data-id="3" class="dropdown-item">3+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body-item pt-2 pb-3">
+                                <div id="div_items_extra" class="hidden">
+                                    @*<div class="d-flex justify-content-between">
+                                <div class="card-body-item-label">Smještaj</div>
+                                <div class="card-body-item-value"><span>0</span>&nbsp;Kn</div>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <div class="card-body-item-label">Popust na duže boravke</div>
+                                <div class="card-body-item-value"><span>0</span>&nbsp;Kn</div>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <div class="card-body-item-label">3 % popusta na rane rezervacije</div>
+                                <div class="card-body-item-value"><span>0</span>&nbsp;Kn</div>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <div class="card-body-item-label">Naknada za usluge</div>
+                                <div class="card-body-item-value"><span>0</span>&nbsp;Kn</div>
+                            </div>*@
+                                    <hr />
+                                </div>
+                                <div class="d-flex justify-content-between total">
+                                    <div class="card-body-item-label"> @bl.lng.l.Total </div>
+                                    <div class="card-body-item-value"><span id="price_total_price"> - </span>&nbsp; <span id="price_total_currency_label"> € </span> </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="card-body-btns d-flex">
+                                <button id="btnExtraPrice" class="btn btn-primary btn-effect mr-2" style="width: 2.5rem;"><i class="fas fa-long-arrow-alt-down"></i></button>
+                                <a onclick="property.got_to_payment();" class="btn btn-primary btn-effect"> @bl.lng.l.Make_reservation </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+                
+
+
+            </div>
+
+
+</section>
+
+        <!-- banner -->
+        @Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "gallery" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+
+
+

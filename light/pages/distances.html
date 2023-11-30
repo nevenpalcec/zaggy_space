@@ -1,0 +1,730 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-none d-md-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_distances_header_object_name"></span>
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="guests_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <div class="row pt-3">
+            <div class="col-12 col-xxl-9">
+                <!-- Distance -->
+                <div class="card mb-5">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="font-weight-bold"><i class="fas fa-arrows-alt-h pr-2"></i>Distance</div>
+                        <div></div>
+                    </div>
+                    <div class="card-body font_3" id="div_distances_form">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3" data-value="" data-objects="">
+                                <label class="mb-1">Airport</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_airport" id="distances_airport">
+                                    <div id="distance_airport" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_airport_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Bank ATM</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_bank_atm" id="distances_bank_atm">
+                                    <div id="distance_bank_atm" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_bank_atm_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Bus stop</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_bus_stop" id="distances_bus_stop">
+                                    <div id="distance_bus_stop" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_bus_stop_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Caffe bar</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_caffe_bar" id="distances_caffe_bar">
+                                    <div id="distance_caffe_bar" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_caffe_bar_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Downtown</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_downtown" id="distances_downtown">
+                                    <div id="distance_downtown" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_downtown_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Ferry</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_ferry" id="distances_ferry">
+                                    <div id="distance_ferry" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_ferry_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Gas station</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_gas_station" id="distances_gas_station">
+                                    <div id="distance_gas_station" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_gas_station_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Highway</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="500" name="distances_highway" id="distances_highway">
+                                    <div id="distance_highway" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_highway_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Marina</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_marina" id="distances_marina">
+                                    <div id="distance_marina" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_marina_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Market</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_market" id="distances_market">
+                                    <div id="distance_market" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_market_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Night life</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_night_life" id="distances_night_life">
+                                    <div id="distance_night_life" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02" id="distances_night_life_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Pharmacy</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_pharmacy" id="distances_pharmacy">
+                                    <div id="distance_pharmacy" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_pharmacy_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Railway station</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_railway_station" id="distances_railway_station">
+                                    <div id="distance_railway_station" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_railway_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Restaurant</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_restaurant" id="distances_restaurant">
+                                    <div id="distance_restaurant" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_restaurant_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Shops</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_shops" id="distances_shops">
+                                    <div id="distance_shops" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_shops_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Ski lift</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_ski_lift" id="distances_ski_lift">
+                                    <div id="distance_ski_lift" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_ski_lift_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Sports</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_sports" id="distances_sports">
+                                    <div id="distance_sports" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_sports_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Tourist info Centre</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_tourist_info_center" id="distances_tourist_info_center">
+                                    <div id="distance_tourist_info_centre" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_tourist_info_center_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 mb-3">
+                                <label class="mb-1">Water</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control focus font_3 text-center rounded_lg_right_0" value="100" name="distances_water" id="distances_water">
+                                    <div id="distance_water" class="select" style="width: 100px;">
+                                        <button class="custom-select focus font_3 bg_silver02 border_left_transparent rounded_lg_left_0" id="distances_water_unit" data-unit_id="">meter</button>
+                                        <i class="fas fa-angle-down"></i>
+                                        <ul class="select_ul hidden">
+                                            <li class="select_li" data-id="1">meter</li>
+                                            <li class="select_li" data-id="2">kilometers</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn_secondary" onclick="distances.bl.save_distances()"><i class="fas fa-save pr-2" ></i>Save</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    var distances = {};
+
+    var missing = {};// distances missing in syncbeds, but neccessary for backend to function
+
+    distances.object_id = '';
+    distances.objects_distances_id = '';
+
+    // Load function
+    distances.load = () => {
+
+        // Title
+        document.title = "Distances";
+
+        object_distances_header_object_name.innerHTML = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+        $(".filter_general").load("/pages/partals/filter_general.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global components
+        ui.custom_select("distance_airport");
+        ui.custom_select("distance_bank_atm");
+        ui.custom_select("distance_bus_stop");
+        ui.custom_select("distance_caffe_bar");
+        ui.custom_select("distance_downtown");
+        ui.custom_select("distance_ferry");
+        ui.custom_select("distance_gas_station");
+        ui.custom_select("distance_highway");
+        ui.custom_select("distance_marina");
+        ui.custom_select("distance_market");
+        ui.custom_select("distance_night_life");
+        ui.custom_select("distance_pharmacy");
+        ui.custom_select("distance_railway_station");
+        ui.custom_select("distance_restaurant");
+        ui.custom_select("distance_shops");
+        ui.custom_select("distance_ski_lift");
+        ui.custom_select("distance_sports");
+        ui.custom_select("distance_tourist_info_centre");
+        ui.custom_select("distance_water");
+
+        distances.object_id = page.get_id();
+
+        // BL components
+        distances.bl.load_distances();
+
+        // UI components
+
+    }
+
+    // UI logic
+    distances.ui = new function () {
+
+    }
+
+    // BL logic
+    distances.bl = new function () {
+
+
+        this.load_distances = async () => {
+
+            var url = '/api/objects_distances/list/' + distances.object_id;
+            var response = await ajax.get(url);
+            var distances_json = JSON.parse(response);
+
+            //console.log(distances_json);
+
+            distances_airport.value = distances_json[0]['distance'] || 0;
+            distances_airport.dataset.place_id = distances_json[0]['objects_distances_id'];
+            distances_airport_unit.dataset.id = distances_json[0]['unit_id'] || 1;
+            
+            if (distance_airport.querySelectorAll("li")[0].dataset.id === distances_airport_unit.dataset.id) {
+                distance_airport.querySelectorAll("li")[0].click();
+            } else {
+                distance_airport.querySelectorAll("li")[1].click();
+            }
+            
+
+            distances_bank_atm.value = distances_json[2]['distance'] || 0;
+            distances_bank_atm.dataset.place_id = distances_json[2]['objects_distances_id'];
+            distances_bank_atm_unit.dataset.id = distances_json[2]['unit_id'] || 1;
+
+            if (distance_bank_atm.querySelectorAll("li")[0].dataset.id === distances_bank_atm_unit.dataset.id) {
+                distance_bank_atm.querySelectorAll("li")[0].click();
+            } else {
+                distance_bank_atm.querySelectorAll("li")[1].click();
+            }
+
+            distances_bus_stop.value = distances_json[4]['distance'] || 0;
+            distances_bus_stop.dataset.place_id = distances_json[4]['objects_distances_id'] || 0;
+            distances_bus_stop_unit.dataset.id = distances_json[4]['unit_id'] || 1;
+
+            if (distance_bus_stop.querySelectorAll("li")[0].dataset.id === distances_bus_stop_unit.dataset.id) {
+                distance_bus_stop.querySelectorAll("li")[0].click();
+            } else {
+                distance_bus_stop.querySelectorAll("li")[1].click();
+            }
+
+            distances_caffe_bar.value = distances_json[5]['distance'] || 0;
+            distances_caffe_bar.dataset.place_id = distances_json[5]['objects_distances_id'];
+            distances_caffe_bar_unit.dataset.id = distances_json[5]['unit_id'] || 1;
+
+            if (distance_caffe_bar.querySelectorAll("li")[0].dataset.id === distances_caffe_bar_unit.dataset.id) {
+                distance_caffe_bar.querySelectorAll("li")[0].click();
+            } else {
+                distance_caffe_bar.querySelectorAll("li")[1].click();
+            }
+
+            distances_downtown.value = distances_json[9]['distance'] || 0;
+            distances_downtown.dataset.place_id = distances_json[9]['objects_distances_id'];
+            distances_downtown_unit.dataset.id = distances_json[9]['unit_id'] || 1;
+
+            if (distance_downtown.querySelectorAll("li")[0].dataset.id === distances_downtown_unit.dataset.id) {
+                distance_downtown.querySelectorAll("li")[0].click();
+            } else {
+                distance_downtown.querySelectorAll("li")[1].click();
+            }
+
+            distances_ferry.value = distances_json[10]['distance'] || 0;
+            distances_ferry.dataset.place_id = distances_json[10]['objects_distances_id'];
+            distances_ferry_unit.dataset.id = distances_json[10]['unit_id'] || 1;
+
+            if (distance_ferry.querySelectorAll("li")[0].dataset.id === distances_ferry_unit.dataset.id) {
+                distance_ferry.querySelectorAll("li")[0].click();
+            } else {
+                distance_ferry.querySelectorAll("li")[1].click();
+            }
+
+            distances_gas_station.value = distances_json[11]['distance'] || 0;
+            distances_gas_station.dataset.place_id = distances_json[11]['objects_distances_id'];
+            distances_gas_station_unit.dataset.id = distances_json[11]['unit_id'] || 1;
+
+            if (distance_gas_station.querySelectorAll("li")[0].dataset.id === distances_gas_station_unit.dataset.id) {
+                distance_gas_station.querySelectorAll("li")[0].click();
+            } else {
+                distance_gas_station.querySelectorAll("li")[1].click();
+            }
+
+            distances_highway.value = distances_json[13]['distance'] || 0;
+            distances_highway.dataset.place_id = distances_json[13]['objects_distances_id'];
+            distances_highway_unit.dataset.id = distances_json[13]['unit_id'] || 1;
+
+            if (distance_highway.querySelectorAll("li")[0].dataset.id === distances_highway_unit.dataset.id) {
+                distance_highway.querySelectorAll("li")[0].click();
+            } else {
+                distance_highway.querySelectorAll("li")[1].click();
+            }
+
+            distances_marina.value = distances_json[16]['distance'] || 0;
+            distances_marina.dataset.place_id = distances_json[16]['objects_distances_id'];
+            distances_marina_unit.dataset.id = distances_json[16]['unit_id'] || 1;
+
+            if (distance_marina.querySelectorAll("li")[0].dataset.id === distances_marina_unit.dataset.id) {
+                distance_marina.querySelectorAll("li")[0].click();
+            } else {
+                distance_marina.querySelectorAll("li")[1].click();
+            }
+
+            distances_market.value = distances_json[17]['distance'] || 0;
+            distances_market.dataset.place_id = distances_json[17]['objects_distances_id'];
+            distances_market_unit.dataset.id = distances_json[17]['unit_id'] || 1;
+
+            if (distance_market.querySelectorAll("li")[0].dataset.id === distances_market_unit.dataset.id) {
+                distance_market.querySelectorAll("li")[0].click();
+            } else {
+                distance_market.querySelectorAll("li")[1].click();
+            }
+
+            distances_night_life.value = distances_json[18]['distance'] || 0;
+            distances_night_life.dataset.place_id = distances_json[18]['objects_distances_id'];
+            distances_night_life_unit.dataset.id = distances_json[18]['unit_id'] || 1;
+
+            if (distance_night_life.querySelectorAll("li")[0].dataset.id === distances_night_life_unit.dataset.id) {
+                distance_night_life.querySelectorAll("li")[0].click();
+            } else {
+                distance_night_life.querySelectorAll("li")[1].click();
+            }
+
+            distances_pharmacy.value = distances_json[19]['distance'] || 0;
+            distances_pharmacy.dataset.place_id = distances_json[19]['objects_distances_id'];
+            distances_pharmacy_unit.dataset.id = distances_json[19]['unit_id'] || 1;
+
+            if (distance_pharmacy.querySelectorAll("li")[0].dataset.id === distances_pharmacy_unit.dataset.id) {
+                distance_pharmacy.querySelectorAll("li")[0].click();
+            } else {
+                distance_pharmacy.querySelectorAll("li")[1].click();
+            }
+
+            distances_railway_station.value = distances_json[20]['distance'] || 0;
+            distances_railway_station.dataset.place_id = distances_json[20]['objects_distances_id'];
+            distances_railway_unit.dataset.id = distances_json[20]['unit_id'] || 1;
+
+            if (distance_railway_station.querySelectorAll("li")[0].dataset.id === distances_railway_unit.dataset.id) {
+                distance_railway_station.querySelectorAll("li")[0].click();
+            } else {
+                distance_railway_station.querySelectorAll("li")[1].click();
+            }
+
+            distances_restaurant.value = distances_json[21]['distance'] || 0;
+            distances_restaurant.dataset.place_id = distances_json[21]['objects_distances_id'];
+            distances_restaurant_unit.dataset.id = distances_json[21]['unit_id'] || 1;
+
+            if (distance_restaurant.querySelectorAll("li")[0].dataset.id === distances_restaurant_unit.dataset.id) {
+                distance_restaurant.querySelectorAll("li")[0].click();
+            } else {
+                distance_restaurant.querySelectorAll("li")[1].click();
+            }
+
+            distances_shops.value = distances_json[22]['distance'] || 0;
+            distances_shops.dataset.place_id = distances_json[22]['objects_distances_id'];
+            distances_shops_unit.dataset.id = distances_json[22]['unit_id'] || 1;
+
+            if (distance_shops.querySelectorAll("li")[0].dataset.id === distances_shops_unit.dataset.id) {
+                distance_shops.querySelectorAll("li")[0].click();
+            } else {
+                distance_shops.querySelectorAll("li")[1].click();
+            }
+
+            distances_ski_lift.value = distances_json[23]['distance'] || 0;
+            distances_ski_lift.dataset.place_id = distances_json[23]['objects_distances_id'];
+            distances_ski_lift_unit.dataset.id = distances_json[23]['unit_id'] || 1;
+
+            if (distance_ski_lift.querySelectorAll("li")[0].dataset.id === distances_ski_lift_unit.dataset.id) {
+                distance_ski_lift.querySelectorAll("li")[0].click();
+            } else {
+                distance_ski_lift.querySelectorAll("li")[1].click();
+            }
+
+            distances_sports.value = distances_json[24]['distance'] || 0;
+            distances_sports.dataset.place_id = distances_json[24]['objects_distances_id'];
+            distances_sports_unit.dataset.id = distances_json[24]['unit_id'] || 1;
+
+            if (distance_sports.querySelectorAll("li")[0].dataset.id === distances_sports_unit.dataset.id) {
+                distance_sports.querySelectorAll("li")[0].click();
+            } else {
+                distance_sports.querySelectorAll("li")[1].click();
+            }
+
+            distances_tourist_info_center.value = distances_json[25]['distance'] || 0;
+            distances_tourist_info_center.dataset.place_id = distances_json[25]['objects_distances_id'];
+            distances_tourist_info_center_unit.dataset.id = distances_json[25]['unit_id'] || 1;
+
+            if (distance_tourist_info_centre.querySelectorAll("li")[0].dataset.id === distances_tourist_info_center_unit.dataset.id) {
+                distance_tourist_info_centre.querySelectorAll("li")[0].click();
+            } else {
+                distance_tourist_info_centre.querySelectorAll("li")[1].click();
+            }
+
+            distances_water.value = distances_json[26]['distance'] || 0;
+            distances_water.dataset.place_id = distances_json[26]['objects_distances_id'];
+            distances_water_unit.dataset.id = distances_json[26]['unit_id'] || 1;
+
+            if (distance_water.querySelectorAll("li")[0].dataset.id === distances_water_unit.dataset.id) {
+                distance_water.querySelectorAll("li")[0].click();
+            } else {
+                distance_water.querySelectorAll("li")[1].click();
+            }
+
+
+            //get id's for distances not in syncbeds
+            missing.bank_id = distances_json[1]['objects_distances_id'];
+            missing.beach_id = distances_json[3]['objects_distances_id'];
+            missing.city_centre_id = distances_json[6]['objects_distances_id'];
+            missing.dentist_id = distances_json[7]['objects_distances_id'];
+            missing.doctor_id = distances_json[8]['objects_distances_id'];
+            missing.golf_id = distances_json[12]['objects_distances_id'];
+            missing.katamaran_id = distances_json[14]['objects_distances_id'];
+            missing.lake_id = distances_json[15]['objects_distances_id'];
+
+
+        }
+
+
+        this.save_distances = async () => {
+
+            ui.content_loading("guests_content_loading");
+
+            var dis = {};
+
+            dis.object_id = distances.object_id;
+            dis.user_id = bl.workers.current_user_id();
+
+            dis.airport = distances_airport.dataset.place_id;
+            dis.airport_value = distances_airport.value;
+            dis.airport_unit = distances_airport_unit.dataset.id;
+
+            //let name = "dis_" + distances_airport.dataset.place_id;
+            //let unit = distances_airport.dataset.place_id + "_unit";
+            //dis[name] = ;
+            //dis[unit] = ;
+
+            dis.bank_atm = distances_bank_atm.dataset.place_id;
+            dis.bank_atm_value = distances_bank_atm.value;
+            dis.bank_atm_unit = distances_bank_atm_unit.dataset.id;
+
+            dis.bus_stop = distances_bus_stop.dataset.place_id;
+            dis.bus_stop_value = distances_bus_stop.value;
+            dis.bus_stop_unit = distances_bus_stop_unit.dataset.id;
+
+            dis.caffe_bar = distances_caffe_bar.dataset.place_id;
+            dis.caffe_bar_value = distances_caffe_bar.value;
+            dis.caffe_bar_unit = distances_caffe_bar_unit.dataset.id;
+
+            dis.downtown = distances_downtown.dataset.place_id;
+            dis.downtown_value = distances_downtown.value;
+            dis.downtown_unit = distances_downtown_unit.dataset.id;
+
+            dis.ferry = distances_ferry.dataset.place_id;
+            dis.ferry_value = distances_ferry.value;
+            dis.ferry_unit = distances_ferry_unit.dataset.id;
+
+            dis.gas_station = distances_gas_station.dataset.place_id;
+            dis.gas_station_value = distances_gas_station.value;
+            dis.gas_station_unit = distances_gas_station_unit.dataset.id;
+
+            dis.highway = distances_highway.dataset.place_id;
+            dis.highway_value = distances_highway.value;
+            dis.highway_unit = distances_highway_unit.dataset.id;
+
+            dis.marina = distances_marina.dataset.place_id;
+            dis.marina_value = distances_marina.value;
+            dis.marina_unit = distances_marina_unit.dataset.id;
+
+            dis.market = distances_market.dataset.place_id;
+            dis.market_value = distances_market.value;
+            dis.market_unit = distances_market_unit.dataset.id;
+
+            dis.night_life = distances_night_life.dataset.place_id;
+            dis.night_life_value = distances_night_life.value;
+            dis.night_life_unit = distances_night_life_unit.dataset.id;
+
+            dis.pharmacy = distances_pharmacy.dataset.place_id;
+            dis.pharmacy_value = distances_pharmacy.value;
+            dis.pharmacy_unit = distances_pharmacy_unit.dataset.id;
+
+            dis.railway_station = distances_railway_station.dataset.place_id;
+            dis.railway_station_value = distances_railway_station.value;
+            dis.railway_station_unit = distances_railway_unit.dataset.id;
+
+            dis.restaurant = distances_restaurant.dataset.place_id;
+            dis.restaurant_value = distances_restaurant.value;
+            dis.restaurant_unit = distances_restaurant_unit.dataset.id;
+
+            dis.shops = distances_shops.dataset.place_id;
+            dis.shops_value = distances_shops.value;
+            dis.shops_unit = distances_shops_unit.dataset.id;
+
+            dis.ski_lift = distances_ski_lift.dataset.place_id;
+            dis.ski_lift_value = distances_ski_lift.value;
+            dis.ski_lift_unit = distances_ski_lift_unit.dataset.id;
+
+            dis.sports = distances_sports.dataset.place_id;
+            dis.sports_value = distances_sports.value;
+            dis.sports_unit = distances_sports_unit.dataset.id;
+
+            dis.tourist_info_center = distances_tourist_info_center.dataset.place_id;
+            dis.tourist_info_center_value = distances_tourist_info_center.value;
+            dis.tourist_info_center_unit = distances_tourist_info_center_unit.dataset.id;
+
+            dis.water = distances_water.dataset.place_id;
+            dis.water_value = distances_water.value;
+            dis.water_unit = distances_water_unit.dataset.id;
+
+
+            //distances not in syncbeds
+            dis.bank = missing.bank_id;
+            dis.bank_value = 0;
+            dis.bank_unit = 1;
+
+            dis.beach = missing.beach_id;
+            dis.beach_value = 0;
+            dis.beach_unit = 1;
+
+            dis.city_center = missing.city_centre_id;
+            dis.city_center_value = 0;
+            dis.city_center_unit = 1;
+
+            dis.dentist = missing.dentist_id;
+            dis.dentist_value = 0;
+            dis.dentist_unit = 1;
+
+            dis.doctor = missing.doctor_id;
+            dis.doctor_value = 0;
+            dis.doctor_unit = 1;
+
+            dis.golf = missing.golf_id;
+            dis.golf_value = 0;
+            dis.golf_unit = 1;
+
+            dis.katamaran = missing.katamaran_id;
+            dis.katamaran_value = 0;
+            dis.katamaran_unit = 1;
+
+            dis.lake = missing.lake_id;
+            dis.lake_value = 0;
+            dis.lake_unit = 1;
+
+
+            var url = '/api/objects_distances/save';
+            var response = await ajax.post_json(url, dis);
+
+            ui.content_loading_hide("guests_content_loading");
+
+        }
+    }
+
+    // On load
+    distances.load();
+
+</script>

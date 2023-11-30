@@ -1,0 +1,465 @@
+﻿<style>
+    .text_border {
+        border: 2px solid lightgrey;
+        border-radius: 0.25rem;
+        padding: 1.2rem !important
+    }
+</style>
+
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-coins pr-2"></i>My balance
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#balance" class="filter_link active"><i class="fas fa-coins pr-lg-2"></i><span class="d-none d-lg-flex">Balance</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#user_invoices" class="filter_link"><i class="fas fa-file-alt pr-lg-2"></i><span class="d-none d-lg-flex">Invoices</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#user_contract" class="filter_link"><i class="fas fa-file-signature pr-lg-2"></i><span class="d-none d-lg-flex">User contract</span></a>
+        <div class="filter_line_y"></div>
+
+        <a href="#contract_items" class="filter_link"><i class="fas fa-list pr-lg-2"></i><span class="d-none d-lg-flex">Contract items</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="balance_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content settings pt-3">
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <!--Card-->
+                    <div class="text_border mb-4">
+
+                        <!--Heading-->
+                        <div class="pb-4">
+                            <span class="font_bold text-uppercase"><i class="far fa-credit-card pr-2"></i> Billing </span>
+                        </div>
+
+                        <!--Card has not been added yet-->
+                        <div id="card_doesnt_exist" class="content-group hidden">
+                            <div class="pb-2"> Add and save your payment details here for quick invoice payments. </div>
+                            <div class="pb-3" style="display: flex; gap: 2rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                                <div class="pt-2">
+                                    <i class="fab fa-cc-mastercard fa-2x"></i>
+                                    <i class="fab fa-cc-visa fa-2x"></i>
+                                    <i class="fab fa-cc-amex fa-2x"></i>
+                                    <i class="fab fa-cc-diners-club fa-2x"></i>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-ladda btn-ladda-spinner" data-spinner-color="#fff" data-style="fade" onclick="balance.bl.take_card();">
+                                    <i class="far fa-credit-card pr-2"></i>Add Credit Card
+                                </button>
+                            </div>
+                        </div>
+
+                        <!--Card has been added-->
+                        <div id="card_already_exist" class="content-group hidden pb-4">
+                            <div class="text-size-large" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                                <div id="card_type" style="display: inline;" class="text-bold">
+
+                                </div>
+                                <div class="text-bold" style="flex-grow: 1;">
+                                    <span id="card_bin"></span> <span>&#8226;&#8226;&#8226;&#8226;</span> <span id="card_last_four"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--zaggy company details-->
+                        <small class="text-uppercase text-muted d-flex justify-content-between">
+                            <span id="zaggy_company_name" class="pr-3"></span>
+                            <span>VATID: <span id="zaggy_company_oib"></span></span>
+                        </small>
+                    </div>
+
+                    <!--Contract-->
+                    <div class="text_border mb-4">
+
+                        <!--Heading-->
+                        <div class="pb-4 d-flex justify-content-between">
+                            <div class="font_bold text-uppercase pt-1"><i class="fas fa-file-signature pr-2"></i> Contract </div>
+                            <div>
+                                <a class="btn btn-light py-1" href="#user_contract" style="border-color: lightgray; font-size: 13px;"> View </a>
+                                <a class="btn btn-light py-1" href="#contract_items" style="border-color: lightgray; font-size: 13px;">Items</a>
+                            </div>
+                        </div>
+
+                        <!--Contract is not active-->
+                        <div id="contract_not_active" class="hidden">
+                            <p class="text-muted"> No currently active contracts!</p>
+                        </div>
+
+                        <!--Contract has not been signed yet-->
+                        <div id="contract_not_signed" class="hidden">
+                            <div class="d-flex justify-content-between pb-4">
+                                <div class="text-uppercase pt-1 mr-2">
+                                    Contract<span id="contract_number_not_signed"></span>
+                                </div>
+                                <div class="py-1 px-3" style=" background-color: #F44336; border-radius: 0.25rem; color: white;">Pending</div>
+                            </div>
+                            <div><span class="font_bold">Billed per:</span> &nbsp; <span id="billing_not_signed"></span> </div>
+                        </div>
+
+                        <!-- Contract has already been signed -->
+                        <div id="contract_signed" class="hidden">
+                            <div class="d-flex justify-content-between pb-4">
+                                <div class="text-uppercase pt-1 mr-2">
+                                    Contract<span id="contract_number_signed"></span>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="py-1 px-3 mr-2" style=" background-color: #4CAF50;; border-radius: 0.25rem; color: white;">Signed</div>
+                                    <button type="button" class="btn btn-light py-1" style="border-color: lightgray;" onclick="balance.bl.print_to_pdf();">PDF</button>
+                                </div>
+                            </div>
+                            <div> <span class="font_bold">Billed per: </span> &nbsp; <span id="billing_signed"></span> </div>
+                            <div> <span class="font_bold">Signed by: </span> &nbsp; <span id="guest_name"></span></div>
+                            <div> <span class="font_bold">Signed at: </span> &nbsp; <span id="contract_signed_date"></span></div>
+                            <div> <span class="font_bold">Expires: </span> &nbsp; <span id="date_expire"></span> </div>
+                        </div>
+
+                    </div>
+
+                    <!--Usage Statistics-->
+                    <div class="text_border mb-4">
+
+                        <!--Heading-->
+                        <div class="pb-4">
+                            <div class="font_bold text-uppercase pt-1"><i class="fas fa-chart-line pr-2"></i> Usage Statistics </div>
+                        </div>
+
+                        <!--Statistics-->
+                        <div>
+                            <a href="#objects" style="text-decoration: none; color: black;">
+                                <div><span id="count_objects" class="pr-2"></span>Objects</div>
+                                <div class="font_bold"><span id="count_objects_connected" class="pr-2"></span>Objects connected</div>
+                                <div><span id="count_connections" class="pr-2"></span>Connections</div>
+                                <div class="font_bold"><span id="count_channels_used" class="pr-2"></span>Channels used</div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <!-- Account manager contact -->
+                    <div id="account_manager" class="text_border mb-4 hidden">
+
+                        <!--Heading-->
+                        <div class="pb-4">
+                            <div id="account_manager_name" class="font_bold font_5"></div>
+                            <div class="text-uppercase">Your Account Manager</div>
+                        </div>
+
+                        <!--Contact info-->
+                        <div>
+                            <a id="account_manager_tel" href="" style="text-decoration: none; color: black;"></a><br />
+                            <a id="account_manager_email" href="" style="text-decoration: none; color: black;"></a>
+                        </div>
+
+                        <hr />
+
+                        <!--About public-->
+                        <div>
+                            <p id="about_public">
+
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!--zaggy CFO-->
+                    <div class="text_border">
+
+                        <!--Heading-->
+                        <div class="pb-4">
+                            <div class="font_bold font_5">Davor Palčec</div>
+                            <div class="text-uppercase">zaggy CFO</div>
+                        </div>
+
+                        <!--Contact info-->
+                        <div>
+                            <a href="tel:+385911165422" style="text-decoration: none; color: black;">
+                                +385 91 116 5422
+                            </a><br />
+                            <a href="mailto:davor@zaggys.com" style="text-decoration: none; color: black;">
+                                davor@zaggys.com
+                            </a>
+                        </div>
+
+                        <hr />
+
+                        <!--About public-->
+                        <div>
+                            <p>
+                                Hello, feel free to reach out to me anytime if you have any inquiries regarding billing.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--templates-->
+<div>
+    <!-- -->
+    <template id="">
+
+    </template>
+
+
+</div>
+
+<script>
+
+    var balance = {};
+
+    balance.user_id = bl.workers.current_user_id();
+    balance.reseller_worker_id = bl.workers.reseller_worker_id();
+    balance.worker_name = bl.workers.current_worker_name();
+    balance.card_exist = '';
+    balance.card_type = '';
+    balance.user_name = '';
+    balance.user_email = '';
+    balance.user_tel = '';
+    balance.contract_id = '';
+
+    // balance load function
+    balance.load = async () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        ui.display_title("Balance");
+
+        ui.content_loading("balance_content_loading");
+
+        await balance.bl.load_billing();
+        await balance.bl.load_contract();
+        await balance.bl.load_account_manager();
+        await balance.bl.load_statistics();
+
+        ui.content_loading_hide("balance_content_loading");
+
+    }
+
+    balance.ui = new function () {
+
+    }
+
+    balance.bl = new function () {
+
+        this.load_billing = async () => {
+
+            var url_user = `/api/users/details?id=${balance.user_id}`;
+            var res_user = await ajax.get_json(url_user);
+            var user = res_user[0];
+
+            balance.user_name = user['name'];
+            balance.user_email = user['email'];
+            balance.user_tel = user['tel'];
+
+            var b2b_id = '380'; // Revolut
+            var url_card = `/api/users_zaggy_cards/get?user_id=${balance.user_id}&b2b_id=${b2b_id}`;
+            var res_card = await ajax.get_json(url_card);
+            var card = res_card[0];
+
+            var card_exist = !card['card_bin'] ? 'N' : 'Y';
+            var type = card['type'];
+            balance.card_type = card['card_type'] == 'prod' ? 'prod' : 'sandbox';
+
+            if (card_exist == 'Y') {
+
+                card_doesnt_exist.classList.add('hidden');
+                card_already_exist.classList.remove('hidden');
+
+                if (type == 'visa') {
+                    card_type.innerHTML = '<i class="fab fa-cc-visa pr-2"></i><span>Visa</span>';
+                } else if (type == 'mastercard') {
+                    card_type.innerHTML = '<i class="fab fa-cc-mastercard pr-2"></i><span>MasterCard</span>';
+                } else if (type == 'diners') {
+                    card_type.innerHTML = '<i class="fab fa-cc-diners-club pr-2"></i><span>Diners Club</span>';
+                } else if (type == 'americanexpress') {
+                    card_type.innerHTML = '<i class="fab fa-cc-amex pr-2"></i><span>American Express</span>';
+                } else {
+                    card_type.innerHTML = '<i class="fa fa-lg fa-credit-card pr-2"></i> <span>Other</span>';
+                }
+
+                card_bin.innerText = card['card_bin'];
+                card_last_four.innerText = card['card_last_four'];
+
+            }
+            else {
+                card_doesnt_exist.classList.remove('hidden');
+                card_already_exist.classList.add('hidden');
+            }
+
+            zaggy_company_name.innerText = user['zaggy_companies_name'];
+            zaggy_company_oib.innerText = user['zaggy_companies_oib'];
+        }
+
+        this.load_contract = async () => {
+
+            var url = `api/users_zaggy_contract/get?id=${balance.user_id}`;
+            var res = await ajax.get_json(url);
+            var contract = res[0];
+
+            balance.contract_id = contract['id'];
+
+            if (contract['active'] != 'Y') {
+
+                contract_not_active.classList.remove('hidden');
+                contract_not_signed.classList.add('hidden');
+                contract_signed.classList.add('hidden');
+
+            } else {
+
+                if (contract['contract_signed'] != 'Y') {
+
+                    contract_not_active.classList.add('hidden');
+                    contract_not_signed.classList.remove('hidden');
+                    contract_signed.classList.add('hidden');
+
+                    contract_number_not_signed.innerText = contract['contract_number'];
+                    billing_not_signed.innerText = contract['billing'];
+
+
+                } else {
+
+                    contract_not_active.classList.add('hidden');
+                    contract_not_signed.classList.add('hidden');
+                    contract_signed.classList.remove('hidden');
+
+                    contract_number_signed.innerText = contract['contract_number'];
+                    billing_signed.innerText = contract['billing'];
+                    guest_name.innerText = contract['guest_name'];
+                    contract_signed_date.innerText = js.date.toIso(contract['contract_signed_date']).split("-").reverse().join(".");
+                    date_expire.innerText = contract['date_expire'] == null ? '-' : js.date.toIso(contract['date_expire']).split("-").reverse().join(".");;
+                }
+            }
+
+        }
+
+        this.load_statistics = async () => {
+
+            var url_obj = `/api/objects/list_short?id=${balance.user_id}`;
+            var res_obj = await ajax.get_json(url_obj);
+            count_objects.innerText = res_obj.length;
+
+            var url_obj_conn = `/api/objects/count_active?id=${balance.user_id}`;
+            var res_obj_conn = await ajax.get_json(url_obj_conn);
+            count_objects_connected.innerText = res_obj_conn;
+
+            var url_connections = `/api/objects_b2b/list_grp_by_type_count?id=${balance.user_id}`;
+            var res_connections = await ajax.get_json(url_connections);
+            count_connections.innerText = res_connections;
+
+            var url_channels = `/api/objects_b2b/list_grp_by_type?id=${balance.user_id}`;
+            var res_channels = await ajax.get_json(url_channels);
+            count_channels_used.innerText = res_channels.length;
+
+        }
+
+        this.load_account_manager = async () => {
+
+            if (!balance.reseller_worker_id == false) {
+
+                account_manager.classList.remove('hidden');
+
+                var url = `/api/resellers_workers/get?id=${balance.reseller_worker_id}`;
+                var res = await ajax.get_json(url);
+                rw = res[0];
+
+                account_manager_name.innerText = rw['name'];
+                account_manager_tel.href = "tel:" + rw['tel'];
+                account_manager_tel.innerText = rw['tel'];
+                account_manager_email.href = "mailto:" + rw['email'];
+                account_manager_email.innerText = rw['email'];
+                about_public.innerText = rw['about_public'] == null ? 'Welcome! :)' : rw['about_public'].replaceAll("@worker_name", balance.worker_name);
+
+            }
+
+        }
+
+        this.take_card = async () => {
+
+            //var erp_id = await js.guid.generate();
+            //var url = `/api/users/revolut_take_card/?id=${balance.user_id}&erp_id=${erp_id}`;
+            //var order_id_json = await js.http.async.get(url);
+            //var order_id = JSON.parse(order_id_json);
+
+            //RevolutCheckout(order_id, balance.card_type).then(function (instance) {
+
+            //    instance.payWithPopup({
+
+            //        name: balance.user_name,
+            //        email: balance.user_email,
+            //        phone: balance.user_tel,
+            //        savePaymentMethodFor: 'merchant',
+            //        locale: 'en',
+
+            //        async onSuccess() {
+
+            //            var url_revolut = '/api/b2b/revolut_transaction_add/' + balance.user_id + '?erp_id=' + erp_id + '&note=Add credit card';
+            //            await ajax.get_json(url_revolut);
+
+            //            location.reload();
+            //        },
+
+            //        onError(message) {
+            //            console.log(message.message);
+            //            window.alert("Oh no :(");
+            //        },
+
+            //        onCancel() {
+            //            window.alert("Payment cancelled!");
+            //        }
+
+            //    });
+
+            //});
+
+        }
+
+        this.print_to_pdf = async () => {
+
+            var url = `/contracts/pdf_get/?id=${balance.contract_id}`;
+            window.open(url, '_blank');
+
+        }
+    }
+
+    // Load
+    balance.load();
+
+</script>

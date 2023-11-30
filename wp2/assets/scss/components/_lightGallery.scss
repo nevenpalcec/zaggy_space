@@ -1,0 +1,19 @@
+﻿.photo_gallery {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    transition: height ease-in-out .125s;
+    a {
+        flex: 0 0 33.333%;
+        height: 14rem;
+        padding: .5rem;
+        overflow: hidden;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            box-shadow: 0 3px 5px rgba(0,0,0,.2);
+        }
+    }
+}

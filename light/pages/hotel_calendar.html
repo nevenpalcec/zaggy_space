@@ -1,0 +1,1297 @@
+﻿<!-- page -->
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+        <!-- left side -->
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-coins pr-2"></i>Price
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex align-items-center px-3">
+
+        <!-- Months -->
+        <div id="prices_filter_month" class="view_dropdown toggle hidden">
+            <button class="btn btn_hover px-2" style="padding-top: .6rem; padding-bottom: .6rem;" id="price_button_filter_month">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-calendar-alt font_7"></i>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" id="price_modal_filter_month">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-month="1" onclick="prices.ui.choose_month(1);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">1</div>
+                                <div class="align-self-center">January</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="2" onclick="prices.ui.choose_month(2);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">2</div>
+                                <div class="align-self-center">February</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="3" onclick="prices.ui.choose_month(3);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">3</div>
+                                <div class="align-self-center">March</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="4" onclick="prices.ui.choose_month(4);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">4</div>
+                                <div class="align-self-center">April</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="5" onclick="prices.ui.choose_month(5);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">5</div>
+                                <div class="align-self-center">May</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="6" onclick="prices.ui.choose_month(6);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">6</div>
+                                <div class="align-self-center">June</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="7" onclick="prices.ui.choose_month(7);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">7</div>
+                                <div class="align-self-center">July</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="8" onclick="prices.ui.choose_month(8);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">8</div>
+                                <div class="align-self-center">August</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="9" onclick="prices.ui.choose_month(9);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">9</div>
+                                <div class="align-self-center">September</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="10" onclick="prices.ui.choose_month(10);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">10</div>
+                                <div class="align-self-center">October</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="11" onclick="prices.ui.choose_month(11);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">11</div>
+                                <div class="align-self-center">November</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown_li" data-month="12" onclick="prices.ui.choose_month(12);">
+                        <a class="dropdown_a">
+                            <div class="d-flex align-items-center">
+                                <div class="icon font_2 font_medium">12</div>
+                                <div class="align-self-center">December</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Calendar -->
+        <div class="d-flex">
+            <button class="btn btn_hover" onclick="hotel_calendar.ui.go_before();"><i class="fas fa-angle-left"></i></button>
+            <div id="prices_filter_calendar" class="view_dropdown filter_calendar d-lg-block d-none">
+                <button class="btn btn_hover  px-2 py-1 d-lg-block d-none">
+                    <div class="d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-3 font_7"></i>
+                        <div class="dropdown_label mr-1 text-left">
+                            <div class="font_1 text-uppercase font_bold">Calendar</div>
+                            <div id="prices_date_from" class="font_3 font_light text-left">-</div>
+                        </div>
+                        <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                </button>
+                <div id="prices_form_calendar" class="dropdown_menu calendar hidden">
+                    <div id="prices_filter_dropdown_calendar" class="filter_dropdown_calendar">
+                    </div>
+                    <hr class="m-0">
+                    <div class="dropdown_footer d-flex">
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;" onclick="hotel_calendar.ui.today_diff_change(-1)"><i class="fas fa-angle-left"></i></div>
+                        <div class="dropdown_btn flex_1 text-center font_3" onclick="hotel_calendar.ui.datepicker_set_today();" data-today_diff="0">Today</div>
+                        <div class="dropdown_btn d-flex justify-content-center align-items-center" style="width: 2.5rem;" onclick="hotel_calendar.ui.today_diff_change(1)"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <a id="prices_filter_calendar_btn" class="filter_link d-lg-none d-block mobile">
+                <i class="far fa-calendar-alt"></i>
+            </a>
+            <button class="btn btn_hover" onclick="hotel_calendar.ui.go_next();"><i class="fas fa-angle-right"></i></button>
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Input - number of day -->
+        <div class="input_remove_number_arrow">
+            <input type="number" class="form-control focus text-center" value="30" style="max-width: 3.5rem; min-width: 3.5rem;" id="hotel_calendar_days" onchange="hotel_calendar.ui.change_number_of_display_days();">
+        </div>
+        <div class="filter_line_y"></div>
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control focus font_3" style="min-width: 9rem;" placeholder="Search name" id="hotel_calendar_objects_search">
+            <span class="search_icon"><i class="fas fa-search"></i></span>
+        </div>
+
+        <!-- refresh page -->
+        <div class="ml-auto">
+            <button class="btn btn_hover" onclick="group_price.bl.refresh_page();">
+                <i class="fas fa-sync"></i>
+            </button>
+        </div>
+        <!-- Tools -->
+
+        <div id="prices_filter_tip" class="view_dropdown filter_tip d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1 d-lg-block d-none">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-cog"></i></span>
+                    <div class="dropdown_label mr-1">
+                        <div class="font_1 text-uppercase font_bold text-left">Tip</div>
+                        <div class="font_3">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden" style="right: 0;">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Tip</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-tip="1">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Default</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="2">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Price</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="3">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Min stay</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="4">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Check in/out</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="5">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Extra</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="6">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Special</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="6">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Stock</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="7">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Enable</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="8">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Advance</span>
+                            </span>
+                        </label>
+                    </li>
+                    <li class="dropdown_li" data-tip="9">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-item-center">
+                                <span class="icon"><i class="fas fa-file-excel"></i></span>
+                                <span class="align-self-center">Single</span>
+                            </span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_groups"></div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="hotel_calendar_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <div class="d-flex flex-wrap mb-1">
+            <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="hotel_calendar.bl.load_data(); hotel_calendar.ui.set_buttons_active('hotel_calendar_free')" id="hotel_calendar_free">Free</button>
+            <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="hotel_calendar.bl.display_percentage(); hotel_calendar.ui.set_buttons_active('hotel_calendar_percentage')" id="hotel_calendar_percentage">Percentage</button>
+            <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="hotel_calendar.bl.display_rents(); hotel_calendar.ui.set_buttons_active('hotel_calendar_rents')" id="hotel_calendar_rents">Rents</button>
+            <button class="btn btn_silver font_1 text-uppercase py-1 px-2 m-1" onclick="hotel_calendar.bl.display_price(); hotel_calendar.ui.set_buttons_active('hotel_calendar_price')" id="hotel_calendar_price">Price</button>
+        </div>
+
+        <div class="view_calendar price">
+            <div style="overflow-y: auto;">
+                <div id="group_prices_table_calendar" class="custom_table d-flex">
+
+                    <!-- list of objects -->
+                    <div class="pos_left">
+
+                        <div class="left_head">
+                            <div class="font-weight-bold" id="group_prices_total_objects">Objects -</div>
+                        </div>
+
+                        <div class="left_body" id="hotel_calendar_objects_list">
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 1 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">
+                                        Apartment with balcony
+                                        (1+2)
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="left_body_box inactive">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Not active">
+                                        <i class="fas fa-eye-slash red"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">
+                                        Apartment with balcony
+                                        (1+2)
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                            <div class="left_body_box">
+                                <!-- Name -->
+                                <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                                    <a href="#" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Link for details">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                    <a href="./object_general.html" class="left_body_name">Apartment 02 (1+2)</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- prices -->
+                    <div class="calendar_wrapper">
+
+                        <!--thead -->
+                        <div class="thead" id="groups_prices_thead">
+
+                        </div>
+                        <!-- table -->
+                        <div class="tbody" id="hotel_calendar_tbody">
+
+                        </div>
+                        <!-- End - Calendar -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- templates -->
+        <section>
+
+            <!-- template thead -->
+            <template id="template_thead">
+                <div class="headcol">
+                    <div class="headcol_sub font_1">${month_name}</div>
+                    <div class="headcol_label font-weight-bold font_2">${day}</div>
+                    <div class="headcol_sub font_1">${day_name}</div>
+                </div>
+            </template>
+
+            <!-- template price day -->
+            <template id="template_rent_count">
+                <div class="bodycol ${holiday} ${disabled} ${no_stock}" data-day="${day}" data-price="${price}" data-object="${object_name}" data-id="${object_id}" style="opacity: 0.8;">
+                    <div class="col_td" style="background-color:${color}">
+                        <div class="value font_2">${price}</div>
+                    </div>
+                </div>
+            </template>
+
+            <template id="template_object">
+                <div class="left_body_box">
+                    <!--Name-->
+                    <div class="d-flex align-items-center w-100 font_2 px-2 py-1">
+                        <a href="#object_general?${id}" class="left_body_icon d-block p-1 mr-1" data-toggle="tooltip"
+                           data-placement="top" data-original-title="Link for details">
+                            <i class="fas fa-link"></i>
+                        </a>
+                        <a href="#object_prices?${id}" class="left_body_name"> ${object_name} (${object_number}) </a>
+                    </div>
+                </div>
+            </template>
+
+            <!-- rents row -->
+            <template id="template_hotel_calendar_rents_tr">
+                <tr class="" ${reservation_color}>
+                    <th scope="row">${number_of_reservation}</th>
+                    <td class="td_item01">
+                        <div class="d-flex align-items-center">
+                            <div onclick="modal_details_rent.ui.show_details('${rent_id}');" class="td_icon" data-toggle="modal"
+                                 data-target="#exampleModal">
+                                <img src="/assets/images/icons/portals/${rent_source_icon}.svg" alt="" loading="lazy">
+                                <!--<img src="/assets/images/icons/portals/${rent_source_icon}.png" alt="" loading="lazy">-->
+                            </div>
+                            <div class="td_wrapper">
+                                <div class="td_guest">
+                                    <strong class="d-flex">
+                                        <span><img src="/assets/images/icons/flags/${code2}.svg" alt="" loading="lazy"></span>
+                                        <span> ${contact_name} </span>
+                                    </strong>
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    <div class="item"><span>${adults}</span><i class="fas fa-user"></i></div>
+                                    <div class="line"></div>
+                                    <div class="item"><span>${children}</span><i class="fas fa-child"></i></div>
+                                    <div class="line"></div>
+                                    <div class="item"><span>${pets}</span><i class="fas fa-paw"></i></div>
+                                    <div class="line"></div>
+                                    <div class="item"><i class="fas fa-parking"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="td_item02 period">
+                        <div><strong> ${period} </strong></div>
+                        <span> ${period_nights} </span>
+                    </td>
+                    <td class="td_item03 object">
+                        <div><strong> ${object_name} </strong></div>
+                        <span class="status-circle">
+                            <span class="green"></span>
+                            ${status_name}
+                        </span>
+                    </td>
+                    <td class="td_item04 value">
+                        <div><strong> ${price} </strong></div>
+                        <div> ${in_advance} </div>
+                    </td>
+                    <td class="td_item05 notice">
+                        <span class="notice_icon"><i class="far fa-comment"></i></span>
+                        <span class="notice_text">
+                            ${note_short}
+                        </span>
+                    </td>
+                    <td class="td_item06 icons">
+                        <div class="d-flex pb-1">
+                            <a data-toggle="tooltip" data-placement="top" data-original-title="${sync}"><i class="${type_of_sync}"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" data-original-title="${deposit}"><i class="fas fa-comment-dollar"></i></a>
+                        </div>
+                        <div class="d-flex">
+                            <a data-toggle="tooltip" data-placement="top" data-original-title="${note}"><i class="${note_exist}"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" data-original-title="${arrivals}"><i class="fas fa-${sign}-alt"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+        </section>
+
+        <!--scripts-->
+        <script>
+
+            var hotel_calendar = {}
+
+            hotel_calendar.groups = [];
+            hotel_calendar.prices = [];
+            hotel_calendar.date_from = '';
+            hotel_calendar.date_until = '';
+            hotel_calendar.days = '';
+
+            // Onload function
+            hotel_calendar.load = function () {
+
+                hotel_calendar_objects_list.innerHTML = '';
+                hotel_calendar_days.value = bl.varables.get('price_days');
+                //groups_calendar_tbody.innerHTML = '';
+
+                // Load
+                $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+                $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+                $(".filter_groups").load("/pages/partals/filter_groups.html");
+
+                hotel_calendar.value = bl.varables.get('price_days');
+
+                // Global ui
+                ui.dropdown_date("prices_filter_calendar");
+                ui.dropdown_text("prices_filter_month");
+                ui.display_title("Group prices");
+                ui.filter_mobile_btn("prices_filter_calendar_btn", "prices_filter_calendar");
+
+                // Local ui
+                hotel_calendar.ui.filter_calendar();
+                hotel_calendar.ui.range_of_clicking_on_table();
+                hotel_calendar.ui.set_buttons_active('hotel_calendar_free');
+
+                hotel_calendar.ui.search_objects();
+                //hotel_calendar.ui.pop_up_close();
+
+                hotel_calendar.ui.dropdown_label("prices_filter_tip");
+
+                // Logic bl
+                hotel_calendar.bl.laod_thead();
+                hotel_calendar.bl.load_data();
+
+            }
+
+            // Logic
+            hotel_calendar.bl = new function () {
+
+                // variables
+                this.objects_ids = [];
+                this.dispay_max_objects = 50;
+                hotel_calendar.days = bl.varables.get('price_days');
+                hotel_calendar.date_from = bl.varables.get('price_date_from');
+                var date = new Date(hotel_calendar.date_from);
+                date.setDate(date.getDate() + Number(hotel_calendar.days - 1));
+                hotel_calendar.date_until = js.date.toIsoFormat(date);
+
+                // load thead days
+                this.laod_thead = () => {
+
+                    ui.content_loading("hotel_calendar_content_loading");
+                    groups_prices_thead.innerHTML = '';
+                    var date_from = bl.varables.get('price_date_from');
+
+                    for (var i = 0; i <= hotel_calendar.days - 1; i++) {
+
+                        var t = template_thead.innerHTML;
+
+                        var date = new Date(date_from);
+                        var date_new = js.date.add_day(date, i);
+                        var date_new_d = new Date(date_new);
+                        var day_name = new Date(date_new).toLocaleString('en', { weekday: 'short' });
+                        var month_name = date_new_d.toLocaleString('en', { month: 'short' });
+                        var day_week = date_new_d.getDay();
+
+                        var day = js.date.get_day(date_new);
+
+                        t = t.replace('${day}', day);
+                        t = t.replace('${month_name}', month_name);
+                        t = t.replace('${day_name}', day_name);
+                        t = t.replace('${holiday}', (day_week == 0 || day_week == 6) ? 'td_highlight' : '');
+
+                        js.html.insertAdjacentHTML('groups_prices_thead', t);
+
+                    }
+
+                }
+
+                this.load_data = async () => {
+
+                    //prices_objects_list.innerHTML = '';
+                    hotel_calendar_tbody.innerHTML = '';
+                    var user_id = bl.workers.current_user_id();
+
+                    var url = `/api/objects_groups/list_active/` + user_id;
+                    hotel_calendar.groups = await ajax.get(url);
+                    hotel_calendar.groups = JSON.parse(hotel_calendar.groups);
+
+                    // display data
+                    await hotel_calendar.bl.display_prices();
+                }
+
+                // creating table
+                this.display_prices = async () => {
+
+                    hotel_calendar.days = bl.varables.get('price_days');
+                    hotel_calendar.date_from = bl.varables.get('price_date_from');
+                    var date = new Date(hotel_calendar.date_from);
+                    date.setDate(date.getDate() + Number(hotel_calendar.days - 1));
+                    hotel_calendar.date_until = js.date.toIsoFormat(date);
+
+                    var number_of_objects = 0;
+                    hotel_calendar_objects_list.innerHTML = '';
+                    hotel_calendar_tbody.innerHTML = '';
+
+                    for (var o of hotel_calendar.groups) {
+
+                        number_of_objects++;
+                        var object_id = o['id'];
+                        var object_name = o['name'];
+                        var object_id = o['id'];
+                        var group_id = o['id'];
+                        var t = template_object.innerHTML;
+                        t = t.replace('${object_name}', object_name);
+                        t = t.replace('${object_number}', o['obj']);
+
+                        js.html.insertAdjacentHTML('hotel_calendar_objects_list', t);
+
+                        var object_price_tr = document.createElement("tr");
+                        object_price_tr.classList.add("tr");
+                        object_price_tr.setAttribute('data-name', object_name);
+
+                        var url = `/api/objects_groups/rents_count?from=${hotel_calendar.date_from}&until=${hotel_calendar.date_until}&id=${group_id}`
+                        var response = await ajax.get(url);
+                        var json_response = JSON.parse(response);
+
+                        for (var days of json_response) {
+
+                            var tr = template_rent_count.innerHTML;
+
+                            tr = tr.replace('${price}', days['free_objects']);
+                            tr = tr.replace('${price}', days['free_objects']);
+                            tr = tr.replace('${day}', days['day'].split('T')[0].replace(/-/g, '\/'));
+
+                            if (days['free_objects'] < days['group_count'] && days['free_objects'] > -1) {
+                                tr = tr.replace('${color}', '#5eeb5c')
+                            }
+                            if (days['free_objects'] == 0) {
+                                tr = tr.replace('${color}', '#e01f24')
+                            }
+                            if (days['free_objects'] == days['group_count']) {
+                                tr = tr.replace('${color}', '')
+                            }
+
+                            object_price_tr.insertAdjacentHTML('beforeend', tr);
+                        }
+
+                        hotel_calendar_tbody.insertAdjacentElement('beforeend', object_price_tr);
+
+                    }
+
+                    group_prices_total_objects.innerText = 'Objects (' + number_of_objects + ')';
+                    hotel_calendar.ui.range_of_clicking_on_table();
+                    ui.content_loading_hide('hotel_calendar_content_loading');
+                }
+
+                this.display_percentage = async () => {
+
+                    var number_of_objects = 0;
+                    hotel_calendar_objects_list.innerHTML = '';
+                    hotel_calendar_tbody.innerHTML = '';
+
+                    for (var o of hotel_calendar.groups) {
+
+                        number_of_objects++;
+                        var object_id = o['id'];
+                        var object_name = o['name'];
+                        var group_id = o['id'];
+                        var t = template_object.innerHTML;
+                        t = t.replace('${object_name}', object_name);
+                        t = t.replace('${object_number}', o['obj']);
+
+                        js.html.insertAdjacentHTML('hotel_calendar_objects_list', t);
+
+                        var object_price_tr = document.createElement("tr");
+                        object_price_tr.classList.add("tr");
+
+                        var url = `/api/objects_groups/rents_count?from=${hotel_calendar.date_from}&until=${hotel_calendar.date_until}&id=${group_id}`
+                        var response = await ajax.get(url);
+                        var json_response = JSON.parse(response);
+
+                        for (var days of json_response) {
+
+                            var tr = template_rent_count.innerHTML;
+
+                            tr = tr.replace('${price}', days['day_percent'].toFixed([2]));
+                            tr = tr.replace('${price}', days['day_percent'].toFixed([2]));
+                            tr = tr.replace('${day}', days['day'].split('T')[0]);
+
+                            if (days['free_objects'] < days['group_count'] && days['free_objects'] > -1) {
+                                tr = tr.replace('${color}', '#5eeb5c')
+                            }
+                            if (days['free_objects'] == 0) {
+                                tr = tr.replace('${color}', '#e01f24')
+                            }
+                            if (days['free_objects'] == days['group_count']) {
+                                tr = tr.replace('${color}', '')
+                            }
+
+                            object_price_tr.insertAdjacentHTML('beforeend', tr);
+                        }
+
+                        hotel_calendar_tbody.insertAdjacentElement('beforeend', object_price_tr);
+
+                    }
+
+                    group_prices_total_objects.innerText = 'Total (' + number_of_objects + ')';
+                    hotel_calendar.ui.range_of_clicking_on_table();
+                    ui.content_loading_hide('hotel_calendar_content_loading');
+                }
+
+                this.display_rents = async () => {
+
+                    var number_of_objects = 0;
+                    hotel_calendar_objects_list.innerHTML = '';
+                    hotel_calendar_tbody.innerHTML = '';
+
+                    for (var o of hotel_calendar.groups) {
+
+                        number_of_objects++;
+                        var object_id = o['id'];
+                        var object_name = o['name'];
+                        var object_id = o['id'];
+                        var group_id = o['id'];
+                        var t = template_object.innerHTML;
+                        t = t.replace('${object_name}', object_name);
+                        t = t.replace('${object_number}', o['obj']);
+
+                        js.html.insertAdjacentHTML('hotel_calendar_objects_list', t);
+
+                        var object_price_tr = document.createElement("tr");
+                        object_price_tr.classList.add("tr");
+
+                        var url = `/api/objects_groups/rents_count?from=${hotel_calendar.date_from}&until=${hotel_calendar.date_until}&id=${group_id}`
+                        var response = await ajax.get(url);
+                        var json_response = JSON.parse(response);
+
+                        for (var days of json_response) {
+
+                            var tr = template_rent_count.innerHTML;
+
+                            tr = tr.replace('${price}', days['rents_day']);
+                            tr = tr.replace('${price}', days['rents_day']);
+                            tr = tr.replace('${day}', days['day'].split('T')[0]);
+
+                            if (days['free_objects'] < days['group_count'] && days['free_objects'] > -1) {
+                                tr = tr.replace('${color}', '#5eeb5c')
+                            }
+                            if (days['free_objects'] == 0) {
+                                tr = tr.replace('${color}', '#e01f24')
+                            }
+                            if (days['free_objects'] == days['group_count']) {
+                                tr = tr.replace('${color}', '')
+                            }
+
+                            object_price_tr.insertAdjacentHTML('beforeend', tr);
+                        }
+
+                        hotel_calendar_tbody.insertAdjacentElement('beforeend', object_price_tr);
+
+                    }
+
+                    group_prices_total_objects.innerText = 'Total (' + number_of_objects + ')';
+                    hotel_calendar.ui.range_of_clicking_on_table();
+                    ui.content_loading_hide('hotel_calendar_content_loading');
+                }
+
+                this.display_price = async () => {
+
+                    var number_of_objects = 0;
+                    hotel_calendar_objects_list.innerHTML = '';
+                    hotel_calendar_tbody.innerHTML = '';
+
+                    for (var o of hotel_calendar.groups) {
+
+                        number_of_objects++;
+                        var object_id = o['id'];
+                        var object_name = o['name'];
+                        var object_id = o['id'];
+                        var group_id = o['id'];
+                        var t = template_object.innerHTML;
+                        t = t.replace('${object_name}', object_name);
+                        t = t.replace('${object_number}', o['obj']);
+
+                        js.html.insertAdjacentHTML('hotel_calendar_objects_list', t);
+
+                        var object_price_tr = document.createElement("tr");
+                        object_price_tr.classList.add("tr");
+
+                        let from = hotel_calendar.date_from.split("T")[0].replace(/-/g, '\/');
+                        let until = hotel_calendar.date_until.split("T")[0].replace(/-/g, '\/');
+
+                        var url = `/api/objects_groups/rents_count?from=${from}&until=${until}&id=${group_id}`
+                        var response = await ajax.get(url);
+                        var json_response = JSON.parse(response);
+
+                        for (var days of json_response) {
+
+                            var day = new Date(days['day']);
+                            day = day.replace(/-/g, '\/')
+                            console.log(day)
+
+                            var tr = template_rent_count.innerHTML;
+
+                            tr = tr.replace('${price}', !days['price_day'] == true ? '-' : days['price_day']);
+                            tr = tr.replace('${price}', !days['price_day'] == true ? '' : days['price_day']);
+                            tr = tr.replace('${day}', day.split('T')[0]).replace(/-/g, '\/');
+
+                            if (days['free_objects'] < days['group_count'] && days['free_objects'] > -1) {
+                                tr = tr.replace('${color}', '#5eeb5c')
+                            }
+                            if (days['free_objects'] == 0) {
+                                tr = tr.replace('${color}', '#e01f24')
+                            }
+                            if (days['free_objects'] == days['group_count']) {
+                                tr = tr.replace('${color}', '')
+                            }
+
+                            object_price_tr.insertAdjacentHTML('beforeend', tr);
+                        }
+
+                        hotel_calendar_tbody.insertAdjacentElement('beforeend', object_price_tr);
+
+                    }
+
+                    group_prices_total_objects.innerText = 'Total (' + number_of_objects + ')';
+                    hotel_calendar.ui.range_of_clicking_on_table();
+                    ui.content_loading_hide('hotel_calendar_content_loading');
+                }
+
+                this.refresh_page = () => {
+                    var page_current = page.get_current_page();
+                    if (page_current == 'hotel_calendar') {
+                        hotel_calendar.bl.load_data();
+                    }
+                }
+
+            }
+
+            // ui components
+            hotel_calendar.ui = new function () {
+
+                this.datepicker_set_today = function () {
+
+                    let today_diff = parseInt(document.querySelector('[data-today_diff]').dataset.today_diff);
+                    let today = new Date();
+                    today.setDate(today.getDate() + today_diff);
+
+                    $("#prices_filter_dropdown_calendar").datepicker('setDate', today);
+                    setTimeout(function () {
+                        $('.ui-datepicker-current-day').click();
+                    }, 250);
+                }
+
+                this.today_diff_change = function (change) {
+
+                    let today_el = document.querySelector('[data-today_diff]');
+                    let today_diff = parseInt(today_el.dataset.today_diff);
+                    today_diff += change;
+
+                    today_el.dataset.today_diff = today_diff;
+
+                    let print = '';
+                    if (today_diff > 0) {
+                        print = '+' + today_diff;
+                    }
+                    else if (today_diff < 0) {
+                        print = today_diff;
+                    }
+
+                    today_el.innerText = 'Today ' + print;
+                }
+
+                this.set_buttons_active = (id) => {
+
+                    hotel_calendar_rents.style.backgroundColor = '';
+                    hotel_calendar_percentage.style.backgroundColor = '';
+                    hotel_calendar_price.style.backgroundColor = '';
+                    hotel_calendar_free.style.backgroundColor = '';
+
+                    document.getElementById(id).style.backgroundColor = '#81F56C';
+
+                }
+
+                this.dropdown_label = function (id) {
+                    var id = document.getElementById(id);
+                    var btn = id.children[0];
+                    var dropdown = id.lastElementChild;
+                    var dropdown_li = id.lastElementChild.lastElementChild.children;
+                    var label = id.children[0].children[0].children[1].lastElementChild;
+
+                    for (let i = 0; i < dropdown_li.length; i++) {
+                        dropdown_li[i].addEventListener("click", function (e) {
+                            var value = e.currentTarget.children[0].children[0].lastElementChild.textContent;
+                            label.innerText = value;
+                            dropdownToggle();
+                        });
+                    }
+                    var close = id.lastElementChild.children[0].lastElementChild;
+                    btn.addEventListener("click", function () {
+                        dropdownToggle();
+                    });
+                    close.addEventListener("click", function () {
+                        dropdownToggle();
+                    });
+                    function dropdownToggle() {
+                        if (!btn.classList.contains("open")) {
+                            dropdown.classList.remove("hidden");
+                            btn.classList.add("open");
+                        } else {
+                            dropdown.classList.add("hidden");
+                            btn.classList.remove("open");
+                        }
+                    }
+                    $(document).mouseup(function (e) {
+                        if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                            dropdown.classList.add("hidden");
+                            btn.classList.remove("open");
+                        }
+                    });
+                }
+
+                // Filter - double calendar
+                this.filter_calendar = function () {
+                    $("#prices_filter_dropdown_calendar").datepicker({
+                        firstDay: 1,
+                        //minDate: 0,
+                        numberOfMonths: 1,
+                        altFormat: "yy-mm-dd",
+                        onSelect: function (dateText, inst) {
+
+                            $("#prices_form_calendar").addClass("hidden");
+                            document.querySelector(".filter_calendar > button").classList.remove("open");
+
+                            var date_iso = js.date.toIso(new Date(dateText));
+                            prices_date_from.innerHTML = date_iso;
+
+                            // save new date
+                            bl.varables.set('price_date_from', date_iso);
+
+                            hotel_calendar.bl.laod_thead();
+                            hotel_calendar.bl.load_data();
+
+                        }
+                    });
+
+                    $('#double_calendar').datepicker('setDate', new Date(hotel_calendar.date_from));
+                    prices_date_from.innerHTML = hotel_calendar.date_from;
+                }
+
+                // Range of clicking on table
+                this.range_of_clicking_on_table = function () {
+                    let table = $("#group_prices_table_calendar");
+                    let td = $(".bodycol");
+
+                    let isMouseDown = false;
+                    let startRowIndex = null;
+                    let startCellIndex = null;
+
+                    function selectTo(cell) {
+
+                        let row = cell.parent();
+                        let cellIndex = cell.index();
+                        let rowIndex = row.index();
+
+                        let rowStart, rowEnd, cellStart, cellEnd;
+
+                        if (rowIndex < startRowIndex) {
+                            rowStart = rowIndex;
+                            rowEnd = startRowIndex;
+                        } else {
+                            rowStart = startRowIndex;
+                            rowEnd = rowIndex;
+                        }
+
+                        if (cellIndex < startCellIndex) {
+                            cellStart = cellIndex;
+                            cellEnd = startCellIndex;
+                        } else {
+                            cellStart = startCellIndex;
+                            cellEnd = cellIndex;
+                        }
+
+                        for (let i = rowStart; i <= rowEnd; i++) {
+                            let rowCells = table.find(".tr").eq(i).find(td);
+                            for (let j = cellStart; j <= cellEnd; j++) {
+                                rowCells.eq(j).addClass("clicked");
+                            }
+                        }
+                    }
+
+                    var tds = table.find(td);
+
+                    // mouse down
+                    tds.mousedown(function (e) {
+                        isMouseDown = true;
+                        let cell = $(this);
+
+                        table.find(".clicked").removeClass("clicked"); // deselect everything
+
+                        if (e.shiftKey) {
+                            selectTo(cell);
+                        } else {
+                            cell.addClass("clicked");
+                            startCellIndex = cell.index();
+                            startRowIndex = cell.parent().index();
+                        }
+
+                        return false; // prevent text selection
+                    });
+
+                    // mouse over
+                    tds.mouseover(function () {
+                        if (!isMouseDown) return;
+                        table.find(".clicked").removeClass("clicked");
+                        selectTo($(this));
+                    });
+
+                    // select start
+                    tds.bind("selectstart", function () {
+                        return false;
+                    });
+
+                    $(document).mouseup(function () {
+
+                        if (isMouseDown == true) {
+
+                            //var table = document.queryselectorall('#hotel_calendar_tbody > .tr > .bodycol')
+                            //var selected_days = [];
+                            //var arr_objects_name = [];
+                            //var arr_objects_id = [];
+                            //var price = '';
+                            //for (var i of table) {
+                            //    if (i.classlist.contains('clicked')) {
+
+                            //        arr_objects_id.push(i.dataset.id);
+                            //        arr_objects_name.push(i.dataset.object);
+
+                            //        selected_days.push(i)
+                            //    }
+                            //}
+
+                            //// removing duplicate
+                            //var unique_objects_id = [...new set(arr_objects_id)];
+                            //var unique_objects_name = [...new set(arr_objects_name)];
+
+                            //// show popup
+                            //var page = 'groups_calendar';
+                            //var price = selected_days[0].dataset.price;
+                            //var min_stay = selected_days[0].dataset.stay;
+                            //var date_from = selected_days[0].dataset.day;
+                            //var date_until = selected_days[selected_days.length - 1].dataset.day;
+                            //var enabled = selected_days[0].dataset.enable;
+                            //var check_in = selected_days[0].dataset.check_in;
+                            //var check_out = selected_days[0].dataset.check_out;
+
+                            //price_change.ui.open(page, date_from, date_until, price, min_stay, enabled, check_in, check_out, unique_objects_name, unique_objects_id);
+
+                        }
+
+                        isMouseDown = false;
+
+                    });
+
+                }
+
+                // Mobile open dropdown by click btn
+                this.filter_mobile_btn = function (id, dropdown_id) {
+                    let mobile_btn = document.getElementById(id);
+                    let dropdown = document.getElementById(dropdown_id);
+                    let dropdown_btn = dropdown.getElementsByTagName("button")[0];
+                    let dropdown_menu = dropdown.getElementsByClassName("dropdown_menu")[0];
+                    mobile_btn.addEventListener("click", function () {
+                        if (!dropdown_btn.classList.contains("open")) {
+                            dropdown.classList.remove("d-none");
+                            dropdown_menu.classList.remove("hidden");
+                            dropdown_btn.classList.add("open");
+                        } else {
+                            dropdown.classList.add("d-none");
+                            dropdown_menu.classList.add("hidden");
+                            dropdown_btn.classList.remove("open");
+                        }
+                    })
+                }
+
+                // Handle search objects
+                this.search_objects = () => {
+
+                    // Get the input box
+                    var textInput = document.getElementById('hotel_calendar_objects_search');
+
+                    // Init a timeout variable to be used below
+                    var timeout = null;
+
+                    // Listen for keystroke events
+                    textInput.onkeyup = function (e) {
+
+                        clearTimeout(timeout);
+
+                        // Make a new timeout set to go off in 800ms
+                        timeout = setTimeout(function () {
+
+                            var input = hotel_calendar_objects_search.value;
+                            input = input.toUpperCase();
+                            var objects_names = document.querySelectorAll('#hotel_calendar_objects_list > div');
+                            var prices = document.querySelectorAll('#hotel_calendar_tbody > tr');
+                            for (var i = 0; i < objects_names.length; i++) {
+                                var obj = objects_names[i].textContent;
+                                if (obj.toUpperCase().indexOf(input) > -1) {
+                                    objects_names[i].style.display = '';
+                                    prices[i].style.display = '';
+
+                                } else {
+                                    objects_names[i].style.display = 'none';
+                                    prices[i].style.display = 'none';
+
+                                }
+
+                            }
+
+                        }, 500);
+                    };
+
+                }
+
+                // filter by month
+                this.choose_month = function (month) {
+
+                    // hide modal
+                    price_modal_filter_month.classList.add("hidden");
+                    price_button_filter_month.classList.remove("open");
+
+                    // getting date from modal
+                    var date = new Date(2021, month - 1, 1);
+                    var date_iso = date.toISOString().split('T')[0];
+
+                    // save new date
+                    bl.varables.set('price_date_from', date_iso);
+
+                    // load prices
+                    prices.bl.laod_thead();
+                    prices.bl.load_prices();
+                }
+
+                // change number of days that will be display in table
+                this.change_number_of_display_days = function () {
+                    hotel_calendar.days = hotel_calendar_days.value - 1;
+                    bl.varables.set('price_days', hotel_calendar.days);
+
+                    // load prices
+                    hotel_calendar.bl.laod_thead();
+                    hotel_calendar.bl.load_data();
+                }
+
+                // go next with calendar
+                this.go_next = function () {
+
+                    var date_from = bl.varables.get('price_date_from');
+                    var days = bl.varables.get('price_days');
+                    var date_from_new = js.date.add_day(date_from, days);
+
+                    // store new date
+                    bl.varables.set('price_date_from', date_from_new);
+
+                    $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('price_date_from')));
+                    prices_date_from.innerHTML = bl.varables.get('price_date_from');
+
+                    // load rents
+                    hotel_calendar.bl.laod_thead();
+                    hotel_calendar.bl.load_data();
+
+                }
+
+                // go before with calendar
+                this.go_before = function () {
+
+                    var date_from = bl.varables.get('price_date_from');
+                    var days = bl.varables.get('price_days');
+                    var date_from_new = js.date.add_day(date_from, -1 * days);
+
+                    // store new date
+                    bl.varables.set('price_date_from', date_from_new);
+
+                    $('#double_calendar').datepicker('setDate', new Date(bl.varables.get('price_date_from')));
+                    prices_date_from.innerHTML = bl.varables.get('price_date_from');
+
+                    // load rents
+                    hotel_calendar.bl.laod_thead();
+                    hotel_calendar.bl.load_data();
+                }
+
+            }
+
+            // On load
+            hotel_calendar.load();
+
+        </script>

@@ -1,0 +1,52 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var booking_engine_db = (System.Data.DataRow)Session["booking_engine"];
+
+    ViewBag.Title = " | " + bl.lng.l.General_terms;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "user" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- About us -->
+<section class="section-about-us">
+
+    <!-- top header picture-->
+    <div class="wrapper">
+        <div class="bg-img">
+            <img src="@booking_engine_db["picture_main_link"]"
+                 alt="">
+        </div>
+        <div class="container-wrapper">
+            <h1 class="gallery-title"> @bl.lng.l.General_terms </h1>
+        </div>
+    </div>
+
+</section>
+
+<!-- about as text -->
+<section class="mb-5">
+    <div class="container-wrapper">
+        @*<div class="heading-title mb-3"> @bl.lng.l.General_terms @bl.lng.l.Description </div>*@
+        <div class="row">
+            <div class="col-md-12">
+                <div class="about-us-text pt-3">
+                    @Html.Raw(users_text["terms_conditions"].ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- contact us -->
+@Html.Partial("/Views/partal/contact_us.cshtml")
+
+<!-- Photo galery -->
+@*@Html.Partial("/Views/partal/gallery.cshtml", new ViewDataDictionary { { "list_gallery", list_gallery } })*@
+
+<!-- Location -->
+@Html.Partial("/Views/partal/location.cshtml")

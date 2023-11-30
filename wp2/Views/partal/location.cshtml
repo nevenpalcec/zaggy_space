@@ -1,0 +1,94 @@
+﻿@{
+
+    var user_db = bl.settings_current.registars.booking_engine_user.Rows[0];
+    string company_name = user_db["company_name"].ToString();
+
+    var settings_str = (string) System.Web.HttpContext.Current.Session["settings"];
+    var settings = bl.sys.json.obj(settings_str);
+    var show_map_user = (string) (settings["show_map_user"] ?? "on");
+}
+
+@if (show_map_user == "on") {
+    <section class="section-location">
+
+        <div class="container-wrapper">
+
+            <h2 class="heading-title mb-3 text-uppercase"> @bl.lng.l.Location </h2>
+            <div id="location-map" class="location-map"></div>
+
+            <div class="row pt-3">
+
+                <div class="col-md-6">
+                    <div class="location-p">
+                        <i class="fas fa-building pr-2"></i> &nbsp; @user_db["company_name"]
+                    </div>
+                </div>
+
+                @if (string.IsNullOrWhiteSpace(user_db["telephone"].ToString()) == false)
+                {
+                    <div class="col-md-6">
+                        <div class="location-p">
+                            <i class="fas fa-phone pr-2"></i> &nbsp; <a href="tel:@user_db["telephone"]"> @user_db["telephone"]  </a>
+                        </div>
+                    </div>
+                }
+                @if (string.IsNullOrWhiteSpace(user_db["mobile"].ToString()) == false)
+                {
+                    <div class="col-md-6">
+                        <div class="location-p">
+                            <i class="fas fa-mobile pr-2"></i> &nbsp; <a href="tel:@user_db["mobile"]"> @user_db["mobile"]  </a>
+                        </div>
+                    </div>
+                }
+                @if (string.IsNullOrWhiteSpace(user_db["email"].ToString()) == false)
+                {
+                    <div class="col-md-6">
+                        <div class="location-p">
+                            <i class="fas fa-envelope pr-2"></i> &nbsp; <a href="mailto:@user_db["email"]">@user_db["email"]</a>
+                        </div>
+                    </div>
+                }
+                @if (string.IsNullOrWhiteSpace(user_db["address"].ToString()) == false)
+                {
+                    <div class="col-md-6">
+                        <div class="location-p">
+                            <i class="fas fa-map-marker-alt pr-2"></i> &nbsp; @user_db["address"], @user_db["city_zip"] @user_db["city_name"]
+                        </div>
+                    </div>
+                }
+                @*<div class="col-md-6">
+            <div class="location-p">
+                <i class="fas fa-fax pr-2"></i><a href="tel:@user_db["tel_mobile"]"> @user_db["tel_mobile"] </a>
+            </div>
+        </div>*@
+
+                <div class="col-md-12 pt-3">
+                    @Html.Partial("/Views/users/partal/social_media_buttons.cshtml")
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+    // set get data
+    var lng = @user_db["longitude"];
+    var lat = @user_db["latitude"];
+    var company_name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(company_name))";
+
+    // Location map
+    var map = L.map('location-map');
+    map.setView([lat + 0.004, lng], 13);
+
+    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://zaggy.hr">zaggy</a>'
+    });
+    layer.addTo(map);
+
+    // add marker
+    var marker = L.marker([lat, lng]);
+    marker.addTo(map).bindPopup(company_name).openPopup();
+
+    </script>
+
+}

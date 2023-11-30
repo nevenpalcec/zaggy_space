@@ -1,0 +1,371 @@
+﻿
+<div class="d-none">
+    <button onclick="notify.bl.need_help();" class="mr-3 pop_up_top_btn success btn btn_primary">Need help</button>
+    <button onclick="notify.bl.success();" class="mr-3 pop_up_top_btn btn btn_primary">Success!</button>
+    <button onclick="notify.bl.warning();" class="mr-3 pop_up_top_btn btn btn_secondary">Warning!</button>
+    <button onclick="notify.bl.remove();" class="mr-3 pop_up_top_btn btn btn_secondary">Remove</button>
+    <button onclick="notify.bl.offer();" class="mr-3 pop_up_top_btn btn btn_secondary">Send offer</button>
+    <button onclick="notify.bl.noshow();" class="mr-3 pop_up_top_btn btn btn_secondary">Guest missing</button>
+    <button onclick="notify.bl.confirm();" class="mr-3 pop_up_top_btn btn btn_secondary">Confirm</button>
+    <button onclick="notify.bl.deactivate();" class="mr-3 pop_up_top_btn btn btn_secondary">Deactivate</button>
+    <button onclick="notify.bl.invoice();" class="mr-3 pop_up_top_btn btn btn_secondary">Invoice</button>
+    <button onclick="notify.bl.request();" class="mr-3 pop_up_top_btn btn btn_secondary">Request</button>
+    <button onclick="notify.bl.saved();" class="mr-3 pop_up_top_btn btn btn_secondary">Saved</button>
+</div>
+
+<!-- Popup container -->
+<!-- Warning, Oh snap, Saved, Send offer, No show, Confirm?, Deactivate, Send invoice, Send request?, Need help?, Success!,  -->
+<div id="notify_popup_container">
+
+    <!-- Need help? -->
+    <div id="pop_up_need_help" class="pop_up info position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Need help?</div>
+            <div class="pb-4 line_normal opacity_50">You can find out more about this feature in our <span class="text_decoration_underline">knowledge base</span>.</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">View</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success -->
+    <div id="pop_up_success" class="pop_up success position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/success-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (1).svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Success!</div>
+            <div class="pb-4 line_normal opacity_50">You have added a new $insert-property-here.</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Edit</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Add more</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning -->
+    <div id="pop_up_warning" class="pop_up warning position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/warning-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (2).svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Warning!</div>
+            <div class="pb-4 line_normal opacity_50">Overbooking has been detected on reservation ID <span id="pop_up_warning_rent_id" data-toggle="tooltip" data-title="Click to copy" class="text_decoration_underline font_bold">[Not found]</span>.</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button id="pop_up_warning_button" type="button" class="mr-3 bg-white btn w-100">View</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove -->
+    <div id="pop_up_remove" class="pop_up custom_alert position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/remove-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (3).svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Oh snap!</div>
+            <div class="pb-4 line_normal opacity_50">You're about to remove <span id="pop_up_remove_property">$insert-property-here</span>, please confirm.</div>
+            <div class="m-0 row pop_up_btns">
+                <div id="pop_up_remove_yes" class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="mr-3 bg-white btn w-100">Remove</button>
+                </div>
+                <div id="pop_up_remove_no" class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send offer -->
+    <div id="pop_up_offer" class="pop_up info position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Send offer!</div>
+            <div class="pb-4 line_normal opacity_50">You are sending offer to $guest-mail, offer is valid for $valid days.</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guest missing -->
+    <div id="pop_up_noshow" class="pop_up custom_alert position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/remove-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (3).svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">No show?</div>
+            <div class="pb-4 line_normal opacity_50">Guests didn't show up? Report this booking as a no show.</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Report</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation -->
+    <div id="pop_up_confirm" class="pop_up info position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Confirm?</div>
+            <div class="pb-4 line_normal opacity_50">You are sending a reservation confirmation to $guest-mail</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deactivate object -->
+    <div id="pop_up_deactivate" class="pop_up custom_alert position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/remove-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (3).svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Deactivate?</div>
+            <div class="pb-4 line_normal opacity_50">Your object won't be removed, but it will be blocked for sale</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Deactivate</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send invoice -->
+    <div id="pop_up_invoice" class="pop_up info position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Send invoice?</div>
+            <div class="pb-4 line_normal opacity_50">You are sending an invoice to $guest-mail</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send request -->
+    <div id="pop_up_request" class="pop_up info position_center_center" style="display: none;">
+        <img src="/assets/images/icons/pop-up/help-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg.svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div data-dismiss='pop_up' class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Send request?</div>
+            <div class="pb-4 line_normal opacity_50">You are sending a review request to $guest-mail</div>
+            <div class="m-0 row pop_up_btns">
+                <div class="col-6">
+                    <button type="button" class="mr-3 bg-white btn w-100">Send</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" data-dismiss='pop_up' class="btn w-100 btn_border_white">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saved -->
+    <div id="pop_up_saved" class="pop_up saved pop_up_position_down_right" style="display: none;" data-dismiss='pop_up'>
+        <img src="/assets/images/icons/pop-up/save-balloon.svg" class="icon_ballon" alt="icon ballon">
+        <div class="overflow-hidden rounded-lg pop_up_bg_image"><img src="/assets/images/icons/pop-up/bg (4).svg" alt="icon bubbles"></div>
+        <div class="py-4 overflow-hidden text-white rounded-lg pop_up_card w-100 position-relative">
+            <div class="p-1 pop_up_close"><img src="/assets/images/icons/pop-up/close-icon.svg" alt="icon close"></div>
+            <div class="pb-1 font_bold font_8">Saved!</div>
+            <div class="line_normal opacity_50">Your changes have been successfully saved.</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    var notify = new function () {
+
+        this.load = function () {
+
+            notify.ui.setup_popups();
+
+        }
+
+        this.ui = new function () {
+
+            this.setup_popups = function () {
+
+                document.querySelectorAll('#notify_popup_container > *').forEach(popup => {
+
+                    // Dismiss
+                    popup.querySelectorAll("[data-dismiss='pop_up']").forEach(element => {
+
+                        element.onclick = function () {
+                            $(popup).fadeOut();
+                        }
+                    });
+
+                    // On clicked outside the modal
+                    document.addEventListener('mouseup', function (e) {
+
+                        if (popup.outerHTML.includes(e.target.outerHTML) == false) {
+                            $(popup).fadeOut();
+                        }
+                        $(pop_up_saved).fadeOut();
+                    });
+                });
+
+            }
+
+        }
+
+        this.bl = new function () {
+
+            // pop_up_need_help Need help?
+            this.need_help = async function () {
+                $(pop_up_need_help).fadeIn();
+            }
+
+            // pop_up_success Success
+            this.success = async function () {
+                $(pop_up_success).fadeIn();
+            }
+
+            // pop_up_warning Warning
+            this.warning = async function (rent_id, on_accept) {
+
+                // Set copy onclick
+                if (!rent_id) {
+                    pop_up_warning_rent_id.innerText = '[Not found]';
+                    pop_up_warning_rent_id.onclick = null;
+                }
+                else {
+                    pop_up_warning_rent_id.innerText = rent_id;
+                    pop_up_warning_rent_id.onclick = function () {
+
+                        bl.copy_to_clipboard(rent_id);
+                        $(pop_up_warning_rent_id).tooltip('hide');
+                        pop_up_warning_rent_id.dataset.originalTitle = 'Copied!';
+                        $(pop_up_warning_rent_id).tooltip('show');
+
+                        setTimeout(function () {
+                            $(pop_up_warning_rent_id).tooltip('hide');
+                            pop_up_warning_rent_id.dataset.originalTitle = 'Copy';
+                        }, 500);
+
+                    }
+                }
+
+                if (typeof (on_accept) === 'function') {
+
+                    pop_up_warning_button.onclick = async function () {
+                        on_accept();
+                        $(pop_up_warning).fadeOut();
+                    };
+                }
+
+                $(pop_up_warning).fadeIn();
+            }
+
+            // pop_up_remove Remove
+            this.remove = async function (property_name, on_accept, on_cancel) {
+
+                if (typeof (on_accept) !== 'function') {
+                    on_accept = function () {
+                        console.log('Removed.');
+                    }
+                }
+                if (typeof (on_cancel) !== 'function') {
+                    on_cancel = function () {
+                        console.log('Cancelled.');
+                    }
+                }
+
+                pop_up_remove_property.innerText = property_name || 'a property';
+                pop_up_remove_yes.onclick = on_accept;
+                pop_up_remove_no.onclick = on_cancel;
+
+                $(pop_up_remove).fadeIn();
+            }
+
+            // pop_up_offer Send offer
+            this.offer = async function () {
+                $(pop_up_offer).fadeIn();
+            }
+
+            // pop_up_noshow Guest missing
+            this.noshow = async function () {
+                $(pop_up_noshow).fadeIn();
+            }
+
+            // pop_up_confirm Confirmation
+            this.confirm = async function () {
+                $(pop_up_confirm).fadeIn();
+            }
+
+            // pop_up_deactivate Deactivate object
+            this.deactivate = async function () {
+                $(pop_up_deactivate).fadeIn();
+            }
+
+            // pop_up_invoice Send invoice
+            this.invoice = async function () {
+                $(pop_up_invoice).fadeIn();
+            }
+
+            // pop_up_request Send request
+            this.request = async function () {
+                $(pop_up_request).fadeIn();
+            }
+
+            // pop_up_saved Saved
+            this.saved = async function () {
+                $(pop_up_saved).fadeIn();
+            }
+
+        }
+
+    }
+
+    notify.load();
+
+</script>

@@ -1,0 +1,216 @@
+.ui-datepicker {
+    border: 1px solid rgba($bg-tertiary, .5) !important;
+    padding: 0 0 .3rem 0 !important;
+    background-color: $bg-secondary !important;
+    position: relative;
+    &:after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: .3rem;
+        background-color: $bg-tertiary;
+    }
+    thead {
+        opacity: .5;
+        font-size: .7rem;
+    }
+    .ui-widget-header {
+        border: none !important;
+        background: none !important;
+        user-select: none;
+        .ui-datepicker-title {
+            color: $text-secondary !important;
+        }
+        .ui-datepicker-prev, .ui-datepicker-next {
+            cursor: pointer;
+            top: 0;
+            margin: 2px;
+            &:after {
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                color: #FFF;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        }
+        .ui-datepicker-prev {
+            left: 0;
+            &:after {
+                content: "\f053";
+            }
+        }
+        .ui-datepicker-next {
+            cursor: pointer;
+            right: 0;
+            &:after {
+                content: "\f054";
+            }
+        }
+        .ui-icon {
+            display: none;
+        }
+    }
+    .ui-datepicker-calendar {
+        color: $text-secondary !important;
+        .ui-state-default {
+            color: $text-secondary;
+            text-align: center;
+            border: 1px solid $bg-secondary;
+            &:hover {
+                background: $bg-tertiary;
+                border: 1px solid $bg-tertiary;
+            }
+        }
+        .ui-state-highlight {
+            background: gray;
+            border: 1px solid gray;
+        }
+        td a {
+            color: white !important;
+        }
+    }
+    .ui-state-hover {
+        border: 1px solid transparent !important;
+    }
+}
+
+#rd-calendar {
+    .ui-datepicker-group {
+        @media screen and (max-width: 500px) {
+            flex: 0 0 100%;
+        }
+    }
+
+    .ui-datepicker {
+        background-color: $bg-primary !important;
+        border: none !important;
+        width: auto !important;
+
+        @media screen and (max-width: 500px) {
+            flex-wrap: wrap;
+            display: flex !important;
+        }
+
+        &:after {
+            content: none !important;
+        }
+
+        .ui-datepicker-title {
+            color: $text-primary !important;
+            font-size: 1.1rem !important;
+        }
+
+        .ui-datepicker-calendar {
+            color: $text-primary !important;
+
+            .ui-state-default {
+                color: $text-primary !important;
+                border: 1px solid transparent !important;
+                font-size: 1rem !important;
+                padding: .4rem !important;
+            }
+
+            .ui-state-highlight {
+                background: $color-silver !important;
+            }
+
+            .ui-state-hover {
+                color: $text-secondary !important;
+            }
+        }
+
+        .ui-datepicker-next, .ui-datepicker-prev {
+            &:after {
+                color: $text-primary;
+            }
+        }
+    }
+}
+
+#ui-datepicker-div {
+    width: 100% !important;
+    max-width: 22rem !important;
+    a {
+        padding: .5rem !important;
+    }
+}
+
+/*form datetime piceker - calendar*/
+.fp-booked-first {
+    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, #eb6c6c 50%, #eb6c6c 100%) !important;
+}
+
+.fp-booked-last {
+    background: linear-gradient(to bottom right, #eb6c6c 0%, #eb6c6c 50%, #fff 50%, #fff) !important;
+}
+
+.fp-small-booked-first:not(:hover) {
+    background: linear-gradient(to bottom right, #333 0%, #333 50%, #eb6c6c 50%, #eb6c6c 100%) !important;
+}
+
+
+.fp-small-booked-last:not(:hover) {
+    background: linear-gradient(to bottom right, #eb6c6c 0%, #eb6c6c 50%, #333 50%, #333) !important;
+}
+
+/* Do not override range css */
+.fp-small-booked-first.startRange, .fp-booked-all.startRange, .fp-small-booked-last.startRange {
+    background: #20baba !important;
+}
+.fp-small-booked-first.inRange, .fp-booked-all.inRange, .fp-small-booked-last.inRange {
+    background: #20baba !important;
+}
+.fp-small-booked-first.endRange, .fp-booked-all.endRange, .fp-small-booked-last.endRange {
+    background: #20baba !important;
+}
+
+.fp-booked-all {
+    background-color: #eb6c6c !important;
+}
+
+.fp-select-first {
+    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, #eb6c6c 50%, #eb6c6c 100%);
+}
+
+.fp-select-last {
+    background: linear-gradient(to bottom right, #eb6c6c 0%, #eb6c6c 50%, #fff 50%, #fff 100%);
+}
+
+.fp-select-all {
+    background-color: #20baba;
+}
+
+.ui-datepicker-current-day {
+    background-color: #20baba;
+}
+
+.rent-details {
+    .flatpickr-calendar {
+        max-width: 350px !important;
+    }
+
+    .flatpickr-day {
+        max-width: 44px !important;
+        line-height: 35px !important;
+    }
+
+    .flatpickr-monthDropdown-months {
+        background-color: #333 !important;
+        color: #FFF !important;
+    }
+}
+
+#excursion_card_dropdown_calendar {
+    .ui-datepicker-inline {
+        width: 100% !important;
+    }
+}
+
+.td-highlight {
+    color: $color-white !important;
+    background-color: $bg-tertiary !important;
+    z-index: 20;
+}

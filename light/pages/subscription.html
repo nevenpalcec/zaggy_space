@@ -1,0 +1,273 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-cogs pr-2"></i>Settings
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+        <a href="#settings" class="filter_link"><i class="fas fa-user-cog pr-lg-2"></i><span class="d-none d-lg-flex">Account</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#subscription" class="filter_link active"><i class="fas fa-money-check pr-lg-2"></i><span class="d-none d-lg-flex">Subscription</span></a>
+        <div class="filter_line_y"></div>
+        <a href="#invoices" class="filter_link"><i class="fas fa-file-invoice-dollar pr-lg-2"></i><span class="d-none d-lg-flex">Invoices</span></a>
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg-white position-relative pt-1">
+
+        <!-- Loading -->
+        <div id="website_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content subscription pt-3">
+            <div class="row">
+                <div class="col-lg-6 col-xl-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Status</label>
+                                <input type="text" class="form-control" readonly id="subscriptons_active_user">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Subscription plan</label>
+                                <div id="select_subscription_plan" class="select">
+                                    <button class="custom-select focus">Basic</button>
+                                    <i class="fas fa-angle-down"></i>
+                                    <ul class="select_ul hidden">
+                                        <li class="select_li" data-id="1">Basic</li>
+                                        <li class="select_li" data-id="2">Premium</li>
+                                        <li class="select_li" data-id="3">Advance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Price</label>
+                                <input type="text" class="form-control" value="8 €" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="mb-1">Valid</label>
+                                <input type="text" class="form-control" value="21.2.2021" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-bottom my-2"></div>
+                    <div class="d-flex justify-content-between py-2">
+                        <button class="btn btn_red">Cancel</button>
+                        <button class="btn btn_primary"><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>
+                    <div class="font_5 font_bold color_primary pt-2">Promo code</div>
+                    <div class="mb-1">Activate promotional codes to earn discounts.</div>
+                    <input type="text" class="form-control focus mb-3" style="max-width: 25rem;">
+                    <button class="btn btn_primary mb-3">Redeem code</button>
+                </div>
+                <div class="col-lg-6 col-xl-5">
+                    <div class="font_5 font_bold color_primary pb-1">Method of payment subscription:</div>
+                    <div class="custom_radio radio_lg d-flex pb-3">
+                        <div class="mr-3">
+                            <input type="radio" id="subscription_monthly" name="method_of_payment_subscription" checked>
+                            <label for="subscription_monthly">
+                                Monthly
+                                <span></span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="subscription_manual" name="method_of_payment_subscription">
+                            <label for="subscription_manual">
+                                Manual
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="first_option_subscription">
+                        <div class=" pb-1">Do you want to automatically renew your subscription?</div>
+                        <div class="custom_radio radio_lg d-flex">
+                            <div class="mr-3">
+                                <input type="radio" id="subscription_yes" name="subscription" checked>
+                                <label for="subscription_yes">
+                                    Yes
+                                    <span></span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" id="subscription_no" name="subscription">
+                                <label for="subscription_no">
+                                    No
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div id="box_date_next_billing">
+                            <div class="font_3 font_bold color_primary text-uppercase pt-2">Next billing date</div>
+                            <div class="date_next_billing d-flex align-items-center">
+                                <div class="position-relative">
+                                    <div class="calendar font_8 "><i class="far fa-calendar-alt"></i></div>
+                                    <div class="check green"><i class="fas fa-check-circle"></i></div>
+                                </div>
+                                <div class="ml-2 font_6">14.01.2021</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="second_option_subscription" class="hidden">
+                        <div class="form-group">
+                            <label class="mb-1">Select manual payment</label>
+                            <div id="select_manual_payment" class="select" style="max-width: 250px;">
+                                <button class="custom-select focus">Monthly</button>
+                                <i class="fas fa-angle-down"></i>
+                                <ul class="select_ul hidden">
+                                    <li class="select_li" value="1">Monthly</li>
+                                    <li class="select_li" value="2">Every 2 months</li>
+                                    <li class="select_li" value="3">Every 3 months</li>
+                                    <li class="select_li" value="4">Every 4 months</li>
+                                    <li class="select_li" value="5">Every 5 months</li>
+                                    <li class="select_li" value="6">Every 6 months</li>
+                                    <li class="select_li" value="7">1 year</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="font_3 font_bold color_primary text-uppercase">Price:</div>
+                        <div class="font_7 font_medium">€ 10</div>
+                        <div class=" pb-1">Do you want to automatically renew your subscription?</div>
+                        <div class="custom_radio radio_lg d-flex">
+                            <div class="mr-3">
+                                <input type="radio" id="subscription_manual_yes" class="" name="manual_subscription" checked>
+                                <label for="subscription_manual_yes">
+                                    Yes
+                                    <span></span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" id="subscription_manual_no" name="manual_subscription">
+                                <label for="subscription_manual_no">
+                                    No
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div id="box_manual_date_next_billing">
+                            <div class="font_3 font_bold color_primary text-uppercase pt-2">Date next billing</div>
+                            <div class="date_next_billing d-flex align-items-center">
+                                <div class="position-relative">
+                                    <div class="calendar font_8 "><i class="far fa-calendar-alt"></i></div>
+                                    <div class="check green"><i class="fas fa-check-circle"></i></div>
+                                </div>
+                                <div class="ml-2 font_6">14.01.2021</div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-right">
+                        <button class="btn btn_primary"><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var subscription = {};
+
+    subscription.load = () => {
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Global ui
+        subscription.ui.check_auto_subscription("first_option_subscription");
+        subscription.ui.check_manual_auto_subscription("second_option_subscription");
+        subscription.ui.check_method_of_payment_subscription();
+
+        ui.custom_select("select_manual_payment");
+        ui.custom_select("select_subscription_plan");
+    }
+
+    subscription.ui = new function () {
+
+        // Check auto subscription
+        this.check_auto_subscription = function (id) {
+            var auto_sub_id = document.getElementById(id);
+            var yes = auto_sub_id.children[1].children[0].children[0];
+            var box = auto_sub_id.children[2];
+            if (yes.checked == true) {
+                box.classList.remove("hidden");
+            } else {
+                box.classList.add("hidden");
+            }
+            document.addEventListener("change", function () {
+                if (yes.checked == true) {
+                    box.classList.remove("hidden");
+                } else {
+                    box.classList.add("hidden");
+                }
+            })
+        }
+
+        // Check manual auto subscription
+        this.check_manual_auto_subscription = function (id) {
+            var auto_manual_sub_id = document.getElementById(id);
+            var yes = auto_manual_sub_id.children[4].children[0].children[0];
+            var box = auto_manual_sub_id.children[5];
+            if (yes.checked == true) {
+                box.classList.remove("hidden");
+            } else {
+                box.classList.add("hidden");
+            }
+            document.addEventListener("change", function () {
+                if (yes.checked == true) {
+                    box.classList.remove("hidden");
+                } else {
+                    box.classList.add("hidden");
+                }
+            })
+        }
+
+        // Check method of payment subscription
+        this.check_method_of_payment_subscription = function () {
+            var monthy = document.getElementById("subscription_monthly");
+            var option = document.getElementById("first_option_subscription");
+            var option_02 = document.getElementById("second_option_subscription");
+            document.addEventListener("change", function () {
+                if (monthy.checked == true) {
+                    option.classList.remove("hidden");
+                    option_02.classList.add("hidden");
+                } else {
+                    option.classList.add("hidden");
+                    option_02.classList.remove("hidden");
+                }
+            })
+        }
+
+        var user_id = bl.workers.current_user_id();
+        var url = '/api/users/details/' + user_id;
+        var response = await ajax.get(url);
+        var user = JSON.parse(response)[0];
+
+        document.getElementById('subscriptons_active_user').value = user['active'] == 'Y' ? 'Active' : 'Disable';
+    }
+
+    subscription.load();
+
+</script>

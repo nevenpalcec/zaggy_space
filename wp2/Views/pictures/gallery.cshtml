@@ -1,0 +1,74 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var list_front_page = bl.objects_relstate_pictures.list_front_page(user_id);
+    var list_gallery = bl.objects_relstate_pictures.list_gallery(user_id);
+    var list_gallery_be = bl.booking_enigne_pictures.list(user_id, "gallery");
+
+
+    ViewBag.Title = users_text["title"].ToString() + " | " + bl.lng.l.Gallery;
+    Layout = "~/Views/_Layout.cshtml";
+
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "gallery" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<!-- Gallery -->
+<section class="section-gallery">
+
+    <!-- top header picture-->
+    <div class="wrapper">
+        <div class="bg-img">
+            <img src="@booking_engine_db["picture_main_link"]"
+                 alt="">
+        </div>
+        <div class="container-wrapper">
+            <h1 class="gallery-title"> @bl.lng.l.Photo_Gallery </h1>
+        </div>
+    </div>
+
+    <!-- pictures -->
+    <div class="container-wrapper py-3">
+        <div class="heading-title mb-3"> @bl.lng.l.Photo_Gallery </div>
+        <div class="row">
+            @foreach (System.Data.DataRow r in list_gallery_be.Rows)
+            {
+                <a href="@r["link"]" class="col-md-6 col-lg-4 img-effect"
+                   data-toggle="lightbox" data-gallery="gallery" data-type="image">
+                    <img src="/assets/images/icons/spinner.gif" data-src="@r["link"]" class="img-fluid lazy" alt="@r["name"]">
+                </a>
+            }
+            @foreach (System.Data.DataRow r in list_gallery.Rows)
+            {
+                <a href="@r["link"]" class="col-md-6 col-lg-4 img-effect"
+                   data-toggle="lightbox" data-gallery="gallery" data-type="image">
+                    <img src="/assets/images/icons/spinner.gif" data-src="@r["link_amazon"]" class="img-fluid lazy" alt="@r["name"]">
+                </a>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Gallery small -->
+@*@Html.Partial("/Views/partal/gallery.cshtml", new ViewDataDictionary { { "list_gallery", list_front_page } })*@
+
+<!-- Location -->
+@Html.Partial("/Views/partal/location.cshtml")
+
+<!-- contact us -->
+<div style="margin-bottom: 25px;">
+    @Html.Partial("/Views/partal/contact_us.cshtml")
+</div>
+
+<script>
+    // Lightbox - gallery
+    $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+</script>
+

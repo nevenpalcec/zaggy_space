@@ -1,0 +1,233 @@
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <span class="icons_location_wrapper"><i class="fas fa-map-marker-alt"></i></span> Locations
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+
+        <!-- Object -->
+        <a href="#objects" class="btn btn_hover px-2 py-1">
+            <div class="d-flex align-items-center">
+                <span class="font_7"><i class="fas fa-cube"></i></span>
+            </div>
+        </a>
+
+        <div class="filter_line_y"></div>
+
+        <!-- Search name -->
+        <div class="filter_search_name position-relative">
+            <input type="text" class="form-control font_3 focus" placeholder="Search location" id="location_list_input_search">
+            <span class="search_icon"><i class="fas fa-search"></i></span>
+        </div>
+
+        <!-- Add location -->
+        <!--<a class="filter_link" id="location_list_new_location" onclick="list_locations.bl.add_new_location();"><i class="far fa-plus-square pr-md-2"></i><span class="d-md-block d-none">Add location</span></a>-->
+
+        <button class="btn bg_primary text-white ml-auto" id="location_list_new_location" onclick="list_locations.bl.add_new_location();"><i class="fas fa-plus pr-2"></i>Add location</button>
+    </div>
+    
+    <!--Page-->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div class="view_loading" style="display: none;">
+            <div class="icon-loader">
+                <div class="icon-wrapper">
+                    <div class="icon icon01">
+                    </div>
+                    <div class="icon icon02">
+                    </div>
+                    <div class="icon icon03">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="location_list_content_loading" class="view_loading" style="display: none;">
+            <img src="/assets/images/icons/loading.svg" />
+        </div>
+
+        <!-- Content -->
+        <div class="content list_location pt-3">
+            <div class="locations_list d-flex flex-wrap" id="location_list_card">
+                <!-- Locations go here -->     
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .location_card, .location_card:hover {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+<section>
+    <template id="template_location_card">
+        <a class="location_card cursor_point" href="#location_details?${unit_id}" >
+            <div class="location_wrapper">
+                <div id="location_map_${id}" class="location_img" data-lat="${lat}" data-lng="${lng}">
+                    <!--<img src="${picture_url}" alt="">-->
+                </div>
+                <div class="location_body tiny_scrollbar">
+                    <div class="location_under d-flex justify-content-between font_4">
+                        <div class="font_medium mb-1">${name}</div>
+                        <div class="font_medium mb-1"><i class="fas fa-cubes pr-2"></i>${objects_count}</div>
+                    </div>
+                    <div class="font_medium mb-1 font_2"><i class="fas fa-map-marker-alt pr-2"></i>${city_name}, ${country}</div>
+                </div>
+            </div>
+        </a>
+    </template>
+</section>
+
+<script>
+
+    var list_locations = {};
+
+    list_locations.load = () => {
+
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // clear demo data from location card
+        location_list_card.innerHTML = '';
+
+        list_locations.bl.load_units();
+
+        list_locations.ui.search_setup();
+
+    };
+
+    list_locations.bl = new function () {
+
+        this.filter_unit = (unit_id) => {
+        }
+
+        // loading units into card
+        this.load_units = async () => {
+            ui.content_loading('location_list_content_loading');
+
+            var url = '/api/units_location/get/' + bl.workers.current_user_id();
+            var response = await ajax.get(url);
+            var response_json = JSON.parse(response);
+
+            // Fill missing data
+            response_json.forEach(loc => {
+                loc['name'] = loc['name'] || 'No name';
+                loc['city_name'] = loc['city_name'] || 'Unknown';
+                loc['country'] = loc['country'] || 'Unknown';
+            });
+
+            response_json.sort((a, b) => {
+                return a['name'].localeCompare(b['name']);
+            })
+
+            location_list_card.innerHTML = '';
+
+            for (var ll of response_json) {
+
+                var t = template_location_card.innerHTML;
+                let lat = ll['latitude'] || 0;
+                let lng = ll['longitude'] || 0;
+
+                t = t.replace('${id}', ll['id']);
+                t = t.replace('${lat}', lat);
+                t = t.replace('${lng}', lng);
+                t = t.replace('${name}', ll['name']);
+                t = t.replace('${unit_id}', ll['id']);
+                t = t.replace('${city_name}', ll['city_name']);
+                t = t.replace('${country}', ll['country']);
+                t = t.replace('${objects_count}', ll['objects_count']);
+                //t = t.replace('${picture_url}', ll['picture_url'] == null ? '/assets/images/pictures/no-image.png' : ll['picture_url']);
+
+                if (Math.abs(lat) > 0.01 || Math.abs(lng) > 0.01) {
+                    js.html.insertAdjacentHTML('location_list_card', t);
+                }
+                else {
+                    location_list_card.insertAdjacentHTML('afterbegin', t);
+                }
+
+
+                // Set map
+
+                let map_options = {
+                    dragging: false,
+                    zoomControl: false,
+                    scrollWheelZoom: false
+                };
+                //let map = L.map('location_map_' + ll['id'], map_options).setView([parseFloat(lat) + 0.005, lng], 15);
+                let map = L.map('location_map_' + ll['id'], map_options).setView([parseFloat(lat) + 0.0005, lng], 15);
+
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV2ZW5wYWxjZWMiLCJhIjoiY2xma3pnc2toMDA2dzN4a2FzejBuczUweSJ9.z7fIwkgxvfSm-bu9VdI3Ig', {
+                    id: 'mapbox/light-v9',
+                    attribution: '',
+                    tileSize: 512,
+                    zoomOffset: -1
+                }).addTo(map);
+
+                let marker = L.marker([lat, lng]).bindPopup('Location not found.').addTo(map);
+
+                if (Math.abs(lat) < 0.01 && Math.abs(lng) < 0.01) {
+                    marker.openPopup();
+                    map.setView([parseFloat(lat) + 0.0018, lng]);
+                }
+
+            }
+
+            ui.content_loading_hide('location_list_content_loading');
+
+        }
+
+        // adding new empthy location
+        this.add_new_location = async () => {
+
+            var url = '/api/units/add/' + bl.workers.current_user_id();
+            var response = await ajax.get(url);
+            response = response.slice(1, -1)
+            location.href = '/#location_details?' + response;
+        }
+    }
+
+    list_locations.ui = new function () {
+
+        this.search_setup = () => {
+
+            location_list_input_search.onkeyup = function () {
+
+                var val = location_list_input_search.value.toLowerCase();
+
+                document.querySelectorAll('.location_card').forEach(card => {
+
+                    if (card.innerText.toLowerCase().includes(val)) {
+                        card.classList.remove('d-none');
+                    }
+                    else {
+                        card.classList.add('d-none');
+                    }
+                });
+            }
+
+
+        }
+    }
+
+    list_locations.load();
+
+</script>

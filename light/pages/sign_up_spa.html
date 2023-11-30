@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+
+</head>
+
+<body>
+
+    <div class="sign_new">
+        <div class="mx-0 row" style="height: 100vh;">
+            <div class="p-0 col-xl-6 col-lg-6 d-none d-lg-block text_white position-relative" style="max-width: 1200px;">
+                <div class="top-0 position-absolute w-100 h-100" style="z-index: -1;">
+                    <img src="/assets/images/pictures/syncbeds_img_sign_up.jpg" class="w-100 h-100" style="object-fit: cover;" alt="img">
+                </div>
+                <div class="top-0 position-absolute bg_primary_50 w-100 h-100" style="left: 0;"></div>
+                <div class="p-3 m-auto text-white position-relative flex-column align-items-center d-flex justify-content-center h-100" style="max-width: 500px;">
+                    <div class="mb-3 font_8 font_medium">Welcome to Apartments Staypicker</div>
+                    <div>Powerful vacation rental management platform optimized for catering from single property private ventures up to professional, high turnover agencies.</div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="px-5 py-4">
+                    <div class="sign_header">
+                        <img src="/assets/images/icons/logo_spa.svg" style="height: 3rem; width: auto;" alt="logo syncbeds">
+                    </div>
+                    <div class="row">
+                        <div class="col-xxl-6 col-xl-7">
+                            <form action="">
+                                <div class="mb-5 font_bold font_8">Start your free trial</div>
+                                <label class="font_medium">Name and surname</label>
+                                <input type="text" class="mb-4 form-control focus font_6" id="sign_up_name">
+                                <label class="font_medium">Telephone</label>
+                                <input type="text" class="mb-4 form-control focus font_6" id="sign_up_tel">
+                                <div class="mb-4">
+                                    <label class="font_medium">Email</label>
+                                    <input type="text" class="form-control focus font_6" id="sign_up_email">
+                                    <small class="red hidden"><i class="pr-2 fas fa-exclamation"></i>Email already exists.</small>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="font_medium">Username</label>
+                                    <input type="text" class="form-control focus font_6" id="sign_up_username">
+                                    <small class="red hidden"><i class="pr-2 fas fa-exclamation"></i>Username already exists.</small>
+                                </div>
+                                <div class="mb-4">Already a member? <a href="#sign_in_spa" class="font_medium color_primary">Sign in</a></div>
+                                <div id="sign_in_btn" class="">
+                                    <button type="button" onclick="sign_up.bl.add_new_user();" class="px-4 py-2 btn btn_secondary font_6 position-relative"><span>Sign up</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var sign_up = {};
+
+        sign_up.load = function () {
+
+            // Global components
+            ui.display_title("Sign up");
+
+            $(".main_menu_left").addClass("hidden");
+            $(".bg_screen_img_blur_shadow").addClass("hidden");
+            $(".bg_screen_img_blur").addClass("hidden");
+            $(".bg_sign").addClass("hidden");
+            $(".main_background").addClass("hidden");
+
+        }
+
+        sign_up.ui = new function () {
+
+            this.add_loading = () => {
+
+                if(!sign_in_btn.classList.contains('loading')){
+                    sign_in_btn.classList.add('loading');
+                }
+
+            }
+
+        }
+
+        sign_up.bl = new function () {
+
+            this.add_new_user = async () => {
+
+                var user = {};
+
+                user.name = sign_up_name.value;
+                user.email = sign_up_email.value;
+                user.tel = sign_up_tel.value;
+                user.username = sign_up_username.value;
+
+                var url = `/api/users/add_user`;
+                var response = await ajax.post_json(url, user);
+
+                location.href = '#sign_in';
+            }
+        }
+
+        sign_up.load();
+
+    </script>
+
+</body>
+
+</html>

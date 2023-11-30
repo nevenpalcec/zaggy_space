@@ -1,0 +1,1030 @@
+﻿<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+            <div class="view_mobile_nav">
+                <button class="view_mobile_btn btn text-black mr-2">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+            </div>
+            <div class="d-flex line_normal align-items-center font_5 font_bold text-uppercase">
+                <span class="d-block"><i class="fas fa-home pr-2"></i></span>
+                <span class="d-none d-md-block" id="object_calendar_header_object_name"></span>
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter_general"></div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <div class="view_loading" style="display: none;">
+            <div class="icon-loader">
+                <div class="icon-wrapper">
+                    <div class="icon icon01">
+                    </div>
+                    <div class="icon icon02">
+                    </div>
+                    <div class="icon icon03">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content object_calendars pt-3">
+            <div class="row">
+                <div class="custom_col_01">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold"><i class="far fa-list-alt pr-2"></i>Reservations</div>
+                            <div class="font_medium" data-toggle="tooltip" data-placement="top"
+                                 data-original-title="Total reservations" id="object_calendars_total_reservation">20</div>
+                        </div>
+                        <div class="card-body font_3 position-relative">
+
+                            <!--loading -->
+                            <div id="object_calendars_content_loading" class="view_loading" style="display: none;">
+                                <img src="/assets/images/icons/loading.svg" />
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                                <div onclick="object_calendars.bl.go_before();">
+                                    <button class="btn py-0 px-2 btn_silver"><i class="fas fa-angle-left"></i></button>
+                                </div>
+                                <div class="font_medium font_4" id="object_calendars_year">2021</div>
+                                <div onclick="object_calendars.bl.go_next();">
+                                    <button class="btn py-0 px-2 btn_silver"><i class="fas fa-angle-right"></i></button>
+
+                                </div>
+                            </div>
+                            <div class="tiny_scrollbar pt-2">
+                                <ul class="months_wrapper border-bottom">
+
+                                    <!-- January -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_01">3</span>&nbsp;|&nbsp;<span id="objcal_occupancy_01" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">60%</span></div>
+                                            <div class="text-uppercase">January</div>
+                                            <div id="objcal_mprice_01" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">600 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_01">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">13.01. - 17.01.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal"><i class="far fa-hand-paper"></i></div>
+                                                    <div class="period">18.01. - 24.01.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>6</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">300 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">25.01. - 28.01.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>3</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/fr.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Prewitt Bonsaint</div>
+                                                    <div class="ml-auto">150 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- February -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_02">3</span>&nbsp;|&nbsp;<span id="objcal_occupancy_02" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">60%</span></div>
+                                            <div class="text-uppercase">February</div>
+                                            <div id="objcal_mprice_02" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">600 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_02">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.02. - 07.02.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">10.02. - 20.02.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>10</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">500 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">21.02. - 25.02.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>4</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/fr.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Prewitt Bonsaint</div>
+                                                    <div class="ml-auto">200 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- March -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_03">2</span>&nbsp;|&nbsp;<span id="objcal_occupancy_03" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">60%</span></div>
+                                            <div class="text-uppercase">March</div>
+                                            <div id="objcal_mprice_03" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">700 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_03">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.03. - 07.03.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">22.03. - 31.03.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>9</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">450 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- April -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_04">4</span>&nbsp;|&nbsp;<span id="objcal_occupancy_04" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">50%</span></div>
+                                            <div class="text-uppercase">April</div>
+                                            <div id="objcal_mprice_04" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">1.200 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_04">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.04. - 07.04.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">08.04. - 12.04.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>4</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">200 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">13.04. - 18.04.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>6</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">300 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">22.04. - 31.04.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>9</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">450 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- May -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_05">2</span>&nbsp;|&nbsp;<span id="objcal_occupancy_05" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">30%</span></div>
+                                            <div class="text-uppercase">May</div>
+                                            <div id="objcal_mprice_05" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">700 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_05">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.05. - 07.05.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">22.05. - 31.05.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>9</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">450 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- June -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_06">2</span>&nbsp;|&nbsp;<span id="objcal_occupancy_06" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">30%</span></div>
+                                            <div class="text-uppercase">June</div>
+                                            <div id="objcal_mprice_06" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">700 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_06">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.06. - 07.06.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">22.06. - 31.06.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>9</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">450 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- July -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_07">3</span>&nbsp;|&nbsp;<span id="objcal_occupancy_07" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">30%</span></div>
+                                            <div class="text-uppercase">July</div>
+                                            <div id="objcal_mprice_07" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">700 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_07">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.07. - 07.07.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">09.07. - 15.07.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>7</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/de.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">350 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">22.07. - 31.07.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>9</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1">
+                                                        <img src="./assets/images/icons/flags/cz.svg" alt="">
+                                                    </div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">450 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- August -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_08">4</span>&nbsp;|&nbsp;<span id="objcal_occupancy_08" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">30%</span></div>
+                                            <div class="text-uppercase">August</div>
+                                            <div id="objcal_mprice_08" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">700 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_08">
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">02.08. - 07.08.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>5</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1"><img src="./assets/images/icons/flags/de.svg" alt=""></div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">250 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">08.08. - 15.08.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>7</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1"><img src="./assets/images/icons/flags/de.svg" alt=""></div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">350 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                                    </div>
+                                                    <div class="period">16.08. - 20.08.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>4</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1"><img src="./assets/images/icons/flags/de.svg" alt=""></div>
+                                                    <div class="name_guest">Bernd Lehrer</div>
+                                                    <div class="ml-auto">200 €</div>
+                                                </div>
+                                            </div>
+                                            <div class="month_card" onclick="object_calendars.show_details()">
+                                                <div class="d-flex justify-content-between border-bottom font_medium">
+                                                    <div class="portal">
+                                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="">
+                                                    </div>
+                                                    <div class="period">22.08. - 31.08.</div>
+                                                    <div><i class="fas fa-moon fa-xs pr-1"></i>9</div>
+                                                </div>
+                                                <div class="d-flex font_medium pt-1">
+                                                    <div class="flag pr-1"><img src="./assets/images/icons/flags/cz.svg" alt=""></div>
+                                                    <div class="name_guest">Jan Bartošek</div>
+                                                    <div class="ml-auto">450 €</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- September -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_09">0</span>&nbsp;|&nbsp;<span id="objcal_occupancy_09" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">0%</span></div>
+                                            <div class="text-uppercase">September</div>
+                                            <div id="objcal_mprice_09" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">0 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_09">
+                                            <div class="text-center">No reservation</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- October -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_10">0</span>&nbsp;|&nbsp;<span id="objcal_occupancy_10" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">0%</span></div>
+                                            <div class="text-uppercase">October</div>
+                                            <div id="objcal_mprice_10" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">0 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_10">
+                                            <div class="text-center">No reservation</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- November -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_11">0</span>&nbsp;|&nbsp;<span id="objcal_occupancy_11" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">0%</span></div>
+                                            <div class="text-uppercase">November</div>
+                                            <div id="objcal_mprice_11" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">0 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_11">
+                                            <div class="text-center">No reservation</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- December -->
+                                    <div class="month_items">
+                                        <div class="month_heading d-flex justify-content-between font_bold font_3 border-bottom">
+                                            <div class="pl-2"><span data-toggle="tooltip" data-placement="top" data-original-title="Total reservations for this month" id="objcal_total_12">0</span>&nbsp;|&nbsp;<span id="objcal_occupancy_12" data-toggle="tooltip" data-placement="top" data-original-title="Occupancy for this month">0%</span></div>
+                                            <div class="text-uppercase">December</div>
+                                            <div id="objcal_mprice_12" class="pr-2" data-toggle="tooltip" data-placement="top" data-original-title="Total value for this month">0 €</div>
+                                        </div>
+                                        <div class="month_list" id="object_calendar_month_card_12">
+                                            <div class="text-center">Full disabled</div>
+                                        </div>
+                                    </div>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom_col_02">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold">
+                                <i class="far fa-calendar-alt pr-2"></i>Calendars
+                            </div>
+                            <div class="d-flex" style="margin-right: 3.8rem;">
+                                <div id="show_number_of_calendar" class="view_dropdown">
+                                    <button class="btn py-1 px-2 btn_hover line_normal font_3">12</button>
+                                    <div class="dropdown_menu hidden" style="right: 0; min-width: 3.8rem;">
+                                        <ul class="dropdown_ul dropdown_ul_max_height font_3 text-right">
+                                            <li class="dropdown_li">
+                                                <a onclick="object_calendars.bl.show_calendar_number(2)" class="dropdown_a">2</a>
+                                            </li>
+                                            <li class="dropdown_li">
+                                                <a onclick="object_calendars.bl.show_calendar_number(4)" class="dropdown_a">4</a>
+                                            </li>
+                                            <li class="dropdown_li">
+                                                <a onclick="object_calendars.bl.show_calendar_number(6)" class="dropdown_a">6</a>
+                                            </li>
+                                            <li class="dropdown_li">
+                                                <a onclick="object_calendars.bl.show_calendar_number(8)" class="dropdown_a">8</a>
+                                            </li>
+                                            <li class="dropdown_li">
+                                                <a onclick="object_calendars.bl.show_calendar_number(12)" class="dropdown_a">12</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><span class="mx-2 border-left"></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="object_calendars_datepicker"></div>
+                            <hr>
+                            <div class="d-flex flex-wrap text-uppercase font_1 mt-2">
+                                <div class="px-2 py-1 m-1 today">Today</div>
+                                <div class="px-2 py-1 m-1 reservation">Reservation</div>
+                                <div class="px-2 py-1 m-1 overbooking">Overbooking</div>
+                                <div class="px-2 py-1 m-1 disable">Disable</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<section>
+    <template id="template_month_card">
+        <div class="month_card" onclick="modal_details_rent.ui.show_details(${id});">
+            <div class="d-flex justify-content-between border-bottom font_medium">
+                <div class="portal">
+                    <img src="./assets/images/icons/portals/${rent_source_icon}.svg" alt="">
+                </div>
+                <div class="period">${from_date} - ${until_date}</div>
+                <div><i class="fas fa-moon fa-xs pr-1"></i>${nights}</div>
+            </div>
+            <div class="d-flex font_medium pt-1">
+                <div class="flag pr-1">
+                    <img src="./assets/images/icons/flags/${code2}.svg" alt="">
+                </div>
+                <div class="name_guest">${contact_name}</div>
+                <div class="ml-auto">${price} ${label}</div>
+            </div>
+        </div>
+    </template>
+</section>
+<script>
+
+    var object_calendars = {};
+
+    object_calendars.object_id;
+    object_calendars.year = '';
+    object_calendars.block_days = [];
+    var date = new Date()
+    object_calendars.calendar_date_from = '';
+    object_calendars.calendar_date_until = '';
+
+    object_calendars.load = () => {
+
+        object_calendars.object_id = page.get_id();
+
+        object_calendar_header_object_name.innerHTML = bl.objects.list_get().filter(res => res.id == page.get_id())[0]['name'];
+
+        var current_year = new Date().getFullYear();
+        object_calendars_year.innerHTML = current_year;
+        object_calendars.year = current_year;
+
+        // Load
+        $(".filter_general").load("/pages/partals/filter_general.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+
+        // Local ui
+        object_calendars.bl.set_calendar(12);
+        object_calendars.ui.calendar_line_dropdown("show_number_of_calendar");
+
+        object_calendars.bl.load_month_card();
+
+    }
+
+    object_calendars.ui = new function () {
+
+        // Calendar inline
+        this.calendar_inline = function (cal) {
+            $("#" + cal).datepicker({
+                firstDay: 1,
+                numberOfMonths: object_calendars.number_of_months,
+                // minDate: 1,
+                beforeShowDay: function (date) {
+
+                    var startDate = new Date(object_calendars.date_from);
+                    var endDate = new Date(object_calendars.date_until);
+
+                    var className = "";
+
+                    if (startDate && (date.getTime() == startDate.getTime())) {
+                        className = "start-date td-highlight"
+                    }
+                    else if (endDate && (date.getTime() == endDate.getTime())) {
+                        className = "end-date td-highlight";
+                    }
+                    else if ((startDate && endDate) && (startDate < date && date < endDate)) {
+                        className = "between-date td-highlight";
+                    }
+                    else {
+                        className = "";
+                    }
+                    return [true, className];
+                },
+                onSelect: function (dateText, inst) {
+
+                    var sd = new Date(dateText);
+
+                    var day = sd.getDate();
+                    var mounth = sd.getMonth();
+                    var year = sd.getFullYear();
+
+                    var date_string = day + '.' + mounth + '.' + year;
+
+                }
+            });
+
+            $("#" + cal).on('mouseenter', 'td a', function () {
+                $(".td-highlight").removeClass("td-highlight"); // Reset
+                isBetween = false;
+                foundFirst = 0;
+                calendar = $(this).closest('.ui-datepicker');
+                if (calendar.find('.start-date').length > 0 && calendar.find('.end-date').length == 0) {
+                    calendar.find(".ui-state-default").each(function () {
+                        if ($(this).hasClass("ui-state-active")) {
+                            if (foundFirst == 0) foundFirst = -1;
+                            isBetween = (foundFirst == -1 ? true : false);
+                        }
+                        if ($(this).hasClass("ui-state-hover")) {
+                            if (foundFirst == 0) foundFirst = 1;
+                            isBetween = (foundFirst == 1 ? true : false);
+                        }
+                        if (isBetween) {
+                            $(this).parent().addClass("td-highlight");
+                        }
+                    });
+                }
+            })
+        }
+
+        // Dropdown on calendar line
+        this.calendar_line_dropdown = function (id) {
+            var dropdown_id = document.getElementById(id);
+            var dropdown_btn = dropdown_id.getElementsByClassName("btn")[0];
+            var dropdown_menu = dropdown_id.getElementsByClassName("dropdown_menu")[0];
+            var dropdown_a = dropdown_id.getElementsByClassName("dropdown_a")[0];
+            var dropdown_ul = dropdown_id.getElementsByClassName("dropdown_ul")[0];
+            dropdown_btn.addEventListener("click", function () {
+                if (dropdown_menu.classList.contains("hidden")) {
+                    dropdown_menu.classList.remove("hidden");
+                    dropdown_btn.classList.add("open");
+                } else {
+                    dropdown_menu.classList.add("hidden");
+                }
+            });
+            for (let i = 0; i < dropdown_ul.children.length; i++) {
+                dropdown_ul.children[i].onclick = function (e) {
+                    dropdown_btn.innerText = e.currentTarget.innerText;
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            }
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown_menu).is(e.target) && $(dropdown_menu).has(e.target).length === 0) {
+                    dropdown_menu.classList.add("hidden");
+                    dropdown_btn.classList.remove("open");
+                }
+            })
+        }
+
+    }
+
+    object_calendars.bl = new function () {
+
+        this.get_occupancy = function (month, year, all_rents) {
+
+            let total_dict = {};
+            let month_days = new Date(year, month, 0).getDate();
+
+            all_rents.forEach(rent => {
+
+                // Iterate from-until
+                for (let d = new Date(rent['date_from']); js.date.toIso(d) != rent['date_until']; d.setDate(d.getDate() + 1)) {
+
+                    // Mark date as taken
+                    if (d.getFullYear() == year && d.getMonth() + 1 == month) {
+                        total_dict[d.getDate()] = 1;
+                    }
+                }
+            });
+
+            let total_occupied = Object.values(total_dict).reduce((a, b) => a + b, 0);
+            return total_occupied / month_days;
+        }
+
+        this.get_month_price = function (month, year, all_rents) {
+
+            let total = 0;
+            all_rents.filter(rent => {
+                if (rent['date_from'].includes(year + '-' + ('0' + month).slice(-2))) {
+                    return true;
+                }
+            }).forEach(rent => {
+                total += rent['price_sum'];
+            });
+
+            return total.toFixed([2]);
+        }
+
+        // loading rents to month card
+        this.load_month_card = async () => {
+
+            
+
+            ui.content_loading('object_calendars_content_loading');
+
+
+            //api call for list of rents in range
+            var url = `/api/rents/get_by_object/${object_calendars.object_id}?date_from=${object_calendars.year}-01-01&date_until=${object_calendars.year}-12-31`;
+            
+            // response from api
+            var response = await ajax.get(url)
+            var response_json = JSON.parse(response);
+
+            console.log(response_json);
+
+            // clearing all month card
+            object_calendar_month_card_01.innerHTML = '';
+            object_calendar_month_card_02.innerHTML = '';
+            object_calendar_month_card_03.innerHTML = '';
+            object_calendar_month_card_04.innerHTML = '';
+            object_calendar_month_card_05.innerHTML = '';
+            object_calendar_month_card_06.innerHTML = '';
+            object_calendar_month_card_07.innerHTML = '';
+            object_calendar_month_card_08.innerHTML = '';
+            object_calendar_month_card_09.innerHTML = '';
+            object_calendar_month_card_10.innerHTML = '';
+            object_calendar_month_card_11.innerHTML = '';
+            object_calendar_month_card_12.innerHTML = '';
+
+            var number_of_reservation = 0;
+
+            // Sort rents by dates
+            response_json.sort((a, b) => {
+                return new Date(a['from_date']) - new Date(b['from_date']);
+            });
+
+            for (var ppd of response_json) {
+
+                var t = template_month_card.innerHTML;
+                
+                var month;
+                var date = ppd['from_date'].split('T')[0];
+                var month = date.split('-')[1];
+                var date_format = date.split('-')[2] + '.' + date.split('-')[1];
+                t = t.replace('${from_date}', date_format);
+                var date = ppd['until_date'].split('T')[0];
+                var date_format = date.split('-')[2] + '.' + date.split('-')[1]
+                t = t.replace('${id}', ppd['id']);
+                t = t.replace('${until_date}', date_format);
+                t = t.replace('${contact_name}', ppd['contact_name']);
+                t = t.replace('${nights}', ppd['days']);
+                t = t.replace('${rent_source_icon}', ppd['rent_source_icon'] || 'syncbeds');
+                t = t.replace('${price}', ppd['price_sum'].toFixed([2]));
+                t = t.replace('${label}', ppd['label']);
+                t = t.replace('${code2}', ppd['code2']);
+                js.html.insertAdjacentHTML('object_calendar_month_card_' + month, t);
+
+                number_of_reservation++;
+
+            }
+
+            let year = object_calendars_year.innerText;
+            let label = response_json.length > 0 ? response_json[0]['label'] : '';
+
+            for (let i = 1; i <= 12; ++i) {
+
+                let i_str = ('0' + i).slice(-2)
+                let occ = object_calendars.bl.get_occupancy(i, year, response_json);
+                let pr = object_calendars.bl.get_month_price(i, year, response_json);
+
+                let total = document.getElementById('objcal_total_' + i_str);
+                let occupancy = document.getElementById('objcal_occupancy_' + i_str);
+                let mprice = document.getElementById('objcal_mprice_' + i_str);
+
+                total.innerHTML = document.querySelectorAll('#object_calendar_month_card_' + i_str + ' > div').length;
+                occupancy.innerText = (Math.floor(occ * 100)) + ' %';
+                mprice.innerText = pr + ' ' + label;
+            }
+
+            object_calendars_total_reservation.innerHTML = number_of_reservation;
+
+            ui.content_loading_hide('object_calendars_content_loading');
+
+        }
+
+        // changing year for reservation to increase
+        this.go_next = async function () {
+
+            object_calendars_year.innerHTML = parseInt(object_calendars_year.innerHTML) + 1;
+            object_calendars.year = object_calendars_year.innerHTML;
+            await this.load_month_card();
+        }
+
+        // changing year for reservation to decrease
+        this.go_before = async function () {
+
+            object_calendars_year.innerHTML = parseInt(object_calendars_year.innerHTML) - 1;
+            object_calendars.year = object_calendars_year.innerHTML;
+            await this.load_month_card();
+        }
+
+        // 
+        this.set_calendar = async (number_of_months) => {
+            
+            var url = '/api/objects/days_blocked/' + object_calendars.object_id;
+            var response = await ajax.get(url);
+            var respone_json = JSON.parse(response);
+            object_calendars.block_days = respone_json;
+
+            // Calendar on content
+
+            day_before_booked = '';
+
+            $("#object_calendars_datepicker").datepicker({
+
+                dateFormat: 'yy-mm-dd',
+                firstDay: 1,
+                minDate: 0,
+                numberOfMonths: number_of_months,
+
+                // mark blocke or selected days
+                beforeShowDay: function (date) {
+
+                    console.log('beforeShowDay');
+                    
+                    var d = js.date.toIsoFormat(date);
+
+                    // check if this day exist in block days
+                    
+                    var include = object_calendars.block_days.includes(d);
+
+                    var day_current = (d == object_calendars.calendar_date_from);
+                    var css = '';
+
+                    //console.log(d, day_current, property.calendar_date_from);
+                    // mark selected days
+                    if (!object_calendars.calendar_date_until == false) {
+                        
+                        // check if date is in select dates
+                        var v = js.date.if_day_is_between(object_calendars.calendar_date_from, object_calendars.calendar_date_until, date);
+                        if (day_current == true) {
+                            css = 'fp-select-all';
+                            return [true, css];
+                        }
+                        else if (v == true) {
+                            css = 'fp-select-all';
+                            return [true, css];
+                        }
+                        else {
+                            return mark_blok_day();
+                        }
+                    }
+                    // mark normal blok days
+                    else {
+                        return mark_blok_day();
+                    }
+                    // mark blokec day
+                    function mark_blok_day() {
+                        if (include == true) {
+                            if (day_before_booked == true) {
+                                css = 'fp-booked-all';
+                            }
+                            else {
+                                css = 'fp-booked-first';
+                            }
+                            day_before_booked = true;
+                        }
+                        else {
+                            if (day_before_booked == true) {
+                                css = 'fp-booked-last';
+                            }
+                            day_before_booked = false;
+                        }
+                        return [true, css];
+                    }
+                },
+
+                // handle on click
+                onSelect: function (date) {
+
+                    console.log('onselect: ' + date);
+
+                    if (!object_calendars.calendar_date_until == false) {
+                        object_calendars.calendar_date_from = date;
+                        object_calendars.calendar_date_until = null;
+                       
+                    }
+                    else if (!object_calendars.calendar_date_from == true) {
+                        object_calendars.calendar_date_from = date;
+                        
+                    }
+                    else {
+                        object_calendars.calendar_date_until = date;
+                        modal_add_new_rent.ui.show(object_calendars.object_id , object_calendars.calendar_date_from, object_calendars.calendar_date_until);
+
+                    }
+                 
+                }
+            });
+
+        }
+
+        this.calendar_data = async function () {
+
+            var url = 'https://api.zaggy.net/objects/days_blocked/' + object_calendars.object_id;
+
+            await $.getJSON(url, function (data) {
+                object_calendars.block_days = data;
+                object_calendars.bl.set_calendar();
+            });
+        }
+
+
+        this.show_calendar_number = (number) => {
+            object_calendars_datepicker.innerHTML = '';
+            object_calendars_datepicker.classList.remove('hasDatepicker');
+            object_calendars.bl.set_calendar(number);
+
+        }
+    }
+
+    object_calendars.load();
+
+</script>

@@ -1,0 +1,31 @@
+﻿@code {
+
+    [Parameter] public string id { get; set; }
+    [Parameter] public string id_hash { get; set; }
+    [Parameter] public string name { get; set; }
+    [Parameter] public string picture_url { get; set; }
+    [Parameter] public string address { get; set; }
+    [Parameter] public string city { get; set; }
+    [Parameter] public string country { get; set; }
+    [Parameter] public string country_code { get; set; }
+    [Parameter] public string latitude { get; set; }
+    [Parameter] public string longitude { get; set; }
+
+}
+
+<div class="card mb-3 bg-dark mb-2">
+    <a class="text-decoration-none" href="/objects/details/@id_hash">
+        <div class="card-header d-flex justify-content-between">
+
+            <div>
+                <h6 class="mb-2 fs-0 text-white fw-bold"> Property | @id_hash </h6>
+                <p class="mb-0 fs--1 text-white"> @name </p>
+            </div>
+            <div class="align-center align-items-baseline" style="padding-top: 10px;">
+                <i class="fas fa-home text-white" style="font-size: x-large;"></i>
+            </div>
+
+        </div>
+    </a>
+</div>
+

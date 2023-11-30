@@ -1,0 +1,47 @@
+﻿<img src="/assets/images/pictures/night.png" class="days" alt="">
+<span class="stars"></span>
+<img src="/assets/images/pictures/clouds.png" class="clouds" alt="">
+
+<script>
+
+    var clouds_background = {};
+
+    // On load function
+    clouds_background.load = function () {
+
+        // Local
+        clouds_background.ui.stars();
+
+    };
+
+    clouds_background.ui = new function () {
+        // Stars
+        this.stars = function () {
+            var count = 500;
+            var scene = document.querySelector(".stars");
+            var i = 0;
+            while (i < count) {
+                var star = document.createElement("i");
+                var x = Math.floor(Math.random() * window.innerWidth);
+                var y = Math.floor(Math.random() * window.innerHeight);
+                var duration = Math.random() * 10;
+                var size = Math.random() * 2;
+
+                star.style.left = x + 'px';
+                star.style.top = y + 'px';
+                star.style.width = 1 + size + 'px';
+                star.style.height = 1 + size + 'px';
+
+                star.style.animationDuration = 10 + duration + 's';
+                star.style.animationDelay = duration + 's';
+
+                scene.appendChild(star);
+                i++;
+            }
+        }
+         
+    };
+
+    clouds_background.load();
+
+</script>

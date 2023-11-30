@@ -1,0 +1,62 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var rent_id = (string)ViewData["rent_id"];
+    var rent = bl.rents.get(rent_id).Rows[0];
+    var error = (string)(ViewData["error"] ?? "0");
+
+    ViewBag.Title = users_text["title"].ToString() + " | " + bl.lng.l.Home;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "blog" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+
+<section class="section-confirm">
+    <div class="wrapper">
+        <div class="bg-img">
+            <img src="https://images.unsplash.com/photo-1487611459768-bd414656ea10?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                 alt="">
+        </div>
+        <div class="container-wrapper">
+            <div class="confirm-title">@bl.lng.l.Confirmation</div>
+        </div>
+    </div>
+    <div class="container-wrapper py-5 text-center">
+
+        @if (error == "1")
+        {
+            <div class="confirm-heading"> @bl.lng.l.Your_reservation_is_confirmed <span style="color: red;"> @bl.lng.l.Some @bl.lng.l.Errors.ToLower() </span>  </div>
+            <div class="confirm-label">@bl.lng.l.But_hey_dont_worry_We_will_check_it_out_and_contact_you_soon_with_new_information.</div>
+            <div class="confirm-label">@bl.lng.l.In_the_meantime_relax_and_leave_it_all_to_us :)</div>
+
+            <div style="margin-top: 50px; margin-bottom: 25px;">
+                <img src="~/assets/images/pictures/rent-thank-you-zaggy.png" />
+            </div>
+        }
+        else
+        {
+
+            <div class="pt-4 pb-5">
+                <div class="text_primary text-uppercase font-weight-bold" style="font-size: 4rem; line-height: normal;"> Vaš zahtjev je uspješno obrađen. </div>
+                <div class="text-uppercase mt-5" style="font-size: 1.2rem; margin-top: 25px;"> Molimo provjerite Vaše email za više informacija</div>
+            </div>
+
+            <div style="margin-top: 50px; margin-bottom: 100px;">
+                <img src="~/assets/images/pictures/zagreb_logo.png" />
+            </div>
+
+            <div style="margin-top: 25px;">
+                <div class="confirm-heading"> Hvala Vam što koristite - Zaggy Space </div>
+                <div class="confirm-label"> Želimo Vam ugoda ostatak dana! </div>
+            </div>
+          
+
+        }
+
+    </div>
+</section>

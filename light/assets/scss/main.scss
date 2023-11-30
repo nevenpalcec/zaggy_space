@@ -1,0 +1,45 @@
+@import "abstracts/base";
+@import "abstracts/mixins";
+@import "abstracts/variables";
+
+@import "components/checkbox";
+@import "components/tables";
+@import "components/buttons";
+@import "components/dropdowns";
+@import "components/calendar";
+@import "components/scrollbar";
+@import "components/input";
+@import "components/modal";
+@import "components/tabs";
+@import "components/cards";
+@import "components/select";
+@import "components/slick";
+@import "components/carousel";
+@import "components/editor";
+@import "components/radio";
+@import "components/accordion";
+@import "components/web_template";
+@import "components/pop_up";
+@import "components/loading";
+@import "components/switch";
+@import "components/language_switcher";
+@import "components/ui_datepicker_custom";
+@import "components/tawk";
+@import "components/map";
+@import "components/file_upload";
+
+
+@import "layouts/screen";
+@import "layouts/view";
+@import "layouts/navs";
+@import "layouts/sign";
+
+html, body {
+    font-family: 'Avenir Next Regular', serif;
+    cursor: default;
+    /*color: red !important;*/
+/*    color: red !important;
+    border: 1px solid black;
+    padding: 2px;*/
+}
+

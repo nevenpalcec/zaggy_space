@@ -1,0 +1,302 @@
+﻿ <!-- Modal add new portal -->
+<div id="modal_add_airbnb_objects" class="view_modal">
+
+    <div class="modal_backdrop"></div>
+
+    <div class="modal_dialog modal_xl">
+
+        <div class="modal_content position-relative">
+
+            <!-- Loading -->
+            <div id="modal_add_airbnb_objects_loading" class="view_loading" style="display: none;">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <!--Header-->
+            <div class="modal_header">
+                <div class="text-white font_5 align-self-center px-3 font_medium">
+                    <!--<i class="fas fa-link pr-2"></i>-->
+                    <img src="./assets/images/icons/portals/airbnb.svg" alt="" style="height: 20px;"> &nbsp;
+                    <span class="tran_js" data-key="Airbnb_properties">Airbnb properties</span>
+                </div>
+                <div class="close" onclick="p_modal_add_airbnb_objects.ui.close_modal()"><i class="fas fa-times"></i></div>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <table class="table table-bordered table-sm table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        Airbnb ID
+                                    </th>
+                                    <th>
+                                        Object name
+                                    </th>
+                                    <th class="text-center">
+                                        Country
+                                    </th>
+                                    <th>
+                                        City
+                                    </th>
+                                    <th class="text-center">
+                                        <img src="./assets/images/icons/portals/airbnb.svg" alt="" style="height: 20px;">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal_airbnb_property_list">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- templates -->
+<div>
+
+    <template id="template_modal_airbnb_property_list">
+        <tr ${text_color}>
+            <td class="text-center"> ${id} </td>
+            <td class="text-bold"> ${name} </td>
+            <td class="text-center"> <img src="/assets/images/icons/flags/${country_code}.svg" style="height: 15px;">  </td>
+            <td> ${city} </td>
+            <td class="text-center">
+                <button class="btn btn_secondary font_1 text-uppercase py-1 px-2" onclick="p_modal_add_airbnb_objects.bl.airbnb_connect_property(`${id}`);" ${cursor} ${disabled}>Select</button>
+                <!-- <a class="label label-primary" onclick="p_modal_add_airbnb_objects.bl.airbnb_connect_property('${id}');"> Select </a>-->
+            </td>
+        </tr>
+    </template>
+
+</div>
+
+<!-- scripts -->
+<script>
+
+    var p_modal_add_airbnb_objects = {};
+    p_modal_add_airbnb_objects.template = 't_modal_add_airbnb_objects';
+    
+    p_modal_add_airbnb_objects.bl = new function () {
+
+        this.load_airbnb_properties = async () => {
+
+            var object_id = object_general.object_id;
+            var url = '/api/b2b/airbnb_listings_list/' + object_id;
+            var response = await ajax.get_json(url);
+
+            var properties = JSON.parse(response);
+
+            modal_airbnb_property_list.innerHTML = '';
+
+            for (var p of properties) {
+
+                var t = template_modal_airbnb_property_list.innerHTML;
+
+                var disabled = '<i class="fas fa-ban text-danger"></i>';
+                var enabled = '<i class="far fa-check-circle text-success"></i>';
+
+                var sync = p['synchronization_category'] == 'sync_rates_and_availability' ? 'LIMIT' : !p['synchronization_category'] == false ? 'ALL' : '-';
+
+                t = t.replaceAll('${id}', p['id']);
+                t = t.replace('${name}', decodeURI(p['name']));
+                t = t.replace('${country_code}', p['country_code']);
+                t = t.replace('${city}', p['city']);
+                t = t.replace('${has_availability}', p['has_availability'] == true ? enabled : disabled);
+                t = t.replace('${synchronization_category}', js.text.check_if_empty(sync));
+
+                if (p['has_availability'] == true) {
+                    t = t.replace('${text_color}', '');
+                    t = t.replace('${cursor}', '');
+                    t = t.replace('${disabled}', '');
+
+                } else {
+                    t = t.replace('${text_color}', 'style = "color: #6c757d61;" ');
+                    t = t.replace('${cursor}', 'style = "cursor: auto" ');
+                    t = t.replace('${disabled}', 'disabled');
+                }
+
+                if (sync != 'LIMIT') {
+                    js.html.insertAdjacentHTML('modal_airbnb_property_list', t);
+                }
+            }
+        }
+
+        this.airbnb_connect_property = async (id) => {
+
+            //add loading
+            ui.content_loading("modal_add_airbnb_objects_loading");
+
+            var object_id = object_general.object_id;
+            var user_id = await bl.workers.current_user_id();
+
+            var j = {
+                object_id,
+                value: id,
+                user_id
+            }
+
+            var url = '/api/objects_b2b/airbnb_connect';
+            var response = await ajax.post_json(url, j);
+
+            // Close modal
+            p_modal_add_airbnb_objects.ui.close_modal();
+
+            // reload connections
+            await object_general.bl.load_b2b_connections();
+
+            //hide loading
+            ui.content_loading_hide("modal_add_airbnb_objects_loading");
+        }
+
+        this.airbnb_disconnect_property = async (id) => {
+
+        }
+
+        this.get_all_settings = async () => {
+
+            var object_id = object_general.object_id;
+            var url = '/api/b2b/airbnb_get_all_settings/' + object_id;
+            var response = await js.http.async.get_json(url);
+
+        }
+
+        this.set_listing_details = async () => {
+
+            var object_id = object_general.object_id;
+
+            var url = '/api/b2b/airbnb_set_listing_details/' + object_id;
+            var response = await js.http.async.get_json(url);
+
+            if (response.includes('error') == true) {
+                swal({
+                    title: "Listing details upload",
+                    text: response,
+                    type: "error"
+                });
+            }
+
+        }
+
+        this.set_availability_settings = async () => {
+
+            var object_id = object_general.object_id;
+            var url = '/api/b2b/airbnb_availability_settings_set/' + object_id;
+            var response = await js.http.async.get_json(url);
+            var r = JSON.parse(response);
+
+            if (response.includes('error') == true) {
+                swal({
+                    title: "Availability settings",
+                    text: response,
+                    type: "error"
+                });
+            }
+
+        }
+
+        this.set_booking_settings = async () => {
+
+            var object_id = object_general.object_id;
+
+            var url = '/api/b2b/airbnb_booking_settings_set/' + object_id;
+            var response = await js.http.async.get_json(url);
+
+            if (!response == false) {
+                if (response.includes('error') == true) {
+                    swal({
+                        title: "Booking settings",
+                        text: response,
+                        type: "error"
+                    });
+                }
+            }
+
+        }
+
+        this.set_price_settings = async () => {
+
+            var object_id = object_general.object_id;
+
+            var url = '/api/b2b/airbnb_price_settings_set/' + object_id;
+            var response = await ajax.get_json(url);
+            var r = JSON.parse(response);
+        }
+
+        this.set_listing_details = async () => {
+
+            var object_id = object_general.object_id;
+
+            var url = '/api/b2b/airbnb_set_listing_details/' + object_id;
+            var response = await ajax.get_json(url);
+
+            if (!r == false) {
+                var r = JSON.parse(response);
+                if (response.includes('error') == true) {
+                    swal({
+                        title: "Listing details upload",
+                        text: response,
+                        type: "error"
+                    });
+                }
+            }
+
+        }
+
+    }
+
+    p_modal_add_airbnb_objects.ui = new function () {
+
+        // Open modal
+        this.show_modal = async function () {
+                        
+            await Swal.fire({
+
+                title: title_text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: confirmation_text,
+                cancelButtonText: cancel_text
+
+            }).then(async (result) => {
+
+                if (result.isConfirmed) {
+
+                    ui.content_loading("objects_general_content_loading");
+
+                    var modal_id = document.getElementById('t_modal_add_airbnb_objects');
+                    modal_id.classList.remove("hidden");
+
+                    // load airbnb properties
+                    await p_modal_add_airbnb_objects.bl.load_airbnb_properties();
+
+                    setTimeout(function () {
+                        modal_id.classList.remove('visuallyhidden');
+                    }, 20);
+
+                    ui.content_loading_hide("objects_general_content_loading");
+
+                }
+            });
+        }
+
+        // Close modal
+        this.close_modal = function () {
+            var modal_id = document.getElementById('t_modal_add_airbnb_objects');
+            modal_id.classList.add('hidden');
+            modal_id.classList.add('visuallyhidden');
+        };
+
+    };
+
+</script>

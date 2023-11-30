@@ -1,0 +1,892 @@
+﻿@page "/regions/list/{region_id?}"
+@using System.Data
+@using System.ComponentModel.DataAnnotations
+
+@code {
+
+    System.Data.DataTable location_region, dt, dt_count_group, region_desc;
+    System.Data.DataRow objItem, region;
+
+    string b2b_id = bl.B2B.zaggy.shared.b2b_id;
+
+    string region_id_query = "";
+    string country_id = "99";
+    string map_h = "none";
+    string search = "";
+    string regions_types_sel;
+    string sort_by = "created";
+    string sort_order = "";
+
+    string sort_d_by = "created"; 
+    string sort_d_order = "";
+    string region_type_filter = "";
+
+    string country_id_sel = "12";
+    public string guid { get; set; }
+
+    bool save_success_item = false;
+    bool disabled_edit_item = true;
+
+    int offset = 1;
+    int list_count = 0;
+    int page_selected = 0;
+
+    [Parameter] public string region_id { get; set; }
+    List<string> regions_types = new List<string>(new string[] { "city", "neighborhood", "point", "region_micro", "island", "park", "region", "area", "event", "street", "cool place", "hospital" });
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(1);
+
+        if (location_region.Rows.Count > 0)
+        {
+            if (region_id.is_null() == false)
+            {
+                // await get_region();
+            }
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        region_id = region_id ?? "";
+
+        await load_r();
+        dt = bl.countries.contires_list();
+
+        guid = await sessionStorage.GetItemAsync<string>("guid");
+        bl.B2B.zaggy.shared.guid = guid;
+
+        await Perm.reseller_worker_perm();
+        if (Perm.regions_list == false) { NavManager.NavigateTo("403", true); }
+
+        await get_region();
+
+        edit_reg("181");
+        await js.InvokeVoidAsync("region_list.bl.ClearAll");
+    }
+
+    async Task fill_list()
+    {
+        offset = 1;
+        await load_r();
+    }
+
+    async Task load_r()
+    {
+
+        await Task.Delay(1);
+
+        int offset_sql = 25 * (offset - 1);
+
+        if (offset_sql < 1) { offset_sql = 0; }
+
+        location_region = bl.b2b_regions.list(b2b_id, search, sort_by, guid, region_type_filter, offset_sql, country_id);
+        dt_count_group = bl.b2b_regions.count_group();
+
+        await Task.Delay(1);
+
+        StateHasChanged();
+
+    }
+
+    async void edit_reg(string reg_id)
+    {
+        region_id = reg_id;
+
+        await get_region();
+        await js.InvokeVoidAsync("region_list.edit", reg_id);
+        disabled_edit_item = false;
+        await Task.Delay(300);
+        StateHasChanged();
+    }
+
+    async void pager(int p)
+    {
+        await Task.Delay(1);
+
+    }
+
+    void get_description(System.Data.DataRow row)
+    {
+        objItem = row;
+    }
+
+    async void on_page_change()
+    {
+        map_h = "";
+        await get_region();
+        await js.InvokeVoidAsync("region_list.clear_checked");
+        await Task.Delay(300);
+
+        await load_r();
+        await js.InvokeVoidAsync("region_list.bl.setCheckboxTrueAll");
+        await Task.Delay(100);
+        disabled_edit_item = true;
+    }
+
+    async Task search_keypress(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            map_h = "";
+            await get_region();
+            await js.InvokeVoidAsync("region_list.clear_checked");
+            await Task.Delay(300);
+
+            await fill_list();
+            await js.InvokeVoidAsync("region_list.bl.setCheckboxTrueAll");
+            await Task.Delay(100);
+            disabled_edit_item = true;
+
+        }
+    }
+
+    async void select_region()
+    {
+        map_h = "";
+        await load_r();
+
+        if (region_id.is_null() == false)
+        {
+            await get_region();
+            //await js.InvokeVoidAsync("region_list.bl.load_data", region_id);
+            await Task.Delay(1);
+            StateHasChanged();
+        }
+    }
+
+    async void map_full()
+    {
+        map_h = "";
+
+        await load_r();
+        OnParametersSet();
+
+        await js.InvokeVoidAsync("region_list.bl.load_data", region_id);
+        await js.InvokeVoidAsync("map_full_click");
+
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async Task addNewDesc()
+    {
+        bool confirmed = await js.InvokeAsync<bool>("confirm", "Are you sure?");
+
+        if (confirmed)
+        {
+            bl.b2b_regions.list_desc_add(region_id);
+            region_desc = bl.b2b_regions.list_desc(region_id);
+        }
+    }
+
+    async Task get_all_sel_region()
+    {
+        var id_in = await js.InvokeAsync<string>("region_list.bl.get_map_data");
+
+        if (id_in != "")
+        {
+            id_in = id_in.TrimEnd(',');
+            search = "";
+            location_region = bl.b2b_regions.list(b2b_id, search, "name", guid, region_type_filter, 0, country_id, id_in);
+
+            StateHasChanged();
+
+            await Task.Delay(400);
+            await js.InvokeVoidAsync("region_list.bl.setCheckboxTrueAll");
+            await Task.Delay(100);
+        }
+
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    void regions_types_change(ChangeEventArgs e)
+    {
+        regions_types_sel = e.Value.ToString();
+    }
+
+    void refresh() { map_h = ""; }
+
+    async Task save_map_details()
+    {
+        await Task.Delay(1);
+        await js.InvokeVoidAsync("region_list.bl.send", region_id);
+        await load_r();
+        toastService.ShowSuccess(bl.lng.l.Save, lng.l.Congratulations);
+    }
+
+    async Task sync()
+    {
+        await Task.Delay(1);
+        bl.b2b_regions.sync(bl.B2B.zaggy.shared.b2b_id);
+        bl.b2b_regions.sync(bl.B2B.zaggy.shared.b2b_id);
+        toastService.ShowSuccess(bl.lng.l.Sync, lng.l.Congratulations);
+    }
+
+    async Task add_new_region()
+    {
+        // add new empty region
+        bl.b2b_regions.add(bl.B2B.zaggy.shared.b2b_id, "99", "NR", "New region", "city");
+
+        //await js.InvokeVoidAsync("region_list.draw");
+
+        sort_by = "id desc";
+        search = "New region";
+        region_type_filter = "";
+        region = null;
+
+        await load_r();
+    }
+
+    async Task calculate_total_properties()
+    {
+        // add new empty region
+        bl.b2b_regions.update_total_properties_number(region_id, bl.B2B.zaggy.shared.b2b_id);
+
+        await load_r();
+        await get_region();
+    }
+
+    async Task deleteRegion(string id)
+    {
+        bool confirmed = await js.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            bl.b2b_regions.del(id);
+            region_id = null;
+            region = null;
+            await load_r();
+        }
+    }
+
+    async Task deleteRegionDesc(string id)
+    {
+        bool confirmed = await js.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            bl.b2b_regions.del_desription(id);
+            await load_r();
+        }
+    }
+
+    /// <summary>
+    /// get details for region
+    /// </summary>
+    /// <returns></returns>
+    async Task get_region()
+    {
+        try
+        {
+            if (region_id == "") { region_id = "256"; }
+
+            var qregion = (from System.Data.DataRow myRow in location_region.Rows
+                           where (int)myRow["id"] == Int32.Parse(region_id)
+                           select myRow).CopyToDataTable();
+
+            region = qregion.Rows[0];
+
+            map_h = "";
+            await load_r();
+            await js.InvokeVoidAsync("region_list.on_load");
+            await js.InvokeVoidAsync("region_list.bl.load_data", region_id);
+
+            await Task.Delay(100);
+            await js.InvokeVoidAsync("region_list.bl.setCheckboxTrueAll");
+            await Task.Delay(100);
+        }
+
+        catch (Exception ex)
+        {
+            var a = ex.Message;
+            //code for any other type of exception
+            map_h = "";
+            //await load_r();
+            //await js.InvokeVoidAsync("region_list.on_load");
+            //await js.InvokeVoidAsync("region_list.bl.load_data", 100000);
+        }
+    }
+
+    async void CheckboxClicked(string check_box_id, object checkedValue)
+    {
+        //await js.InvokeVoidAsync("region_list.bl.getSelectCheckbox");
+        await js.InvokeVoidAsync("region_list.bl.getSelectCheckbox", check_box_id, checkedValue);
+        await Task.Delay(1);
+        disabled_edit_item = true;
+        StateHasChanged();
+    }
+
+    async void Checkbox_select_all(object checkedValue)
+    {
+        await Task.Delay(1);
+
+        if ((bool)checkedValue == true)
+        {
+            set_checkbox_true();
+        }
+        else
+        {
+            set_checkbox_false();
+        }
+    }
+
+    async void select_all_region()
+    {
+        await js.InvokeVoidAsync("region_list.bl.setCheckboxTrueAll");
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void clear_all_region()
+    {
+        await js.InvokeVoidAsync("region_list.bl.ClearAll");
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+    
+    async void CheckboxSelect(string check_box_id)
+    {
+        await js.InvokeVoidAsync("region_list.bl.load_data_add", check_box_id);
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void set_checkbox_true()
+    {
+        await js.InvokeVoidAsync("region_list.bl.setCheckboxTrue");
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async void set_checkbox_false()
+    {
+        await js.InvokeVoidAsync("region_list.bl.setCheckboxFalse");
+        await Task.Delay(1);
+        StateHasChanged();
+    }
+
+    async Task order_by(string col)
+    {
+        await Task.Delay(1);
+
+        sort_order = (sort_order == "" ? " desc" : "");
+        sort_by = col + sort_order;
+        //await load_r();
+    }
+
+    void order_d_by(string col)
+    {
+        sort_d_order = (sort_d_order == "" ? " desc" : "");
+        sort_d_by = col + sort_d_order;
+        region_desc = bl.b2b_regions.list_desc(region_id, sort_d_by);
+    }
+
+    async Task select_country(ChangeEventArgs e)
+    {
+        country_id = e.Value.ToString();
+        await load_r();
+    }
+
+    async Task regions_types_filter_change(ChangeEventArgs e)
+    {
+        region_type_filter = e.Value.ToString();
+        await load_r();
+    }
+
+    async Task regions_types_filter_clear()
+    {
+        region_type_filter = "all";
+        await load_r();
+    }
+}
+
+<style>
+
+    #leaflet_container {
+        display: flex;
+    }
+
+    #leaf_map {
+        flex: 1;
+        height: 600px;
+    }
+
+    #leaf_buttons {
+        width: 150px;
+        padding-left: 5px;
+    }
+
+        #leaf_buttons > * {
+            width: 100%;
+            border-radius: 0;
+            border-bottom: 1px solid white;
+        }
+
+        #leaf_buttons .leaf_onclick_checkbox {
+            padding-top: 5px;
+        }
+
+    #input_region_country {
+        display: block !important;
+        opacity: 0;
+        width: 0;
+        position: absolute;
+    }
+
+    .d-none {
+        display: none !important;
+    }
+
+    .leaflet-container.crosshair-cursor-enabled {
+        cursor: crosshair;
+    }
+
+    tr td {
+        padding: 5 !important;
+        margin: 5 !important;
+    }
+</style>
+
+<PageTitle> @lng.l.Regions </PageTitle>
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card shadow-none border" style="background-color: @Settings.color_primary;">
+            <div class="row gx-0 flex-between-center">
+
+                <div class="col-sm-auto d-flex align-items-center ms-2">
+                    <img class="p-2" src="@Settings.img_avatar_small" alt="" style="height: 60px;" />
+                    <div>
+                        <h6 class="fs--1 mb-0" style="color: #fff;"> @bl.lng.l.Region @bl.lng.l.List <span style="color: #fff;">  </span>  </h6>
+                        <h4 class="fw-black mb-0" style="color: #fff;"> @Settings.app_name <span class="fw-medium" style="color: #fff;"> @bl.lng.l.Region @bl.lng.l.List </span></h4>
+                    </div>
+                </div>
+
+                <div class="col-md-auto p-3">
+                    <div class="d-flex">
+
+                        <span class="text-dark me-2 align-self-center">@lng.l.Page</span>
+                       
+                        <!-- Countries -->
+                        <span class="me-2">
+                            <select id="select_country" class="form-select text-capitalize" @onchange="select_country" style="width: 200px;">
+                                <option class="text-capitalize" selected value="99"> Croatia | HR </option>
+                                <option class="text-capitalize" selected value="203"> Slovenia | SI </option>
+                                <option class="text-capitalize" selected value="244"> Serbia | RS </option>
+                                <option class="text-capitalize" selected value="29"> Bosnia and Herzegovina | BA </option>
+                                <option class="text-capitalize" selected value="252"> Montenegro | ME </option>
+                                <option class="text-capitalize" selected value=""> All </option>
+                            </select>
+                        </span>
+
+                        <!-- regions types -->
+                        <span class="me-2">
+                            <select id="regions_types_filter" class="form-select text-capitalize" @onchange="regions_types_filter_change" style="width: 200px;">
+                                <option class="text-capitalize" selected value="">@lng.l.All</option>
+                                @foreach (var r in regions_types)
+                                {
+                                    if (r != "")
+                                    {
+                                        <option class="text-capitalize" value="@r">@r</option>
+                                    }
+                                }
+                            </select>
+                        </span>
+                        
+                        @*<button type="button" class="btn btn-dark ms-1" @onclick="fill_list"> @lng.l.Search </button>*@
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+
+    <!-- list of regions -->
+    <div class="col-lg-4 col-xxl-3">
+
+        <div class="card card-default">
+
+            @*Add New Region card header*@
+            <div class="m-1 pt-1">
+                <div class="d-flex ">
+
+                    <button class="btn btn-falcon-primary flex-1 btn-sm me-1  text-danger" type="button" @onclick="clear_all_region"> Clear </button>
+                    <button class="btn btn-falcon-primary flex-1 btn-sm me-1 " type="button" @onclick="get_all_sel_region"> Show </button>
+
+                    <button class="btn btn-falcon-success flex-1 btn-sm me-1 " type="button" @onclick="sync" data-spinner-color="#fff" data-style="fade">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+
+                    @if (Perm.edit_reginos == true)
+                    {
+                        <button class="btn btn-falcon-primary btn-sm me-1 " type="button" @onclick="add_new_region" data-spinner-color="#fff" data-style="fade">
+                            <i class="fas fa-plus"></i>
+                            <span class="ms-2">@lng.l.New</span>
+                        </button>
+                    }
+
+                </div>
+            </div>
+
+            @*Regions search and sorting*@
+            <div class="card-body" style="padding: 2px; overflow: hidden;">
+             
+                <!-- input search -->
+                <div class="p-2 d-flex justify-content-between">
+                    <input class="form-control me-2" placeholder="page" type="number" @bind="offset" @bind:event="oninput" style="width: 90px;" @onchange="on_page_change" min="1" />
+                    <input class="form-control" @onkeyup="search_keypress" placeholder="@lng.l.Search @lng.l.Regions..." type="search" @bind="search" autofocus />
+                </div>
+                
+                @*Regions list table*@
+                <table class="table table-hover datatable-responsive-row-control">
+                    @*<thead style="border-bottom-width: 2px">
+
+                        <tr>
+                            <th scope="col" colspan="2" class="sorting" role="button" @onclick="@(e => order_by("name"))">@lng.l.Name</th>
+                            <th scope="col" class="text-end">@lng.l.Type</th>
+                        </tr>
+                    </thead>*@
+
+                    @if (location_region != null)
+                    {
+                        <tbody>
+                            
+                            @foreach (System.Data.DataRow r in location_region.Rows)
+                            {
+                                <tr style="@((r["id"].ToString() == region_id && disabled_edit_item != true) ? "background: #ccc;" : "background: #fff;") ">
+
+                                    <td>
+                                        
+                                        <div style="cursor: pointer" @onclick="@(e => edit_reg(r["id"].ToString()))">
+                                            <img style="width:20px" src="/assets/images/icons/flags/@(r["country_code"]).svg" /> &nbsp;
+                                            @r["name"].ToString()
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        <input id="@r["id"]_cid" value="@r["id"]" name="cb_regije" checked="@(r["id"].ToString() == region_id ? true : false)" type="checkbox" @onchange="@(eventArgs  => CheckboxClicked(r["id"].ToString(), eventArgs.Value))" />
+                                    </td>
+
+                                    @*<td class="text-end text-capitalize" style="white-space: nowrap;">
+                                        <label style="cursor: pointer" for="@r["id"]_cid">@r["type"]</label>
+                                        <button title="Edit" @onclick="@(e => edit_reg(r["id"].ToString()))" class="btn btn-falcon-primary btn-sm  ms-1 mb-1" type="button">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>*@
+                                </tr>
+                            }
+
+                        </tbody>
+                    }
+                </table>
+
+            </div>
+
+            @*Regions table pagination*@
+            @*            <div class="card-footer">
+            <div class="row">
+            <div class="col-auto d-flex">
+
+            @for (int i = 1; i <= (list_count / 25) + 1; i++)
+            {
+            int pageId = i - 1;
+            if (pageId == page_selected)
+            {
+
+            <button class="btn btn-sm btn-dark px-3 m-1" type="button" id="b_@i"><span>@i</span></button>
+            }
+            else
+            {
+            <button class="btn btn-sm btn-outline-dark px-3 m-1" type="button" id="b_@i" @onclick="(e => pager(pageId))"><span>@i</span></button>
+            }
+            }
+            </div>
+            </div>
+            </div>*@
+
+        </div>
+
+    </div>
+
+    <!-- region details  -->
+    <div class="col-lg-8 col-xxl-9" id="area_panel">
+        @if (region != null)
+        {
+            <!-- Details -->
+            <div class="card card-default mb-3" id="map_wrapper">
+                <div class="card-header">
+                    <div class="row flex-between-center">
+                        <div class="col-6 col-sm-auto d-flex align-items-center pe-0">
+                            <h4 class="mb-0 text-capitalize text-uppercase">
+
+                                <a href="https://www.google.hr/maps/place/@region["name"]" target="_blank">
+                                    @*@region["type"] - @region["name"] |*@ Total properties: @region["properties_number"]
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="col-6 col-sm-auto ms-auto text-end ps-0 flex-between-center">
+                            <div>
+                            </div>
+
+                            <!-- right side buttons -->
+                            <div class="d-flealign-items-xl-center">
+
+                                <div>
+                                    @if (Perm.edit_reginos == true)
+                                    {
+                                        <button disabled="@disabled_edit_item" class="btn btn-falcon-danger btn-sm" type="button" @onclick="@(async () => await deleteRegion(@region_id.ToString()))">
+                                            <i class="far fa-trash-alt"></i>
+                                            <span class="ms-2">@lng.l.Delete</span>
+                                        </button>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-1">
+
+                    <div class="row">
+
+                        <div class="d-flex flex-between-center">
+
+                            <div class="d-flex flex-between-center">
+                                <div class="col-md-auto pe-1">
+
+                                    <label for="b2b_regions_name"> @lng.l.Region_name </label>
+
+                                    <div class="input-group">
+                                        <input type="text" name="name" class="form-control" id="b2b_regions_name" value="@region["name"]" autocomplete="off" required>
+                                        <span class="input-group-btn">
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="pe-1">
+                                    <label for="region_contires_select">@lng.l.Country</label>
+                                    <select class="form-select" style="z-index:0;" id="region_contires_select" size="1">
+                                        <Contires selC="@region["country_id"].ToString()"></Contires>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-auto pe-1">
+                                    <label> @lng.l.Region_type </label>
+                                    <div class="input-group">
+                                        <select id="regions_types" class="form-select text-capitalize" @onchange="regions_types_change">
+                                            @foreach (var r in regions_types)
+                                            {
+                                                if (r == region["type"].ToString())
+                                                {
+                                                    <option class="text-capitalize" selected value="@r">@r</option>
+                                                }
+                                                else
+                                                {
+                                                    <option class="text-capitalize" value="@r">@r</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- full screen -->
+                                <div class="col-md-auto pe-1">
+
+                                    <button class="btn btn-dark" type="button" @onclick="map_full" style="margin-top: 30px;">
+                                        <span> &#x26f6; </span>
+                                    </button>
+                                </div>
+
+                                <div class="col-md-auto pe-1">
+
+                                    <a href="units/map/@region_id" title="Show objects" class="btn btn-dark" type="button" style="margin-top: 30px;">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </a>
+                                </div>
+
+                                <div class="col-md-auto pe-1">
+
+                                    <button class="btn btn-dark" type="button" @onclick="calculate_total_properties" style="margin-top: 30px;" title="calculate total number of properites">
+                                        <i class="fas fa-house-user"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- save button -->
+                            <div class="col-md-auto pe-1" style="margin-top: 30px;">
+                                @if (Perm.edit_reginos == true)
+                                {
+                                    <button class="btn btn-dark" disabled="@disabled_edit_item" @onclick="save_map_details"> @lng.l.Save </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- map -->
+                    <div class="row">
+                        <!-- Select region -->
+                        <div id="leaflet_container" class="col-md-12 my-3 ">
+
+                            <!-- Map -->
+                            <div class="rounded" id="leaf_map"></div>
+
+                        </div>
+                    </div>
+
+                    @*Map control Buttons*@
+                    <div id="leaf_buttons" class="w-100" style="width: auto;">
+                        <div class="row p-0 g-3">
+                            <div class="col-md-auto">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" id="leaf_map_checkbox" type="checkbox" />
+                                    <label class="form-check-label text-nowrap" for="leaf_map_checkbox"> @lng.l.Move_on_Click </label>
+                                </div>
+                            </div>
+                            <div class="col-md-auto">
+                                <button class="btn btn-outline-dark btn-sm text-nowrap w-100" @onclick="load_r"> @lng.l.Reload_Map </button>
+                            </div>
+                            <div class="col-md-auto">
+                                <button class="btn btn-outline-dark btn-sm text-nowrap w-100" onclick="region_list.ui.delete_last();"> @lng.l.Remove_Last </button>
+                            </div>
+                            <div class="col-md-auto">
+                                <button class="btn btn-outline-dark btn-sm text-nowrap w-100" onclick="region_list.ui.clear_all();"> @lng.l.Remove_All </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <div class="row flex-between-center">
+                        <div class="col-6 col-sm-auto d-flex align-items-center pe-0">
+                            <h5 class="mb-0 text-capitalize">@lng.l.Meta_data</h5>
+                        </div>
+                        <div class="col-6 col-sm-auto ms-auto text-end ps-0 flex-between-center">
+                            <div>
+                                <button class="btn btn-falcon-default btn-sm" type="button" @onclick="@(async() => await addNewDesc())">
+                                    <i class="fas fa-language"></i>
+                                    <span class="ms-2">Autotranslate</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-hover table-striped overflow-hidden">
+                        <thead style="border-bottom-width: 2px">
+                            <tr>
+                                <th scope="col" role="button" @onclick="@(e => order_d_by("Lang"))"> @lng.l.Language </th>
+                                <th scope="col" role="button" @onclick="@(e => order_d_by("name"))"> @lng.l.Name </th>
+                                <th scope="col" role="button" @onclick="@(e => order_d_by("Short"))"> @lng.l.Description </th>
+                                <th scope="col" role="button" @onclick="@(e => order_d_by("Created"))"> @lng.l.Created </th>
+                                <th scope="col" class="text-end"> @lng.l.Action </th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_rents">
+
+                            @if (region_desc != null)
+                            {
+                                foreach (System.Data.DataRow r in region_desc.Rows)
+                                {
+                                    <tr>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-info m-1" type="button" data-bs-toggle="modal" data-bs-target="#edit-modal" @onclick="() => get_description(r)"> @lng.l.Edit </button>
+                                            <img style="width:20px" src="/assets/images/icons/flags/@(r["country_code"]).svg" />
+                                            <span class="text-dark">@r["lang"]</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="text-dark">@r["name"]</span>
+                                            <div class="notification-time m-0 p-1">
+                                                <span class="text-dark">@r["slug"]</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="text-dark">@r["short"]</span>
+                                        </td>
+                                        <td>
+                                            <div class="m-0 p-0 text-dark">
+                                                @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("dd.MM.yyyy")
+                                            </div>
+                                            <div class="notification-time text-dark m-0 p-1">
+                                                @System.DateTime.Parse(r["created"].ToString() ?? "").ToString("HH:mm") h
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <button title="Delete" type="button" @onclick="@(async () => await deleteRegionDesc(@r["id"].ToString()))" class="m-0 btn btn-outline-secondary">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card card-default mb-3 mt-2 pt-3">
+                    @*Regions Count group table*@
+                    <table class="table table-sm">
+                        @if (dt_count_group != null)
+                        {
+                            <tbody>
+                                @foreach (System.Data.DataRow r in dt_count_group.Rows)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+
+                                                    &nbsp; @r["type"].ToString()
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td class="text-end text-capitalize">
+                                            &nbsp; @r["c"].ToString()
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@code {
+
+    //poziva se iz child-a
+    async Task ClickHandler(string newMessage)
+    {
+        //message = newMessage;
+        //await refresh2();
+        await Task.Delay(1);
+        region_desc = bl.b2b_regions.list_desc(region_id);
+    }
+
+}
+
+<Modal onSave="ClickHandler" objItem="@objItem" region_id="@region_id"></Modal>

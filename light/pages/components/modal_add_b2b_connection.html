@@ -1,0 +1,240 @@
+﻿<!-- Modal add status -->
+<div id="modal_add_b2b_connection" class="view_modal  hidden visuallyhidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal_header bg_primary">
+                <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="fas fa-list-ul pr-2"></i>Add B2B connection</div>
+                <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+            </div>
+            <div class="modal-body pb-0">
+                <!-- Payment -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div id="modal_add_b2b_connection_b2b_id" class="view_dropdown dropdown" data-id="">
+                            <button type="button" class="btn btn_hover px-2 py-1 w-100" onclick="modal_add_b2b_connection.ui.toggle_dropdown(this);">
+                                <div class="d-flex align-items-center w-100">
+                                    <span class="mr-3 font_8 d-flex py-2">
+                                        <i class="fas fa-compress-arrows-alt"></i>
+                                    </span>
+                                    <div class="dropdown_label mr-1">
+                                        <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                            Enter B2B ID
+                                        </div>
+                                        <div class="font_3 dropdown_name text-left" id="modal_add_rents_sources_payment_name">-</div>
+                                    </div>
+                                    <div class="btn_toogleArrow pl-2 ml-auto font_4">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown_menu w-100 hidden">
+                                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                    <div class="font_bold"></div>
+                                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                </div>
+                                <hr class="m-0">
+                                <ul class="dropdown_ul font_3" style="max-height: 15rem; overflow-y: auto;" id="modal_add_b2b_connection_b2b_id_type">                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">B2B value: </label>
+                            <input type="text" class="form-control focus" id="modal_add_b2b_connection_value" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="mb-1">Price id: </label>
+                            <input type="text" class="form-control focus" id="modal_add_b2b_connection_price_id" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn_silver" data-dismiss="modal" id="modal_add_b2b_connection_cancel_btn">Cancel</button>
+                <button class="btn btn_red hidden" id="modal_add_b2b_connection_delete_btn" onclick="modal_add_b2b_connection.bl.delete_status();">Delete</button>
+                <!--<div>
+                    <button class="btn btn_primary hidden" id="modal_add_b2b_connection_save_btn" onclick="modal_add_b2b_connection.bl.update_status();">Save</button>                    
+                </div>-->
+                <button class="btn btn_primary" onclick="modal_add_b2b_connection.bl.save_b2b();" id="modal_add_b2b_connection_add_btn"><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--template for rent sources list-->
+<template id="template_b2b_options">
+
+    <li class="dropdown_li" data-id="${apartment_rent_source_id}" data-name="${icon}">
+        <div class="d-flex align-items-center">
+            <div class="icon icon_img">
+                <img src="./assets/images/icons/portals/${img}.svg" alt="">
+            </div>
+            <div class="name align-self-center">${name}</div>
+        </div>
+    </li>
+
+</template>
+
+<script>
+
+    var modal_add_b2b_connection = {};
+
+    modal_add_b2b_connection.object_id = '';
+    modal_add_b2b_connection.user_id = '';
+
+    // Load function
+    modal_add_b2b_connection.load = () => {
+
+        // Global components
+        // ui.select_custom("modal_edit_room_select_type_bed");
+        //ui.filter_search_list("modal_add_review_select_filter_countries");
+        //ui.select_filter_custom("modal_add_review_select_filter_countries");
+
+        modal_add_b2b_connection.bl.load_b2b_connections();
+
+        //modal_add_b2b_connection.bl.dropdown("modal_add_b2b_connection_b2b_id");
+        ui.dropdown_list("modal_add_b2b_connection_b2b_id");
+        //document.querySelectorAll('#modal_add_b2b_connection_b2b_id_type > li')[0].click();
+
+        // BL components
+        modal_add_b2b_connection.bl.close_modal("modal_add_b2b_connection");
+
+        // get object id from url
+        modal_add_b2b_connection.object_id = page.get_id();
+        modal_add_b2b_connection.user_id = bl.workers.current_user_id();
+
+    };
+
+    // UI logic
+    modal_add_b2b_connection.ui = new function () {
+
+        this.toggle_dropdown = (el) => {
+
+            let e = el.parentElement.children[1];
+
+            if (e.classList.contains("hidden")) {
+                e.classList.remove("hidden");
+            } else {
+                e.classList.add("hidden");
+            }
+
+        }
+
+    };
+
+    // BL logic
+    modal_add_b2b_connection.bl = new function () {
+
+        // Close modal
+        this.close_modal = function (id) {
+
+            let details_id = document.getElementById(id);
+            let modal_content = details_id.getElementsByClassName("modal_content")[0];
+            let dismiss = details_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                };
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!details_id.classList.contains("hidden")) {
+                        hide_modal();
+                    };
+                };
+            });
+            document.onkeydown = function (e) {
+                if (!details_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    };
+                };
+            };
+            function hide_modal() {
+
+                details_id.classList.add('visuallyhidden');
+                details_id.addEventListener('transitionend', function (e) {
+                    details_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+
+            };
+        };
+
+        // Open modal
+        this.show_modal = function (id) {
+
+            modal_add_b2b_connection_delete_btn.classList.add('hidden');
+
+            let modal_id = document.getElementById(id);
+            modal_id.classList.remove("hidden");
+            setTimeout(function () {
+                modal_id.classList.remove('visuallyhidden');
+            }, 20);
+        };
+
+        //load b2b dropdown list
+        this.load_b2b_connections = function () {
+
+            var sources = JSON.parse(localStorage.getItem('list_sort'));
+            
+            for (var s of sources) {
+                var t = template_b2b_options.innerHTML;
+                t = t.replace('${apartment_rent_source_id}', s['id']);
+                t = t.replace('${img}', s['icon']);
+                t = t.replace('${icon}', s['icon']);
+                t = t.replaceAll('${name}', s['name']);
+                js.html.insertAdjacentHTML('modal_add_b2b_connection_b2b_id_type', t);
+            }
+
+        }
+
+        // add new b2b connection to object
+        this.save_b2b = async () => {
+
+            var url = '/api/objects_b2b/add';
+
+            var b2b = {};
+
+            b2b.b2b_id = modal_add_b2b_connection_b2b_id.dataset.id;
+            b2b.b2b_value = modal_add_b2b_connection_value.value;
+            b2b.object_id = modal_add_b2b_connection.object_id;
+            b2b.price_id = modal_add_b2b_connection_price_id.value;
+            b2b.user_id = modal_add_b2b_connection.user_id;
+            b2b.item_id = "-1";
+
+            await ajax.post_json(url, b2b);
+
+            object_general.bl.load_b2b_connections();
+
+            //sync.bl.load_b2b();
+            this.clear_modal();
+            this.close_modal('modal_add_b2b_connection');
+        }
+
+        // clear input fields
+        this.clear_modal = () => {
+
+            modal_add_b2b_connection_cancel_btn.click();
+            modal_add_b2b_connection_value.value = '';
+            modal_add_b2b_connection_price_id.value = '';
+            document.querySelector('#modal_add_b2b_connection_b2b_id_type > li').click();
+
+        }
+
+    };
+
+    // On load
+    modal_add_b2b_connection.load();
+
+</script>

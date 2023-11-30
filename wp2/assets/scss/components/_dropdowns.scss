@@ -1,0 +1,62 @@
+.dropdown {
+    .btn {
+        background-color: #FFF;
+        width: 100%;
+        text-align: left;
+    }
+
+    .dropdown-toggle {
+        position: relative;
+
+        &:after {
+            position: absolute;
+            top: 50%;
+            transform: translate(0,-50%);
+            right: .8rem;
+        }
+    }
+
+    .dropdown-item {
+        cursor: pointer;
+
+        &:active {
+            background-color: $bg-tertiary;
+            color: red;
+        }
+    }
+
+    i {
+        position: absolute;
+        z-index: 1;
+        top: .7rem;
+        left: .4rem;
+        color: black;
+    }
+}
+
+
+// fix for semnatic js dropdows
+.ui.dropdown {
+    .dropdown.icon {
+        &:before {
+            position: absolute;
+            right: 0.2rem;
+        }
+    }
+
+    .text, .item {
+        img {
+            vertical-align: super !important;
+        }
+    }
+}
+
+.rent-details {
+    .dropdown-item {
+
+        &:active {
+            background-color: $bg-tertiary !important;
+            color: #FFF !important;
+        }
+    }
+}

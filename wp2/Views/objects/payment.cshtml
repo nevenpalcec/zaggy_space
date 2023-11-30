@@ -1,0 +1,843 @@
+﻿
+@{
+    var user_id = bl.settings_current.user_id;
+    var user_db = bl.users.user_get(user_id).Rows[0];
+    var booking_engine_db = bl.booking_engine.get_by_user_id(user_id).Rows[0];
+    var users_text = bl.users_texts.get(user_id, bl.settings_current.language_id).Rows[0];
+    var rent_source_id = bl.rents_sources.get_id_web(user_id);
+
+    ViewBag.Title = users_text["title"].ToString() + " | " + bl.lng.l.Book_Now;
+    Layout = "~/Views/_Layout.cshtml";
+
+    var object_id = (string) ViewData["object_id"];
+    var date_from = (string) ViewData["date_from"];
+    var date_until = (string) ViewData["date_until"];
+    var persons = (string) (ViewData["persons"] ?? "1");
+    var pets = (string) (ViewData["pets"] ?? "0");
+    var children = (string) (ViewData["children"] ?? "0");
+    var item_id = (string) (ViewData["item_id"] ?? "-1");
+    var promo_code = (string) (ViewData["promo_code"] ?? "");
+
+    var obj = bl.objects.get(object_id).Rows[0];
+
+    var price_def = bl.objects_prices_days.price_calculation_b2b(object_id, date_from, date_until, persons, "0", pets, item_id, bl.B2B.Web.shared.b2b_id, "1", null, promo_code);
+
+    var items_auto = price_def.Tables["items_auto"];
+    var sum = price_def.Tables["sum"].Rows[0];
+    var advance = price_def.Tables["advance"].Rows[0];
+    var general = price_def.Tables["general"].Rows[0];
+
+    var price_sum = decimal.Parse(sum["full_price_b2b"].ToString());
+    var insurance_price = price_sum * bl.B2B.ProtectaGroup.shared.provision_percent / 100;
+    var label = sum["currency_label"].ToString();
+    var price_total = price_sum + insurance_price;
+
+    var countries = bl.countries.contires_list();
+
+    // get cooke
+    var contact_country_id = Request.Cookies["user"] == null ? string.Empty : Request.Cookies["user"].ToString();
+    var contact_name_first = Request.Cookies["contact_name_first"] == null ? string.Empty : Request.Cookies["contact_name_first"].ToString();
+    var contact_email = Request.Cookies["contact_email"] == null ? string.Empty : Request.Cookies["contact_email"].ToString();
+    var contact_tel = Request.Cookies["contact_tel"] == null ? string.Empty : Request.Cookies["contact_tel"].ToString();
+
+    // Credit card show check
+    bool pay_card = obj["pay_card"].ToString() == "Y";
+    var payment_gateway = bl.settings.get("payment_getway", user_id);
+    string[] allowed_gateways = new string[] { "wspay", "stripe", "revolut" }; // only supported (for now)
+}
+
+<!-- banner -->
+@Html.Partial("/Views/partal/header.cshtml", new ViewDataDictionary { { "page", "objects_list" }, { "title", users_text["title"].ToString() }, { "moto", users_text["moto"].ToString() }, { "header_display_title", booking_engine_db["header_display_title"].ToString() } })
+
+<style>
+
+    /* required fields must not be "hidden", so put opacity 0 */
+    .required_country {
+        width: 0;
+        position: absolute;
+        right: 0;
+        opacity: 0;
+    }
+
+    [role="button"] {
+        cursor: pointer;
+    }
+</style>
+
+<!-- page -->
+<section class="section-payment">
+    <div class="wrapper">
+        <div class="bg-img">
+            <img src="@booking_engine_db["picture_main_link"]" alt="">
+        </div>
+        <div class="container-wrapper">
+            <div class="payment-title">@bl.lng.l.Payment</div>
+        </div>
+    </div>
+
+    <div class="container-wrapper pt-4">
+
+        <form method="post" action="/objects/rent_add" id="form_payment">
+
+            <input type="hidden" name="payment_method_type" value="iban" id="payment_method_type" />
+            <input type="hidden" name="user_id" value="@user_id" />
+            <input type="hidden" name="object_id" value="@object_id" />
+            <input type="hidden" name="from_date" value="@date_from" />
+            <input type="hidden" name="until_date" value="@date_until" />
+            <input type="hidden" name="item_id" value="@item_id" />
+            <input type="hidden" name="price" value="@sum["full_price_b2b"].ToString()" />
+            <input type="hidden" name="in_advance" value="@advance["price_avance_b2b"].ToString()" />
+            <input type="hidden" name="currency_id" value="@sum["currency_id"].ToString()" />
+            <input type="hidden" name="adults" value="@persons" />
+            <input type="hidden" name="pets" value="@pets" />
+            <input type="hidden" name="b2b_id" value="297" />
+            <input type="hidden" name="rent_source_id" value="@rent_source_id" />
+            <input type="hidden" name="promo_code" value="@promo_code" />
+            <input type="hidden" name="item_name" value="@general["item_name"]" />
+            <input type="hidden" name="children" value="@children" />
+            <input type="hidden" name="insurance_price" value="@insurance_price" />
+            <input type="hidden" name="insurance_price_enable" value="N" id="insurance_price_enable" />
+
+            <div class="row">
+
+                <!-- left side -->
+                <div class="col-lg-7">
+
+                    <div class="payment-wrapper p-4">
+
+                        <!-- guest information -->
+                        <div class="label" style="font-size: 1.4rem; margin-top: -10px;">
+                            <div>  Osnovni podaci </div>
+                            <div class="payment-sub mt-2"> @bl.lng.l.Please_enter_your_details_so_we_can_confirm_your_reservation </div>
+                        </div>
+
+                        <div class="row pt-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="contact_name_first" class="form-control" placeholder="@bl.lng.l.Name" value="ZICER" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <div class="ui fluid search selection dropdown" id="select_dropdown_country">
+                                        <input type="text" id="contact_country_id" name="contact_country_id" class="required_country" style="display: block!important;"  tabindex="-1">
+                                        <i id="country_search_input" class="dropdown icon" style="position: absolute; right: 1.5rem;"></i>
+                                        <div class="default text">@bl.lng.l.Select_country </div>
+                                        <div id="countries_list_menu" class="menu">
+                                            @foreach (System.Data.DataRow r in countries.Rows)
+                                            {
+                                                <div class="item" data-value="@r["id"]">
+                                                    <img src="/assets/images/flags/@(r["code2"]).svg" style="height: 13px; margin-right: 3px;"> @r["country"]
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" name="contact_email" class="form-control" placeholder="@bl.lng.l.Email" value="npalcec@inet.hr" onchange="div_iban_email_address.innerHTML = this.value;" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="tel" name="contact_tel" class="form-control" placeholder="@bl.lng.l.Telephone" value="@contact_tel">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" name="note" style="height: 100px;" placeholder="@bl.lng.l.Notes"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- guest information -->
+                        <div class="label" style="font-size: 1.4rem; margin-top: 25px;">
+                            <div>  Ostale informacije </div>
+                            <div class="payment-sub mt-2"> Inofrmacije vezane za zahtjev </div>
+                        </div>
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                OIB:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="tel" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                Djelatnost podnositelja zahtjeva:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                Žiro račun:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control">
+                            </div>
+
+                        </div>
+
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                Broj aktivnih članova:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                Broj volontera:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control">
+                            </div>
+
+                        </div>
+
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                Preporuke:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="row pt-3 form-group">
+
+
+                            <div class="col-md-6">
+
+                                Gradska četvrt:
+
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control">
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Add protection refund -->
+                        <div style="display: none;">
+
+                            <div class="label mt-3" style="font-size: 1.4rem;">
+                                <div class="d-flex justify-content-between">
+                                    <div>  Refund full price of the reservation </div>
+                                    <div class="px-2 text_sm text-uppercase" style="background: rgba(76, 175, 80, .1);border: 1px solid #4CAF50; color:#4CAF50"> @bl.lng.l.Recommended </div>
+                                </div>
+                                <div class="payment-sub mt-2">
+                                    @bl.lng.l.Choose_cancellation_protection_and_recive <strong> @price_sum @label </strong>
+                                </div>
+                            </div>
+
+                            <div class="add_protection_refund pt-3">
+                                <input type="radio" id="payment_add_protection_refund_yes" name="radio_add" onclick="objects_payment.refund_add();">
+                                <label class="custom_radio border p-3 mb-3" for="payment_add_protection_refund_yes">
+                                    <span class="icon_radio"></span>
+                                    <span class="d-flex justify-content-between flex-wrap font_semiBold border-bottom mb-2 pb-2 pl-4" style="font-size: 1.2rem;">
+                                        <span>@bl.lng.l.Yes, @bl.lng.l.Protect_my_booking.ToLower() &nbsp; <i class="far fa-thumbs-up"></i> </span>
+                                        <span style="color: #188585;"> <i class="fas fa-user-shield"></i> &nbsp; @bl.lng.l.For_only.ToLower(): &nbsp; @insurance_price.ToString("n2") &nbsp; @label </span>
+                                    </span>
+                                    <div class="mb-2">
+                                        <strong>@bl.lng.l.We_provide_refunds_if </strong> @bl.lng.l.you_are_unable_Attend_the_Booking_due_to_any_of_the_listed_reasons_and_have_provided_the_required_shown_in_the_individual_reasons_section_below
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Illness_Injury_including_Covid_19 </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Pre_existing_Medical_condition </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Pregnancy_Complication </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Death_of_Immediate_Family </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Public_Transport_Failure</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Flight_disruption </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Mechanical_Breakdown </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Home_Emergency </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Theft_of_Documents </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Jury_Service </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Court_Summons </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Armed_forces </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Relocated_for_work </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-check fa-xs pr-2"></i><span> @bl.lng.l.Changes_to_Examination_Dates </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <strong>
+                                            @bl.lng.l.By_makeing_your_reservation_Refundable_we_will_be_able_to_fully_refound_total_price_of_the_reservation_price: @price_sum @label @bl.lng.l.To_you.ToLower()!
+                                        </strong>
+                                    </div>
+                                </label>
+
+                                <div class="pb-1">
+                                    <input type="radio" id="payment_add_protection_refund_no" name="radio_add" checked onclick="objects_payment.refund_del();">
+                                    <label class="custom_radio font_semiBold m-0 border p-3 w-100" style="font-size: 1.2rem;" for="payment_add_protection_refund_no">
+                                        <span class="icon_radio"></span>
+                                        <span class="pl-4"> @bl.lng.l.No, @bl.lng.l.I_dont_need_protection </span>
+                                    </label>
+                                </div>
+
+                                <!-- protecta logo -->
+                                <div class="mt-2 d-flex">
+
+                                    <div>
+                                        <img src="~/assets/images/partners/protect_group.svg" style="width: 100px; margin-right: 15px;" />
+                                    </div>
+
+                                    <div>
+                                        <div> @bl.lng.l.Power_by: <a href="https://www.protectgroup.co/Privacy-Policy" target="_blank"> <span class="color_turquoise"> @bl.lng.l.Event_protect_limited </span>  </a> </div>
+                                        <div> @bl.lng.l.Please_check_our <a href="https://www.refundable.me/extended/en" target="_blank"> <span class="color_turquoise"> @bl.lng.l.Terms_and_conditions </span> </a> @bl.lng.l.For_more_informations.ToLower() </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <!-- general terms -->
+                        <div class="payment-terms" style="margin-top: 25px;">
+                            <label class="checkbox cursor-pointer">
+                                @bl.lng.l.i_accept_general_terms_privacy
+                                <input type="checkbox" required>
+                                <span class="icon-check"></span>
+                            </label>
+                            <div class="term-text">
+                                @bl.lng.l.i_accept_general_terms_privacy_long
+                            </div>
+                            <div class="ml-4 mt-1 terms_privacy_container">
+                                <a href="/users/general_terms" target="_blank">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> @bl.lng.l.General_terms
+                                </a>
+                                &nbsp;
+                                <a href="/users/privacy_policy" target="_blank">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> @bl.lng.l.Privacy_policy
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- payment method -->
+                        <div class="payment_method" style="display: none;">
+
+                            @*<div class="label"> @bl.lng.l.Payment_methods </div>*@
+
+                            <!-- Add protection refund -->
+                            <div class="label mt-5" style="font-size: 1.4rem;">
+                                <div>  @bl.lng.l.Payment_methods </div>
+                                <div class="payment-sub mt-2 bold"> @bl.lng.l.Please_choose_what_type_of_payment_do_you_prefer </div>
+                            </div>
+
+                            <div class="row pt-3">
+                                <div class="col-md-6 @(pay_card && allowed_gateways.Contains(payment_gateway) ? "" : "d-none")">
+                                    <input type="radio" id="payment_methods_credit_card" name="radio_payment">
+                                    <label class="custom_radio border p-3 mb-3 w-100 d-flex align-items-center text_base" onclick="objects_payment.bl.chose_payment_method('credit_card', this)" for="payment_methods_credit_card">
+                                        <i class="far fa-credit-card pr-2"></i>
+                                        <span class="d-block">@bl.lng.l.Credit_card</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" id="payment_methods_bank_transfer" name="radio_payment">
+                                    <label class="custom_radio border p-3 mb-3 w-100 d-flex align-items-center text_base" onclick="objects_payment.bl.chose_payment_method('bank_transfer', this)" for="payment_methods_bank_transfer">
+                                        <i class="fas fa-university pr-2"></i>
+                                        <span class="d-block">@bl.lng.l.Bank_transfer</span>
+                                    </label>
+                                </div>
+                                <div id="payment_methods_credit_card_info" class="col-12 mb-3 d-none">
+
+                                    <div class="border p-3 w-100 text_base">
+                                        @bl.lng.l.After_confirming_reservation_we_will_redirect_to_a_secure_payment_gatway_web_page_where_you_will_be_able_to_make_transaction_with_a_credit_card
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="payment-btn pt-4">
+                                        <button onclick="objects_payment.confirm_reservation_popup('card');" class="btn btn-primary">
+                                            <i class="far fa-credit-card pr-2"></i> &nbsp;
+                                            @bl.lng.l.Confirm_reservation_with_credit_card
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div id="payment_methods_bank_transfer_info" class="col-12 mb-3 d-none">
+
+                                    <div class="border p-3 w-100 text_base">
+                                        <div>
+                                            @bl.lng.l.After_confirming_reservation_we_will_send_you_IBAN_details_on_your_email_with_instructions_how_to_make_transaction.
+                                        </div>
+                                        <div class="mt-2">
+                                            @bl.lng.l.Please_check_if_you_have_entered_right_email_address: <span id="div_iban_email_address" style="color: #1d9f9f;"></span>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                            <!-- Confirm_reservation -->
+                            <div class="payment_method">
+
+                                <!-- Button -->
+                                <div class="payment-btn pt-4">
+                                    <button onclick="objects_payment.confirm_reservation_popup('iban');" class="btn btn-primary">
+                                        <i class="fas fa-university pr-2"></i> &nbsp;
+                                        @bl.lng.l.Confirm_reservation
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <div class="payment-btn pt-4">
+                                <button onclick="objects_payment.confirm_reservation_popup('iban');" class="btn btn-primary">
+                                    <i class="fas fa-university pr-2"></i> &nbsp;
+                                    @bl.lng.l.Confirm_reservation
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- payment cards logo -->
+                        <div class="payment-cards d-flex flex-wrap justify-content-center mt-4" style="display: none;">
+
+                            <div style="display: none;">
+
+                                <!-- VISA -->
+                                <div class="payment-item" role="button" onclick="window.open('https://www.visa.co.uk/pay-with-visa/featured-technologies/verified-by-visa.html', '_blank');">
+                                    @*<img src="~/assets/images/icons/icon-card-visa.png" alt="">*@
+                                    <img src="~/assets/images/icons/wspay/Visa50.gif" />
+                                </div>
+
+                                <!-- VISA Secure -->
+                                <div class="payment-item" role="button" onclick="window.open('https://www.visa.co.uk/pay-with-visa/featured-technologies/verified-by-visa.html', '_blank');">
+                                    <img src="~/assets/images/icons/wspay/visa-secure.png" />
+                                </div>
+
+                                <!-- MasterCard -->
+                                <div class="payment-item" role="button" onclick="window.open('https://www.mastercard.us/en-us.html', '_blank');">
+                                    @*<img src="/assets/images/icons/icon-card-mastercard.svg" alt="">*@
+                                    <img src="~/assets/images/icons/wspay/MasterCard50.gif" />
+                                </div>
+
+                                <!-- MasterCard ID Check -->
+                                <div class="payment-item" role="button" onclick="window.open('https://www.mastercard.us/en-us.html', '_blank');">
+                                    <img src="~/assets/images/icons/wspay/mc_idcheck.png" />
+                                </div>
+
+                                <!-- Maestro -->
+                                <div class="payment-item">
+                                    @*<img src="/assets/images/icons/icon-card-maestro.svg" alt="">*@
+                                    <img src="~/assets/images/icons/wspay/maestro50.gif" />
+                                </div>
+
+                                <!-- Discover -->
+                                <div class="payment-item">
+                                    @*<img src="/assets/images/icons/icon-card-discover.svg" alt="">*@
+                                    <img src="~/assets/images/icons/wspay/discover_50.gif" />
+                                </div>
+
+                                <!-- Diners -->
+                                <div class="payment-item">
+                                    @*<img src="/assets/images/icons/icon-card-diners.svg" alt="">*@
+                                    <img src="~/assets/images/icons/wspay/diners_50.gif" />
+                                </div>
+
+                                <!-- American Express -->
+                                <div class="payment-item">
+                                    @*<img src="/assets/images/icons/icon-card-american-express.svg" alt="">*@
+                                    <img src="~/assets/images/icons/wspay/AmericanExpress50.jpg" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- pci logo -->
+                        <!--<div class="payment-pay d-flex flex-wrap justify-content-center" style="display: none;">
+    <img src="/assets/images/icons/cropped-zaggy_logo-POTPIS.svg" style="margin-right: 1.5rem;" alt="logo zaggy">
+    <img src="/assets/images/icons/pci-dss-compliant-logo-vector.svg" style="margin-right: 1.5rem;" alt="pci">
+    <img src="~/assets/images/icons/icon_ssl.svg" alt="icon ssl">-->
+                        <!-- WSpay-->
+                        <!--&nbsp;<a href="https://www.wspay.info/" target="_blank" title="WSpay - Web Secure Payment Gateway">
+            <img alt="WSpay - Web Secure Payment Gateway" border="0" src="https://www.wspay.info/payment-info/wsPayWebSecureLogo-118x50-transparent.png" style="width: 118px; height: 50px;">
+        </a>
+    </div>-->
+
+                        <div>
+                            <button onclick="objects_payment.confirm_reservation_popup('iban');" class="btn btn-primary">
+                                <i class="fas fa-university pr-2"></i> &nbsp; POŠALJI ZAHTJEV
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                    </div>
+
+                <!-- right side -->
+                <div class="col-lg-5">
+                    <div class="payment-wrapper p-4">
+
+                        <!-- Mame -->
+                        <div class="label" style="font-size: 1.4rem; margin-top: -10px;">
+                            @*<div> @obj["name"] </div>*@
+                            <div> @obj["object_name"] </div>
+                            <div class="payment-sub mt-2"> @obj["adress"], @obj["country"] </div>
+                        </div>
+
+                        <!-- Check in & Check out -->
+                        <div class="d-flex pt-3 pb-3">
+                            <div class="payment-item pr-5">
+                                <div class="payment-item-sub font_bold pb-1">@bl.lng.l.Check_IN</div>
+                                <div class="payment-item-label text_xl"> @System.DateTime.Parse(date_from).ToString("dd.MM.yyyy.") </div>
+                            </div>
+                            <div class="payment-item pr-5">
+                                <div class="payment-item-sub font_bold pb-1">@bl.lng.l.Check_OUT</div>
+                                <div class="payment-item-label text_xl"> @System.DateTime.Parse(date_until).ToString("dd.MM.yyyy.") </div>
+                            </div>
+                            <div class="payment-item">
+                                <div class="payment-item-sub font_bold pb-1">@bl.lng.l.Days</div>
+                                <div class="payment-item-label text_xl"> @general["days"] </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Guests -->
+                        <div class="payment-item pt-2" style="display: none;">
+
+                            <div class="heading-title" style="margin-bottom: 15px;"> @bl.lng.l.Guests </div>
+
+                            @*<div class="payment-sub payment-item-sub font_bold pb-1">@bl.lng.l.Guests</div>*@
+                            <div class="payment-item-label text_lg">
+
+                                <span>@persons</span> @bl.lng.l.Adults,
+                                <span class="ml-3"> @children </span> @bl.lng.l.Children,
+
+                                @if (pets != "0") {
+                                    <span class="ml-3"> @pets </span> @bl.lng.l.Pets
+                                }
+
+                            </div>
+                        </div>
+
+                        <!-- Edit details -->
+                        @*<div class="heading-title d-flex justify-content-between" style="margin-bottom: 15px;">
+
+                            <div>
+                                @bl.lng.l.Price_of_reservation
+                            </div>
+
+                            <div class="payment-item">
+                                <a class="payment-item-link" href="/objects/property/@object_id">@bl.lng.l.Edit_rent_details</a>
+                            </div>
+
+                        </div>*@
+
+
+                        <!-- protect reservation -->
+                        @*<div class="payment-advance my-2" id="div_protection_price">
+                            <div class="d-flex justify-content-between mt-2">
+                                <div class="payment-advance-label"> @bl.lng.l.Reservation_price </div>
+                                <div class="payment-advance-value"><span> @decimal.Parse(sum["price_b2b"].ToString()).ToString("n2") </span> @label</div>
+                            </div>
+                        </div>*@
+
+                        <!-- add extra items -->
+                        @*<div class="payment-advance my-2" id="div_protection_price">
+
+                            @foreach (System.Data.DataRow r in items_auto.Rows) {
+                                <div class="d-flex justify-content-between mt-2">
+                                    <div class="payment-advance-label"> @r["name"] </div>
+                                    <div class="payment-advance-value"><span> @decimal.Parse(r["full_price"].ToString()).ToString("n2") </span> @label</div>
+                                </div>
+                            }
+
+                        </div>*@
+
+                        <!-- Total -->
+                        @*<div class="payment-total">
+                            <div class="payment-total-night">
+                                <span> @general["days"] </span>
+                                @if (general["days"].ToString() != "1") {
+                                    @bl.lng.l.nights
+
+                                } else {
+                                    @bl.lng.l.Night
+                                }
+
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="payment-total-label">@bl.lng.l.Total</div>
+                                <div class="payment-total-value"><span id="price_total"> @price_sum.ToString("n2") </span> @label </div>
+                            </div>
+                        </div>*@
+
+
+                        <!-- Advance -->
+                        @*@if (advance["advance_percent"].ToString() != "0") {
+                            <div class="payment-item mt-3">
+                                <div class="payment-item-sub"> @bl.lng.l.Advance_payment </div>
+
+                            </div>
+                            <div class="payment-advance my-2">
+                                <div class="d-flex justify-content-between">
+                                    <div class="payment-advance-label"> @bl.lng.l.Advance_payment @advance["advance_percent"].ToString() %</div>
+                                    <div class="payment-advance-value"><span> @decimal.Parse(advance["price_avance_b2b"].ToString()).ToString("n2") </span> @sum["currency_label"] </div>
+                                </div>
+                            </div>
+                        }*@
+
+                        <!-- Flexible cancellation policy -->
+                        <!-- hidden -->
+                        @*<div class="payment-policy pt-3" style="display: none;">
+                            <div class="payment-policy-sub py-1">@bl.lng.l.flexible_cancellation_policy</div>
+                            <div class="payment-policy-text">
+                                @bl.lng.l.flexible_cancellation_policy_message
+                            </div>
+                        </div>*@
+
+                        <!-- Encourage  -->
+                        @*<div class="payment-badges pt-3">
+                            <img src="/assets/images/icons/badges-safe.png" alt="100% Safe">
+                            <img src="/assets/images/icons/badges-prices.png" alt="Best price">
+                            <img src="/assets/images/icons/badges-match.png" alt="Best match">
+                        </div>*@
+
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- modal, adding reservation -->
+    <div id="pop_up_message" class="pop-up-message" style="display: none;">
+        <div class="popup-up-wrapper">
+            <div class="load">
+                <div class="heading"> Obrađujemo Vaš zahtjev  </div>
+
+                <img src="/assets/images/pictures/zaggy-new.png" />
+                 
+                <div class="title"> Obrada u tijeku... </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- scripts -->
+<script>
+
+    var objects_payment = {};
+
+    //Load function
+    objects_payment.load = () => {
+
+    }
+
+    // BL logic
+    objects_payment.bl = new function() {
+
+        // chosse payment method
+        this.chose_payment_method = function (panel, id) {
+
+            payment_methods_credit_card_info.classList.add("d-none");
+            payment_methods_bank_transfer_info.classList.add("d-none");
+
+            if (panel == "credit_card") {
+                payment_methods_credit_card_info.classList.remove("d-none");
+            } else if (panel == "bank_transfer") {
+                payment_methods_bank_transfer_info.classList.remove("d-none");
+            }
+
+        }
+
+        this.check_form_validity = function () {
+
+            let not_filled = Array.from(form_payment.querySelectorAll('[required]'))
+                .filter(function (input) {
+
+                    // Check if invalid on 3 different ways
+                    if (input.validity.valid === false) {
+                        return true;
+                    }
+                    if (input.checkValidity() === false) {
+                        return true
+                    }
+                    if (!input.value) {
+                        return true;
+                    }
+                    return false;
+                });
+
+            if (not_filled.length == 0) {
+                pop_up_message.style.display = 'block';
+                return true;
+            }
+            else {
+                // There are invalid fields, do not submit the form
+                return false;
+            }
+        }
+
+    }
+
+    // Change country bg to white (it is red in case of error)
+    function reset_country_bg() {
+
+        $(select_dropdown_country).animate({
+            backgroundColor: '',
+        }, 100);
+    }
+
+    $('#select_dropdown_country').dropdown({ clearable: true });
+
+    objects_payment.confirm_reservation_popup = function (type) {
+
+        // Country selecting
+        let selected_country_el = document.querySelector('#countries_list_menu .selected');
+        let country_val = '';
+
+        if (selected_country_el) {
+            country_val = selected_country_el.dataset.value;
+        }
+
+        else
+        {
+
+            // Change bg
+            $(select_dropdown_country).animate({
+                backgroundColor: '#ffefef',
+            }, 100);
+
+            // Monitor until country is OK
+            // (since keyup does not work for enter press)
+            let country_tid = null;
+            country_tid = setInterval(function () {
+
+                if (document.querySelector('#countries_list_menu .selected')) {
+
+                    // Country pressed
+                    clearInterval(country_tid);
+                    reset_country_bg();
+                }
+            }, 500);
+        }
+
+        contact_country_id.value = country_val;
+
+        form_payment.querySelectorAll('[required]').forEach(input => {
+
+            if (!input.value) {
+
+                $(input).animate({
+                    backgroundColor: '#ffefef',
+                }, 100);
+
+                // When something is typed, remove red color
+                input.addEventListener('keyup', function () {
+                    $(input).animate({
+                        backgroundColor: '',
+                    }, 100);
+                }, {
+                    once: true
+                });
+            }
+        });
+
+        payment_method_type.value = type;
+
+        if (objects_payment.bl.check_form_validity() == true) {
+            form_payment.submit();
+        }
+        else {
+            // Form invalid
+        }
+    }
+
+    objects_payment.refund_add = () => {
+        var total_price = '@price_total.ToString("n2")';
+        div_protection_price.style.display = 'block';
+        price_total.innerHTML = total_price;
+        insurance_price_enable.value = "Y";
+    }
+
+    objects_payment.refund_del = () => {
+        console.log("del");
+        var total_price = '@price_sum.ToString("n2")';
+        div_protection_price.style.display = 'none';
+        price_total.innerHTML = total_price;
+        insurance_price_enable.value = "N";
+    }
+
+</script>

@@ -1,0 +1,33 @@
+﻿@page "/logout"
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@layout EmptyLayout
+@inject IHttpContextAccessor _httpContextAccessor
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Http
+
+@using System.Text.RegularExpressions;
+@using System.Text;
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Task.Delay(1);
+            ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsLogout();
+            Navigation.NavigateTo("/login", true);
+
+        }
+    }
+}

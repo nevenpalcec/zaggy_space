@@ -1,0 +1,122 @@
+.section-payment, .section-cards {
+    .payment-cards {
+        max-width: 380px;
+        margin: auto;
+
+        .payment-item {
+            padding: .3rem;
+
+            img {
+                height: 3rem;
+            }
+        }
+    }
+
+    .terms_privacy_container {
+        font-size: .9rem;
+        opacity: .7;
+    }
+
+    .payment-pay {
+        margin-top: 20px;
+
+        img {
+            height: 2.5rem;
+        }
+    }
+
+    .term-text {
+        padding-left: 1.5rem;
+        font-size: .8rem;
+        line-height: normal;
+        opacity: .5;
+    }
+
+    .label {
+        font-weight: 500;
+        padding-top: 1rem;
+        border-bottom: 1px solid $color-silver;
+        @include underline;
+    }
+
+    .form-control {
+        border: 1px solid $color-silver !important;
+    }
+
+    .dropdown {
+        i {
+            position: absolute;
+            top: .7rem;
+            left: .7rem;
+            z-index: 1;
+        }
+
+        .btn {
+            padding-left: 2rem;
+            border: 1px solid $color-silver !important;
+        }
+    }
+    // Second column
+    .payment-label {
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
+    .payment-sub {
+        text-transform: uppercase;
+        font-size: .8rem;
+    }
+
+    .payment-item {
+        .payment-item-sub {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+    }
+
+    .payment-item-link {
+        font-size: .7rem;
+        text-transform: uppercase;
+        color: $text-primary;
+        text-decoration: none;
+    }
+
+    .payment-total {
+        background-color: rgba(32, 186, 186, .1);
+        padding: .8rem;
+
+        .payment-total-night {
+            text-align: right;
+            font-size: .8rem;
+        }
+
+        .payment-total-label {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .payment-total-value {
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+    }
+
+    .payment-advance {
+        font-size: 1.1rem;
+        font-weight: 500;
+        background-color: rgba(32, 186, 186, .1);
+        padding: .4rem .8rem;
+    }
+
+    .payment-policy {
+        .payment-policy-sub {
+            font-size: 1rem;
+        }
+
+        .payment-policy-text {
+            font-size: .8rem;
+            line-height: normal;
+            opacity: .5;
+        }
+    }
+}

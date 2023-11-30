@@ -1,0 +1,717 @@
+﻿<!-- modal for price changing on calendar  -->
+<div>
+    <div class="modal_put_rent hidden" id="price_change_modal" style="max-width: 600px !important;">
+
+        <div class="modal_put_rent_header position-relative">
+            <div class="text-left font_6 mb-3 pr-4" id="price_change_object_name">Name of apartment so long name</div>
+            <span class="modal_put_rent_close" onclick="price_change.ui.close_modal();"><i class="fas fa-times"></i></span>
+            <div class="progress hidden" id="progress_bar_show">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%" id="progress_bar">
+
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="modal_put_rent_body position-relative">
+
+            <!-- Date -->
+            <div class="row">
+                <div class="col-6">
+                    <div id="modal_put_rent_date_from" class="form-group">
+                        <label class="mb-1 font_3">Date from:</label>
+                        <input type="text" id="modal_put_rent_date_from_input"
+                               class="form-control focus">
+                        <div id="modal_put_rent_date_from_calendar" class="modal_pop_up hidden"></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="modal_put_rent_date_until" class="form-group">
+                        <label class="mb-1 font_3">Date until:</label>
+                        <input type="text" id="modal_put_rent_date_until_input" class="form-control focus">
+                        <div id="modal_put_rent_date_until_calendar" class="modal_pop_up hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-top py-2"></div>
+
+            <!-- Loading -->
+            <div id="prices_change_content_loading" class="view_loading" style="display: none;">
+                <img src="/assets/images/icons/loading.svg" />
+            </div>
+
+            <!-- Price -->
+            <div class="d-flex align-items-center mb-2">
+                <div class="text-uppercase font_medium mr-auto">Price</div>
+                <div id="" class="input-group" style="width: 180px;">
+                    <div class="input-group-prepend cursor_point">
+                        <span class="input-group-text"><i class="fas fa-euro-sign"></i></span>
+                    </div>
+                    <input type="text" class="form-control focus text-center" value=null id="modal_put_rent_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                </div>
+            </div>
+
+            <!-- Nights -->
+            <div class="d-flex align-items-center mb-2">
+                <div class="text-uppercase font_medium mr-auto">Stay</div>
+                <div id="" class="input-group input_remove_number_arrow" style="width: 180px;">
+                    <div class="input-group-prepend cursor_point">
+                        <span class="input-group-text"><i class="fas fa-moon fa-xs"></i></span>
+                    </div>
+                    <input type="number" class="form-control focus text-center" value="1" id="modal_put_rent_min_stay">
+                </div>
+            </div>
+
+            <!-- Enable/Disable -->
+            <div class="d-flex align-items-center mb-2">
+                <div class="text-uppercase font_medium flex-grow-1">Enable / Disable</div>
+                <div>
+                    <div class="yes_or_no font_5">
+                        <span onclick="price_change.ui.yes_or_no(this)" class="yes py-1 px-2" id="price_change_enable_yes" style="width: 90px;">Yes</span>
+                        <span onclick="price_change.ui.yes_or_no(this)" class="no py-1 px-2" id="price_change_enable_no" style="width: 90px;">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn_secondary" onclick="price_change.bl.save_both();"><i class="fas fa-save pr-2"></i>Save</button>
+            </div>
+
+            <hr />
+
+            <!-- Extra price from -->
+            <div class="mb-2">
+                <label class="font_3 mb-1">
+                    Number of guests included in the basic price:
+                </label>
+                <div class="input_remove_number_arrow ">
+                    <input type="number" id="price_change_extra_price_from" class="form-control focus text-center col-md-6">
+                </div>
+            </div>
+
+            <!-- Extra Price -->
+            <div class="mb-1">
+                <label class="font_3 mb-2">
+                    For each additional guest, increase the price by:
+                </label>
+                <div id="" class="input-group col-md-6 px-0 input_remove_number_arrow">
+                    <input type="number" id="price_change_extra_price" class="form-control focus text-center">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-euro-sign"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save extra -->
+            <div class="d-flex justify-content-end mb-3">
+                <button class="btn btn_secondary" onclick="price_change.bl.save_extra();"><i class="fas fa-save pr-2"></i>Save</button>
+            </div>
+
+            <!-- advance details -->
+            <div class="hidden d-flex justify-content-around" id="price_change_advance_details">
+                <hr />
+
+                <div class="d-flex">
+                    <div class="w-100">
+                        <div class="border-top py-2"></div>
+                        <!-- Check in -->
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="text-uppercase font_medium flex-grow-1">Check in</div>
+                            <div style="width: 130px;">
+                                <div class="yes_or_no font_5">
+                                    <span onclick="price_change.ui.yes_or_no(this)" class="yes py-1 px-2" id="price_change_checkin_yes">Yes</span>
+                                    <span onclick="price_change.ui.yes_or_no(this)" class="no py-1 px-2" id="price_change_checkin_no">No</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Check out -->
+                        <div class="d-flex align-items-center">
+                            <div class="text-uppercase font_medium flex-grow-1">Check out</div>
+                            <div style="width: 130px;">
+                                <div class="yes_or_no font_5">
+                                    <span onclick="price_change.ui.yes_or_no(this)" class="yes py-1 px-2" id="price_change_checkout_yes">Yes</span>
+                                    <span onclick="price_change.ui.yes_or_no(this)" class="no py-1 px-2" id="price_change_checkout_no">No</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Days-->
+                        <div class="mt-4 mb-2 col-md-12">
+                            <div class="font_3 flex-grow-1">Apply check-in and check-out rules to:</div>
+                            <div class="font_4">
+                                <!-- Checkbox label md -->
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none" onclick="price_change.ui.select_all_days();">
+                                        <input type="checkbox" checked="" id="modal_price_change_day_all">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase">All</div>
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_mon">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase">Mon</div>
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_tue">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase">Tue</div>
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_wed">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase"><span class="tran_js" data-key="Wed">Wed</span></div>
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_thu">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase"><span class="tran_js" data-key="Thu">Thu</span></div>
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_fri">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase"><span class="tran_js" data-key="Fri">Fri</span></div>
+                                    </div>
+                                </label>
+                                <label>|</label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_sat">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase"><span class="tran_js" data-key="Sat">Sat</span></div>
+                                    </div>
+                                </label>
+                                <label class="checkbox">
+                                    <div class="d-flex align-items-center user_select_none">
+                                        <input type="checkbox" checked="" name="day_of_week" id="modal_price_change_day_sun">
+                                        <div class="check check_md"></div>
+                                        <div class="pl-2 text-uppercase"><span class="tran_js" data-key="Sun">Sun</span></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="btn btn_secondary ml-2 mt-2" onclick="price_change.bl.save_check_in_out()"><i class="fas fa-check"></i></button>
+
+            </div>
+            <hr />
+
+        </div>
+        <div class="">
+            <div class="d-flex justify-content-start ">
+                <div class="py-1 px-2 font_medium cursor_point modal_put_rent_show_more" onclick="price_change.ui.modal_put_rent_show_more();"><span class="pr-1">Show more</span><i class="fas fa-chevron-down"></i></div>
+            </div>
+
+        </div>
+        <div class="border-top py-2 hidden"></div>
+        <div class="d-flex justify-content-between hidden">
+            <div>
+                <button class="btn btn_silver" onclick="price_change.ui.close_modal();">Close</button>
+                <button class="btn btn_primary hidden" id="price_change_add_btn" onclick="price_change.ui.new_reservation();"><i class="fas fa-plus pr-2"></i>Add</button>
+            </div>
+            <!--<button class="btn btn_primary" onclick="price_change.bl.save_min_stay(); price_change.bl.save_price();"><i class="fas fa-save pr-2"></i>Save</button>-->
+            <button class="btn btn_secondary" onclick="price_change.bl.save_both();"><i class="fas fa-save pr-2"></i>Save</button>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    var price_change = {};
+
+    // on what page we are
+    price_change.page = '';
+    price_change.object_id = [];
+    price_change.object_name = [];
+    price_change.price = '';
+    price_change.new_progress = 0;
+
+
+    price_change.bl = new function () {
+
+        // save price for selected objects on selected days
+        this.save_price = async () => {
+
+            var date_from = modal_put_rent_date_from_input.value;
+            var date_until = modal_put_rent_date_until_input.value;
+
+            var price = modal_put_rent_price.value;
+
+            ui.content_loading("prices_change_content_loading");
+
+            for (var i = 0; i < price_change.object_id.length; i++) {
+
+                price_change.ui.change_progress_bar();
+
+                document.getElementById('price_change_object_name').innerText = 'Changing ' + price_change.object_name[i];
+
+                // if current page is groups calendar api call is objects_groups_prices_days
+                if (price_change.page == 'groups_calendar') {
+                    var url = '/api/objects_groups_prices_days/save_price/';
+                } else {
+                    var url = '/api/objects_prices_days/save_price/';
+                }
+
+                var object = {};
+                object.id = price_change.object_id[i];
+                object.date_from = date_from;
+                object.date_until = date_until;
+                object.price = price;//.replace('.', ',');
+
+                var response = await ajax.post_json(url, object);
+
+                var response_nesto = response.substring(1, response.length - 1);
+                if (response_nesto == 'ok') {
+                    price_change.ui.pop_up_notification_open();
+
+                } else {
+                    price_change.ui.pop_up_notification_close();
+                }
+
+            }
+        }
+
+        // save minimum stay for selected object on selected days
+        this.save_min_stay = async () => {
+
+            var date_from = modal_put_rent_date_from_input.value;
+            var date_until = modal_put_rent_date_until_input.value;
+            var min_stay = modal_put_rent_min_stay.value;
+
+            ui.content_loading("prices_change_content_loading");
+
+            for (var i = 0; i < price_change.object_id.length; i++) {
+
+                price_change.ui.change_progress_bar();
+                document.getElementById('price_change_object_name').innerText = 'Changing ' + price_change.object_name[i];
+
+                if (price_change.page == 'groups_calendar') {
+                    var url = `/api/objects_groups_prices_days/save_min_stay/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}&min_stay=${min_stay}`;
+                } else {
+                    var url = `/api/objects_prices_days/save_min_stay/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}&min_stay=${min_stay}`;
+
+                }
+                var response = await ajax.get(url);
+            }
+
+        }
+
+        this.save_both = async () => {
+
+            ui.content_loading("prices_change_content_loading");
+
+            await price_change.bl.save_price();
+            await price_change.bl.save_min_stay();
+            await price_change.bl.save_enable();
+
+            // closing pop up modal after finishing
+            price_change.ui.close_modal();
+
+            // refresh page to see changes
+            await price_change.bl.refresh_page();
+
+            ui.content_loading_hide("prices_change_content_loading");
+
+        }
+
+        this.save_extra = async () => {
+
+            // add loading
+            await ui.content_loading("prices_change_content_loading");
+
+            let data = {};
+
+            data.date_from = modal_put_rent_date_from_input.value;
+            data.date_until = modal_put_rent_date_until_input.value;
+            data.price_extra = price_change_extra_price.value;
+            data.extra_from = price_change_extra_price_from.value;
+            data.item_id = '-1';
+            data.who = 'manual';
+
+            var url = "/api/objects_prices_days/prices_save_extra";
+
+            for (var i = 0; i < price_change.object_id.length; i++) {
+
+                data.object_id = price_change.object_id[i];
+
+                await ajax.post_json(url, data);
+            }
+
+            // closing pop up modal after finishing
+            price_change.ui.close_modal();
+
+            // refresh page to see changes
+            await price_change.bl.refresh_page();
+
+            await ui.content_loading_hide("prices_change_content_loading");
+        }
+
+        // save is it enable for selected object on selected days
+        this.save_enable = async () => {
+
+            var date_from = modal_put_rent_date_from_input.value;
+            var date_until = modal_put_rent_date_until_input.value;
+            var enable = price_change_enable_yes.classList.contains('active') == true ? 'Y' : 'N';
+
+            ui.content_loading("prices_change_content_loading");
+
+            for (var i = 0; i < price_change.object_id.length; i++) {
+
+                price_change.ui.change_progress_bar();
+                document.getElementById('price_change_object_name').innerText = 'Changing ' + price_change.object_name[i];
+
+                if (price_change.page == 'groups_calendar') {
+                    var url = `/api/objects_groups_prices_days/save_enable/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}&enable=${enable}`;
+                } else {
+                    var url = `/api/objects_prices_days/save_enable/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}&enable=${enable}`;
+                }
+                var response = await ajax.get(url);
+            }
+
+        }
+
+        // delete price for selected object on selected days
+        this.delete_price = async () => {
+
+            var date_from = modal_put_rent_date_from_input.value;
+            var date_until = modal_put_rent_date_until_input.value;
+
+            ui.content_loading("prices_change_content_loading");
+
+            for (var i = 0; i < price_change.object_id.length; i++) {
+
+                price_change.ui.change_progress_bar();
+                // if current page is groups calendar then api call is objects_groups_prices_days
+                if (price_change.page == 'groups_calendar') {
+                    document.getElementById('price_change_object_name').innerText = 'Changing ' + price_change.object_name[i];
+                    var url = `/api/objects_groups_prices_days/delete_price/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}`;
+                    var response = await ajax.get(url);
+
+                } else {
+                    document.getElementById('price_change_object_name').innerText = 'Changing ' + price_change.object_name[i];
+                    var url = `/api/objects_prices_days/delete_price/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}`;
+                    var response = await ajax.get(url);
+                }
+
+
+
+            }
+
+            price_change.ui.close_modal();
+
+            // refresh page to see changes
+            price_change.bl.refresh_page();
+
+        }
+
+        // save is check in our check out is enabled on selected days for selected objects
+        this.save_check_in_out = async () => {
+
+            //var object_id = price_change.object_id;
+            var date_from = modal_put_rent_date_from_input.value;
+            var date_until = modal_put_rent_date_until_input.value;
+            var check_in = price_change_checkin_yes.classList.contains('active') == true ? 'Y' : 'N';
+            var check_out = price_change_checkout_yes.classList.contains('active') == true ? 'Y' : 'N';
+
+            var days = "";
+
+            days += modal_price_change_day_sun.checked;
+            days += "," + modal_price_change_day_mon.checked;
+            days += "," + modal_price_change_day_tue.checked;
+            days += "," + modal_price_change_day_wed.checked;
+            days += "," + modal_price_change_day_thu.checked;
+            days += "," + modal_price_change_day_fri.checked;
+            days += "," + modal_price_change_day_sat.checked;
+
+            ui.content_loading("prices_change_content_loading");
+
+            for (var i = 0; i < price_change.object_id.length; i++) {
+
+                price_change.ui.change_progress_bar();
+
+                if (price_change.page == 'groups_calendar') {
+                    var url = `/api/objects_groups_prices_days/save_check_in_out/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}&check_in=${check_in}&check_out=${check_out}&days=`;
+
+                } else {
+                    var url = `/api/objects_prices_days/save_check_in_out/${price_change.object_id[i]}?date_from=${date_from}&date_until=${date_until}&check_in=${check_in}&check_out=${check_out}&days=${days}`;
+                }
+
+                var response = await ajax.get(url);
+            }
+
+            // closing pop up modal after finishing
+            price_change.ui.close_modal();
+
+            // refresh page to see change
+            price_change.bl.refresh_page();
+
+        }
+
+        // check on which page is it and refresh that page
+        this.refresh_page = () => {
+
+            if (price_change.page == 'prices') {
+                prices.bl.refresh_page();
+            }
+
+            if (price_change.page == 'object_prices') {
+                object_prices.bl.refresh_page();
+            }
+
+            if (price_change.page == 'groups_calendar') {
+                group_price.bl.refresh_page();
+            }
+            ui.content_loading_hide('prices_change_content_loading');
+        }
+
+    }
+
+    price_change.ui = new function () {
+
+        // This will select all checkbox days
+        this.select_all_days = () => {
+
+            var days_of_week_checkboxes = document.querySelectorAll("[name='day_of_week']");
+
+            if (modal_price_change_day_all.checked == true) {
+
+                for (let day of days_of_week_checkboxes) {
+                    day.checked = true;
+                }
+
+            } else {
+
+                for (let day of days_of_week_checkboxes) {
+                    day.checked = false;
+                }
+            }
+        }
+
+        // Table - yes or no
+        this.yes_or_no = function (e) {
+            if (e.classList.contains("yes")) {
+                e.classList.add("active");
+                e.parentElement.children[1].classList.remove("active");
+            } else if (e.classList.contains("no")) {
+                e.classList.add("active");
+                e.parentElement.children[0].classList.remove("active");
+            }
+        }
+
+        // close pop up modal
+        //this.close_modal_put_rent = function () {
+
+        //    let modal = document.querySelector(".modal_put_rent");
+        //    let dismiss = modal.querySelectorAll("[data-dismiss='modal']");
+        //    for (let i = 0; i < dismiss.length; i++) {
+        //        dismiss[i].onclick = function () {
+        //            $(modal).addClass("hidden");
+        //        }
+        //    }
+
+        //    document.addEventListener("mouseup", function (e) {
+        //        if (!$(modal).is(e.target) && $(modal).has(e.target).length === 0) {
+        //            if (!modal.classList.contains("hidden")) {
+        //                $(modal).addClass("hidden");
+        //            }
+        //        }
+        //    });
+
+
+
+        //}
+
+        this.close_modal = function () {
+
+            document.getElementById('price_change_modal').classList.add('hidden');
+
+            // hidding progress bar after changes are finished
+            if (!progress_bar_show.classList.contains('hidden')) {
+                progress_bar_show.classList.add('hidden')
+            }
+
+            price_change.new_progress = 0;
+
+        }
+
+        // show more advance details
+        this.modal_put_rent_show_more = function () {
+
+            const btn = document.querySelector(".modal_put_rent_show_more");
+            const inside = document.querySelector("#price_change_advance_details");
+
+            if (inside.classList.contains("hidden")) {
+                inside.classList.remove("hidden");
+                btn.children[0].textContent = "Show less";
+                btn.children[1].style.transform = "rotate(180deg)";
+            } else {
+                inside.classList.add("hidden");
+                btn.children[0].textContent = "Show more";
+                btn.children[1].style.transform = "rotate(0deg)";
+
+            }
+
+        }
+
+        this.modal_show_more_hide = function () {
+        }
+
+        // Modal - Calendar
+        this.modal_calendar = function (date_id, modal_calendar_id) {
+
+            let calendar_wrapper = document.getElementById(modal_calendar_id);
+            let calendar_pop_up = calendar_wrapper.getElementsByClassName("modal_pop_up")[0];
+            let calendar_input = calendar_wrapper.getElementsByTagName("input")[0];
+
+            calendar_input.addEventListener("click", function () {
+
+                if (!calendar_pop_up.classList.contains("open")) {
+                    calendar_pop_up.classList.remove("hidden");
+                    calendar_pop_up.classList.add("open");
+                } else {
+                    calendar_pop_up.classList.add("hidden");
+                    calendar_pop_up.classList.remove("open");
+                }
+            });
+
+            // calendar inicalization
+            $("#" + date_id).datepicker({
+                firstDay: 1,
+                minDate: 0,
+                numberOfMonths: 1,
+                dateFormat: "yy-mm-dd",
+                onSelect: function (dateText, inst) {
+                    calendar_input.value = dateText;
+                    calendar_pop_up.classList.add("hidden");
+                    calendar_pop_up.classList.remove("open");
+                }
+            });
+
+            $(document).mouseup(function (e) {
+                if (!$(calendar_pop_up).is(e.target) && $(calendar_pop_up).has(e.target).length === 0) {
+                    calendar_pop_up.classList.add("hidden");
+                    calendar_pop_up.classList.remove("open");
+                }
+            });
+        }
+
+        // open modal
+        this.open = (page, date_from, date_until, price, min_stay, enable, check_in, check_out, unique_objects_name, unique_objects_id) => {
+
+            price_change_advance_details.classList.remove('hidden');
+
+            price_change.price = price;
+            price_change.page = page;
+            price_change.object_id = unique_objects_id;
+            price_change.object_name = unique_objects_name[0];
+            //console.log(price_change.object_id);
+
+
+            // showing name of object if is one selected, if its more then show how much is selected
+            if (unique_objects_id.length == 1) {
+                document.getElementById('price_change_object_name').innerText = unique_objects_name[0];
+                price_change_add_btn.classList.remove('hidden');
+
+            } else {
+                price_change_add_btn.classList.add('hidden');
+                document.getElementById('price_change_object_name').innerText = 'Selected: ' + unique_objects_id.length;
+            }
+
+            // setting values of inputs
+            document.getElementById('modal_put_rent_date_from_input').value = date_from;
+            document.getElementById('modal_put_rent_date_until_input').value = date_until;
+
+            //debugger;
+            
+            if (isNaN(price_change.price)) {
+                price_change.price = null;
+            }
+          
+            document.getElementById('modal_put_rent_price').value = price_change.price;
+
+            
+            document.getElementById('modal_put_rent_min_stay').value = min_stay;
+
+            enable == 'Y' ? document.querySelector('#price_change_enable_yes').click() : document.querySelector('#price_change_enable_no').click();
+            check_in == 'Y' ? document.querySelector('#price_change_checkin_yes').click() : document.querySelector('#price_change_checkin_no').click();
+            check_out == 'Y' ? document.querySelector('#price_change_checkout_yes').click() : document.querySelector('#price_change_checkout_no').click();
+
+            price_change_extra_price_from.value = '';
+            price_change_extra_price.value = '';
+            
+            // show modal
+            document.getElementById('price_change_modal').classList.remove('hidden');
+
+            // on click showing more information
+            this.modal_put_rent_show_more();
+            //this.close_modal_put_rent();
+
+            ui.content_loading_hide('prices_change_content_loading');
+        }
+
+        // progress bar changing for sending data to database
+        this.change_progress_bar = () => {
+
+            progress_bar_show.classList.remove('hidden')
+            var new_progress_number = 100 / price_change.object_id.length;
+            price_change.new_progress += new_progress_number;
+
+            // changing value of progress bar
+            $('#progress_bar').attr('aria-valuenow', price_change.new_progress.toFixed(2)).css('width', price_change.new_progress.toFixed(2) + '%');
+            progress_bar.innerText = price_change.new_progress.toFixed(2) + '%';
+
+            //// hidding load scene when changes are finished
+            //if (price_change.new_progress == 100) {
+            //    ui.content_loading_hide('prices_change_content_loading');
+            //}
+        }
+
+        this.new_reservation = () => {
+            if (!price_change_add_btn.classList.contains('hidden')) {
+
+                var date_from = modal_put_rent_date_from_input.value;
+                var date_until = modal_put_rent_date_until_input.value;
+
+                modal_add_new_rent.ui.show(price_change.object_id, date_from, date_until);
+            }
+        }
+
+        // pop up notification
+        this.pop_up_notification_close = function () {
+            let card = document.querySelectorAll(".pop_up_notification");
+            setTimeout(function () {
+                $(card).fadeOut();
+            }, 2000);
+
+        }
+
+        this.pop_up_notification_open = function () {
+            let card = document.querySelectorAll(".pop_up_notification");
+            setTimeout(function () {
+                $(card).fadeIn();
+            }, 1000);
+            this.pop_up_notification_close();
+        }
+
+    }
+
+    price_change.ui.modal_calendar("modal_put_rent_date_from_calendar", "modal_put_rent_date_from");
+    price_change.ui.modal_calendar("modal_put_rent_date_until_calendar", "modal_put_rent_date_until");
+
+
+</script>

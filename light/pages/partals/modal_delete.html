@@ -1,0 +1,72 @@
+﻿<!-- Modal - delete -->
+<div class="view_modal visuallyhidden delete hidden">
+    <div class="modal_backdrop"></div>
+    <div class="modal_dialog">
+        <div class="modal_content">
+            <div class="modal-body">
+                <div class="text-center py-2 font_9 red"><i class="fas fa-exclamation"></i></div>
+                <div class="text-center">Are you sure to remove portal Airbnb?</div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn_silver" data-dismiss='modal'>Cancel</button>
+                    <button class="btn btn_primary" data-dismiss='modal'>
+                        <i class="far fa-trash-alt pr-2"></i>Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var modal_delete = {};
+
+    modal_delete.load() {
+        
+    }
+
+    modal_delete.ui = new function () {
+
+        // Modal - close delete
+        this.close_modal_delete = function (id) {
+            var modal_id = document.querySelector("." + id);
+            var modal_content = modal_id.getElementsByClassName("modal_content")[0];
+            var dismiss = modal_id.querySelectorAll("[data-dismiss='modal']");
+            for (let i = 0; i < dismiss.length; i++) {
+                dismiss[i].onclick = function () {
+                    hide_modal();
+                }
+            }
+            document.addEventListener("mouseup", function (e) {
+                if (!$(modal_content).is(e.target) && $(modal_content).has(e.target).length === 0) {
+                    if (!modal_id.classList.contains("hidden")) {
+                        hide_modal();
+                    }
+                }
+            });
+
+            document.onkeydown = function (e) {
+                if (!modal_id.classList.contains("hidden")) {
+                    if (e.keyCode === 27) {// || e.keyCode === 13) {
+                        hide_modal();
+                    }
+                }
+            };
+            function hide_modal() {
+                modal_id.classList.add('visuallyhidden');
+                modal_id.addEventListener('transitionend', function (e) {
+                    modal_id.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+        }
+
+    }
+
+    modal_delete.load();
+
+</script>

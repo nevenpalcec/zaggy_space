@@ -1,0 +1,1294 @@
+<!-- page -->
+<div class="view_items d-flex flex-column">
+
+    <!-- Header -->
+    <div class="view_header d-flex">
+        <div class="align-self-center position-relative">
+            <div class="d-flex">
+
+                <!-- Mobile btn -->
+                <div class="mobile_button"></div>
+
+                <!-- Customize btn -->
+                <!--<button id="home_button_customize_picture" class="btn btn_white_shadow"><span class="btn_label">Customize</span><i class="fas fa-edit pl-md-2"></i></button>-->
+            </div>
+        </div>
+
+        <!-- right shortcuts -->
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content">
+        <div class="d-flex h-100 w-100 position-relative flex-column justify-content-between">
+
+            <!-- View arrival -->
+            <!--<div class="view_main_left_panel h-100 d-flex flex-column pr-3 text-white">
+            <div class="view_panel d-flex flex-wrap">
+                <div>
+                    <div class="pb-2"> <span class="tran_js" data-key="Arrivals"> Arrivals </span>  </div>
+                    <div class="d-flex text-center line_normal">
+                        <div id="arrivals_today_btn" class="panel_item mr-sm-2 p-2">
+                            <div class="font_10 font-weight-bold" id="home_today_arrivals_number"></div>
+                            <div class="text-uppercase font_2 font-weight-bold"> <span class="tran_js" data-key="Today"> Today </span> </div>
+                        </div>
+                        <div id="arrivals_tomorrow_btn" class="panel_item p-2">
+                            <div class="font_10 font-weight-bold" id="home_tomorrow_arrivals_number"></div>
+                            <div class="text-uppercase font_2 font-weight-bold"> <span class="tran_js" data-key="Tomorrow"> Tomorrow </span> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel_line_y"></div>
+                <div>
+                    <div class="pb-2">  <span class="tran_js" data-key="Departures"> Departures </span> </div>
+                    <div class="d-flex text-center line_normal">
+                        <div id="departures_today_btn" class="panel_item mr-sm-2 p-2">
+                            <div class="font_10 font-weight-bold" id="home_today_departures_number"></div>
+                            <div class="text-uppercase font_2 font-weight-bold"> <span class="tran_js" data-key="Today"> Today </span> </div>
+                        </div>
+                        <div id="departures_tomorrow_btn" class="panel_item p-2">
+                            <div class="font_10 font-weight-bold" id="home_tomorrow_departures_number"></div>
+                            <div class="text-uppercase font_2 font-weight-bold"> <span class="tran_js" data-key="Tomorrow"> Tomorrow </span> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             Welcome
+            <div class="view_welcome pb-md-4 mt-auto">
+                <div class="font_6"><span id="time_of_day"></span>,<span id="user_name"></span></div>
+                <div id="today_time" class="font_12 mt-2 font-weight-bold line_normal"></div>
+                <div id="qod_text" class="font_3 mt-3 w-auto" style="max-width: 22rem;">
+                </div>
+                <div class="d-flex mt-2 font_3">
+                    <a id="quote_likes" onclick="home.ui.add_like(this);" data-href="api/registars/qod_like/90" class="cursor_point user_select_none">
+                        <i class="fas fa-heart pr-2 text-red"></i><span id="qod_likes"></span> Likes
+                    </a>
+                    <div class="view_welcome_line_y"></div>
+                    <div>2019-08-08</div>
+                    <div class="view_welcome_line_y"></div>
+                    <div id="qod_author"></div>
+                </div>
+            </div>
+        </div>-->
+            <!--left panel on desktop | centered on mobile-->
+            <div class="d-flex flex-row justify-content-between w-100 align-content-center">
+
+                <div class="view_panel d-flex flex-row flex-wrap">
+                    <!--dashboard panel-->
+                    <div class="d-flex flex-row">
+                        <!--all properties-->
+                        <div onclick='window.location.href="#objects"' class="d-flex flex-column align-items-center mr-lg-1 panel_item p-2" style="width: 110px;">
+                            <span class="text-white font_8 font-weight-bold" id="num_of_objects"></span>
+                            <span class="text-white font_3">PROPERTIES</span>
+                        </div>
+                        <!--rents-->
+                        <div onclick='window.location.href="#rents"' class="d-flex flex-column align-items-center mr-lg-1 panel_item p-2" style="width: 110px;">
+                            <span class="text-white font_8 font-weight-bold" id="num_of_rents"></span>
+                            <span class="text-white font_3">RENTS</span>
+                        </div>
+                        <div style="height: 100%; border-left: 2px solid white;" class="mr-lg-1"></div>
+                        <!--arrivals-->
+                        <div onclick='window.location.href="#calendar"' class="d-flex flex-column align-items-center mr-lg-1 panel_item p-2" style="width: 110px;">
+                            <span class="text-white font_8 font-weight-bold" id="all_arrivals"></span>
+                            <span class="text-white font_3">ARRIVALS</span>
+                        </div>
+                        <!--departures-->
+                        <div onclick='window.location.href="#calendar"' class="d-flex flex-column align-items-center mr-lg-1 panel_item p-2" style="width: 110px;">
+                            <span class="text-white font_8 font-weight-bold" id="all_departures"></span>
+                            <span class="text-white font_3">DEPARTURES</span>
+                        </div>
+                        <!--active-->
+                        <!--<div onclick='window.location.href="#calendar"' class="d-flex flex-column align-items-center mr-lg-1 panel_item p-2" style="width: 110px;">
+                            <span class="text-white font_8 font-weight-bold" id="active_rents"></span>
+                            <span class="text-white font_3">ACTIVE</span>
+                        </div>-->
+                        <!--active-->
+                        <div onclick='window.location.href="#calendar"' class="d-flex flex-column align-items-center mr-lg-1 panel_item p-2" style="width: 110px;">
+                            <span class="text-white font_8 font-weight-bold" id="new_rents"></span>
+                            <span class="text-white font_3">NEW</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--right panel on desktop | hidden on mobile-->
+                <div class="d-none d-lg-flex flex-row align-content-center">
+
+                    <!--day and date-->
+                    <div class="text-white text-right text_shadow d-flex flex-column justify-content-center">
+                        <!--<div class="font_10 font_medium line_normal" id="home_today_time">&nbsp;</div>-->
+                        <div class="font_7" id="home_today_date"></div>
+                        <div class="line_normal" id="home_today_day"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-flex flex-row justify-content-between">
+                <div class="ml-3 px-5 px-3 bg-white panel_item" style="width: 200px; visibility: hidden;">
+                    <span class="text-black font_bold font_3">PROPERTIES</span>
+                </div>
+                <!--bottom options-->
+                <div class="d-flex align-items-center text_shadow align-self-end">
+                    <button class="btn btn_bordered border d-flex align-items-center mr-1 text-white" onclick="toggleFullscreen(document.body);">
+                        <i class="fas fa-desktop pr-2"></i>Fullscreen
+                    </button>
+                    <a href="#settings" class="btn btn_bordered border d-flex align-items-center mr-1 text-white"><i class="fas fa-cog pr-2"></i>Settings</a>
+                    <button type="button" class="btn btn_bordered border text-white" onclick="bl.workers.worker_logout();"><i class="fas fa-power-off"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today
+    <!--<div id="dropdown_arrivals_today" class="view_rents today visuallyhidden hidden">
+        <div class="rents_card color_card" onclick="modal_details_rent.ui.show_details()">
+            <div class="backdrop_filter"></div>
+            <div class="d-flex justify-content-between align-items-center pb-1">
+                <div class="rents_card_portal">
+                    <div class="rents_card_portal_icon">
+                        <img src="./assets/images/icons/portals/airbnb.svg"
+                             alt="">
+                    </div>
+                    <div>Airbnb</div>
+                </div>
+                <div class="rents_card_time">16:00</div>
+            </div>
+            <div class="rents_card_guest">
+                <img src="./assets/images/icons/flags/de.svg" alt="">
+                <span class="rents_card_guest_name">Pero Perić</span>
+            </div>
+            <div class="d-flex flex-wrap py-1">
+                <div class="rents_card_items">
+                    <i class="fas fa-user pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-child pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-paw pr-1"></i>
+                    <span>1</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-parking"></i>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <span>750 €</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="rents_card_object">
+                    <span class="rents_card_object_icon green"><i class="fas fa-circle"></i></span>
+                    <span class="rents_card_object_name pl-1">Apartment with view sea</span>
+                </div>
+                <div class="rents_card_night">4 <i class="fas fa-moon"></i></div>
+            </div>
+        </div>
+    </div>-->
+        <!-- Tomorrow -->
+        <!--<div id="dropdown_arrivals_tomorrow" class="view_rents tomoroow visuallyhidden hidden">
+        <div class="rents_card color_card" onclick="modal_details_rent.ui.show_details()">
+            <div class="backdrop_filter"></div>
+            <div class="d-flex justify-content-between align-items-center pb-1">
+                <div class="rents_card_portal">
+                    <div class="rents_card_portal_icon">
+                        <img src="./assets/images/icons/portals/airbnb.svg"
+                             alt="">
+                    </div>
+                    <div>Airbnb</div>
+                </div>
+                <div class="rents_card_time">16:00</div>
+            </div>
+            <div class="rents_card_guest">
+                <img src="./assets/images/icons/flags/de.svg" alt="">
+                <span class="rents_card_guest_name">Pero Perić</span>
+            </div>
+            <div class="d-flex flex-wrap py-1">
+                <div class="rents_card_items">
+                    <i class="fas fa-user pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-child pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-paw pr-1"></i>
+                    <span>1</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-parking"></i>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <span>750 €</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="rents_card_object">
+                    <span class="rents_card_object_icon green"><i class="fas fa-circle"></i></span>
+                    <span class="rents_card_object_name pl-1">Apartment with view sea</span>
+                </div>
+                <div class="rents_card_night">4 <i class="fas fa-moon"></i></div>
+            </div>
+        </div>
+    </div>-->
+        <!-- View departures -->
+        <!-- Today -->
+        <!--<div id="dropdown_departures_today" class="view_rents today visuallyhidden hidden">
+        <div class="rents_card color_card" onclick="modal_details_rent.ui.show_details()">
+            <div class="backdrop_filter"></div>
+            <div class="d-flex justify-content-between align-items-center pb-1">
+                <div class="rents_card_portal">
+                    <div class="rents_card_portal_icon">
+                        <img src="./assets/images/icons/portals/airbnb.svg"
+                             alt="">
+                    </div>
+                    <div>Airbnb</div>
+                </div>
+                <div class="rents_card_time">16:00</div>
+            </div>
+            <div class="rents_card_guest">
+                <img src="./assets/images/icons/flags/de.svg" alt="">
+                <span class="rents_card_guest_name">Pero Perić</span>
+            </div>
+            <div class="d-flex flex-wrap py-1">
+                <div class="rents_card_items">
+                    <i class="fas fa-user pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-child pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-paw pr-1"></i>
+                    <span>1</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-parking"></i>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <span>750 €</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="rents_card_object">
+                    <span class="rents_card_object_icon green"><i class="fas fa-circle"></i></span>
+                    <span class="rents_card_object_name pl-1">Apartment with view sea</span>
+                </div>
+                <div class="rents_card_night">4 <i class="fas fa-moon"></i></div>
+            </div>
+        </div>
+    </div>-->
+        <!-- Tomorrow -->
+        <!--<div id="dropdown_departures_tomorrow" class="view_rents tomorrow visuallyhidden hidden">
+        <div class="rents_card color_card" onclick="modal_details_rent.ui.show_details()">
+            <div class="backdrop_filter"></div>
+            <div class="d-flex justify-content-between align-items-center pb-1">
+                <div class="rents_card_portal">
+                    <div class="rents_card_portal_icon">
+                        <img src="./assets/images/icons/portals/airbnb.svg"
+                             alt="">
+                    </div>
+                    <div>Airbnb</div>
+                </div>
+                <div class="rents_card_time">16:00</div>
+            </div>
+            <div class="rents_card_guest">
+                <img src="./assets/images/icons/flags/de.svg" alt="">
+                <span class="rents_card_guest_name">Pero Perić</span>
+            </div>
+            <div class="d-flex flex-wrap py-1">
+                <div class="rents_card_items">
+                    <i class="fas fa-user pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-child pr-1"></i>
+                    <span>2</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-paw pr-1"></i>
+                    <span>1</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-parking"></i>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <span>750 €</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="rents_card_object">
+                    <span class="rents_card_object_icon green"><i class="fas fa-circle"></i></span>
+                    <span class="rents_card_object_name pl-1">Apartment with view sea</span>
+                </div>
+                <div class="rents_card_night">4 <i class="fas fa-moon pl-2"></i></div>
+            </div>
+        </div>
+    </div>-->
+        <!-- Weather widget -->
+        <!--<div id="view_weather_widget_item" class="ml-auto py-3 hidden">
+        <div class="view_weahter_widget" style="width: 20rem;">
+            <a id="weatherwidget-io" class="weatherwidget-io" href="https://forecast7.com/en/45d8215d98/zagreb/"
+               data-label_1="ZAGREB" data-theme="weather_one">ZAGREB</a>
+        </div>
+    </div>-->
+
+    </div>
+    </div>
+</div>
+
+<!-- modals -->
+<section>
+
+    <!-- customize pictures -->
+    <div id="home_modal_customize_picture" class="visuallyhidden hidden">
+        <div class="d-flex justify-content-between dropdown_header">
+            <div class="font-weight-bold">Customize</div>
+            <div class="dropwdown_close"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="tiny_scrollbar">
+            <ul class="dropdown_menu m-0">
+                <li class="font_2">
+                    Customize the background and the widgets you want to see on your Dashboard.
+                </li>
+                <li class="py-3">
+
+                    <!-- Quote & Welcome -->
+                    <div class="d-flex justify-content-between align-items-center font_3 mb-2">
+                        <div class="align-self-center">
+                            <i class="fas fa-align-left pr-2"></i>Quote & Welcome
+                        </div>
+                        <label class="slider_switch">
+                            <input id="quoteWelcome" type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <!-- Resolution picture 4K -->
+                    <div class="d-flex justify-content-between align-items-center font_3 mb-2">
+                        <div class="align-self-center">
+                            <i class="far fa-image pr-2"></i>Gallery on Dashboard 4K
+                        </div>
+                        <label class="slider_switch">
+                            <input id="quoteWelcome" type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <!-- weather api -->
+                    <!--<div class="d-none d-lg-flex justify-content-between font_3 mb-2">
+                        <div class="align-self-center"><i class="fas fa-cloud-sun pr-2"></i>Weather</div>
+                        <label class="slider_switch">
+                            <input id="checkbox_weather" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>-->
+
+                </li>
+
+                <!-- lsit of pictures-->
+                <li class="dropdown_background">
+                    <div class="d-flex flex-wrap bg_items">
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/1-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/2-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/3-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/4-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/5-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/6-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/7-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/8-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/12-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/16-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/17-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <!--<div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/18-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>-->
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/19-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/20-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/21-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/22-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/23-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item d-none">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/24-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                        <div class="bg_item">
+                            <img src="https://zaggypictures.s3.eu-central-1.amazonaws.com/background/25-thumb.jpg" loading="lazy"
+                                 onclick="home.ui.preview_img(this)" alt="">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</section>
+
+<!--templates-->
+<div>
+    <template id="template_dropdown_list_of_rents">
+        <div class="rents_card color_card" onclick="modal_details_rent.ui.show_details(`${id}`)">
+            <div class="backdrop_filter"></div>
+            <div class="d-flex justify-content-between align-items-center pb-1">
+                <div class="rents_card_portal">
+                    <div class="rents_card_portal_icon">
+                        <img src="./assets/images/icons/portals/${rent_source_icon}.svg"
+                             alt="">
+                    </div>
+                    <div>${rents_sources_name}</div>
+                </div>
+                <div class="rents_card_time">${time}</div>
+            </div>
+            <div class="rents_card_guest">
+                <img src="./assets/images/icons/flags/${country_code2}.svg" alt="">
+                <span class="rents_card_guest_name">${contact_name}</span>
+            </div>
+            <div class="d-flex flex-wrap py-1">
+                <div class="rents_card_items">
+                    <i class="fas fa-user pr-1"></i>
+                    <span>${adults}</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-child pr-1"></i>
+                    <span>${children}</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-paw pr-1"></i>
+                    <span>${pets}</span>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <i class="fas fa-parking" style="opacity:${parking}"></i>
+                </div>
+                <div class="rents_card_line_y"></div>
+                <div class="rents_card_items">
+                    <span>${price}  ${label}</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="rents_card_object">
+                    <span class="rents_card_object_icon ${color}"><i class="fas fa-circle"></i></span>
+                    <span class="rents_card_object_name pl-1">${object_name}</span>
+                </div>
+                <div class="rents_card_night">${nights}<i class="fas fa-moon pl-1"></i></div>
+            </div>
+        </div>
+    </template>
+
+</div>
+
+<!-- scripts-->
+<script>
+
+    var home = {};
+
+    home.worker_id = window.localStorage.getItem('worker').id;
+
+    home.time_interval_id = null;
+
+    // home load function
+    home.load = async () => {
+
+        await home.ui.setup_background_img();
+
+        // Load
+        await $(".mobile_button").load("/pages/partals/mobile_navigation.html").promise();
+        await $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html").promise();
+
+        // Set date
+        home.ui.set_day_info();
+
+        // load statistics
+        home.ui.dashboard_statistics_simple();
+
+        ////get all properties
+        // await home.ui.get_all_properties();
+
+        ////get all rents
+        // const rents = await home.ui.get_all_rents();
+
+        ////get arrivals
+        //home.ui.get_arrivals(rents);
+
+        ////get departures
+        //home.ui.get_departures(rents);
+
+        ////get active rents
+        //home.ui.get_active_rents(rents);
+
+        // Global ui
+        ui.display_title("Dashboard");
+
+        // custom backgroud picture
+        home.ui.modal_customize_picture();
+
+        await ui.content_loading_hide('login_content_loading');
+
+    }
+
+    // home ui logic
+    home.ui = new function () {
+
+        this.set_day_info = () => {
+
+            var current_date = moment().format("LL");
+            var current_day = moment().format('dddd');
+
+            home_today_date.innerHTML = current_date;
+            home_today_day.innerHTML = current_day;
+
+        }
+
+        this.left_nav_show = function () {
+
+            var page = location.hash;
+
+            if (page == "#home") {
+                $(".main_menu_left").removeClass("hidden");
+                $(".bg_screen_img_blur_shadow").removeClass("hidden");
+                $(".bg_screen_img_blur").removeClass("hidden");
+                $(".bg_sign").addClass("hidden");
+                $(".main_background").removeClass("hidden");
+            }
+
+        }
+
+        // -------------------------------------------
+
+        this.dashboard_statistics_simple = async () => {
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/users/dashboard_statistics_simple/' + user_id;
+
+            var s = await await ajax.get_json(url);
+
+            num_of_rents.innerHTML = s[0]['rents_active'];
+            num_of_objects.innerHTML = s[0]['objects_active'];
+            all_arrivals.innerHTML = s[0]['rents_arrival_today'];
+            all_departures.innerHTML = s[0]['rents_departure_today'];
+            new_rents.innerHTML = s[0]['rents_new'];;
+
+        }
+
+        //get all rents
+        this.get_all_rents = async function () {
+
+            //array of rents (rent is active && rent date is bigger than today)
+            var active_rents_arr = [];
+
+            var rents = await bl.rents.get_all_rents_new();
+
+            rents.forEach(rent => {
+                if (rent.active === "Y") {
+                    active_rents_arr.push(rent);
+                }
+            });
+
+            let number_of_active_rents = active_rents_arr.length;
+
+            num_of_rents.innerHTML = number_of_active_rents;
+
+            return active_rents_arr;
+        }
+
+        //get all properties
+        this.get_all_properties = async function () {
+
+            //get objects
+            var objects = await bl.objects.list_get();
+
+            let num_of_object = objects.length;
+
+            num_of_objects.innerHTML = num_of_object;
+        }
+
+        //get all arrivals
+        this.get_arrivals = async function (rents) {
+
+            var arrivals_array = [];
+
+            //map throught rents
+            rents.forEach(rent => {
+                if (rent.from_date === moment().format("YYYY-MM-DD").toString()) {
+                    arrivals_array.push(rent);
+                }
+            })
+
+            let n_of_arrivals = arrivals_array.length;
+
+            all_arrivals.innerHTML = n_of_arrivals;
+        }
+
+        //get all departures
+        this.get_departures = async function (rents) {
+
+            var departures_array = [];
+
+            //map throught rents
+            rents.forEach(rent => {
+                if (rent.until_date === moment().format("YYYY-MM-DD").toString()) {
+                    departures_array.push(rent);
+                }
+            })
+
+            let n_of_departures = departures_array.length;
+
+            all_departures.innerHTML = n_of_departures;
+        }
+
+        //get all active rents
+        this.get_active_rents = async function (rents) {
+
+            //array of rents that from is smaller and untill is bigger
+            var active_rents_arr = [];
+
+            const today_date = moment();
+
+            rents.forEach(rent => {
+                //rent until date
+                var rent_until = moment(rent.until_date, "YYYY-MM-DD");
+                //rent from date
+                var rent_from = moment(rent.from_date, "YYYY-MM-DD");
+
+                if (today_date <= rent_until && today_date >= rent_from) {
+                    active_rents_arr.push(rent);
+                }
+            });
+
+            let active_rents_n = active_rents_arr.length;
+
+            active_rents.innerHTML = active_rents_n;
+
+        }
+
+        // ---------------------------------------------
+
+        // Time of day - display good morning, good afternoon & good evening
+        this.time_of_day_index = function (id) {
+
+            var time_of_day_data = [
+                [0, 11, "Good morning"],
+                [12, 17, "Good afternoon"],
+                [18, 24, "Good evening"]
+            ],
+                hr = new Date().getHours();
+            for (var i = 0; i < time_of_day_data.length; i++) {
+                if (hr >= time_of_day_data[i][0] && hr <= time_of_day_data[i][1]) {
+
+                    try {
+
+                        document.getElementById(id).innerText = time_of_day_data[i][2];
+
+                    } catch (error) {
+
+                        console.log(error);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        // set backgrounds for properties
+        this.setup_background_img = function () {
+            //index.setup_background_img();
+        }
+
+        // Modal change background image
+        this.preview_img = async function (img) {
+
+            var img_url = "";
+
+            img_url = img.src;
+
+            var worker_id = bl.workers.current_worker_id();
+
+            // Take HD
+            img_url = img_url.replace('-thumb', '');
+
+            var url = '/api/workers/picture_background_set/' + worker_id + '?img=' + img_url;
+
+            //console.log('Fetching ' + img_url);
+
+            //await $.get(url).done((data) => {
+            //    bl.workers.get();
+            //}).promise();
+
+            document.querySelector(".bg_screen_img > img").src = img_url;
+            document.querySelector(".bg_screen_img_blur > img").src = img_url;
+            localStorage.setItem("bg_img", img_url);
+
+        }
+
+        // Open / Close dropdown customize
+        this.modal_customize_picture = function () {
+
+            var btn = document.getElementById("home_button_customize_picture");
+            var dropdown = document.getElementById("home_modal_customize_picture");
+            var close = dropdown.getElementsByClassName("dropwdown_close")[0];
+
+            // show modal
+            btn.addEventListener("click", function () {
+
+                var is_hidden = dropdown.classList.contains("hidden");
+
+                if (is_hidden == true) {
+                    dropdown.classList.remove("hidden");
+                    setTimeout(function () {
+                        dropdown.classList.remove('visuallyhidden');
+                    }, 20)
+                } else {
+                    hidden();
+                }
+            });
+
+            // hide modal
+            close.addEventListener("click", function () {
+                hidden();
+            });
+
+            // hide modal (clik outside)
+            $(document).mouseup(function (e) {
+                if (!$(dropdown).is(e.target) && $(dropdown).has(e.target).length === 0) {
+                    if (!dropdown.classList.contains("hidden")) {
+                        hidden();
+                    }
+                }
+            });
+
+            // check if it's hidden or not
+            function hidden() {
+                dropdown.classList.add('visuallyhidden');
+                dropdown.addEventListener('transitionend', function (e) {
+                    dropdown.classList.add('hidden');
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+            }
+        }
+
+        // o'clock on display
+        this.startTime = function (id) {
+
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            m = checkTime(m);
+
+            try {
+
+                today_time.innerHTML = h + ":" + m;
+
+            } catch (error) {
+
+                console.log(error);
+            }
+
+            var t = setTimeout(home.startTime, 1000);
+
+            function checkTime(i) {
+                if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+                return i;
+            }
+        }
+
+        // Time of day - display good morning, good afternoon & good evening
+        this.display_time_of_day = function (id) {
+            var time_of_day_data = [
+                [0, 11, "Good morning"],
+                [12, 17, "Good afternoon"],
+                [18, 24, "Good evening"]
+            ],
+                hr = new Date().getHours();
+            for (var i = 0; i < time_of_day_data.length; i++) {
+                if (hr >= time_of_day_data[i][0] && hr <= time_of_day_data[i][1]) {
+
+                    try {
+                        document.getElementById(id).innerText = time_of_day_data[i][2];
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Toggle like story
+        this.toggle_like_story = function (e) {
+            $(e.children[0]).toggleClass('fas far');
+        }
+
+        // Dropdown rents Arrivals / Departures
+        this.dropdown_rents = function (dropdown, btn, left) {
+
+            // variables
+            var modal_rent_details = '';
+            var panel_btn = document.getElementById(btn);
+            var dropdown_id = document.getElementById(dropdown);
+            var welcome = document.getElementsByClassName("view_welcome")[0];
+
+            try {
+
+                panel_btn.onclick = function () {
+                    if (dropdown_id.classList.contains("hidden")) {
+                        toggle_dropdown();
+                        welcome.style.opacity = ".3";
+                        panel_btn.style.backgroundColor = "rgba(255,255,255,.2)";
+
+                    } else {
+                        toggle_dropdown();
+                        welcome.style.opacity = "1";
+                        panel_btn.style.backgroundColor = "";
+                    }
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+
+
+            document.addEventListener("mouseup", function (e) {
+
+                if (!$(dropdown_id).is(e.target) && $(dropdown_id).has(e.target).length === 0) {
+                    //if (modal_rent_details == undefined) {
+                    //if (modal_rent_details.classList.contains('hidden')) {
+                    if (!dropdown_id.classList.contains("hidden")) {
+                        toggle_dropdown();
+                        welcome.style.opacity = "1";
+                        panel_btn.style.backgroundColor = "";
+                    }
+                    //}
+                    //}
+
+                }
+            });
+
+            function toggle_dropdown() {
+                if (!dropdown_id.classList.contains("hidden")) {
+                    dropdown_id.classList.add("visuallyhidden");
+                    dropdown_id.addEventListener("transitionend", function () {
+                        dropdown_id.classList.add("hidden");
+                    }, {
+                        capture: false,
+                        once: true,
+                        passive: false
+                    });
+                } else {
+                    dropdown_id.classList.remove("hidden");
+                    setTimeout(function () {
+                        dropdown_id.classList.remove('visuallyhidden');
+                    }, 20);
+                }
+            }
+
+        }
+
+        // slide checkbox Welcome on/off
+        this.checkbox_slide_welcome = function () {
+            let checkbox = document.getElementById("quoteWelcome");
+            let view_welcome = document.querySelector(".view_welcome");
+
+            try {
+
+                checkbox.addEventListener("change", function () {
+                    if (checkbox.checked == true) {
+                        try {
+                            view_welcome.classList.remove("hidden");
+                        } catch (error) {
+                            console.log(error);
+                        }
+                        localStorage.setItem("view_welcome", "true");
+                    } else {
+                        try {
+                            view_welcome.classList.add("hidden");
+                        } catch (error) {
+                            console.log(error);
+                        }
+                        localStorage.setItem("view_welcome", "false");
+                    }
+                });
+
+            } catch (error) {
+
+                console.log(error);
+            }
+
+            let check = localStorage.getItem("view_welcome");
+
+            if (check == "true") {
+                try {
+                    view_welcome.classList.remove("hidden");
+                } catch (error) {
+                    console.log(error);
+                }
+                checkbox.checked = true;
+            } else {
+                try {
+                    view_welcome.classList.add("hidden");
+                } catch (error) {
+                    console.log(error);
+                }
+                checkbox.checked = false;
+            }
+        }
+
+        //fetch and display quote of the day
+        this.quote_of_the_day = function () {
+
+            //fetch('/api/registars/qod').then(res => res.json()).then(quote => {
+
+            //    let quote_id = quote[0]['id'];
+
+
+            //    let likes_counter;
+
+            //    try {
+
+            //        likes_counter = document.getElementById('quote_likes').getAttribute('data-href');
+
+            //    } catch (error) {
+
+            //        console.log(error);
+            //    }
+
+            //    likes_counter = "api/registars/qod_like/" + quote_id;
+
+            //    try {
+            //        document.getElementById('qod_text').innerText = quote[0]['text'];
+            //    } catch (error) {
+            //        console.log(error);
+            //    }
+
+            //    try {
+            //        document.getElementById('qod_author').innerText = quote[0]['author'];
+            //    } catch (error) {
+            //        console.log(error);
+            //    }
+
+            //    try {
+            //        document.getElementById('qod_likes').innerText = quote[0]['like'];
+            //    } catch (error) {
+            //        console.log(error);
+            //    }
+            //});
+        }
+
+        //add option to like quote
+        this.add_like = async function (el) {
+
+            // Check if user liked this quote before
+            if (sessionStorage.getItem('quote_liked') !== 'Y') {
+
+                let url = el.dataset.href;
+                var likes = await fetch(url).then(res => res.text());
+                likes = likes.replaceAll('"', '');
+                $("#qod_likes").text(likes);
+
+                sessionStorage.setItem('quote_liked', 'Y');
+
+            }
+
+        }
+
+        //fetch and display users name in welcome section
+        this.welcome_user = async function () {
+
+            var user_id = bl.workers.current_user_id();
+            var url = '/api/users/details/' + user_id;
+            var response = await ajax.get(url);
+
+            var user = JSON.parse(response)[0];
+
+            try {
+
+                document.getElementById("user_name").innerText = " " + user["name"];
+
+            } catch (error) {
+
+                console.log(error);
+            }
+
+        }
+
+        //load list of today arrivals in dropdown menu
+        this.load_arrivals_today = function () {
+
+            var sum_arrivals = 0;
+            var list = bl.rents_local.get();
+            list = list['arrivals']['today'];
+            var cl = bl.countries.list();
+
+            if (list != undefined) {
+
+                dropdown_arrivals_today.innerHTML = '';
+
+                for (var ls of list) {
+                    var t = template_dropdown_list_of_rents.innerHTML;
+                    for (var i of cl) {
+                        if (i['id'] == ls['contact_country_id']) {
+                            t = t.replace('${country_code2}', i['code2']);
+
+                        }
+                    }
+
+                    if (!ls['rent_source_icon']) {
+                        ls['rent_source_icon'] = 'syncbeds';
+                    }
+                    if (!ls['rents_sources_name']) {
+                        ls['rents_sources_name'] = 'Syncbeds';
+                    }
+
+                    sum_arrivals++;
+                    t = t.replace('${id}', ls['id']);
+                    t = t.replace('${label}', ls['label']);
+                    t = t.replace('${country_code2}', ls['country_code2']);
+                    t = t.replace('${until_date}', ls['days'] - 1);
+                    t = t.replace('${rent_source_icon}', ls['rent_source_icon'] || 'syncbeds');
+                    t = t.replace('${nights}', ls['days']);
+                    t = t.replace('${contact_name}', ls['contact_name']);
+                    t = t.replace('${object_name}', ls['object_name']);
+                    t = t.replace('${rents_sources_name}', ls['rents_sources_name'] || 'Syncbeds');
+                    t = t.replace('${adults}', ls['rent_adults']);
+                    t = t.replace('${children}', ls['rent_children']);
+                    t = t.replace('${pets}', ls['rent_pets']);
+                    t = t.replace('${price}', ls['price'] == true ? ls['price'].toFixed([2]) : '');
+                    t = t.replace('${parking}', ls['parking'] == 'Y' ? 1 : 0.1);
+                    t = t.replace('${time}', ls['from_time'].split('T'[0]));
+
+                    js.html.insertAdjacentHTML('dropdown_arrivals_today', t);
+
+                }
+            }
+            document.getElementById('home_today_arrivals_number').innerHTML = sum_arrivals;
+
+        }
+
+        //load list of today departures in dropdown menu
+        this.load_departures_today = function () {
+
+            //var list = bl.rents_local.get();
+            //list = list['departures']['today'];
+
+            //dropdown_departures_today.innerHTML = '';
+
+            //var sum_arrivals = 0;
+            //for (var ls of list) {
+            //    var t = template_dropdown_list_of_rents.innerHTML;
+
+            //    if (!ls['rent_source_icon']) {
+            //        ls['rent_source_icon'] = 'syncbeds';
+            //    }
+            //    if (!ls['rents_sources_name']) {
+            //        ls['rents_sources_name'] = 'Syncbeds';
+            //    }
+
+            //    sum_arrivals++;
+            //    t = t.replace('${id}', ls['id']);
+            //    t = t.replace('${label}', ls['label']);
+            //    t = t.replace('${until_date}', ls['days'] - 1);
+            //    t = t.replace('${country_code2}', ls['country_code2']);
+            //    t = t.replace('${rent_source_icon}', ls['rent_source_icon']);
+            //    t = t.replace('${nights}', ls['days']);
+            //    t = t.replace('${contact_name}', ls['contact_name']);
+            //    t = t.replace('${object_name}', ls['object_name']);
+            //    t = t.replace('${rents_sources_name}', ls['rents_sources_name']);
+            //    t = t.replace('${adults}', ls['rent_adults']);
+            //    t = t.replace('${children}', ls['rent_children']);
+            //    t = t.replace('${pets}', ls['rent_pets']);
+            //    t = t.replace('${price}', ls['price'].toFixed([2]));
+            //    t = t.replace('${time}', ls['until_time']);
+            //    t = t.replace('${parking}', ls['parking'] == 'Y' ? 1 : 0.1);
+
+            //    js.html.insertAdjacentHTML('dropdown_departures_today', t);
+            //}
+
+            //document.getElementById('home_today_departures_number').innerHTML = sum_arrivals;
+
+
+        }
+
+        //load list of tomorrow departures in dropdown menu
+        this.load_departures_tomorrow = function () {
+
+            var list = bl.rents_local.get();
+            list = list['departures']['tomorrow'];
+
+            dropdown_departures_tomorrow.innerHTML = '';
+
+            var sum_arrivals = 0;
+            for (var ls of list) {
+                var t = template_dropdown_list_of_rents.innerHTML;
+
+                if (!ls['rent_source_icon']) {
+                    ls['rent_source_icon'] = 'syncbeds';
+                }
+                if (!ls['rents_sources_name']) {
+                    ls['rents_sources_name'] = 'Syncbeds';
+                }
+
+                sum_arrivals++;
+                t = t.replace('${id}', ls['id']);
+                t = t.replace('${label}', ls['label']);
+                t = t.replace('${country_code2}', ls['country_code2']);
+                t = t.replace('${rent_source_icon}', ls['rent_source_icon']);
+                t = t.replace('${nights}', ls['days'] - 1);
+                t = t.replace('${contact_name}', ls['contact_name']);
+                t = t.replace('${object_name}', ls['object_name']);
+                t = t.replace('${rents_sources_name}', ls['rents_sources_name']);
+                t = t.replace('${adults}', ls['rent_adults']);
+                t = t.replace('${children}', ls['rent_children']);
+                t = t.replace('${pets}', ls['rent_pets']);
+                t = t.replace('${price}', ls['price'] == null ? '' : ls['price'].toFixed([2]));
+                t = t.replace('${time}', ls['until_time']);
+                t = t.replace('${parking}', ls['parking'] == 'Y' ? 1 : 0.1);
+
+                js.html.insertAdjacentHTML('dropdown_departures_tomorrow', t);
+
+            }
+
+            document.getElementById('home_tomorrow_departures_number').innerHTML = sum_arrivals;
+
+        }
+
+        //load list of tomorrow arrivals in dropdown menu
+        this.load_arrivals_tomorrow = function () {
+
+            var lista = bl.rents_local.get();
+            lista = lista['arrivals']['tomorrow'];
+            dropdown_arrivals_tomorrow.innerHTML = '';
+
+            var sum_arrivals = 0;
+            for (var ls of lista) {
+                var t = template_dropdown_list_of_rents.innerHTML;
+
+                if (!ls['rent_source_icon']) {
+                    ls['rent_source_icon'] = 'syncbeds';
+                }
+                if (!ls['rents_sources_name']) {
+                    ls['rents_sources_name'] = 'Syncbeds';
+                }
+
+                sum_arrivals++;
+                t = t.replace('${id}', ls['id']);
+                //var nights = new Date(ls['from_date']).getDate() - new Date(ls['from_date']).getDate();
+                t = t.replace('${label}', ls['label']);
+                t = t.replace('${country_code2}', ls['country_code2']);
+                t = t.replace('${rent_source_icon}', ls['rent_source_icon']);
+                t = t.replace('${nights}', ls['days'] - 1);
+                t = t.replace('${contact_name}', ls['contact_name']);
+                t = t.replace('${object_name}', ls['object_name']);
+                t = t.replace('${rents_sources_name}', ls['rents_sources_name']);
+                t = t.replace('${adults}', ls['rent_adults']);
+                t = t.replace('${children}', ls['rent_children']);
+                t = t.replace('${pets}', ls['rent_pets']);
+                t = t.replace('${price}', (ls['price'] || 0).toFixed([2]));
+                t = t.replace('${time}', ls['from_time']);
+                t = t.replace('${parking}', ls['parking'] == 'Y' ? 1 : 0.1);
+
+                js.html.insertAdjacentHTML('dropdown_arrivals_tomorrow', t);
+
+            }
+
+            document.getElementById('home_tomorrow_arrivals_number').innerHTML = sum_arrivals;
+
+        }
+    }
+
+    function toggleFullscreen(elem) {
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+            document.exitFullscreen();
+        }
+        else {
+            openFullscreen(elem);
+        }
+    }
+
+    function openFullscreen(elem) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        }
+        else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        }
+        else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+        else {
+            console.log("Can't open fullscreen for element.");
+        }
+    }
+
+    // on load
+    home.load();
+
+</script>

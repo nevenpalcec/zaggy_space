@@ -1,0 +1,921 @@
+﻿<div class="view_sidebar d-flex font_6">
+    <!-- Bell - notification -->
+    <div id="btn_bell" class="view_sidebar_item align-self-center position-relative d-none">
+        <i class="far fa-bell"></i>
+        <span class="notice">10</span>
+    </div>
+    <div class="view_sidebar_line_y d-none"></div>
+    <!-- Refresh local storage -->
+    <div id="sidebar_refresh_btn" class="view_sidebar_item align-self-center hidden" onclick="/*header_navbar_right_shrotcuts.bl.reload_local_storage();*/ statistics.ui.load_charts(statistics.object_id, statistics.unit_id, statistics.object_name);"><i class="fas fa-sync"></i></div>
+
+    <!-- Messages - notification -->
+    <div class="pt-1 pr-3 view_sidebar_item align-self-center position-relative">
+        <a href='#messages?new_messages' class="nav-link text-dark font_5" style="position: relative;">
+            <i class="far fa-envelope font_6 view_sidebar"></i>
+            <span id="new_messages_notifications" class="notice text-white hidden"></span>
+        </a>
+    </div>
+
+    <!-- Search -->
+    <div id="sidebar_search_btn" class="view_sidebar_item align-self-center" onclick="modal_search.bl.show_modal('modal_search');"><i class="fas fa-search"></i></div>
+    <!-- User -->
+    <div id="header_user"></div>
+</div>
+
+<!-- Loading -->
+<div id="navbar_loading" class="view_loading" style="display: none;">
+    <img src="/assets/images/icons/loading.svg" />
+</div>
+
+<!-- Modal -->
+<section>
+
+    <!-- View notification -->
+    <div id="view_notification" class="view_notification visuallyhidden hidden">
+        <div class="close_wrapper text-right font_7 mb-2"><span class="view_close p-2 cursor_point"><i class="fas fa-times"></i></span></div>
+        <div class="p-2">
+            <div class="d-flex justify-content-between border-bottom mb-2 px-1 font_wrapper">
+                <div class="font_3"><i class="far fa-bell pr-2"></i>Notification<span class="clean_all font_2" onclick="header_navbar_right_shrotcuts.ui.clean_all_notification(this)">Clean all</span></div>
+                <div class="font_2"><span class="notification_day">Today</span></div>
+            </div>
+            <div class="notification_list_wrapper m-1">
+                <div class="notification_list m-1">
+                    <!-- Rent -->
+                    <div class="notification_card rent">
+                        <div onclick="header_navbar_right_shrotcuts.ui.remove_notification_card(this)" class="card_close"><i class="fas fa-times"></i></div>
+                        <div class="border-bottom">
+                            <i class="fas fa-bullhorn pr-2"></i>New reservation
+                        </div>
+                        <div class="card_wrapper cursor_point" onclick="modal_details_rent.ui.show_details()">
+                            <div class="d-flex align-items-center py-1">
+                                <div class="rents_card_portal_icon">
+                                    <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                </div>
+                                <div class="rents_card_guest">
+                                    <img src="./assets/images/icons/flags/et.svg" alt="">
+                                    <span class="rents_card_guest_name">Pero Perić</span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap py-1">
+                                <div class="rents_card_items">
+                                    <i class="fas fa-user pr-1"></i>
+                                    <span>2</span>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <i class="fas fa-child pr-1"></i>
+                                    <span>2</span>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <i class="fas fa-paw pr-1"></i>
+                                    <span>1</span>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <i class="fas fa-parking"></i>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <span>700 €</span>
+                                </div>
+                            </div>
+                            <div class="rents_card_object">
+                                <span class="rents_card_object_icon red"><i class="fas fa-circle"></i></span>
+                                <span class="rents_card_object_name pl-1">Apartment</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>11.08.2021 - 16.08.2021</div>
+                                <div class="rents_card_night">5<i class="fas fa-moon pl-1"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="font_2 text-right border-bottom mb-2 px-1">Yesterday</div>
+                    <!-- Canelled -->
+                    <div class="notification_card cancelled">
+                        <div onclick="header_navbar_right_shrotcuts.ui.remove_notification_card(this)" class="card_close"><i class="fas fa-times"></i></div>
+                        <div class="border-bottom">
+                            <i class="far fa-trash-alt pr-2"></i>Cancelled reservation
+                        </div>
+                        <div class="card_wrapper cursor_point" onclick="modal_details_rent.ui.show_details()">
+                            <div class="d-flex align-items-center py-1">
+                                <div class="rents_card_portal_icon">
+                                    <img src="./assets/images/icons/portals/booking.svg" alt="">
+                                </div>
+                                <div class="rents_card_guest">
+                                    <img src="/assets/images/icons/flags/et.svg" alt="">
+                                    <span class="rents_card_guest_name">Pero Perić</span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap py-1">
+                                <div class="rents_card_items">
+                                    <i class="fas fa-user pr-1"></i>
+                                    <span>2</span>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <i class="fas fa-child pr-1"></i>
+                                    <span>2</span>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <i class="fas fa-paw pr-1"></i>
+                                    <span>1</span>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <i class="fas fa-parking"></i>
+                                </div>
+                                <div class="rents_card_line_y"></div>
+                                <div class="rents_card_items">
+                                    <span>700 €</span>
+                                </div>
+                            </div>
+                            <div class="rents_card_object">
+                                <span class="rents_card_object_icon green"><i class="fas fa-circle"></i></span>
+                                <span class="rents_card_object_name pl-1">Apartment</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>11.08.2021 - 16.08.2021</div>
+                                <div class="rents_card_night">5<i class="fas fa-moon pl-1"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Message -->
+                    <div class="notification_card message">
+                        <div onclick="header_navbar_right_shrotcuts.ui.remove_notification_card(this)" class="card_close"><i class="fas fa-times"></i></div>
+                        <div class="border-bottom">
+                            <i class="far fa-envelope pr-2"></i>New message
+                        </div>
+                        <div class="card_message_subject pt-1">Subject</div>
+                        <div class="card_message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum sed aliquid veritatis nam iste minima.</div>
+                        <div class="d-flex justify-content-between border-top mt-1 pt-1">
+                            <div class="rents_card_guest">
+                                <img src="./assets/images/icons/flags/et.svg" alt="">
+                                <span class="rents_card_guest_name">Pero Perić</span>
+                            </div>
+                            <div class="card_message_time">15:41</div>
+                        </div>
+                    </div>
+                    <div class="font_2 text-right border-bottom mb-2 px-1">20.11.2020</div>
+                    <!-- Error sync -->
+                    <div class="notification_card error">
+                        <div onclick="header_navbar_right_shrotcuts.ui.remove_notification_card(this)" class="card_close"><i class="fas fa-times"></i></div>
+                        <div class="border-bottom">
+                            <i class="fas fa-exclamation pr-2"></i><span class="text-black">Error sync</span>
+                        </div>
+                        <div class="card_message pt-2">Lorem ipsum dolor sit.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View task -->
+    <div id="view_task" class="view_task visuallyhidden hidden">
+        <div class="backdrop"></div>
+        <div class="close_wrapper text-right font_7 mb-2"><span class="view_close p-2 cursor_point"><i class="fas fa-times"></i></span></div>
+        <div class="d-flex justify-content-between px-1 border-bottom">
+            <div class="font_3"><i class="far fa-clipboard pr-2"></i>Task & Notes</div>
+            <div class="task_plus font_3"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="pr-2 task_list_wrapper">
+            <div class="task_list">
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status red"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2 yellow"></i>20.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+                <div class="task_card color_card">
+                    <div class="task_card_heading pb-1">
+                        <div class="task_card_status green"><i class="fas fa-square"></i></div>
+                        <div class="task_card_title">Task01</div>
+                    </div>
+                    <div class="task_card_text font_2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint
+                        facere cupiditate ea nihil assumenda numquam.
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                        <div class="task_card_ring"><i class="fas fa-bell pr-2"></i>29.11.2020.</div>
+                        <div onclick="task_notification.task_checked(this)" class="task_card_check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="task_card_icons d-flex">
+                        <span onclick="task_notification.show_task('view_modal_task_edit')"><i class="fas fa-edit"></i></span>
+                        <span onclick="task_notification.remove_task(this)"><i class="fas fa-times"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal new task -->
+    <div id="view_modal_task_new" class="view_modal visuallyhidden new hidden">
+        <div class="modal_backdrop"></div>
+        <div class="modal_dialog modal_lg">
+            <div class="modal_content">
+                <div class="modal_header">
+                    <div class="text-white font_5 align-self-center px-3 font-weight-bold">
+                        <i class="far fa-clipboard pr-2"></i>New node details
+                    </div>
+                    <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><i class="far fa-sticky-note pr-2"></i>Subject</label>
+                        <input type="text" class="form-control focus">
+                    </div>
+                    <div class="border-bottom border-top">
+                        <div class="row py-2">
+                            <div class="col-md-4">
+
+                                <!-- Calendar -->
+                                <div id="modal_calendar_new" class="view_dropdown dropdown">
+                                    <button class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="far fa-calendar-alt"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Calendar - day
+                                                </div>
+                                                <div id="calendar_new_task_day" class="font_3 dropdown_name white text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="form_calendar_new_task" class="dropdown_menu calendar hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Calendar - day</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <div id="modal_double_calendar_new" class="pt-2">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <!-- Status -->
+                                <div id="modal_status_new" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-layer-group"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Status
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Status</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-status="1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon" style="background-color: #38a3a5;"></div>
+                                                    <div class="align-self-center">Normal</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-status="2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon" style="background-color: #e63946;"></div>
+                                                    <div class="align-self-center">Urgent</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <!-- Object -->
+                                <div id="modal_object_new" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-cube"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Object
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Object</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-object="1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 01</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment u ljubljani</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="3">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment s balkonom</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="4">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 02</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="5">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 03</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 04</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 05</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="8">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 06</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="9">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 07</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="10">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 08</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="11">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 09</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Notes</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Response</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal_check_new" class="modal_check">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center"
+                               style="max-width: 100px;">
+                            <span class="d-flex align-items-center">
+                                Done
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_lg"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn_silver" data-dismiss='modal'>Close</button>
+                    <div>
+                        <button type="button" class="btn btn_primary" data-dismiss='modal'><i class="fas fa-plus pr-2"></i>Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit task -->
+    <div id="view_modal_task_edit" class="view_modal visuallyhidden edit hidden">
+        <div class="modal_backdrop"></div>
+        <div class="modal_dialog modal_lg">
+            <div class="modal_content">
+                <div class="modal_header">
+                    <div class="text-white font_5 align-self-center px-3 font-weight-bold"><i class="far fa-clipboard pr-2"></i>Edit node details</div>
+                    <div class="close" data-dismiss='modal'><i class="fas fa-times"></i></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><i class="far fa-sticky-note pr-2"></i>Subject</label>
+                        <input type="text" class="form-control focus">
+                    </div>
+                    <div class="border-bottom border-top">
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <!-- Calendar -->
+                                <div id="modal_calendar_edit" class="view_dropdown dropdown">
+                                    <button class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="far fa-calendar-alt"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Calendar - day
+                                                </div>
+                                                <div id="calendar_edit_task_day" class="font_3 dropdown_name white text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="form_calendar_edit_task" class="dropdown_menu calendar hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Calendar - day</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <div id="modal_double_calendar_edit" class="pt-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Status -->
+                                <div id="modal_status_edit" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-layer-group"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Status
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Status</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-status="1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon" style="background-color: #38a3a5;"></div>
+                                                    <div class="align-self-center">Normal</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-status="2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon" style="background-color: #e63946;"></div>
+                                                    <div class="align-self-center">Urgent</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- Object -->
+                                <div id="modal_object_edit" class="view_dropdown dropdown">
+                                    <button type="button" class="btn btn_hover px-2 py-1 w-100">
+                                        <div class="d-flex align-items-center w-100">
+                                            <span class="mr-3 font_8 d-flex py-2"><i class="fas fa-cube"></i></span>
+                                            <div class="dropdown_label mr-1">
+                                                <div class="font_1 text-uppercase font_bold text-left pb-1">
+                                                    Object
+                                                </div>
+                                                <div class="font_3 dropdown_name text-left">-</div>
+                                            </div>
+                                            <div class="btn_toogleArrow pl-2 ml-auto font_1">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown_menu w-100 hidden">
+                                        <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                                            <div class="font_bold">Object</div>
+                                            <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                                        </div>
+                                        <hr class="m-0">
+                                        <ul class="dropdown_ul ul_icon_white font_3" style="max-height: 15rem; overflow-y: auto;">
+                                            <li class="dropdown_li" data-object="1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 01</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment u ljubljani</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="3">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment s balkonom</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="4">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 02</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="5">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 03</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 04</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 05</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="8">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 06</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="9">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 07</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="10">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 08</div>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown_li" data-object="11">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="align-self-center">Apartment 09</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Notes</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="mb-1"><i class="far fa-clipboard pr-2"></i>Response</div>
+                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal_check_edit" class="modal_check">
+                        <label class="checkbox checkbox_label d-flex justify-content-between align-items-center" style="max-width: 100px;">
+                            <span class="d-flex align-items-center">
+                                Done
+                            </span>
+                            <input type="checkbox">
+                            <span class="check check_lg"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn_silver custome_close" data-dismiss='modal'>Close</button>
+                    <div>
+                        <button type="button" class="btn btn_red" data-dismiss='modal'><i class="far fa-trash-alt pr-2"></i>Remove</button>
+                        <button type="button" class="btn btn_primary" data-dismiss='modal'><i class="fas fa-save pr-2"></i>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+
+    var header_navbar_right_shrotcuts = {};
+
+    header_navbar_right_shrotcuts.load = function () {
+
+        // Load
+        $("#header_user").load("/pages/partals/header_user.html");
+
+        // Logic
+        header_navbar_right_shrotcuts.bl.icon_set_white();
+
+        // Notifications for new messages
+        //header_navbar_right_shrotcuts.bl.set_notifications();
+
+        // Refresh new rents and new messages every 5s
+        setInterval(async function () {
+            header_navbar_right_shrotcuts.bl.set_notifications();
+        }, 30000);
+
+        // ui
+        // Bell
+        header_navbar_right_shrotcuts.ui.sidebar_notification("btn_bell", "view_notification");
+        header_navbar_right_shrotcuts.ui.sidebar_notice_mobile_close("view_notification", "btn_bell");
+
+    }
+
+    // Logic
+    header_navbar_right_shrotcuts.bl = new function () {
+
+
+        this.reload_local_storage = async () => {
+
+            ui.content_loading("navbar_loading");
+
+            let guid = JSON.parse(localStorage.worker).guid;
+            let hash = location.hash.slice(1);
+            var page = hash.split('?')[0];
+
+            await bl.workers.worker_login(guid);
+
+            
+            window.location.href = '/#' + page;
+
+            ui.content_loading_hide("navbar_loading");
+
+
+        }
+
+        this.icon_set_white = function () {
+
+            var page = location.hash;
+            if (page == "#home" || page == "") {
+                $(".view_sidebar").addClass("text-white");
+                $(".view_sidebar_line_y").addClass("white");
+            }
+            else {
+                $(".view_sidebar_line_y").addClass("black");
+                $(".view_sidebar .notice").addClass("text-white");
+                //    $("#sidebar_search_btn").addClass("hidden");
+            }
+        }
+
+        this.set_notifications = async () => {
+
+            var notifications_new = await bl.workers.get_notifications();
+
+            var messages_new = notifications_new[0]['messages_new'];
+
+            if (messages_new > 0) {
+                new_messages_notifications.innerText = messages_new;
+                new_messages_notifications.classList.remove('hidden');
+            }
+            else {
+                new_messages_notifications.classList.add('hidden');
+            }
+
+        }
+    }
+
+    // ui
+    header_navbar_right_shrotcuts.ui = new function () {
+
+        // Bell -------------------------------------------------------------
+        // Sidebar notification
+        this.sidebar_notification = function (id, dropdown) {
+            var btn = document.getElementById(id);
+            var dropdown_id = document.getElementById(dropdown);
+            var weather = document.getElementById("view_weather_widget_item");
+            var modal_details = document.getElementById("modal_rent_details");
+
+            btn.onclick = function () {
+                if (!dropdown_id.classList.contains("hidden")) {
+                    toggle_dropdown();
+                    btn.classList.add("open");
+                } else {
+                    toggle_dropdown();
+                    btn.classList.remove("open");
+                }
+            }
+
+            document.addEventListener("mouseup", function (e) {
+                if (!$(dropdown_id).is(e.target) && $(dropdown_id).has(e.target).length === 0) {
+                    if (!btn.classList.contains("open")) {
+                        if (!dropdown_id.classList.contains("hidden")) {
+                            if (modal_details.classList.contains("hidden")) {
+                                toggle_dropdown();
+                                btn.classList.remove("open");
+                            }
+                        }
+                    }
+                }
+            });
+
+            function toggle_dropdown() {
+                if (!dropdown_id.classList.contains("hidden")) {
+                    dropdown_id.classList.add("visuallyhidden");
+                    dropdown_id.addEventListener("transitionend", function () {
+                        dropdown_id.classList.add("hidden");
+                    }, {
+                        capture: false,
+                        once: true,
+                        passive: false
+                    });
+                } else {
+                    dropdown_id.classList.remove("hidden");
+                    setTimeout(function () {
+                        dropdown_id.classList.remove('visuallyhidden');
+                    }, 20);
+                }
+            }
+
+        }
+
+        // Sidebar notice mobile close
+        this.sidebar_notice_mobile_close = function (id, btn) {
+            var dropdown = document.getElementById(id);
+            var close = dropdown.getElementsByClassName("view_close")[0];
+            var button = document.getElementById(btn);
+            var view_main_left_panel = document.querySelector(".view_main_left_panel");
+            close.onclick = function () {
+                dropdown.classList.add("visuallyhidden");
+                dropdown.addEventListener("transitionend", function () {
+                    dropdown.classList.add("hidden");
+                }, {
+                    capture: false,
+                    once: true,
+                    passive: false
+                });
+                button.classList.remove("open");
+                view_main_left_panel.classList.remove("active");
+            }
+        }
+
+        // Remove notification
+        this.remove_notification_card = function (e) {
+            e.offsetParent.remove();
+        }
+
+        // Clean all notification
+        this.clean_all_notification = function (event) {
+            var notification_list = document.querySelector(".notification_list");
+            var notification_day = document.querySelector(".notification_day");
+            notification_list.remove();
+            notification_day.remove();
+        }
+
+    }
+
+    header_navbar_right_shrotcuts.load();
+
+</script>

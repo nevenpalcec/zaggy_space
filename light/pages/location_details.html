@@ -1,0 +1,821 @@
+﻿
+<style>
+
+    #location_details_tbody tr:first-child td {
+        border-top: none;
+    }
+
+</style>
+
+<div class="view_items d-flex flex-column bg-white">
+
+    <!-- Header -->
+    <div class="view_header d-flex drop_shadow_md position-relative bg-white">
+        <div class="d-flex align-self-center">
+
+            <!-- Mobile btn -->
+            <div class="mobile_button black"></div>
+
+            <div class="line_normal align-self-center font_5 font_bold text-uppercase">
+                <i class="fas fa-map-marker-alt pr-2"></i>Location
+            </div>
+        </div>
+
+        <div class="align-self-center ml-auto" id="header_navbar_right_shrotcuts"></div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="view_filter bg-white d-flex flex-wrap align-items-center px-3">
+
+        <!-- List locations -->
+        <a href="#location_list" class="btn btn_hover px-2 py-1">
+            <div class="d-flex align-items-center">
+                <span class="font_7"><i class="fas fa-map-marker-alt"></i></span>
+            </div>
+        </a>
+
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Location -->
+        <div id="location_details_filter_location" class="view_dropdown dropdown d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-map-marker-alt"></i></span>
+                    <div class="dropdown_label mr-1 text-left">
+                        <div class="font_1 text-uppercase font_bold">Location</div>
+                        <div class="dropdown_name font_3">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Location</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-location_id="1">Zagreb</li>
+                    <li class="dropdown_li" data-location_id="2">Zagreb zapad</li>
+                    <li class="dropdown_li" data-location_id="3">Zagreb dugački</li>
+                </ul>
+            </div>
+        </div>
+        <a href="#" class="filter_link d-md-none d-block mobile"><i class="fas fa-map-marker-alt"></i></a>
+        <div class="filter_line_y hidden"></div>
+
+        <!-- Object -->
+        <div id="location_details_filter_object" class="view_dropdown dropdown d-md-block d-none hidden">
+            <button class="btn btn_hover px-2 py-1">
+                <div class="d-flex align-items-center">
+                    <span class="mr-3 font_7"><i class="fas fa-cube"></i></span>
+                    <div class="dropdown_label mr-1 text-left">
+                        <div class="font_1 text-uppercase font_bold">Object</div>
+                        <div class="dropdown_name font_3">-</div>
+                    </div>
+                    <div class="btn_toogleArrow ml-2 font_1"><i class="fas fa-chevron-down"></i></div>
+                </div>
+            </button>
+            <div class="dropdown_menu filter_min_width hidden">
+                <div class="d-flex justify-content-between pt-3 px-3 pb-2">
+                    <div class="font_bold">Object</div>
+                    <div class="dropdown_close"><i class="fas fa-times"></i></div>
+                </div>
+                <hr class="m-0">
+                <ul class="dropdown_ul font_3 dropdown_ul_max_height">
+                    <li class="dropdown_li" data-object_id="1">Apartment with balcony</li>
+                    <li class="dropdown_li" data-object_id="2">Apartment 01</li>
+                </ul>
+            </div>
+        </div>
+        <a href="#" class="filter_link d-md-none d-block mobile"><i class="fas fa-cube"></i></a>
+
+    </div>
+
+    <!-- Page -->
+    <div class="view_content bg_silver position-relative pt-1">
+
+        <!-- Loading -->
+        <!--<div class="view_loading" style="display: none;">
+            <div class="icon-loader">
+                <div class="icon-wrapper">
+                    <div class="icon icon01">
+                    </div>
+                    <div class="icon icon02">
+                    </div>
+                    <div class="icon icon03">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- Content -->
+        <div class="content location pt-3">
+
+            <!-- Loading -->
+            <div id="location_main_content_loading" class="view_loading" style="z-index: 2; display: none;">
+                <!--<img src="/assets/images/icons/loading.svg" />-->
+            </div>
+
+            <div class="row">
+
+                <!--<div class="col-xl-8 col-md-6">-->
+                <ddi class="col-xl-8">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <!-- Details -->
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="font-weight-bold">
+                                        <i class="fas fa-map-marker-alt pr-2"></i>General
+                                    </div>
+                                    <div class="d-flex">
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div class="card-body position-relative">
+
+                                    <!-- Loading -->
+                                    <div id="location_info_content_loading" class="view_loading" style="z-index: 2; display: none;">
+                                        <!--<img src="/assets/images/icons/loading.svg" />-->
+                                    </div>
+                                    <div id="location_info_content_loading_logo" class="view_loading" style="z-index: 2; display: none;">
+                                        <img src="/assets/images/icons/loading.svg" />
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+
+                                            <div class="row">
+
+                                                <!-- Code -->
+                                                <!--<div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Code</label>
+                                                        <input type="text" class="form-control focus" id="location_details_code">
+                                                    </div>
+                                                </div>-->
+                                                <!-- Name of location -->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Name</label>
+                                                        <input type="text" class="form-control focus" id="location_details_name">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Address -->
+                                                <div class="col-md-12 mb-3">
+                                                    <label class="mb-1">Address</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control focus" id="location_details_address">
+                                                        <div class="input-group-append" style="cursor: pointer;" onclick="location_details.bl.locate_address();" data-toggle="tooltip" title="Pin on map">
+                                                            <span class="input-group-text" id="basic-addon2"><i class="fas fa-map-pin"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Zip -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Zip</label>
+                                                        <input type="number" class="form-control focus" id="location_details_city_zip">
+                                                    </div>
+                                                </div>
+
+                                                <!-- City -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">City</label>
+                                                        <input type="text" class="form-control focus" id="location_details_city_name">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Country -->
+                                                <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Country</label>
+                                                        <div id="location_details_select_countries" class="select">
+                                                            <button class="custom-select focus"></button>
+                                                            <i class="fas fa-angle-down"></i>
+                                                            <div class="select_ul_filter_wrapper hidden">
+                                                                <div class="select_search m-2">
+                                                                    <input type="text" class="form-control" placeholder="Search">
+                                                                </div>
+                                                                <ul class="select_filter_ul mt-2" id="location_details_select_countries_ul">
+                                                                    <li class="select_filter_li">
+                                                                        <span data-id="1">
+                                                                            <span><img src="./assets/images/icons/flags/ad.svg" alt="icon"></span>
+                                                                            <span>Example so looooook nameeeeeeeeeeee</span>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="select_filter_li">
+                                                                        <span data-id="2">
+                                                                            <span><img src="./assets/images/icons/flags/at.svg" alt="icon"></span>
+                                                                            <span>Austria</span>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="select_filter_li">
+                                                                        <span data-id="3">
+                                                                            <span><img src="./assets/images/icons/flags/es.svg" alt="icon"></span>
+                                                                            <span>Spain</span>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="select_filter_li">
+                                                                        <span data-id="4">
+                                                                            <span><img src="./assets/images/icons/flags/fi.svg" alt="icon"></span>
+                                                                            <span>Finska</span>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="select_filter_li">
+                                                                        <span data-id="5">
+                                                                            <span><img src="./assets/images/icons/flags/fr.svg" alt="icon"></span>
+                                                                            <span>France</span>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="select_filter_li">
+                                                                        <span data-id="6">
+                                                                            <span><img src="./assets/images/icons/flags/hr.svg" alt="icon"></span>
+                                                                            <span>Croatia</span>
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <!-- Settlment -->
+                                                <!--<div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Settlement</label>
+                                                        <div id="location_details_select_settlment" class="select">
+                                                            <button class="custom-select focus" id="location_details_select_settlment_btn"></button>
+                                                            <i class="fas fa-angle-down"></i>
+                                                            <ul class="select_ul hidden" id="location_details_settlment_ul">
+                                                                <li class="select_li" data-settlment_id="1">Example 01</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <!-- Note -->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Note</label>
+                                                        <textarea name="" id="location_details_note" cols="30" rows="5" class="form-control focus"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <!-- Loading -->
+                                            <div id="location_map_content_loading" class="view_loading" style="z-index: 2; display: none;">
+                                                <!--<img src="/assets/images/icons/loading.svg" />-->
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Latitude</label>
+                                                        <input type="number" class="form-control focus" id="location_details_latitude" onkeyup="location_details.bl.marker_set_listen();">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="mb-1">Longitude</label>
+                                                        <input type="number" class="form-control focus" id="location_details_longitude" onkeyup="location_details.bl.marker_set_listen();">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <!--<div id="location_map" style="height: 15rem; z-index: 1;"></div>-->
+                                                    <div id="location_map" style="height: 25rem; z-index: 1;"></div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="mt-3 text-right">
+                                                <button class="btn btn_secondary" onclick="location_details.bl.save_location_manula();"><i class="fas fa-save pr-2"></i>Save</button>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button class="btn btn_bordered color_silver02 border" onclick="location_details.bl.delete_location();"><i class="far fa-trash-alt pr-2"></i>Remove</button>
+                                        <button class="btn btn_secondary" onclick="location_details.bl.location_save();"><i class="fas fa-save pr-2"></i>Save</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ddi>
+
+                <!--<div class="col-xl-4 col-md-6">-->
+                <div class="col-xl-4">
+
+                    <!-- Objects on location -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="font-weight-bold"><i class="fas fa-cubes pr-2"></i>Objects</div>
+                            <div></div>
+                        </div>
+                        <div class="card-body font_3 view_table">
+                            <table class="table table_small">
+                                <tbody id="location_details_tbody">
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="mt-3 text-right">
+                                <button class="btn btn_primary" onclick="modal_add_object.bl.show_modal('modal_add_object')"><i class="fas fa-plus pr-2"></i>New object</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal add object -->
+<section class="modal_add_object"></section>
+
+<section>
+
+    <template id="template_list_apartments">
+        
+        <tr>
+            <!--<td>1</td>-->
+            <td class="p-0">
+                <a href="#object_general?${object_id}" class="d-flex justify-content-between text-dark text-decoration-none py-3 px-3">
+                    <div class="d-flex">
+                        <div class="pr-4">1</div>
+                        <div class="status_icon pr-2"><i class="fas fa-circle fa-md" style="color:${color}"></i></div>${name}
+                    </div>
+                    <div><i class="fas fa-check-circle green" data-toggle="tooltip" data-placement="top" data-original-title="Active"></i></div>
+                </a>
+            </td>
+            
+            <!--<td>
+                <div class="d-flex align-items-center">
+                    <a href="#object_general?${object_id}" class="a_edit"><i class="far fa-edit" data-toggle="tooltip" data-placement="top" data-original-title="Edit"></i></a>
+                    <span><i class="fas fa-check-circle green" data-toggle="tooltip" data-placement="top" data-original-title="Active"></i></span>
+                </div>
+            </td>-->
+
+        </tr>
+        
+    </template>
+
+    <template id="template_location_details_countries">
+
+        <li class="select_filter_li" data-id="${id}" data-name="${country}">
+            <span>
+                <span><img src="./assets/images/icons/flags/${code2}.svg" alt="icon"></span>
+                <span>${country}</span>
+            </span>
+        </li>
+    </template>
+
+    <template id="template_settlment">
+        <li class="select_li" data-id="${id}">${settlment}</li>
+    </template>
+
+</section>
+
+<script>
+
+    var location_details = {};
+
+    location_details.location_id = '';
+    location_details.unit_id = '';
+
+    // Variables used for setting marker when coordinates change
+    location_details.map = null;
+    location_details.marker = null;
+
+    location_details.load = async () => {
+
+        ui.content_loading("location_main_content_loading");
+
+        // Load
+        $(".mobile_button").load("/pages/partals/mobile_navigation.html");
+        $("#header_navbar_right_shrotcuts").load("/pages/partals/header_navbar_right_shrotcuts.html");
+        $(".modal_add_object").load("/pages/components/modal_add_object.html");
+
+        ui.display_title("Edit location");
+
+        // global ui
+        ui.dropdown_list("location_details_filter_location");
+        ui.dropdown_list("location_details_filter_object");
+        //ui.custom_select("location_details_select_countries");
+
+        // local ui
+        location_details.ui.slick(".card-body_pics_list");
+        location_details.ui.map("location_map");
+        location_details.ui.load_list_apartments();
+        location_details.ui.load_countries();
+        location_details.ui.filter_search_list('location_details_select_countries');
+        location_details.ui.select_filter_custom('location_details_select_countries');
+
+        // local bl
+        //location_details.bl.object_load();
+        await location_details.bl.object_display();
+
+        ui.content_loading_hide("location_main_content_loading");
+
+    }
+
+    // component bl
+    location_details.bl = new function () {
+
+        // object load details
+        this.object_load = () => {
+
+            var hash = location.hash;
+
+            //bl.objects.object_load(object_id, this.object_display);
+
+        }
+
+        let marker_listener_id = null;
+
+        this.locate_address = async function () {
+
+            //ui.content_loading('location_info_content_loading');
+            ui.content_loading('location_info_content_loading_logo');
+
+            //debugger;
+
+            let location = location_details_address.value;
+
+            url = '/api/units/predict_location/?address=' + encodeURIComponent(location);
+            var r = await ajax.get_json(url);
+
+            let lat = r['latitude'];
+            let lng = r['longitude'];
+
+            location_details_latitude.value = lat;
+            location_details_longitude.value = lng;
+            location_details.bl.set_marker();
+
+            ui.content_loading_hide('location_info_content_loading_logo');
+
+        }
+
+        // Set marker after 500ms of inactivity on inputs
+        this.marker_set_listen = function () {
+
+            clearTimeout(marker_listener_id);
+            marker_listener_id = setTimeout(location_details.bl.set_marker, 500);
+        }
+
+        // Set marker and move map view to it
+        this.set_marker = () => {
+
+            var lat = location_details_latitude.value || 0;
+            var lng = location_details_longitude.value || 0;
+
+            if (location_details.map && location_details.marker) {
+
+                let new_lat_lng = new L.LatLng(lat, lng);
+                location_details.marker.setLatLng(new_lat_lng);
+                location_details.map.setView(new_lat_lng);
+
+                location_details_latitude.value = Math.round(lat * 10000) / 10000;
+                location_details_longitude.value = Math.round(lng * 10000) / 10000;
+
+            }
+            else {
+                console.log('Cannot find map or marker.');
+            }
+
+        }
+
+        this.object_display = async () => {
+
+            //var o = bl.objects.object_get();
+
+            location_details.unit_id = page.get_id();
+
+            var unit_id = page.get_id();
+            var url = '/api/units/get_unit/' + unit_id;
+            var response = await ajax.get(url);
+            var response_json = JSON.parse(response);
+
+            // console.log(response_json);
+
+            url = '/api/units_pictures/main_picture/' + unit_id;
+            var picture = await ajax.get(url);
+            var picture_json = JSON.parse(picture);
+
+            // Location picture not yet added
+            //if (picture_json.length != 0 && picture_json[0]['link_amazon'] != null && picture_json[0]['link_amazon'] != undefined) {
+            //    location_details_main_picture.src = picture_json[0]['link_amazon'];
+            //}
+            //else {
+            //    location_details_main_picture.src = '/assets/images/pictures/no-image.png';
+            //}
+
+            // Details card
+            var code = response_json[0]['unit'];
+            var name = response_json[0]['name'];
+            var address = response_json[0]['adress'];
+            var city_zip = response_json[0]['city_zip'];
+            var city_name = response_json[0]['city_name'];
+            var note = response_json[0]['note'];
+            var category_stars = response_json[0]['category_stars'];
+            //var location_active = response_json[0]['active'];
+            //var location_ready = response_json[0]['ready'];
+            var country_id = response_json[0]['country_id'];
+            var settlment = response_json[0]['settlment_id'];
+
+            //location_details_code.value = code;
+            location_details_name.value = name;
+            location_details_address.value = address;
+            location_details_city_zip.value = city_zip;
+            location_details_city_name.value = city_name;
+            location_details_note.value = note;
+            //!category_stars == false ? document.querySelectorAll(`#location_details_category_stars_dropdown_ul > li[data-id="${category_stars}"`)[0].click() : '';
+            //location_details_active.checked = location_active == 'Y' ? true : false;
+            //location_details_ready.checked = location_ready == 'Y' ? true : false;
+
+            location_details_latitude.value = response_json[0]['latitude'];
+            location_details_longitude.value = response_json[0]['longitude'];
+            location_details.bl.set_marker();
+
+            if (response_json[0]['country_id']) {
+                location_details_select_countries_ul.querySelector('[data-id="' + country_id + '"]').click();
+                //document.querySelector(`#location_details_select_countries_ul > li[data-id="${response_json[0]['country_id']}"]`).click();
+            }
+
+            //await this.load_settlment(country_id, city_zip);
+            //if (!settlment == false) {
+            //    document.querySelector(`#location_details_settlment_ul > li[data-id="${settlment}"]`).click();
+            //}
+
+        }
+
+        // save changes on location
+        this.location_save = async () => {
+
+            //debugger;
+
+            ui.content_loading('location_info_content_loading');
+
+            var unit = {};
+
+            unit.unit_id = location_details.unit_id;
+            unit.user_id = bl.workers.current_user_id();
+            //unit.unit = location_details_code.value;
+            unit.name = location_details_name.value;
+            unit.adress = location_details_address.value;
+            unit.city_zip = location_details_city_zip.value;
+            unit.city_name = location_details_city_name.value;
+            unit.note = location_details_note.value;
+            unit.latitude = location_details_latitude.value || 0;
+            unit.longitude = location_details_longitude.value || 0;
+            //unit.category_stars = location_details_category_stars_btn.dataset.id;
+            //unit.active = location_details_active.checked == true ? 'Y' : 'N';
+            unit.country_id = parseInt(document.querySelector('#location_details_select_countries > button').dataset.id);
+            //unit.settlment_id = location_details_select_settlment_btn.dataset.id;
+
+
+            //debugger;
+
+            var url = '/api/units/save_json/';
+            var response = await ajax.post_json(url, unit);
+
+            //this.load_settlment(unit.country_id, unit.city_zip);
+
+            ui.content_loading_hide('location_info_content_loading');
+
+        }
+
+        this.load_settlment = async (country_id, place_zip) => {
+
+            var settlemtn = {};
+            settlemtn.country_id = country_id;
+            settlemtn.place_zip = place_zip;
+
+            var url = '/api/countries_settlments/list/';
+            var response_json = await ajax.post_json(url, settlemtn);
+
+            location_details_settlment_ul.innerHTML = '';
+
+            for (var sl of response_json) {
+                var t = template_settlment.innerHTML;
+                t = t.replace('${settlment}', sl['settlment']);
+                t = t.replace('${id}', sl['id']);
+
+                js.html.insertAdjacentHTML('location_details_settlment_ul', t);
+            }
+
+            ui.custom_select("location_details_select_settlment");
+        }
+
+        this.delete_location = async () => {
+
+            await Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, remove it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var url = '/api/units/unit_del/' + location_details.unit_id;
+                    ajax.get(url);
+
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your location is removed .',
+                        confirmButtonText: 'Done'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = '#location_list';
+                        }
+                    })
+
+                }
+            })
+
+        }
+
+    }
+
+    // component ui
+    location_details.ui = new function () {
+
+        // Slick
+        this.slick = function (id) {
+            $(id).slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                arrows: true,
+                prevArrow: '<div class="slick_arrow left"><i class="fas fa-angle-left"></i></div>',
+                nextArrow: '<div class="slick_arrow right"><i class="fas fa-angle-right"></i></div>',
+                responsive: [
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+
+                ]
+            });
+        }
+
+        // Map
+        this.map = async function (id) {
+
+            var unit_id = page.get_id();
+            var url = '/api/units/get_unit/' + unit_id;
+            var response = await ajax.get(url);
+            var response_json = JSON.parse(response);
+            var latitude = response_json[0]['latitude'] || 0;
+            var longitude = response_json[0]['longitude'] || 0;
+
+            location_details.map = L.map(id).setView([latitude, longitude], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(location_details.map);
+
+            location_details.marker = L.marker([latitude, longitude], {
+                draggable: true
+            }).addTo(location_details.map);
+
+            location_details.marker.on('drag', function (e) {
+                location_details_latitude.value = location_details.marker.getLatLng().lat;
+                location_details_longitude.value = location_details.marker.getLatLng().lng;
+            });
+
+            location_details.marker.on('dragend', function (e) {
+                location_details.bl.set_marker();
+            });
+
+        }
+
+        //list of apartments on location
+        this.load_list_apartments = async () => {
+
+            var unit_id = page.get_id();
+
+            var url = '/api/units/get_objects/' + unit_id;
+
+            var objects_json = await ajax.get_json(url);
+            location_details_tbody.innerHTML = '';
+
+            //console.log(objects_json);
+
+            for (var obj of objects_json) {
+
+                var t = template_list_apartments.innerHTML;
+                t = t.replace('${object_id}', obj['id']);
+                t = t.replace('${name}', obj['name']);
+                t = t.replace('${color}', obj['color']);
+                js.html.insertAdjacentHTML('location_details_tbody', t);
+            }
+        }
+
+        this.load_countries = () => {
+
+            var countries = bl.countries.list();
+            location_details_select_countries_ul.innerHTML = '';
+            for (var ct of countries) {
+                var t = template_location_details_countries.innerHTML;
+                t = t.replace('${id}', ct['id']);
+                t = t.replace('${code2}', ct['code2']);
+                t = t.replace('${country}', ct['country']);
+                t = t.replace('${country}', ct['country']);
+
+                js.html.insertAdjacentHTML('location_details_select_countries_ul', t);
+
+            }
+        }
+
+        // Custom select
+        this.select_filter_custom = function (id) {
+
+            let select_id = document.getElementById(id);
+            let btn = select_id.getElementsByTagName("button")[0];
+            let ul_wrapper = select_id.getElementsByClassName("select_ul_filter_wrapper")[0];
+            let ul = select_id.getElementsByClassName("select_filter_ul")[0];
+            let li = select_id.getElementsByTagName("li")[0];
+            btn.onclick = function () {
+                if (!btn.classList.contains("open")) {
+                    btn.classList.add("open");
+                    ul_wrapper.classList.remove("hidden");
+                    let ulOffset = $(ul_wrapper).offset();
+                    let spaceUp = (ulOffset.top - $(btn).height() - $(ul_wrapper).height()) - $(window).scrollTop();
+                    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $(ul_wrapper).height());
+                    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
+                        ul_wrapper.classList.add("reverse");
+                    } else {
+                        ul_wrapper.classList.remove("reverse");
+                    }
+                } else {
+                    btn.classList.remove("open");
+                    ul_wrapper.classList.add("hidden");
+                }
+            };
+            document.addEventListener("mouseup", function (e) {
+                if (!$(btn).is(e.target) && $(btn).has(e.target).length === 0) {
+                    if (!$(ul_wrapper).is(e.target) && $(ul_wrapper).has(e.target).length === 0) {
+                        ul_wrapper.classList.add("hidden");
+                        btn.classList.remove("open");
+                    }
+                }
+            });
+            for (let i = 0; i < ul.children.length; i++) {
+                ul.children[i].onclick = function (e) {
+                    btn.innerHTML = e.currentTarget.innerHTML;
+                    btn.setAttribute('data-id', e.currentTarget.dataset.id);
+                    btn.setAttribute('data-code1', e.currentTarget.dataset.name);
+                    ul_wrapper.classList.add("hidden");
+                    btn.classList.remove("open");
+                }
+            }
+        }
+
+        // filter search
+        this.filter_search_list = function (id) {
+
+            let filter_id = document.getElementById(id);
+            let li = filter_id.querySelectorAll(".select_filter_li");
+            let input = filter_id.getElementsByClassName("form-control")[0];
+            document.addEventListener("keyup", function () {
+                filter = input.value.toUpperCase();
+                for (let i = 0; i < li.length; i++) {
+                    let list = li[i].lastElementChild;
+                    textValue = list.textContent || list.innerText;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            })
+        }
+    }
+
+    location_details.load();
+
+</script>
